@@ -20,7 +20,7 @@ abstract class Sql
 
         //Si l'id n'est pas null alors on fait un update sinon on fait un insert
         $calledClassExploded = explode("\\",get_called_class());
-        $this->table = strtolower(DBPREFIXE.end($calledClassExploded));
+        $this->table = DBPREFIXE.end($calledClassExploded);
 
     }
 

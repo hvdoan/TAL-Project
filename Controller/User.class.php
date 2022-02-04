@@ -28,7 +28,22 @@ class User {
         if( !empty($_POST)){
 
             $result = Verificator::checkForm($user->getRegisterForm(), $_POST);
-            print_r($result);
+            if (empty($result)) {
+            $user->setFirstname($_POST["firstname"]);
+            $user->setLastname($_POST["lastname"]);
+            $user->setEmail($_POST["email"]);
+            $user->setPassword($_POST["password"]);
+            $user->generateToken();
+            $user->creationDate();
+
+            $user->save();
+            echo "Inscription réussie, un email vient de vous être envoyés";
+            } else {
+                echo "ERREUR : <br>";
+                foreach ($result as $item) {
+                    echo "-" . $item . "<br>";
+                }
+            }
 
         }
 
