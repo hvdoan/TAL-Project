@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Core\CleanWords;
@@ -7,47 +8,61 @@ use App\Core\Verificator;
 use App\Core\View;
 use App\Model\User as UserModel;
 
-class User {
-
-    public function login()
-    {
-        $view = new View("Login", "back");
-
-        $view->assign("pseudo", "Prof");
-        $view->assign("firstname", "Yves");
-        $view->assign("lastname", "Skrzypczyk");
-
-    }
-
-
-    public function register()
-    {
-
-        $user = new UserModel();
-
-        if( !empty($_POST)){
-
-            $result = Verificator::checkForm($user->getRegisterForm(), $_POST);
-            print_r($result);
-
-        }
-
-        $view = new View("register");
-        $view->assign("user", $user);
-    }
-
-
-    public function logout()
-    {
-        echo "Se déco";
-    }
-
-
-    public function pwdforget()
-    {
-        echo "Mot de passe oublié";
-    }
-
+class User{
+	
+	public function login()
+	{
+		$user = new UserModel();
+		if(!empty($_POST)){
+			
+			$userLoggedIn = $user->select(['idUser', 'password'], ['email' => $_POST['email']]);
+			
+			if(!empty($userLoggedIn)){
+				if(password_verify($_POST['password'], $userLoggedIn[0]['password'])){
+					$user = $user->setId($userLoggedIn[0]['idUser']);
+					$user->generateToken();
+					$_SESSION['token'] = $user->getToken();
+					setcookie("token", $_SESSION['token'], time() + (60 * 15));
+					$user->save();
+					header("Location: /");
+				}
+				echo 'Mot de passe incorrect';
+			}
+			echo 'Identifiant incorrect';
+		}
+		$view = new View("Login", "front");
+		$view->assign("user", $user);
+	}
+	
+	
+	public function register()
+	{
+		
+		$user = new UserModel();
+		
+		if(!empty($_POST)){
+			
+			$result = Verificator::checkForm($user->getRegisterForm(), $_POST);
+			print_r($result);
+			
+		}
+		
+		$view = new View("register");
+		$view->assign("user", $user);
+	}
+	
+	
+	public function logout()
+	{
+		echo "Se déco";
+	}
+	
+	
+	public function pwdforget()
+	{
+		echo "Mot de passe oublié";
+	}
+	
 }
 
 
