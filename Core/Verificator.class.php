@@ -35,13 +35,9 @@ class Verificator
             if(!empty($input["confirm"]) && $data[$name] != $data[$input["confirm"]]){
                 $result[] = $input["error"];
             }
-
-
         }
 
-
         return $result;
-
     }
 
     public static function checkEmail($email): bool

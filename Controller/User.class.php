@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Core\CleanWords;
+use App\Core\Mail;
 use App\Core\Sql;
 use App\Core\Verificator;
 use App\Core\View;
@@ -16,7 +17,6 @@ class User {
         $view->assign("pseudo", "Prof");
         $view->assign("firstname", "Yves");
         $view->assign("lastname", "Skrzypczyk");
-
     }
 
 
@@ -25,15 +25,23 @@ class User {
 
         $user = new UserModel();
 
-        if( !empty($_POST)){
-
+        if( !empty($_POST))
+        {
             $result = Verificator::checkForm($user->getRegisterForm(), $_POST);
             print_r($result);
-
         }
 
         $view = new View("register");
         $view->assign("user", $user);
+
+        $content = "
+        	<h1>Cliquez sur le lien ci-dessous pour activer votre compte :</h1>
+        	<a href='localhost/activation?token=test'>Activation de votre compte.</a>
+        ";
+
+		$email = new Mail();
+		$email->prepareContent("hoaivietdoan@gmail.com", "Vérification du compte", $content, "Test");
+    	$email->send();
     }
 
 
@@ -48,6 +56,10 @@ class User {
         echo "Mot de passe oublié";
     }
 
+    public function activatedaccount()
+	{
+		$view = new View("validateAccount");
+	}
 }
 
 

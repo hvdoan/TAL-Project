@@ -6,16 +6,18 @@ use App\Core\Sql;
 class User extends Sql
 {
     protected $id = null;
+    protected $idRole = null;
     protected $firstname = null;
     protected $lastname = null;
     protected $email;
     protected $password;
-    protected $status = 0;
-    protected $token = null;
+	protected $token = null;
+	protected $creationDate = null;
+	protected $verifyAccount = null;
+	protected $activeAccount = null;
 
     public function __construct()
     {
-
         parent::__construct();
     }
 
@@ -27,7 +29,21 @@ class User extends Sql
         return $this->id;
     }
 
+	/**
+	 * @return null|int
+	 */
+	public function getIdRole(): ?int
+	{
+		return $this->idRole;
+	}
 
+	/**
+	 * @param null|int
+	 */
+	public function setIdRole(?int $idRole): void
+	{
+		$this->idRole = $idRole;
+	}
 
     /**
      * @return null|string
@@ -38,7 +54,7 @@ class User extends Sql
     }
 
     /**
-     * @param string $firstname
+     * @param null|string
      */
     public function setFirstname(?string $firstname): void
     {
@@ -94,22 +110,6 @@ class User extends Sql
     }
 
     /**
-     * @return int
-     */
-    public function getStatus(): int
-    {
-        return $this->status;
-    }
-
-    /**
-     * @param int $status
-     */
-    public function setStatus(int $status): void
-    {
-        $this->status = $status;
-    }
-
-    /**
      * @return null|string
      */
     public function getToken(): ?string
@@ -124,7 +124,6 @@ class User extends Sql
     {
         $this->token = substr(bin2hex(random_bytes(128)), 0, 255);
     }
-
 
     public function getRegisterForm(): array
     {
