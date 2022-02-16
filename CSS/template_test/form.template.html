@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Framework CSS | Dashboard template</title>
+        <link rel="stylesheet" href="../dist/main.css">
+        <script src="https://kit.fontawesome.com/62e5467ba7.js" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+
+    <body>
+        <style media="screen">
+            body
+            {
+                overflow: hidden;
+            }
+
+            body:before
+            {
+                content: "";
+                position: absolute;
+                top: -100%;
+                left: -10%;
+                width: 1000px;
+                height: 2000px;
+                transform:rotate(60deg);
+                background: #E2E5EC;
+                z-index: -1;
+            }
+
+            body:after
+            {
+                content: "";
+                position: absolute;
+                top: 40%;
+                right: -10%;
+                width: 1000px;
+                height: 2000px;
+                transform:rotate(65deg);
+                background: #E2E5EC;
+                z-index: -1;
+            }
+
+            .form
+            {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        </style>
+
+        <form class="form" action="index.html" method="post">
+            <h1>TAL Project | Inscription</h1>
+
+            <div class="field">
+                <label>Prénom</label>
+                <input type="text" name="firstname">
+            </div>
+
+            <div class="field">
+                <label>Nom</label>
+                <input type="text" name="lastname">
+            </div>
+
+            <div class="field">
+                <label>E-mail</label>
+                <input type="text" name="email">
+            </div>
+
+            <div class="field">
+                <label>Mot de passe</label>
+                <input id="password" type="password" name="password">
+                <i class="right-ico show-password fa-solid fa-eye-slash"></i>
+                <i class="right-ico hide-password hide fa-solid fa-eye"></i>
+            </div>
+
+            <div class="field">
+                <label>Confirmer le mot de passe</label>
+                <input id="confirmPassword" type="password" name="confirmPassword">
+                <i class="right-ico show-confirmPassword fa-solid fa-eye-slash"></i>
+                <i class="right-ico hide-confirmPassword hide fa-solid fa-eye"></i>
+            </div>
+
+            <input class="submit" type="submit" value="S'inscrire">
+        </form>
+
+        <script type="text/javascript">
+            $(document).on("click", ".show-password", function ()
+            {
+                $("#password").attr("type", "text");
+                $(this).addClass("hide");
+                $(".hide-password").removeClass("hide");
+            });
+
+            $(document).on("click", ".show-confirmPassword", function ()
+            {
+                $("#confirmPassword").attr("type", "text");
+                $(this).addClass("hide");
+                $(".hide-confirmPassword").removeClass("hide");
+            });
+
+            $(document).on("click", ".hide-password", function ()
+            {
+                $("#password").attr("type", "password");
+                $(this).addClass("hide");
+                $(".show-password").removeClass("hide");
+            });
+
+            $(document).on("click", ".hide-confirmPassword", function ()
+            {
+                $("#confirmPassword").attr("type", "password");
+                $(this).addClass("hide");
+                $(".show-confirmPassword").removeClass("hide");
+            });
+        </script>
+    </body>
+</html>

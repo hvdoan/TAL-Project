@@ -105,6 +105,7 @@ nav
     & > ul,
     & > ul > .bottom
     {
+        position: absolute;
         overflow: hidden;
         max-width: 0;
         padding: 0;
