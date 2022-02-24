@@ -39,15 +39,17 @@ abstract class Sql
         $columns = get_object_vars($this);
         $columns = array_diff_key($columns, get_class_vars(get_class()));
 
-        if($this->getId() == null){
-            $sql = "INSERT INTO ".$this->table." (".implode(", ", array_keys($columns)).")
-            VALUES ( :".implode(", :",array_keys($columns)).")";
-        }else{
+        if($this->getId() == null)
+        {
+            $sql = "INSERT INTO ".$this->table." (".implode(",",array_keys($columns)).") 
+            		    VALUES ( :".implode(",:",array_keys($columns)).")";
+        }
+        else
+        {
             $update = [];
             foreach ($columns as $column=>$value)
-            {
                 $update[] = $column." = :".$column;
-            }
+          
             $sql = "UPDATE ".$this->table." SET ".implode(",",$update)." WHERE idUser = ".$this->getId() ;
 
         }
@@ -56,29 +58,28 @@ abstract class Sql
         $queryPrepared->execute( $columns );
     }
 	
-	public function delete()
-	{
-		$sql = "DELETE FROM " . $this->table . " WHERE idUser=" . $this->getId();
-		$queryPrepared = $this->pdo->query($sql);
-	}
-	
-	public function select(array $values,array $params)
-	{
-		$calledClassExploded = explode("\\",get_called_class());
-		$table = strtolower(DBPREFIXE.end($calledClassExploded));
-		
-		$sql = "SELECT ".implode(", ", $values)." FROM ".$table." WHERE ";
-		
-		foreach ($params as $key => $values) {
-			$sql .= $key." = :".$key." AND ";
-		}
-		
-		$sql = substr($sql,0,-4);
-		
-		$queryPrepared = $this->pdo->prepare($sql);
-		$queryPrepared->execute( $params );
-		
-		return $queryPrepared->fetchAll(\PDO::FETCH_ASSOC);
-	}
+    public function delete()
+    {
+        $sql = "DELETE FROM " . $this->table . " WHERE idUser=" . $this->getId();
+        $queryPrepared = $this->pdo->query($sql);
+    }
 
+    public function select(array $values,array $params)
+    {
+        $calledClassExploded = explode("\\",get_called_class());
+        $table = strtolower(DBPREFIXE.end($calledClassExploded));
+
+        $sql = "SELECT ".implode(", ", $values)." FROM ".$table." WHERE ";
+
+        foreach ($params as $key => $values) {
+            $sql .= $key." = :".$key." AND ";
+        }
+
+        $sql = substr($sql,0,-4);
+
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute( $params );
+
+        return $queryPrepared->fetchAll(\PDO::FETCH_ASSOC);
+    }
 }
