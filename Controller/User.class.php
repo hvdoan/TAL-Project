@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Core\CleanWords;
@@ -8,60 +9,88 @@ use App\Core\Verificator;
 use App\Core\View;
 use App\Model\User as UserModel;
 
-class User {
-
+class User
+{
     public function login()
     {
-        $view = new View("Login", "back");
+        $user = new UserModel();
+  
+        if(!empty($_POST))
+        {
+            $userLoggedIn = $user->select(['idUser', 'password'], ['email' => $_POST['email']]);
 
-        $view->assign("pseudo", "Prof");
-        $view->assign("firstname", "Yves");
-        $view->assign("lastname", "Skrzypczyk");
+            if(!empty($userLoggedIn))
+            {
+                if(password_verify($_POST['password'], $userLoggedIn[0]['password']))
+                {
+                    $user = $user->setId($userLoggedIn[0]['idUser']);
+                    $user->generateToken();
+                    $_SESSION['token'] = $user->getToken();
+                    setcookie("token", $_SESSION['token'], time() + (60 * 15));
+                    $user->save();
+                    header("Location: /");
+                }
+              
+                echo 'Mot de passe incorrect';
+            }
+          
+            echo 'Identifiant incorrect';
+        }
+  
+        $view = new View("Login", "front");
+        $view->assign("user", $user);
     }
-
-
+	
     public function register()
     {
-
         $user = new UserModel();
 
         if( !empty($_POST))
         {
-            $result = Verificator::checkForm($user->getRegisterForm(), $_POST);
-            print_r($result);
-        }
 
-        $user = new UserModel();
-        $user->setIdRole(1);
-        $user->setFirstname("Hoai-Viet Luc");
-        $user->setLastname("DOAN");
-        $user->setEmail("hoaivietdoan@gmail.com");
-        $user->setPassword("Hoaiviet96");
-        $user->generateToken();
-        $user->setCreationDate(date("Y-m-d"));
-        $user->setVerifyAccount(false);
-        $user->setActiveAccount(true);
-        $user->save();
+            $result = Verificator::checkForm($user->getRegisterForm(), $_POST);
+
+            if (empty($result))
+            {
+                $user->setIdRole(1);
+                $user->setFirstname($_POST["firstname"]);
+                $user->setLastname($_POST["lastname"]);
+                $user->setEmail($_POST["email"]);
+                $user->setPassword($_POST["password"]);
+                $user->generateToken();
+                $user->creationDate();
+                $user->setVerifyAccount(false);
+                $user->setActiveAccount(true);
+
+                $user->save();
+
+                $content = "
+                    <h1>Cliquez sur le lien ci-dessous pour activer votre compte :</h1>
+                    <a href='localhost/activation?email=".$user->getEmail()."&token=".$user->getToken()."'>Activation de votre compte.</a>
+                ";
+
+                $email = new Mail();
+                $email->prepareContent("hoaivietdoan@gmail.com", "Vérification du compte", $content, "Test");
+                $email->send();
+              
+                echo "Inscription réussie, un email vient de vous être envoyés";
+            }
+            else
+            {
+                echo "ERREUR : <br>";
+                foreach ($result as $item)
+                    echo "-" . $item . "<br>";
+            }
+        }
 
         $view = new View("register");
         $view->assign("user", $user);
-
-        $content = "
-        	<h1>Cliquez sur le lien ci-dessous pour activer votre compte :</h1>
-        	<a href='localhost/activation?email=".$user->getEmail()."&token=".$user->getToken()."'>Activation de votre compte.</a>
-        ";
-
-		$email = new Mail();
-		$email->prepareContent("hoaivietdoan@gmail.com", "Vérification du compte", $content, "Test");
-    	$email->send();
     }
-
 
     public function logout()
     {
         echo "Se déco";
     }
-
 
     public function pwdforget()
     {
@@ -69,7 +98,7 @@ class User {
     }
 
     public function activatedaccount()
-	{
+	  {
         if (isset($_GET['email']) && isset($_GET['token']))
         {
             $view = new View("validateAccount");
@@ -87,10 +116,5 @@ class User {
                 $user->save();
             }
         }
-	}
+	  }
 }
-
-
-
-
-

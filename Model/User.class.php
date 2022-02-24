@@ -11,10 +11,10 @@ class User extends Sql
     protected $lastname = null;
     protected $email;
     protected $password;
-	protected $token = null;
-	protected $creationDate = null;
-	protected $verifyAccount = null;
-	protected $activeAccount = null;
+    protected $token = null;
+    protected $creationDate = null;
+    protected $verifyAccount = null;
+    protected $activeAccount = null;
 
     public function __construct()
     {
@@ -144,9 +144,8 @@ class User extends Sql
     /**
      * @param string
      */
-    public function setCreationDate(string $date): void
-    {
-        $this->creationDate = $date;
+    public function creationDate(): void {
+        $this->creationDate = date("Y-m-d");
     }
 
     /**
@@ -207,7 +206,7 @@ class User extends Sql
                     "class"=>"inputForm",
                     "id"=>"pwdForm",
                     "error"=>"Votre mot de passe doit faire au min 8 caractères avec majuscule, minuscules et des chiffres",
-                    ],
+                ],
                 "passwordConfirm"=>[
                     "type"=>"password",
                     "placeholder"=>"Confirmation ...",
@@ -266,6 +265,4 @@ class User extends Sql
             ]
         ];
     }
-
-
 }
