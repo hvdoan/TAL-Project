@@ -31,12 +31,24 @@ class User {
             print_r($result);
         }
 
+        $user = new UserModel();
+        $user->setIdRole(1);
+        $user->setFirstname("Hoai-Viet Luc");
+        $user->setLastname("DOAN");
+        $user->setEmail("hoaivietdoan@gmail.com");
+        $user->setPassword("Hoaiviet96");
+        $user->generateToken();
+        $user->setCreationDate(date("Y-m-d"));
+        $user->setVerifyAccount(false);
+        $user->setActiveAccount(true);
+        $user->save();
+
         $view = new View("register");
         $view->assign("user", $user);
 
         $content = "
         	<h1>Cliquez sur le lien ci-dessous pour activer votre compte :</h1>
-        	<a href='localhost/activation?token=test'>Activation de votre compte.</a>
+        	<a href='localhost/activation?email=".$user->getEmail()."&token=".$user->getToken()."'>Activation de votre compte.</a>
         ";
 
 		$email = new Mail();
@@ -58,7 +70,23 @@ class User {
 
     public function activatedaccount()
 	{
-		$view = new View("validateAccount");
+        if (isset($_GET['email']) && isset($_GET['token']))
+        {
+            $view = new View("validateAccount");
+
+            $user = new UserModel();
+            $userParams = $user->select(['id', 'idRole'],
+                                        ['email' => $_GET['email']]);
+
+            $user = $user->setId(intval($userParams[0]['id'], 10));
+            $user->setIdRole($userParams[0]['idRole']);
+
+            if ($user->getToken() == $_GET['token'])
+            {
+                $user->setVerifyAccount(true);
+                $user->save();
+            }
+        }
 	}
 }
 

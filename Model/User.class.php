@@ -118,11 +118,67 @@ class User extends Sql
     }
 
     /**
+     * @param string
+     */
+    public function setToken(string $token): void
+    {
+        $this->token = $token;
+    }
+
+    /**
      * length : 255
      */
     public function generateToken(): void
     {
         $this->token = substr(bin2hex(random_bytes(128)), 0, 255);
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreationDate(): string
+    {
+        return $this->creationDate;
+    }
+
+    /**
+     * @param string
+     */
+    public function setCreationDate(string $date): void
+    {
+        $this->creationDate = $date;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getVerifyAccount(): bool
+    {
+        return $this->verifyAccount;
+    }
+
+    /**
+     * @param bool
+     */
+    public function setVerifyAccount(bool $flag): void
+    {
+        $this->verifyAccount = (int)$flag;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getActiveAccount(): bool
+    {
+        return $this->activeAccount;
+    }
+
+    /**
+     * @param bool
+     */
+    public function setActiveAccount(bool $flag): void
+    {
+        $this->activeAccount = (int)$flag;
     }
 
     public function getRegisterForm(): array

@@ -55,4 +55,23 @@ abstract class Sql
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute( $columns );
     }
+
+    public function select(array $values,array $params)
+    {
+        $calledClassExploded = explode("\\",get_called_class());
+        $table = strtolower(DBPREFIXE.end($calledClassExploded));
+
+        $sql = "SELECT ".implode(", ", $values)." FROM ".$table." WHERE ";
+
+        foreach ($params as $key => $values) {
+            $sql .= $key." = :".$key." AND ";
+        }
+
+        $sql = substr($sql,0,-4);
+
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute( $params );
+
+        return $queryPrepared->fetchAll(\PDO::FETCH_ASSOC);
+    }
 }
