@@ -1,0 +1,44 @@
+.ctn
+{
+    min-width: 800px;
+    margin: 0 20px 20px 20px;
+    padding: 10px;
+    background: $white;
+    border-radius: 10px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+
+    &-search
+    {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+
+        & > .searchBar
+        {
+            width: 30%;
+            height: 20px;
+            border: solid 1px #000;
+            border-radius: 5px;
+            font-size: rem(12);
+            color: $grey;
+            font-weight: bold;
+
+            &:focus
+            {
+                outline: none;
+            }
+        }
+    }
+
+    & > h1
+    {
+        font-family: $jaldi;
+        color: $black;
+        font-weight: bold;
+    }
+}
