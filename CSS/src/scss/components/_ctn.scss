@@ -7,6 +7,13 @@
     border-radius: 10px;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 
+    & > h1
+    {
+        font-family: $jaldi;
+        color: $black;
+        font-weight: bold;
+    }
+
     &-search
     {
         display: flex;
@@ -35,10 +42,67 @@
         }
     }
 
-    & > h1
+    &-hover
     {
-        font-family: $jaldi;
-        color: $black;
-        font-weight: bold;
+        position: absolute;
+        top: 500px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+
+        & ~ section:nth-child(4)
+        {
+            margin-top: 300px;
+        }
+    }
+
+    &-article
+    {
+        display: flex;
+        flex-direction: row;
+        padding: 0 20px;
+        margin-bottom: 50px;
+        color: $white;
+
+        & > img{
+            padding: 0 10px;
+            max-width: 400px;
+            height: auto;
+        }
+
+        & > p
+        {
+            font-family: $jaldi;
+            padding: 0 10px;
+        }
+
+        &-hover
+        {
+            width: 30%;
+            max-height: 250px;
+            overflow: hidden;
+            padding: 15px;
+            border-radius: 0 70px 0 0;
+            background: $deep-ocean;
+
+            & > h1
+            {
+                text-align: center;
+            }
+
+            & > .content
+            {
+                color: $white;
+                font-family: $jaldi;
+
+                & > img
+                {
+                    float: left;
+                    margin-right: 10px;
+                    width: 100px;
+                    height: auto;
+                }
+            }
+        }
     }
 }

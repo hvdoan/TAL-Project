@@ -41,8 +41,7 @@ abstract class Sql
         $columns = array_diff_key($columns, get_class_vars(get_class()));
 
         if($this->getId() == null){
-            $sql = "INSERT INTO ".$this->table." (".implode(",",array_keys($columns)).") 
-            VALUES ( :".implode(",:",array_keys($columns)).")";
+            $sql = "INSERT INTO ".$this->table." (".implode(",",array_keys($columns)).") VALUES ( :".implode(",:",array_keys($columns)).")";
         }else{
             $update = [];
             foreach ($columns as $column=>$value)

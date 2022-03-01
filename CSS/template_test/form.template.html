@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="../dist/main.css">
         <script src="https://kit.fontawesome.com/62e5467ba7.js" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	    <script src="../dist/main.js"></script>
     </head>
 
     <body>
@@ -50,7 +51,7 @@
             }
         </style>
 
-        <form class="form" action="index.html" method="post">
+        <form class="form" action="homePage.Template.html" method="post">
             <h1>TAL Project | Inscription</h1>
 
             <div class="field">
@@ -84,35 +85,5 @@
 
             <input class="submit" type="submit" value="S'inscrire">
         </form>
-
-        <script type="text/javascript">
-            $(document).on("click", ".show-password", function ()
-            {
-                $("#password").attr("type", "text");
-                $(this).addClass("hide");
-                $(".hide-password").removeClass("hide");
-            });
-
-            $(document).on("click", ".show-confirmPassword", function ()
-            {
-                $("#confirmPassword").attr("type", "text");
-                $(this).addClass("hide");
-                $(".hide-confirmPassword").removeClass("hide");
-            });
-
-            $(document).on("click", ".hide-password", function ()
-            {
-                $("#password").attr("type", "password");
-                $(this).addClass("hide");
-                $(".show-password").removeClass("hide");
-            });
-
-            $(document).on("click", ".hide-confirmPassword", function ()
-            {
-                $("#confirmPassword").attr("type", "password");
-                $(this).addClass("hide");
-                $(".show-confirmPassword").removeClass("hide");
-            });
-        </script>
     </body>
 </html>
