@@ -1,10 +1,9 @@
 <?php
 
-define("DBUSER", "root");
-define("DBPWD", "password");
+define("DBUSER", "root2");
+define("DBPWD", "password2");
 define("DBHOST", "database");
-define("DBNAME", "mvcdocker2");
+define("DBNAME", "TAL_Project_BDD");
 define("DBPORT", "3306");
 define("DBDRIVER", "mysql");
-define("DBPREFIXE", "esgi_");
-
+define("DBPREFIXE", "TALBDD_");

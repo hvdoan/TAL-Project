@@ -6,16 +6,18 @@ use App\Core\Sql;
 class User extends Sql
 {
     protected $id = null;
+    protected $idRole = null;
     protected $firstname = null;
     protected $lastname = null;
     protected $email;
     protected $password;
-    protected $status = 0;
     protected $token = null;
+    protected $creationDate = null;
+    protected $verifyAccount = null;
+    protected $activeAccount = null;
 
     public function __construct()
     {
-
         parent::__construct();
     }
 
@@ -27,7 +29,21 @@ class User extends Sql
         return $this->id;
     }
 
+	/**
+	 * @return null|int
+	 */
+	public function getIdRole(): ?int
+	{
+		return $this->idRole;
+	}
 
+	/**
+	 * @param null|int
+	 */
+	public function setIdRole(?int $idRole): void
+	{
+		$this->idRole = $idRole;
+	}
 
     /**
      * @return null|string
@@ -38,7 +54,7 @@ class User extends Sql
     }
 
     /**
-     * @param string $firstname
+     * @param null|string
      */
     public function setFirstname(?string $firstname): void
     {
@@ -94,27 +110,19 @@ class User extends Sql
     }
 
     /**
-     * @return int
-     */
-    public function getStatus(): int
-    {
-        return $this->status;
-    }
-
-    /**
-     * @param int $status
-     */
-    public function setStatus(int $status): void
-    {
-        $this->status = $status;
-    }
-
-    /**
      * @return null|string
      */
     public function getToken(): ?string
     {
         return $this->token;
+    }
+
+    /**
+     * @param string
+     */
+    public function setToken(string $token): void
+    {
+        $this->token = $token;
     }
 
     /**
@@ -125,6 +133,52 @@ class User extends Sql
         $this->token = substr(bin2hex(random_bytes(128)), 0, 255);
     }
 
+    /**
+     * @return string
+     */
+    public function getCreationDate(): string
+    {
+        return $this->creationDate;
+    }
+
+    /**
+     * @param string
+     */
+    public function creationDate(): void {
+        $this->creationDate = date("Y-m-d");
+    }
+
+    /**
+     * @return bool
+     */
+    public function getVerifyAccount(): bool
+    {
+        return $this->verifyAccount;
+    }
+
+    /**
+     * @param bool
+     */
+    public function setVerifyAccount(bool $flag): void
+    {
+        $this->verifyAccount = (int)$flag;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getActiveAccount(): bool
+    {
+        return $this->activeAccount;
+    }
+
+    /**
+     * @param bool
+     */
+    public function setActiveAccount(bool $flag): void
+    {
+        $this->activeAccount = (int)$flag;
+    }
 
     public function getRegisterForm(): array
     {
@@ -152,7 +206,7 @@ class User extends Sql
                     "class"=>"inputForm",
                     "id"=>"pwdForm",
                     "error"=>"Votre mot de passe doit faire au min 8 caractères avec majuscule, minuscules et des chiffres",
-                    ],
+                ],
                 "passwordConfirm"=>[
                     "type"=>"password",
                     "placeholder"=>"Confirmation ...",
@@ -211,6 +265,4 @@ class User extends Sql
             ]
         ];
     }
-
-
 }
