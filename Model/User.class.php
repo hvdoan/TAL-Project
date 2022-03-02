@@ -5,7 +5,7 @@ use App\Core\Sql;
 
 class User extends Sql
 {
-    protected $id = null;
+    protected $idUser = null;
     protected $idRole = null;
     protected $firstname = null;
     protected $lastname = null;
@@ -26,7 +26,7 @@ class User extends Sql
      */
     public function getId(): ?int
     {
-        return $this->id;
+        return $this->idUser;
     }
 
 	/**

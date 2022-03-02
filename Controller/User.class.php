@@ -70,7 +70,7 @@ class User
                 ";
 
                 $email = new Mail();
-                $email->prepareContent("hoaivietdoan@gmail.com", "Vérification du compte", $content, "Test");
+                $email->prepareContent($user->getEmail(), "Vérification du compte", $content, "Test");
                 $email->send();
               
                 echo "Inscription réussie, un email vient de vous être envoyés";
