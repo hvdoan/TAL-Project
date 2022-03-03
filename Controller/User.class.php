@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Core\CleanWords;
 use App\Core\Mail;
+use App\Core\Notification;
 use App\Core\Sql;
 use App\Core\Verificator;
 use App\Core\View;
@@ -13,6 +14,12 @@ class User
 {
     public function login()
     {
+        if(isset($_SESSION['flash'])) {
+            foreach ($_SESSION['flash'] as $type => $message) {
+                echo "<div class='alert alert-$type'>".$message."</div>";
+            }
+            unset($_SESSION['flash']);
+        }
         $user = new UserModel();
   
         if(!empty($_POST))
@@ -31,16 +38,16 @@ class User
                         $user->save();
                         header("Location: /dashboard");
                     } else {
-                        echo 'Compte non vérifié';
+                         Notification::CreateNotification("error", 'Compte non vérifié');
                     }
                 } else {
-                    echo 'Mot de passe incorrect';
+                     Notification::CreateNotification("error", 'Mot de passe incorrect');
                 }
             } else {
-                echo 'Identifiant incorrect';
+                 Notification::CreateNotification("error", 'Identifiant incorrect');
             }
         }
-  
+
         $view = new View("Login", "front");
         $view->assign("user", $user);
     }
@@ -77,14 +84,17 @@ class User
                 $email->prepareContent($user->getEmail(), "Vérification du compte", $content, "Test");
                 $email->send();
 
-                echo ('Inscription réussie, un email vient de vous être envoyés');
+                Notification::CreateNotification("success", "Inscription réussie, un email vient de vous etre envoyés");
+                //$_SESSION['flash']['success'] = 'Inscription réussie, un email vient de vous etre envoyés';
                 header('Location: /login');
+                exit();
             }
             else
             {
-                echo "ERREUR : <br>";
+                $msg = "ERREUR : <br><br>";
                 foreach ($result as $item)
-                    echo "-" . $item . "<br>";
+                    $msg .= "-" . $item . "<br>";
+                Notification::CreateNotification("error", $msg);
             }
         }
 
