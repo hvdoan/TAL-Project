@@ -57,7 +57,6 @@ class Mail
 		try
 		{
 			$this->email->send();
-			echo "mail send !";
 		}
 		catch(Exception $e)
 		{
