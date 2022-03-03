@@ -17,13 +17,13 @@ class User
   
         if(!empty($_POST))
         {
-            $userLoggedIn = $user->select(['idUser', 'password'], ['email' => $_POST['email']]);
+            $userLoggedIn = $user->select(['id', 'password'], ['email' => $_POST['email']]);
 
             if(!empty($userLoggedIn))
             {
                 if(password_verify($_POST['password'], $userLoggedIn[0]['password']))
                 {
-                    $user = $user->setId($userLoggedIn[0]['idUser']);
+                    $user = $user->setId($userLoggedIn[0]['id']);
                     $user->generateToken();
                     $_SESSION['token'] = $user->getToken();
                     setcookie("token", $_SESSION['token'], time() + (60 * 15));
@@ -70,7 +70,7 @@ class User
                 ";
 
                 $email = new Mail();
-                $email->prepareContent("hoaivietdoan@gmail.com", "Vérification du compte", $content, "Test");
+                $email->prepareContent($user->getEmail(), "Vérification du compte", $content, "Test");
                 $email->send();
               
                 echo "Inscription réussie, un email vient de vous être envoyés";

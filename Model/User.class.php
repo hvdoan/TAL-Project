@@ -244,7 +244,10 @@ class User extends Sql
             "config"=>[
                 "method"=>"POST",
                 "action"=>"",
-                "submit"=>"Se connecter"
+                "submit"=>"Se connecter",
+                "classForm"=>"form",
+                "classSubmit"=>"submit",
+                "title"=>"Connexion",
             ],
             'inputs'=>[
                 "email"=>[
