@@ -24,23 +24,27 @@ class User
   
         if(!empty($_POST))
         {
-            $userLoggedIn = $user->select(['id', 'password'], ['email' => $_POST['email']]);
+            $userLoggedIn = $user->select(['id', 'password', 'verifyAccount'], ['email' => $_POST['email']]);
 
             if(!empty($userLoggedIn))
             {
                 if(password_verify($_POST['password'], $userLoggedIn[0]['password']))
                 {
-                    $user = $user->setId($userLoggedIn[0]['id']);
-                    $user->generateToken();
-                    $_SESSION['token'] = $user->getToken();
-                    setcookie("token", $_SESSION['token'], time() + (60 * 15));
-                    $user->save();
-                    header("Location: /dashboard");
+                    if($userLoggedIn[0]['verifyAccount']) {
+                        $user = $user->setId($userLoggedIn[0]['id']);
+                        $user->generateToken();
+                        $_SESSION['token'] = $user->getToken();
+                        setcookie("token", $_SESSION['token'], time() + (60 * 15));
+                        $user->save();
+                        header("Location: /dashboard");
+                    } else {
+                         Notification::CreateNotification("error", 'Compte non vérifié');
+                    }
                 } else {
-                    Notification::CreateNotification("error", 'Mot de passe incorrect');
+                     Notification::CreateNotification("error", 'Mot de passe incorrect');
                 }
             } else {
-                Notification::CreateNotification("error", 'Identifiant incorrect');
+                 Notification::CreateNotification("error", 'Identifiant incorrect');
             }
         }
 
@@ -100,7 +104,7 @@ class User
 
     public function logout()
     {
-        echo "Se déco";
+        unset($_SESSION['token']);
         header('Location: /login');
     }
 
