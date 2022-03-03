@@ -1,6 +1,6 @@
 <form method="<?= $data["config"]["method"]??"POST" ?>"  action="<?= $data["config"]["action"]??"" ?>">
 
-    <?php foreach ($data["inputs"] as $name=>$input) :?>
+	<?php foreach ($data["inputs"] as $name=>$input) :?>
 
     <input
             type="<?= $input["type"]??"text" ?>"
