@@ -5,7 +5,7 @@ use App\Core\Sql;
 
 class User extends Sql
 {
-    protected $idUser = null;
+    protected $id = null;
     protected $idRole = null;
     protected $firstname = null;
     protected $lastname = null;
@@ -26,7 +26,7 @@ class User extends Sql
      */
     public function getId(): ?int
     {
-        return $this->idUser;
+        return $this->id;
     }
 
 	/**
@@ -244,7 +244,10 @@ class User extends Sql
             "config"=>[
                 "method"=>"POST",
                 "action"=>"",
-                "submit"=>"Se connecter"
+                "submit"=>"Se connecter",
+                "classForm"=>"form",
+                "classSubmit"=>"submit",
+                "title"=>"Connexion",
             ],
             'inputs'=>[
                 "email"=>[
