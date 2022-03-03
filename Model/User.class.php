@@ -186,11 +186,15 @@ class User extends Sql
             "config"=>[
                 "method"=>"POST",
                 "action"=>"",
-                "submit"=>"S'inscrire"
+                "submit"=>"S'inscrire",
+                "classForm"=>"form",
+                "classSubmit"=>"submit",
+                "title"=>"Inscription",
             ],
             'inputs'=>[
                 "email"=>[
                     "type"=>"email",
+                    "label"=>"Email",
                     "placeholder"=>"Votre email ...",
                     "required"=>true,
                     "class"=>"inputForm",
@@ -201,6 +205,7 @@ class User extends Sql
                 ],
                 "password"=>[
                     "type"=>"password",
+                    "label"=>"Mot de passe",
                     "placeholder"=>"Votre mot de passe ...",
                     "required"=>true,
                     "class"=>"inputForm",
@@ -209,6 +214,7 @@ class User extends Sql
                 ],
                 "passwordConfirm"=>[
                     "type"=>"password",
+                    "label"=>"Confirmer Mot de passe",
                     "placeholder"=>"Confirmation ...",
                     "required"=>true,
                     "class"=>"inputForm",
@@ -218,6 +224,7 @@ class User extends Sql
                 ],
                 "firstname"=>[
                     "type"=>"text",
+                    "label"=>"Prénom",
                     "placeholder"=>"Votre prénom ...",
                     "class"=>"inputForm",
                     "id"=>"firstnameForm",
@@ -227,6 +234,7 @@ class User extends Sql
                 ],
                 "lastname"=>[
                     "type"=>"text",
+                    "label"=>"Nom",
                     "placeholder"=>"Votre nom ...",
                     "class"=>"inputForm",
                     "id"=>"lastnameForm",
@@ -252,6 +260,7 @@ class User extends Sql
             'inputs'=>[
                 "email"=>[
                     "type"=>"email",
+                    "label"=>"Email",
                     "placeholder"=>"Votre email ...",
                     "required"=>true,
                     "class"=>"inputForm",
@@ -260,6 +269,7 @@ class User extends Sql
                 ],
                 "password"=>[
                     "type"=>"password",
+                    "label"=>"Mot de passe",
                     "placeholder"=>"Votre mot de passe ...",
                     "required"=>true,
                     "class"=>"inputForm",

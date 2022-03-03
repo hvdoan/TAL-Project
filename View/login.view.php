@@ -7,8 +7,7 @@
 
     .form {
         height: 60vh;
-        margin: 0 auto;
-        margin-top: 50vh;
+        margin: 50vh auto 0;
         transform: translateY(-50%);
     }
 

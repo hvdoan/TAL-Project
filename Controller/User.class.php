@@ -28,7 +28,7 @@ class User
                     $_SESSION['token'] = $user->getToken();
                     setcookie("token", $_SESSION['token'], time() + (60 * 15));
                     $user->save();
-                    header("Location: /");
+                    header("Location: /dashboard");
                 }
               
                 echo 'Mot de passe incorrect';
@@ -72,8 +72,9 @@ class User
                 $email = new Mail();
                 $email->prepareContent($user->getEmail(), "Vérification du compte", $content, "Test");
                 $email->send();
-              
-                echo "Inscription réussie, un email vient de vous être envoyés";
+
+                echo ('Inscription réussie, un email vient de vous être envoyés');
+                header('Location: /login');
             }
             else
             {

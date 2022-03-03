@@ -3,7 +3,7 @@
     <?php foreach ($data["inputs"] as $name=>$input) :?>
 
     <div class="field">
-        <label><?= $name ?></label>
+        <label><?= $input["label"]??"" ?></label>
         <input
                 type="<?= $input["type"]??"text" ?>"
                 name="<?= $name?>"
