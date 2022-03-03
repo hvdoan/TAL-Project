@@ -37,11 +37,9 @@ class User
                     $user->save();
                     header("Location: /dashboard");
                 } else {
-                    //echo "Mot de passe incorrect";
                     Notification::CreateNotification("error", 'Mot de passe incorrect');
                 }
             } else {
-                //echo "Identifiant incorrect";
                 Notification::CreateNotification("error", 'Identifiant incorrect');
             }
         }
@@ -85,6 +83,7 @@ class User
                 Notification::CreateNotification("success", "Inscription réussie, un email vient de vous etre envoyés");
                 //$_SESSION['flash']['success'] = 'Inscription réussie, un email vient de vous etre envoyés';
                 header('Location: /login');
+                exit();
             }
             else
             {
