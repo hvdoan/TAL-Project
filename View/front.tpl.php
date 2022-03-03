@@ -11,6 +11,8 @@
 </head>
 <body>
 
+    <?php \App\Core\Notification::displayNotifications(); ?>
+
     <?php include "View/".$this->view.".view.php"; ?>
 
 </body>

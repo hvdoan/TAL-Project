@@ -36,12 +36,14 @@ class User
                     setcookie("token", $_SESSION['token'], time() + (60 * 15));
                     $user->save();
                     header("Location: /dashboard");
+                } else {
+                    //echo "Mot de passe incorrect";
+                    Notification::CreateNotification("error", 'Mot de passe incorrect');
                 }
-                echo "Mot de passe incorrect";
-                //Notification::CreateNotification("error", 'Mot de passe incorrect');
+            } else {
+                //echo "Identifiant incorrect";
+                Notification::CreateNotification("error", 'Identifiant incorrect');
             }
-            echo "Identifiant incorrect";
-            //Notification::CreateNotification("error", 'Identifiant incorrect');
         }
 
         $view = new View("Login", "front");
@@ -80,16 +82,16 @@ class User
                 $email->prepareContent($user->getEmail(), "Vérification du compte", $content, "Test");
                 $email->send();
 
-                //Notification::CreateNotification("success", "Inscription réussie, un email vient de vous etre envoyés");
-                $_SESSION['flash']['success'] = 'Inscription réussie, un email vient de vous etre envoyés';
+                Notification::CreateNotification("success", "Inscription réussie, un email vient de vous etre envoyés");
+                //$_SESSION['flash']['success'] = 'Inscription réussie, un email vient de vous etre envoyés';
                 header('Location: /login');
             }
             else
             {
-                echo "ERREUR : <br><br>";
+                $msg = "ERREUR : <br><br>";
                 foreach ($result as $item)
-                    echo "-" . $item . "<br>";
-                //Notification::CreateNotification("error", $msg);
+                    $msg .= "-" . $item . "<br>";
+                Notification::CreateNotification("error", $msg);
             }
         }
 
@@ -100,6 +102,7 @@ class User
     public function logout()
     {
         echo "Se déco";
+        header('Location: /login');
     }
 
     public function pwdforget()
