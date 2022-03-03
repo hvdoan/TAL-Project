@@ -32,3 +32,9 @@
   security:
     - admin
     - user
+
+/roleManagement:
+  controller: admin
+  action: managerole
+  security:
+    - admin

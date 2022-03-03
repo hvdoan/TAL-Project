@@ -1,3 +1,4 @@
+
 <form class="<?= $data["config"]["classForm"]??"" ?>" method="<?= $data["config"]["method"]??"POST" ?>"  action="<?= $data["config"]["action"]??"" ?>">
     <h1><?= $data["config"]["title"]??"" ?></h1>
     <?php foreach ($data["inputs"] as $name=>$input) :?>
