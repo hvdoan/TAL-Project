@@ -17,24 +17,28 @@ class User
   
         if(!empty($_POST))
         {
-            $userLoggedIn = $user->select(['id', 'password'], ['email' => $_POST['email']]);
+            $userLoggedIn = $user->select(['id', 'password', 'verifyAccount'], ['email' => $_POST['email']]);
 
             if(!empty($userLoggedIn))
             {
                 if(password_verify($_POST['password'], $userLoggedIn[0]['password']))
                 {
-                    $user = $user->setId($userLoggedIn[0]['id']);
-                    $user->generateToken();
-                    $_SESSION['token'] = $user->getToken();
-                    setcookie("token", $_SESSION['token'], time() + (60 * 15));
-                    $user->save();
-                    header("Location: /dashboard");
+                    if($userLoggedIn[0]['verifyAccount']) {
+                        $user = $user->setId($userLoggedIn[0]['id']);
+                        $user->generateToken();
+                        $_SESSION['token'] = $user->getToken();
+                        setcookie("token", $_SESSION['token'], time() + (60 * 15));
+                        $user->save();
+                        header("Location: /dashboard");
+                    } else {
+                        echo 'Compte non vérifié';
+                    }
+                } else {
+                    echo 'Mot de passe incorrect';
                 }
-              
-                echo 'Mot de passe incorrect';
+            } else {
+                echo 'Identifiant incorrect';
             }
-          
-            echo 'Identifiant incorrect';
         }
   
         $view = new View("Login", "front");
@@ -90,7 +94,8 @@ class User
 
     public function logout()
     {
-        echo "Se déco";
+        unset($_SESSION['token']);
+        header('Location: /login');
     }
 
     public function pwdforget()

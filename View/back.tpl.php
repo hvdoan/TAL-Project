@@ -53,7 +53,7 @@
             </ul>
         </li>
 
-        <a class="btn opened bottom" href="#"><span>Déconnexion</span><i class="fa-solid fa-power-off"></i></a>
+        <a class="btn opened bottom" href="/logout"><span>Déconnexion</span><i class="fa-solid fa-power-off"></i></a>
     </ul>
 </nav>
 
