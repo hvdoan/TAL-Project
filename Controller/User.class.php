@@ -59,9 +59,10 @@ class User
         if( !empty($_POST))
         {
 
+            $AccountExist = $user->select(['id'], ['email' => $_POST['email']]);
             $result = Verificator::checkForm($user->getRegisterForm(), $_POST);
 
-            if (empty($result))
+            if (empty($result) && empty($AccountExist[0]))
             {
                 $user->setIdRole(1);
                 $user->setFirstname($_POST["firstname"]);
@@ -91,7 +92,9 @@ class User
             }
             else
             {
-                $msg = "ERREUR : <br><br>";
+                $msg = "";
+                if (!empty($AccountExist))
+                    $msg .= "- Email déjà existant";
                 foreach ($result as $item)
                     $msg .= "-" . $item . "<br>";
                 Notification::CreateNotification("error", $msg);
