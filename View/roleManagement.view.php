@@ -4,40 +4,56 @@
         text-align: left;
         padding: 8px 10px !important;
     }
+
+    #ctnRoleForm
+    {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1001;
+        background: rgba(0, 0, 0, .6);
+    }
+
+    #ctnRoleForm > form
+    {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 </style>
 
-<h1>Role</h1>
+<section class="ctn">
+    <h1>Role</h1>
 
-<div class="ctn ctn-search">
-	<input class="searchBar" type="text" placeholder="Recherche">
-	<button class="btn btn-delete" type="button" name="button">Supprimer</button>
-</div>
+    <div class="ctn ctn-search">
+        <input class="searchBar" type="text" placeholder="Recherche">
+        <button id="add" class="btn btn-add" onclick="openForm()" type="button" name="button">Nouveau</button>
+        <button id="delete" class="btn btn-delete" onclick="deleteRole()" type="button" name="button">Supprimer</button>
+    </div>
 
-<table id="roleList">
-    <thead>
+    <table id="roleTable">
+        <thead>
         <tr>
             <th><input type="checkbox"></th>
             <th>Role</th>
             <th>Description</th>
-            <th> </th>
+            <th></th>
         </tr>
-    </thead>
+        </thead>
 
-    <tbody>
-			<?php foreach ($this->data["roleList"] as $role) :?>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td><?= $role["name"] ?></td>
-                    <td><?= $role["description"] ?></td>
-                    <td><button>Editer</button></td>
-                </tr>
-			<?php endforeach;?>
-    </tbody>
-</table>
+        <tbody id="roleList">
+        </tbody>
+    </table>
+</section>
 
+<div id="ctnRoleForm"></div>
+
+<script src="../CSS/dist/crudRole.js"></script>
 <script>
     $(document).ready( function ()
     {
-        $('#roleList').DataTable();
+        $('#roleTable').DataTable();
     } );
 </script>
