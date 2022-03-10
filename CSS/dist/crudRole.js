@@ -56,10 +56,45 @@ function insertRole()
         }
     };
 
-    console.log(actionList)
-
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     const body = `requestType=${requestType}&roleName=${roleName}&roleDescription=${roleDescription}&actionList=${actionList}`;
+
+    request.send(body);
+}
+
+/**************************************************
+ * AJAX : UPDATE ROLE
+ ***************************************************/
+function updateRole()
+{
+    const requestType       = "update";
+    const roleId            = $('#input-id').val();
+    const roleName          = $('#input-name').val();
+    const roleDescription   = $('#input-description').val();
+    let actionList          = [];
+    let permissionList      = $(".input-permission");
+
+    for (let i = 0; i < permissionList.length; i++)
+    {
+        if (permissionList[i].checked)
+            actionList.push(permissionList[i].name);
+    }
+
+    const request = new XMLHttpRequest();
+    request.open('POST', '/roleManagement');
+
+    request.onreadystatechange = function()
+    {
+        if(request.readyState === 4)
+        {
+            console.log("AJAX : request insert completed");
+            displayRole();
+            closeForm();
+        }
+    };
+
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    const body = `requestType=${requestType}&roleId=${roleId}&roleName=${roleName}&roleDescription=${roleDescription}&actionList=${actionList}`;
 
     request.send(body);
 }

@@ -21,6 +21,7 @@ class Admin
 
 	public function managerole()
 	{
+        /* Format HTML structure for display role */
 		$role = new Role();
 
 		if(isset($_POST["requestType"]) ? ($_POST["requestType"] == "display") : false)
@@ -31,19 +32,21 @@ class Admin
 			foreach ($roleList as $role)
 			{
 				$htmlContent .= "<tr>";
-					if($role["name"] == "Utilisateur" || $role["name"] == "Administrateur")
-						$htmlContent .= "<td></td>";
-					else
-						$htmlContent .= "<td><input class='idRole' type='checkbox' name='" . $role["id"] . "'></td>";
 
-					$htmlContent .= "<td id='" . $role["id"] . "'>" . $role["name"] . "</td>";
-					$htmlContent .= "<td>" . $role["description"] . "</td>";
+                if($role["name"] == "Utilisateur" || $role["name"] == "Administrateur")
+                    $htmlContent .= "<td></td>";
+                else
+                    $htmlContent .= "<td><input class='idRole' type='checkbox' name='" . $role["id"] . "'></td>";
 
-					if($role["name"] == "Utilisateur" || $role["name"] == "Administrateur")
-						$htmlContent .= "<td></td>";
-					else
-						$htmlContent .= "<td><button onclick='openForm(\"" . $role["id"] . "\")'>Editer</button></td>";
-				$htmlContent .= "</tr>";
+                $htmlContent .= "<td id='" . $role["id"] . "'>" . $role["name"] . "</td>";
+                $htmlContent .= "<td>" . $role["description"] . "</td>";
+
+                if($role["name"] == "Utilisateur" || $role["name"] == "Administrateur")
+                    $htmlContent .= "<td></td>";
+                else
+                    $htmlContent .= "<td><button onclick='openForm(\"" . $role["id"] . "\")'>Editer</button></td>";
+
+                $htmlContent .= "</tr>";
 			}
 
 			echo $htmlContent;
@@ -54,11 +57,13 @@ class Admin
 				isset($_POST["roleDescription"]) ? ($_POST["roleDescription"] != "") : false &&
 				isset($_POST["actionList"]))
 			{
+                /* Creation of the role */
 				$role->setName($_POST["roleName"]);
 				$role->setDescription($_POST["roleDescription"]);
 				$role->save();
 				$role = $role->setId($role->getLastInsertId());
 
+                /* Creation of permissions related to the role */
 				$actionList = explode(",", $_POST["actionList"]);
 
 				for($i = 0; $i < count($actionList); $i++)
@@ -70,8 +75,44 @@ class Admin
 				}
 			}
 		}
+        else if(isset($_POST["requestType"]) ? ($_POST["requestType"] == "update") : false)
+        {
+            if(isset($_POST["roleId"]) ? ($_POST["roleId"] != "") : false &&
+                isset($_POST["roleName"]) ? ($_POST["roleName"] != "") : false &&
+                isset($_POST["roleDescription"]) ? ($_POST["roleDescription"] != "") : false &&
+                isset($_POST["actionList"]))
+            {
+                /* Update of the role information */
+                $role = $role->setId(intval($_POST["roleId"]));
+                $role->setName($_POST["roleName"]);
+                $role->setDescription($_POST["roleDescription"]);
+                $role->save();
+
+                /* Removal of role-related permissions */
+                $permission = new Permission();
+                $permissionList = $permission->select(["id"], ["idRole" => $role->getId()]);
+
+                for($j = 0; $j < count($permissionList); $j++)
+                {
+                    $permission = $permission->setId($permissionList[$j]["id"]);
+                    $permission->delete();
+                }
+
+                /* Recreate updated permissions related to the role */
+                $actionList = explode(",", $_POST["actionList"]);
+
+                for($i = 0; $i < count($actionList); $i++)
+                {
+                    $permission = new Permission();
+                    $permission->setIdRole($role->getId());
+                    $permission->setIdAction(intval($actionList[$i]));
+                    $permission->save();
+                }
+            }
+        }
 		else if(isset($_POST["requestType"]) ? ($_POST["requestType"] == "delete") : false)
 		{
+            /* Processing of role deletion */
 			$roleIdList = explode(",", $_POST["roleIdList"]);
 
 			for($i = 0; $i < count($roleIdList); $i++)
@@ -79,12 +120,14 @@ class Admin
 				$permission		= new Permission();
 				$permissionList = $permission->select(["id"], ["idRole" => $roleIdList[$i]]);
 
+                /* Removal of role-related permissions */
 				for($j = 0; $j < count($permissionList); $j++)
 				{
 					$permission = $permission->setId($permissionList[$j]["id"]);
 					$permission->delete();
 				}
 
+                /* Deletion of the role */
 				$role = $role->setId($roleIdList[$i]);
 				$role->delete();
 			}
@@ -143,7 +186,7 @@ class Admin
 						$isFind = true;
 				}
 
-				if ($isFind)
+				if($isFind)
 				{
 					$htmlContent .= "<label>Autoriser</label>";
 					$htmlContent .= "<input class='input-permission' type='radio' name='" . $actionList[$i]["id"] . "' value='1' checked>";
@@ -163,7 +206,10 @@ class Admin
 			$htmlContent .= "<input class='btn' onclick='closeForm()' type='button' value='Annuler'>";
 
 			if($role->getId() != null)
-				$htmlContent .= "<input class='btn' onclick='updateRole()' type='button' value='Modifier'>";
+            {
+                $htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $role->getId() . "'>";
+                $htmlContent .= "<input class='btn' onclick='updateRole()' type='button' value='Modifier'>";
+            }
 			else
 				$htmlContent .= "<input class='btn' onclick='insertRole()' type='button' value='Créer'>";
 			$htmlContent .= "</form>";
