@@ -69,4 +69,9 @@ abstract class Sql
 
 		return $queryPrepared->fetchAll(\PDO::FETCH_ASSOC);
 	}
+
+	public function getLastInsertId()
+	{
+		return $this->pdoInstance->getPDO()->lastInsertId();
+	}
 }

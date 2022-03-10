@@ -12,7 +12,7 @@ class PDO
 		//Se connecter à la bdd
 		//il faudra mettre en place le singleton
 		try{
-			$this->pdo = new \PDO( DBDRIVER.":host=".DBHOST.";port=".DBPORT.";dbname=".DBNAME
+			$this->pdo = new \PDO( DBDRIVER.":host=".DBHOST.";port=".DBPORT.";dbname=".DBNAME.";charset=".DBCHARSET
 				,DBUSER, DBPWD , [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_WARNING]);
 		}catch (\Exception $e){
 			die("Erreur SQL : ".$e->getMessage());
