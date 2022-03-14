@@ -32,3 +32,10 @@
   security:
     - admin
     - user
+
+/usermanagement:
+  controller: admin
+  action: usermanagement
+  security:
+    - admin
+    - user
