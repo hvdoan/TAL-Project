@@ -19,10 +19,18 @@ class Admin
 	}
 	
 	public function usermanagement(){
-//		$user = new User();
-//		$usersList = $user->select();
+		$usersList = [];
+		$user = new User();
+		$usersIdList = $user->select(['id', 'idRole'], []);
+		
+		for($i = 0; $i < count($usersIdList); $i++){
+			$user = new User();
+			$user = $user->setId($usersIdList[$i]['id']);
+			$user->setIdRole($usersIdList[$i]['idRole']);
+			$usersList[] = $user;
+		}
 		
 		$view = new View("userManagement", "back");
-//		$view->assign("usersList", $usersList);
+		$view->assign("usersList", $usersList);
 	}
 }

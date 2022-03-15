@@ -36,6 +36,10 @@ class View{
 		include "View/Partial/" . $partial . ".partial.php";
 	}
 	
+	/**
+	 * @param $key
+	 * @param $value
+	 */
 	public function assign($key, $value): void
 	{
 		$this->data[$key] = $value;
