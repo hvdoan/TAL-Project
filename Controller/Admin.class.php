@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Core\View;
 use App\Model\Action;
+use App\Model\Page;
 use App\Model\Permission;
 use App\Model\Role;
+use App\Model\User as UserModel;
 
 class Admin
 {
@@ -44,7 +46,7 @@ class Admin
                 if($role["name"] == "Utilisateur" || $role["name"] == "Administrateur")
                     $htmlContent .= "<td></td>";
                 else
-                    $htmlContent .= "<td><button onclick='openForm(\"" . $role["id"] . "\")'>Editer</button></td>";
+                    $htmlContent .= "<td><button class='btn' onclick='openForm(\"" . $role["id"] . "\")'>Editer</button></td>";
 
                 $htmlContent .= "</tr>";
 			}
@@ -221,4 +223,86 @@ class Admin
 			$view = new View("roleManagement", "back");
 		}
 	}
+
+    public function managepage()
+    {
+        /* Format HTML structure for display page */
+        $page = new Page();
+
+        if(isset($_POST["requestType"]) ? ($_POST["requestType"] == "display") : false)
+        {
+            $pageList		= $page->select(["id", "idUser", "uri", "description"], []);
+            $htmlContent	= "";
+
+            foreach ($pageList as $page)
+            {
+                $user = new UserModel();
+                $user = $user->setId(intval($page["idUser"]));
+
+                $htmlContent .= "<tr>";
+                $htmlContent .= "<td><input class='idRole' type='checkbox' name='" . $page["id"] . "'></td>";
+                $htmlContent .= "<td>" . $user->getLastname() . " " . $user->getFirstname() . "</td>";
+                $htmlContent .= "<td>" . $page["uri"] . "</td>";
+                $htmlContent .= "<td>" . $page["description"] . "</td>";
+                $htmlContent .= "<td>";
+                $htmlContent .= "<a class='btn' href='/pageCreation?page=" . $page["id"] . "'>Editer</a>";
+                $htmlContent .= "</td>";
+                $htmlContent .= "</tr>";
+            }
+
+            echo $htmlContent;
+        }
+        else if(!isset($_POST["requestType"]))
+        {
+            $view = new View("pageManagement", "back");
+        }
+    }
+
+    public function creationpage()
+    {
+        $isNew  = true;
+        $view   = new View("pageCreation", "back");
+        $page   = new Page();
+
+        if(isset($_GET["page"]))
+            $page = $page->setId(intval($_GET["page"]));
+
+        $view->assign("page", $page);
+
+    if(isset($_POST["requestType"]) ? ($_POST["requestType"] == "update") : false)
+    {
+        if(isset($_POST["roleId"]) ? ($_POST["roleId"] != "") : false &&
+        isset($_POST["roleName"]) ? ($_POST["roleName"] != "") : false &&
+        isset($_POST["roleDescription"]) ? ($_POST["roleDescription"] != "") : false &&
+            isset($_POST["actionList"]))
+        {
+            /* Update of the role information */
+            $role = $role->setId(intval($_POST["roleId"]));
+            $role->setName($_POST["roleName"]);
+            $role->setDescription($_POST["roleDescription"]);
+            $role->save();
+
+            /* Removal of role-related permissions */
+            $permission = new Permission();
+            $permissionList = $permission->select(["id"], ["idRole" => $role->getId()]);
+
+            for($j = 0; $j < count($permissionList); $j++)
+            {
+                $permission = $permission->setId($permissionList[$j]["id"]);
+                $permission->delete();
+            }
+
+            /* Recreate updated permissions related to the role */
+            $actionList = explode(",", $_POST["actionList"]);
+
+            for($i = 0; $i < count($actionList); $i++)
+            {
+                $permission = new Permission();
+                $permission->setIdRole($role->getId());
+                $permission->setIdAction(intval($actionList[$i]));
+                $permission->save();
+            }
+        }
+    }
+    }
 }

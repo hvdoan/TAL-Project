@@ -14,7 +14,7 @@ function displayRole()
         {
             if (request.responseText !== "")
             {
-                console.log("AJAX : request select completed");
+                console.log("AJAX : request display completed");
                 $("#roleList").html(request.responseText);
             }
         }
