@@ -38,3 +38,15 @@
   action: managerole
   security:
     - admin
+
+/pageManagement:
+  controller: admin
+  action: managepage
+  security:
+    - admin
+
+/pageCreation:
+  controller: admin
+  action: creationpage
+  security:
+    - admin
