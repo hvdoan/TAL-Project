@@ -21,19 +21,10 @@
 				<th>Utilisateurs</th>
 				<th>Emails</th>
 				<th>Rôles</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody id="userList">
-			
-<!--			--><?php ///*foreach($this->data["usersList"] as $user):*/?>
-<!--				<tr>-->
-<!--					<td><input type="checkbox" name="identifiant"></td>-->
-<!--					<td>--><?///*=$user->getId()*/?><!--</td>-->
-<!--					<td>--><?///*=$user->getFirstname() . " " . $user->getLastname()*/?><!--</td>-->
-<!--					<td>--><?///*=$user->getEmail()*/?><!--</td>-->
-<!--					<td>--><?///*=$user->getIdRole()*/?><!--</td>-->
-<!--				</tr>-->
-<!--			--><?//p-->hp endforeach;?>
 		</tbody>
 	</table>
 </section>

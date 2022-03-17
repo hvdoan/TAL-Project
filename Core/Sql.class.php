@@ -15,11 +15,13 @@ abstract class Sql
 		$calledClassExploded = explode("\\",get_called_class());
 		$this->table = DBPREFIXE.end($calledClassExploded);
 	}
-
+	
 	/**
-	 * @param int $id
+	 * @param int|null $id
+	 *
+	 * @return false|mixed|object
 	 */
-	public function setId(?int $id): object
+	public function setId(?int $id)
 	{
 		$sql = "SELECT * FROM ".$this->table." WHERE id = ".$id;
 		$query = $this->pdoInstance->getPDO()->query($sql);
@@ -63,7 +65,7 @@ abstract class Sql
 	 *
 	 * @return bool|array
 	 */
-	public function select(array $values,array $params): bool|array
+	public function select(array $values,array $params)
 	{
 		$calledClassExploded = explode("\\",get_called_class());
 		$table = strtolower(DBPREFIXE.end($calledClassExploded));
@@ -85,7 +87,7 @@ abstract class Sql
 	/**
 	 * @return bool|string
 	 */
-	public function getLastInsertId(): bool|string
+	public function getLastInsertId()
 	{
 		return $this->pdoInstance->getPDO()->lastInsertId();
 	}

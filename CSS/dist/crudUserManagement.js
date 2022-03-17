@@ -6,7 +6,7 @@ function displayUser()
 	const requestType = "display";
 	
 	const request = new XMLHttpRequest();
-	request.open('POST', '/userManagement');
+	request.open('POST', '/usermanagement');
 	
 	request.onreadystatechange = function()
 	{
@@ -14,15 +14,16 @@ function displayUser()
 		{
 			if (request.responseText !== "")
 			{
-				console.log("AJAX : request select completed");
+				console.log("AJAX : request completed");
 				$("#userList").html(request.responseText);
+				console.log(request.responseText);
 			}
 		}
 	};
 	
 	request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	const body = `requestType=${requestType}`;
-	
+	console.log("test");
 	request.send(body);
 }
 
