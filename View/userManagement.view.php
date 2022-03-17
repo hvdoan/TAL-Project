@@ -10,7 +10,7 @@
 	<h1>Utilisateurs</h1>
 	<div class="ctn ctn-search">
 		<button id="add" class="btn btn-add" onclick="openForm()" type="button" name="button">Nouveau</button>
-		<button id="delete" class="btn btn-delete" onclick="deleteRole()" type="button" name="button">Supprimer</button>
+		<button id="delete" class="btn btn-delete" onclick="deleteUser()" type="button" name="button">Supprimer</button>
 	</div>
 	
 	<table id="userManagementTable" class="stripe hover">

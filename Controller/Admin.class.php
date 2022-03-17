@@ -93,7 +93,7 @@ class Admin
 				$user->save();
 			}
 		}else if(isset($_POST["requestType"]) && $_POST["requestType"] == "delete"){
-			if(isset($_POST["userIdList"]) && $_POST["userIdList"] == ""){
+			if(isset($_POST["userIdList"]) && $_POST["userIdList"] != ""){
 				/* Delete users */
 				$userIdList = explode(",", $_POST["userIdList"]);
 				
