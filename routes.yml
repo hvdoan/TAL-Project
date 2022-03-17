@@ -31,7 +31,12 @@
   action: dashboard
   security:
     - admin
-    - user
+
+/usermanagement:
+  controller: admin
+  action: usermanagement
+  security:
+    - admin
 
 /roleManagement:
   controller: admin
