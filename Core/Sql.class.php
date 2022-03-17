@@ -6,7 +6,7 @@ abstract class Sql
 {
 	private $pdoInstance;
 	private $table;
-
+	
 	public function __construct()
 	{
 		$this->pdoInstance = PDO::getIntance();
@@ -25,7 +25,10 @@ abstract class Sql
 		$query = $this->pdoInstance->getPDO()->query($sql);
 		return $query->fetchObject(get_called_class());
 	}
-
+	
+	/**
+	 * @return void
+	 */
 	public function save()
 	{
 		$columns = get_object_vars($this);
@@ -44,14 +47,23 @@ abstract class Sql
 		$queryPrepared = $this->pdoInstance->getPDO()->prepare($sql);
 		$queryPrepared->execute( $columns );
 	}
-
+	
+	/**
+	 * @return void
+	 */
 	public function delete()
 	{
 		$sql = "DELETE FROM " . $this->table . " WHERE id=" . $this->getId();
 		$queryPrepared = $this->pdoInstance->getPDO()->query($sql);
 	}
-
-	public function select(array $values,array $params)
+	
+	/**
+	 * @param array $values
+	 * @param array $params
+	 *
+	 * @return bool|array
+	 */
+	public function select(array $values,array $params): bool|array
 	{
 		$calledClassExploded = explode("\\",get_called_class());
 		$table = strtolower(DBPREFIXE.end($calledClassExploded));
@@ -68,5 +80,13 @@ abstract class Sql
 		$queryPrepared->execute( $params );
 
 		return $queryPrepared->fetchAll(\PDO::FETCH_ASSOC);
+	}
+	
+	/**
+	 * @return bool|string
+	 */
+	public function getLastInsertId(): bool|string
+	{
+		return $this->pdoInstance->getPDO()->lastInsertId();
 	}
 }

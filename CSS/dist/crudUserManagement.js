@@ -1,12 +1,12 @@
 /**************************************************
  * AJAX : DISPLAY USER
  ***************************************************/
-function displayRole()
+function displayUser()
 {
 	const requestType = "display";
 	
 	const request = new XMLHttpRequest();
-	request.open('POST', '/roleManagement');
+	request.open('POST', '/userManagement');
 	
 	request.onreadystatechange = function()
 	{
@@ -15,7 +15,7 @@ function displayRole()
 			if (request.responseText !== "")
 			{
 				console.log("AJAX : request select completed");
-				$("#roleList").html(request.responseText);
+				$("#userList").html(request.responseText);
 			}
 		}
 	};
@@ -29,11 +29,11 @@ function displayRole()
 /**************************************************
  * AJAX : INSERT USER
  ***************************************************/
-function insertRole()
+function insertUser()
 {
 	const requestType       = "insert";
-	const roleName          = $('#input-name').val();
-	const roleDescription   = $('#input-description').val();
+	const userName          = $('#input-name').val();
+	const userDescription   = $('#input-description').val();
 	let actionList          = [];
 	let permissionList      = $(".input-permission");
 	
@@ -44,14 +44,14 @@ function insertRole()
 	}
 	
 	const request = new XMLHttpRequest();
-	request.open('POST', '/roleManagement');
+	request.open('POST', '/userManagement');
 	
 	request.onreadystatechange = function()
 	{
 		if(request.readyState === 4)
 		{
 			console.log("AJAX : request insert completed");
-			displayRole();
+			displayUser();
 			closeForm();
 		}
 	};
@@ -59,7 +59,7 @@ function insertRole()
 	console.log(actionList)
 	
 	request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	const body = `requestType=${requestType}&roleName=${roleName}&roleDescription=${roleDescription}&actionList=${actionList}`;
+	const body = `requestType=${requestType}&userName=${userName}&userDescription=${userDescription}&actionList=${actionList}`;
 	
 	request.send(body);
 }
@@ -67,40 +67,40 @@ function insertRole()
 /**************************************************
  * AJAX : DELETE USER
  ***************************************************/
-function deleteRole()
+function deleteUser()
 {
 	const requestType   = "delete";
-	let roleList        = $(".idRole");
-	let roleNameList    = [];
-	let roleIdList      = [];
+	let userList        = $(".idUser");
+	let userNameList    = [];
+	let userIdList      = [];
 	
-	for (let i = 0; i < roleList.length; i++)
+	for (let i = 0; i < userList.length; i++)
 	{
-		if (roleList[i].checked)
+		if (userList[i].checked)
 		{
-			roleIdList.push(roleList[i].name);
-			roleNameList.push($("#" + roleList[i].name).html());
+			userIdList.push(userList[i].name);
+			userNameList.push($("#" + userList[i].name).html());
 		}
 	}
 	
-	if(roleNameList.length > 0)
+	if(userNameList.length > 0)
 	{
-		if(confirm(("Etes-vous sûr de vouloir supprimer le(s) rôle(s) : " + roleNameList.join(", ") + " ?")))
+		if(confirm(("Etes-vous sûr de vouloir supprimer le(s) rôle(s) : " + userNameList.join(", ") + " ?")))
 		{
 			const request = new XMLHttpRequest();
-			request.open('POST', '/roleManagement');
+			request.open('POST', '/userManagement');
 			
 			request.onreadystatechange = function()
 			{
 				if(request.readyState === 4)
 				{
 					console.log("AJAX : request delete completed");
-					displayRole();
+					displayUser();
 				}
 			};
 			
 			request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-			const body = `requestType=${requestType}&roleIdList=${roleIdList}`;
+			const body = `requestType=${requestType}&userIdList=${userIdList}`;
 			
 			request.send(body);
 		}
@@ -119,7 +119,7 @@ function openForm(id = "")
 	const requestType = "openForm";
 	
 	const request = new XMLHttpRequest();
-	request.open('POST', '/roleManagement');
+	request.open('POST', '/userManagement');
 	
 	request.onreadystatechange = function()
 	{
@@ -128,15 +128,15 @@ function openForm(id = "")
 			if (request.responseText !== "")
 			{
 				console.log("AJAX : request open form completed");
-				$("#ctnRoleForm").html(request.responseText);
-				$("#ctnRoleForm").css("width", "100%");
-				$("#ctnRoleForm").css("height", "100%");
+				$("#ctnUserForm").html(request.responseText);
+				$("#ctnUserForm").css("width", "100%");
+				$("#ctnUserForm").css("height", "100%");
 			}
 		}
 	};
 	
 	request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	const body = `requestType=${requestType}&roleId=${id}`;
+	const body = `requestType=${requestType}&userId=${id}`;
 	
 	request.send(body);
 }
@@ -146,12 +146,12 @@ function openForm(id = "")
  ***************************************************/
 function closeForm()
 {
-	$("#ctnRoleForm").html("");
-	$("#ctnRoleForm").css("width", "0");
-	$("#ctnRoleForm").css("height", "0");
+	$("#ctnUserForm").html("");
+	$("#ctnUserForm").css("width", "0");
+	$("#ctnUserForm").css("height", "0");
 }
 
 /**************************************************
  * EVENT LISTENER
  ***************************************************/
-$("#roleList").ready(displayRole);
+$("#userList").ready(displayUser);

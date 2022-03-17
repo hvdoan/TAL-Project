@@ -23,19 +23,19 @@
 				<th>Rôles</th>
 			</tr>
 		</thead>
-		<tbody>
+		<tbody id="userList">
 			
-			<?php foreach($this->data["usersList"] as $user):?>
-				<tr>
-					<td><input type="checkbox" name="identifiant"></td>
-					<td><?=$user->getId()?></td>
-					<td><?=$user->getFirstname() . " " . $user->getLastname()?></td>
-					<td><?=$user->getEmail()?></td>
-					<td><?=$user->getIdRole()?></td>
-				</tr>
-			<?php endforeach;?>
+<!--			--><?php ///*foreach($this->data["usersList"] as $user):*/?>
+<!--				<tr>-->
+<!--					<td><input type="checkbox" name="identifiant"></td>-->
+<!--					<td>--><?///*=$user->getId()*/?><!--</td>-->
+<!--					<td>--><?///*=$user->getFirstname() . " " . $user->getLastname()*/?><!--</td>-->
+<!--					<td>--><?///*=$user->getEmail()*/?><!--</td>-->
+<!--					<td>--><?///*=$user->getIdRole()*/?><!--</td>-->
+<!--				</tr>-->
+<!--			--><?//p-->hp endforeach;?>
 		</tbody>
 	</table>
 </section>
 
-<div id="ctnRoleForm"></div>
+<div id="ctnUserForm"></div>
