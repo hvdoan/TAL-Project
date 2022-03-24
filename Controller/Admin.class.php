@@ -23,20 +23,8 @@ class Admin
 	
 	public function usermanagement()
 	{
-		$user = new User();
-//		$usersList = [];
-//		$usersIdList = $user->select(['id', 'idRole'], []);
-//
-//		for($i = 0 ; $i < count($usersIdList) ; $i++){
-//			$user = new User();
-//			$user = $user->setId($usersIdList[$i]['id']);
-//			$user->setIdRole($usersIdList[$i]['idRole']);
-//			$usersList[] = $user;
-//		}
-//
-//		$view = new View("userManagement", "back");
-//		$view->assign("usersList", $usersList);
-		
+		$user = new UserModel();
+		$role = new Role();
 		
 		/* Display users HTML Structure */
 		if(isset($_POST["requestType"]) && $_POST["requestType"] == "display"){
@@ -46,9 +34,15 @@ class Admin
 			foreach($usersList as $user){
 				$htmlContent .= "<tr>";
 					$htmlContent .= "<td><input class='idUser' type='checkbox' name='" . $user["id"] . "'></td>";
-					
-					$htmlContent .= "<td id='" . $user["id"] . "'>" . $user["firstname"] . strtoupper($user["lastname"]) . "</td>";
+					$htmlContent .= "<td>" . $user["id"] . "</td>";
+					$htmlContent .= "<td id='" . $user["id"] . "'>" . $user["firstname"] . " " . strtoupper($user["lastname"]) . "</td>";
 					$htmlContent .= "<td>" . $user["email"] . "</td>";
+					
+					$object = $role->setId(intval($user["idRole"]));
+					if($object != false){
+						$role = $object;
+					}
+					$htmlContent .= "<td>" . $role->getName() . "</td>";
 					
 					$htmlContent .= "<td><button class='btn' onclick='openForm(\"" . $user["id"] . "\")'>Editer</button></td>";
 				$htmlContent .= "</tr>";
@@ -80,13 +74,11 @@ class Admin
 //				}
 //			}
 		}else if(isset($_POST["requestType"]) && $_POST["requestType"] == "update"){
-			if((isset($_POST["userId"]) && $_POST["UserId"] != "")
-				&& (isset($_POST["userFirstname"]) && $_POST["userFirstname"] != "")
+			if((isset($_POST["userId"]) && $_POST["userId"] != "")
 				&& (isset($_POST["userLastname"]) && $_POST["userLastname"] != "")
+				&& (isset($_POST["userFirstname"]) && $_POST["userFirstname"] != "")
 				&& (isset($_POST["userEmail"]) && $_POST["userEmail"] != "")
-				&& (isset($_POST["userIdRole"]) && $_POST["userIdRole"] != "")
-				&& (isset($_POST["userPassword"]) && $_POST["userPassword"] != "")){
-				
+				&& (isset($_POST["userIdRole"]) && $_POST["userIdRole"] != "")){
 				/* Update of user information */
 				$object = $user->setId(intval($_POST["userId"]));
 				if($object != false){
@@ -95,11 +87,12 @@ class Admin
 				$user->setFirstname($_POST["userFirstname"]);
 				$user->setLastname($_POST["userLastname"]);
 				$user->setEmail($_POST["userEmail"]);
-				$user->setIdRole($_POST["userIdRole"]);
+				$user->setIdRole(intval($_POST["userIdRole"]));
 				$user->save();
+				var_dump($user);
 			}
 		}else if(isset($_POST["requestType"]) && $_POST["requestType"] == "delete"){
-			if(isset($_POST["userIdList"]) && $_POST["userIdList"] == ""){
+			if(isset($_POST["userIdList"]) && $_POST["userIdList"] != ""){
 				/* Delete users */
 				$userIdList = explode(",", $_POST["userIdList"]);
 				
@@ -113,18 +106,22 @@ class Admin
 				}
 			}
 		}else if(isset($_POST["requestType"]) && $_POST["requestType"] == "openForm"){
-			$role = new Role();
 			$roleList = $role->select(["id", "name"], []);
 			$htmlContent = "";
 			
 			if(isset($_POST["userId"]) && $_POST["userId"] != ""){
-				$user = $user->setId(intval($_POST["userId"]));
+				$getUserIdRole = $user->select(["idRole"], ["id" => $_POST["userId"]]);
+				$object = $user->setId(intval($_POST["userId"]));
+				if($object != false){
+					$user = $object;
+					$user->setIdRole($getUserIdRole[0]["idRole"]);
+				}
 			}
 			
 			$htmlContent .= "<form class='form'>";
 			
 			if($user->getId() != null){
-				$htmlContent .= "<h1>Modification de l\'utilisateur : n°" . $user->getId() . " " . $user->getFirstname() . " " . strtoupper($user->getLastname()) . "</h1>";
+				$htmlContent .= "<h1>Modification de l'utilisateur : n°" . $user->getId() . " " . $user->getFirstname() . " " . strtoupper($user->getLastname()) . "</h1>";
 				$htmlContent .= "<div class='field'>";
 					$htmlContent .= "<label>Nom</label>";
 					$htmlContent .= "<input id='input-lastname' type='text' name='lastname' value='" . $user->getLastname() . "'>";
@@ -134,10 +131,12 @@ class Admin
 					$htmlContent .= "<input id='input-email' type='text' name='email' value='" . $user->getEmail() . "'>";
 				$htmlContent .= "</div>";
 				$htmlContent .= "<div class='field'>";
-					$htmlContent .= "<label for='roles'>Rôles</label>";
-					$htmlContent .= "<select name='input-idRole' id='roles'>";
+					$htmlContent .= "<label for='input-idRole'>Rôles</label>";
+					$htmlContent .= "<select name='userIdRole' id='input-idRole'>";
 					foreach($roleList as $role){
-						$htmlContent .= "<option value='" . $role->getId() . "'>" . $role->getName() . "</option>";
+						$htmlContent .= "<option value='" . $role["id"] . "'";
+						$htmlContent .= ($role["id"] == $user->getIdRole())? "selected>" : ">";
+						$htmlContent .= $role["name"] . "</option>";
 					}
 					$htmlContent .= "</select>";
 				$htmlContent .= "</div>";
@@ -147,7 +146,7 @@ class Admin
 				$htmlContent .= "<input class='btn' onclick='updateUser()' type='button' value='Modifier'>";
 				
 			}else{
-				$htmlContent .= "<h1>Attention ! Vous n'avez pas sélectionner d'utilisateur</h1>";
+				$htmlContent .= "<h1>Attention ! Vous n'avez pas sélectionné d'utilisateur</h1>";
 			}
 			
 			$htmlContent .= "</form>";
@@ -165,7 +164,7 @@ class Admin
         /* Format HTML structure for display role */
 		$role = new Role();
 
-		if(isset($_POST["requestType"]) ? ($_POST["requestType"] == "display") : false)
+		if(isset($_POST["requestType"]) && $_POST["requestType"] == "display")
 		{
 			$roleList		= $role->select(["id", "name", "description"], []);
 			$htmlContent	= "";
@@ -189,15 +188,10 @@ class Admin
 
                 $htmlContent .= "</tr>";
 			}
-
+			
 			echo $htmlContent;
-		}
-		else if(isset($_POST["requestType"]) ? ($_POST["requestType"] == "insert") : false)
-		{
-			if(isset($_POST["roleName"]) ? ($_POST["roleName"] != "") : false &&
-				isset($_POST["roleDescription"]) ? ($_POST["roleDescription"] != "") : false &&
-				isset($_POST["actionList"]))
-			{
+		}else if(isset($_POST["requestType"]) && $_POST["requestType"] == "insert"){
+			if((isset($_POST["roleName"]) && $_POST["roleName"] != "") && (isset($_POST["roleDescription"]) && $_POST["roleDescription"] != "") && isset($_POST["actionList"])){
                 /* Creation of the role */
 				$role->setName($_POST["roleName"]);
 				$role->setDescription($_POST["roleDescription"]);
@@ -216,7 +210,7 @@ class Admin
 				}
 			}
 		}
-        else if(isset($_POST["requestType"]) ? ($_POST["requestType"] == "update") : false)
+        else if(isset($_POST["requestType"]) && $_POST["requestType"] == "update")
         {
             if(isset($_POST["roleId"]) ? ($_POST["roleId"] != "") : false &&
                 isset($_POST["roleName"]) ? ($_POST["roleName"] != "") : false &&
@@ -251,7 +245,7 @@ class Admin
                 }
             }
         }
-		else if(isset($_POST["requestType"]) ? ($_POST["requestType"] == "delete") : false)
+		else if(isset($_POST["requestType"]) && $_POST["requestType"] == "delete")
 		{
             /* Processing of role deletion */
 			$roleIdList = explode(",", $_POST["roleIdList"]);
@@ -273,7 +267,7 @@ class Admin
 				$role->delete();
 			}
 		}
-		else if(isset($_POST["requestType"]) ? ($_POST["requestType"] == "openForm") : false)
+		else if(isset($_POST["requestType"]) && $_POST["requestType"] == "openForm")
 		{
 			$action			= new Action();
 			$actionList		= $action->select(["id", "code", "description"], []);
@@ -368,7 +362,7 @@ class Admin
         /* Format HTML structure for display page */
         $page = new Page();
 
-        if(isset($_POST["requestType"]) ? ($_POST["requestType"] == "display") : false)
+        if(isset($_POST["requestType"]) && $_POST["requestType"] == "display")
         {
             $pageList		= $page->select(["id", "idUser", "uri", "description"], []);
             $htmlContent	= "";
@@ -408,7 +402,7 @@ class Admin
 
         $view->assign("page", $page);
 
-    if(isset($_POST["requestType"]) ? ($_POST["requestType"] == "update") : false)
+    if(isset($_POST["requestType"]) && $_POST["requestType"] == "update")
     {
         if(isset($_POST["roleId"]) ? ($_POST["roleId"] != "") : false &&
         isset($_POST["roleName"]) ? ($_POST["roleName"] != "") : false &&
