@@ -261,48 +261,33 @@ class Admin
     public function creationpage()
     {
         $isNew  = true;
-        $view   = new View("pageCreation", "back");
         $page   = new Page();
 
-        if(isset($_GET["page"]))
-            $page = $page->setId(intval($_GET["page"]));
-
-        $view->assign("page", $page);
-
-    if(isset($_POST["requestType"]) ? ($_POST["requestType"] == "update") : false)
-    {
-        if(isset($_POST["roleId"]) ? ($_POST["roleId"] != "") : false &&
-        isset($_POST["roleName"]) ? ($_POST["roleName"] != "") : false &&
-        isset($_POST["roleDescription"]) ? ($_POST["roleDescription"] != "") : false &&
-            isset($_POST["actionList"]))
+        if(isset($_POST["requestType"]) ? ($_POST["requestType"] == "update") : false)
         {
-            /* Update of the role information */
-            $role = $role->setId(intval($_POST["roleId"]));
-            $role->setName($_POST["roleName"]);
-            $role->setDescription($_POST["roleDescription"]);
-            $role->save();
-
-            /* Removal of role-related permissions */
-            $permission = new Permission();
-            $permissionList = $permission->select(["id"], ["idRole" => $role->getId()]);
-
-            for($j = 0; $j < count($permissionList); $j++)
+            if(isset($_POST["pageId"]) ? ($_POST["pageId"] != "") : false &&
+                isset($_POST["data"]) ? ($_POST["data"] != "") : false)
             {
-                $permission = $permission->setId($permissionList[$j]["id"]);
-                $permission->delete();
-            }
-
-            /* Recreate updated permissions related to the role */
-            $actionList = explode(",", $_POST["actionList"]);
-
-            for($i = 0; $i < count($actionList); $i++)
-            {
-                $permission = new Permission();
-                $permission->setIdRole($role->getId());
-                $permission->setIdAction(intval($actionList[$i]));
-                $permission->save();
+                /* Update of the page information */
+                $page = $page->setId(intval($_POST["pageId"]));
+                $page->setContent($_POST["data"]);
+                var_dump($page);
+                $page->save();
             }
         }
-    }
+        else if(!isset($_POST["requestType"]))
+        {
+            $view   = new View("pageCreation", "back");
+
+            if(isset($_GET["page"]))
+            {
+                $object = $page->setId(intval($_GET["page"]));
+
+                if ($object != false)
+                    $page = $object;
+            }
+
+            $view->assign("page", $page);
+        }
     }
 }

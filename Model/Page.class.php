@@ -9,8 +9,6 @@ class Page extends Sql
     protected $id			        = null;
     protected $idUser               = null;
     protected $uri	                = null;
-    protected $controller	        = null;
-    protected $action	            = null;
     protected $description	        = null;
     protected $content  	        = null;
     protected $dateModification     = null;
@@ -58,38 +56,6 @@ class Page extends Sql
     public function setUri(?string $uri): void
     {
         $this->uri = $uri;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getController(): ?string
-    {
-        return $this->controller;
-    }
-
-    /**
-     * @param null|string
-     */
-    public function setController(?string $controller): void
-    {
-        $this->controller = $controller;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getAction(): ?string
-    {
-        return $this->action;
-    }
-
-    /**
-     * @param null|string
-     */
-    public function setAction(?string $action): void
-    {
-        $this->action = $action;
     }
 
     /**

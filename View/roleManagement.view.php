@@ -36,24 +36,17 @@
     <table id="roleTable">
         <thead>
         <tr>
-            <th><input type="checkbox"></th>
+            <th><input type="checkbox" onclick="checkAll(this)"></th>
             <th>Role</th>
             <th>Description</th>
             <th></th>
         </tr>
         </thead>
 
-        <tbody id="roleList">
-        </tbody>
+        <tbody id="roleList"></tbody>
     </table>
 </section>
 
 <div id="ctnRoleForm"></div>
 
 <script src="../CSS/dist/crudRole.js"></script>
-<script>
-    $(document).ready( function ()
-    {
-        $('#roleTable').DataTable();
-    } );
-</script>

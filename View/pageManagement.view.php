@@ -17,7 +17,7 @@
     <table id="pageTable">
         <thead>
         <tr>
-            <th><input type="checkbox"></th>
+            <th></th>
             <th>Utilisateur</th>
             <th>URI</th>
             <th>Description</th>

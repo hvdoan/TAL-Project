@@ -29,7 +29,7 @@ function displayPage()
 /**************************************************
  * AJAX : UPDATE PAGE
  ***************************************************/
-function updateRole(idPage, data)
+function updateRole(pageId, data)
 {
     const requestType = "update";
 
@@ -41,11 +41,15 @@ function updateRole(idPage, data)
         if(request.readyState === 4)
         {
             console.log("AJAX : request update completed");
+            console.log(request.responseText);
         }
     };
 
+    console.log(pageId);
+    console.log(data);
+
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    const body = `requestType=${requestType}&idPage=${idPage}&data=${data}`;
+    const body = `requestType=${requestType}&pageId=${pageId}&data=${data}`;
 
     request.send(body);
 }
