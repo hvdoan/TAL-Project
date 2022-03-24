@@ -74,13 +74,11 @@ class Admin
 //				}
 //			}
 		}else if(isset($_POST["requestType"]) && $_POST["requestType"] == "update"){
-			if((isset($_POST["userId"]) && $_POST["UserId"] != "")
-				&& (isset($_POST["userFirstname"]) && $_POST["userFirstname"] != "")
+			if((isset($_POST["userId"]) && $_POST["userId"] != "")
 				&& (isset($_POST["userLastname"]) && $_POST["userLastname"] != "")
+				&& (isset($_POST["userFirstname"]) && $_POST["userFirstname"] != "")
 				&& (isset($_POST["userEmail"]) && $_POST["userEmail"] != "")
-				&& (isset($_POST["userIdRole"]) && $_POST["userIdRole"] != "")
-				&& (isset($_POST["userPassword"]) && $_POST["userPassword"] != "")){
-				
+				&& (isset($_POST["userIdRole"]) && $_POST["userIdRole"] != "")){
 				/* Update of user information */
 				$object = $user->setId(intval($_POST["userId"]));
 				if($object != false){
@@ -89,8 +87,9 @@ class Admin
 				$user->setFirstname($_POST["userFirstname"]);
 				$user->setLastname($_POST["userLastname"]);
 				$user->setEmail($_POST["userEmail"]);
-				$user->setIdRole($_POST["userIdRole"]);
+				$user->setIdRole(intval($_POST["userIdRole"]));
 				$user->save();
+				var_dump($user);
 			}
 		}else if(isset($_POST["requestType"]) && $_POST["requestType"] == "delete"){
 			if(isset($_POST["userIdList"]) && $_POST["userIdList"] != ""){
@@ -107,18 +106,22 @@ class Admin
 				}
 			}
 		}else if(isset($_POST["requestType"]) && $_POST["requestType"] == "openForm"){
-			$role = new Role();
 			$roleList = $role->select(["id", "name"], []);
 			$htmlContent = "";
 			
 			if(isset($_POST["userId"]) && $_POST["userId"] != ""){
-				$user = $user->setId(intval($_POST["userId"]));
+				$getUserIdRole = $user->select(["idRole"], ["id" => $_POST["userId"]]);
+				$object = $user->setId(intval($_POST["userId"]));
+				if($object != false){
+					$user = $object;
+					$user->setIdRole($getUserIdRole[0]["idRole"]);
+				}
 			}
 			
 			$htmlContent .= "<form class='form'>";
 			
 			if($user->getId() != null){
-				$htmlContent .= "<h1>Modification de l\'utilisateur : n°" . $user->getId() . " " . $user->getFirstname() . " " . strtoupper($user->getLastname()) . "</h1>";
+				$htmlContent .= "<h1>Modification de l'utilisateur : n°" . $user->getId() . " " . $user->getFirstname() . " " . strtoupper($user->getLastname()) . "</h1>";
 				$htmlContent .= "<div class='field'>";
 					$htmlContent .= "<label>Nom</label>";
 					$htmlContent .= "<input id='input-lastname' type='text' name='lastname' value='" . $user->getLastname() . "'>";
@@ -128,10 +131,12 @@ class Admin
 					$htmlContent .= "<input id='input-email' type='text' name='email' value='" . $user->getEmail() . "'>";
 				$htmlContent .= "</div>";
 				$htmlContent .= "<div class='field'>";
-					$htmlContent .= "<label for='roles'>Rôles</label>";
-					$htmlContent .= "<select name='input-idRole' id='roles'>";
+					$htmlContent .= "<label for='input-idRole'>Rôles</label>";
+					$htmlContent .= "<select name='userIdRole' id='input-idRole'>";
 					foreach($roleList as $role){
-						$htmlContent .= "<option value='" . $role->getId() . "'>" . $role->getName() . "</option>";
+						$htmlContent .= "<option value='" . $role["id"] . "'";
+						$htmlContent .= ($role["id"] == $user->getIdRole())? "selected>" : ">";
+						$htmlContent .= $role["name"] . "</option>";
 					}
 					$htmlContent .= "</select>";
 				$htmlContent .= "</div>";
@@ -141,7 +146,7 @@ class Admin
 				$htmlContent .= "<input class='btn' onclick='updateUser()' type='button' value='Modifier'>";
 				
 			}else{
-				$htmlContent .= "<h1>Attention ! Vous n'avez pas sélectionner d'utilisateur</h1>";
+				$htmlContent .= "<h1>Attention ! Vous n'avez pas sélectionné d'utilisateur</h1>";
 			}
 			
 			$htmlContent .= "</form>";

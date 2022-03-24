@@ -8,20 +8,51 @@ function displayUser()
 	const request = new XMLHttpRequest();
 	request.open('POST', '/usermanagement');
 	
-	request.onreadystatechange = function()
-	{
-		if(request.readyState === 4)
-		{
-			if (request.responseText !== "")
-			{
+	request.onreadystatechange = function(){
+		if(request.readyState === 4){
+			if (request.responseText !== ""){
 				console.log("AJAX : display request completed");
 				$("#userList").html(request.responseText);
+				
+				$(document).ready(function (){
+					$('#userManagementTable').DataTable();
+				});
 			}
 		}
 	};
 	
 	request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	const body = `requestType=${requestType}`;
+	request.send(body);
+}
+
+/**************************************************
+ * AJAX : UPDATE USER
+ ***************************************************/
+function updateUser()
+{
+	const requestType       = "update";
+	const userId            = $('#input-id').val();
+	const userLastName      = $('#input-lastname').val();
+	const userFirstname     = $('#input-firstname').val();
+	const userEmail         = $('#input-email').val();
+	const userIdRole        = $('#input-idRole').val();
+	
+	const request = new XMLHttpRequest();
+	request.open('POST', '/usermanagement');
+	
+	request.onreadystatechange = function(){
+		if(request.readyState === 4){
+			console.log("AJAX : Update request completed");
+			console.log(request.responseText);
+			displayUser();
+			closeForm();
+		}
+	};
+	
+	request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	const body = `requestType=${requestType}&userId=${userId}&userLastname=${userLastName}&userFirstname=${userFirstname}&userEmail=${userEmail}&userIdRole=${userIdRole}`;
+	
 	request.send(body);
 }
 
@@ -42,7 +73,7 @@ function deleteUser(){
 	}
 	
 	if(userNameList.length > 0){
-		if(confirm((`Etes-vous sûr de vouloir supprimer le(s) utilisateur(s) : ${userNameList.join(", ")} ?`))){
+		if(confirm((`Êtes-vous sûr de vouloir supprimer le(s) utilisateur(s) : ${userNameList.join(", ")} ?`))){
 			const request = new XMLHttpRequest();
 			request.open('POST', '/usermanagement');
 			

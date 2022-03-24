@@ -637,12 +637,6 @@ nav > ul > .bottom,
   font-family: "Jaldi", sans-serif;
 }
 
-.ctn th,
-.ctn td,
-.ctn div {
-  font-size: 1rem;
-}
-
 .ctn > h1 {
   font-family: "Jaldi", sans-serif;
   color: #000;
@@ -730,6 +724,22 @@ nav > ul > .bottom,
   height: auto;
 }
 
+#ctnUserForm {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+#ctnUserForm > form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .alert {
   padding: 10px 80px;
   border-radius: 5px;
@@ -754,6 +764,6 @@ nav > ul > .bottom,
 }
 
 .alert-warning {
-  background-color: yellow;
+  background-color: #e0c335;
 }
 
