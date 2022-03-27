@@ -19,7 +19,10 @@
 
 </style>
 
-<?php $this->includePartial("form", $user->getRegisterForm()) ?>
+<div class="form">
+    <h1>Inscription</h1>
+    <?php $this->includePartial("form", $user->getRegisterForm()) ?>
+</div>
 
 
 

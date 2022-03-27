@@ -95,7 +95,10 @@ class User
 
     public function pwdforget()
     {
-        echo "Mot de passe oublié";
+        $user = new UserModel();
+
+        $view = new View("pwdforget", "front");
+        $view->assign("user", $user);
     }
 
     public function activatedaccount()

@@ -187,9 +187,6 @@ class User extends Sql
                 "method"=>"POST",
                 "action"=>"",
                 "submit"=>"S'inscrire",
-                "classForm"=>"form",
-                "classSubmit"=>"submit",
-                "title"=>"Inscription",
             ],
             'inputs'=>[
                 "email"=>[
@@ -253,9 +250,6 @@ class User extends Sql
                 "method"=>"POST",
                 "action"=>"",
                 "submit"=>"Se connecter",
-                "classForm"=>"form",
-                "classSubmit"=>"submit",
-                "title"=>"Connexion",
             ],
             'inputs'=>[
                 "email"=>[
@@ -275,6 +269,29 @@ class User extends Sql
                     "class"=>"inputForm",
                     "id"=>"pwdForm"
                 ]
+            ]
+        ];
+    }
+
+
+    public function getPwdForget(): array
+    {
+        return [
+            "config"=>[
+                "method"=>"POST",
+                "action"=>"",
+                "submit"=>"Envoyer un Email",
+            ],
+            'inputs'=>[
+                "email"=>[
+                    "type"=>"email",
+                    "label"=>"Email",
+                    "placeholder"=>"Votre email ...",
+                    "required"=>true,
+                    "class"=>"inputForm",
+                    "id"=>"emailForm",
+                    "error"=>"Email incorrect"
+                ],
             ]
         ];
     }

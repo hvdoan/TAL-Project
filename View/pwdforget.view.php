@@ -6,7 +6,7 @@
     }
 
     .form {
-        height: 60vh;
+        height: 40vh;
         margin: 50vh auto 0;
         transform: translateY(-50%);
     }
@@ -50,9 +50,6 @@
 
 
 <div class="form">
-    <h1>Connexion</h1>
-    <?php $this->includePartial("form", $user->getLoginForm()) ?>
-    <a class="mdpForget" href="/forget">Mot de passe oublié</a>
+    <h1>Réinitialisation Mot de passe</h1>
+    <?php $this->includePartial("form", $user->getPwdForget()) ?>
 </div>
-        
-        
