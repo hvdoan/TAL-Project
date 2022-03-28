@@ -33,27 +33,20 @@
         <button id="delete" class="btn btn-delete" onclick="deleteRole()" type="button" name="button">Supprimer</button>
     </div>
 
-    <table id="roleTable">
+    <table id="roleTable" class="stripe hover cell-border">
         <thead>
         <tr>
-            <th><input type="checkbox"></th>
+            <th><input type="checkbox" onclick="checkAll(this)"></th>
             <th>Role</th>
             <th>Description</th>
             <th></th>
         </tr>
         </thead>
 
-        <tbody id="roleList">
-        </tbody>
+        <tbody id="roleList"></tbody>
     </table>
 </section>
 
 <div id="ctnRoleForm"></div>
 
 <script src="../CSS/dist/crudRole.js"></script>
-<script>
-    $(document).ready( function ()
-    {
-        $('#roleTable').DataTable();
-    } );
-</script>
