@@ -5,22 +5,38 @@
     }
 </style>
 
-<?php
-    if($this->data["page"]->getId())
-    {
-        echo "<pre>";
-        var_dump($this->data["page"]->getContent());
-        echo "</pre>";
-    }
-?>
+<section class="ctn">
+    <h1>Modification de page</h1>
+
+    <div>
+        <label>URL : http://localhost/</label>
+
+        <?php if($this->data["page"]->getId()) { ?>
+            <input id="input-uri" type="text" name="uri" value="<?=str_replace("/", "", $this->data["page"]->getUri())?>">
+        <?php } else { ?>
+            <input id="input-uri" type="text" name="uri">
+        <?php } ?>
+    </div>
+
+    <div>
+        <label>Description de la page</label>
+
+        <?php if($this->data["page"]->getId()) { ?>
+            <input id="input-description" type="text" name="description" value="<?=$this->data["page"]->getDescription()?>">
+        <?php } else { ?>
+            <input id="input-description" type="text" name="description">
+        <?php } ?>
+    </div>
+</section>
 
 <section class="ctn">
     <div id="editorjs"></div>
-    <?php
-        if($this->data["page"]->getId() )
-    ?>
-    <button id="save-button" class="btn" onclick="save('<?=$this->data["page"]->getId()?>')">Save</button>
-    <pre id="output"></pre>
+    <?php if($this->data["page"]->getId()) { ?>
+        <button id="save-button" class="btn" onclick="save('<?=$this->data["page"]->getId()?>')">Sauvegarder</button>
+        <pre id="output"></pre>
+    <?php } else { ?>
+        <button class="btn" onclick="save()">Créer</button>
+    <?php } ?>
 </section>
 
 <script src="../CSS/dist/crudPage.js"></script>
@@ -105,14 +121,16 @@
         data: data
     });
 
-    function save(pageId)
+    function save(pageId = "")
     {
         editor.save().then( savedData => {
             let data = JSON.stringify(savedData, null, 4);
             $('#output').html(data);
 
-            // if(pageId)
-            //     updateRole(pageId, data);
+            if(pageId !== "")
+                updatePage(pageId, data);
+            else
+                insertPage(data);
         })
     }
 </script>

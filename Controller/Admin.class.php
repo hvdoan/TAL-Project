@@ -226,6 +226,15 @@ class Admin
 
     public function managepage()
     {
+        define("PERMANENT_PAGE", [
+            "home",
+            "presentation",
+            "galerie",
+            "faq",
+            "forum",
+            "donation"
+        ]);
+
         /* Format HTML structure for display page */
         $page = new Page();
 
@@ -240,9 +249,14 @@ class Admin
                 $user = $user->setId(intval($page["idUser"]));
 
                 $htmlContent .= "<tr>";
-                $htmlContent .= "<td><input class='idRole' type='checkbox' name='" . $page["id"] . "'></td>";
+
+                if (in_array(str_replace("/", "", $page["uri"]), PERMANENT_PAGE))
+                    $htmlContent .= "<td></td>";
+                else
+                    $htmlContent .= "<td><input class='idPage' type='checkbox' name='" . $page["id"] . "'></td>";
+
                 $htmlContent .= "<td>" . $user->getLastname() . " " . $user->getFirstname() . "</td>";
-                $htmlContent .= "<td>" . $page["uri"] . "</td>";
+                $htmlContent .= "<td id='" . $page["id"] . "'>" . $page["uri"] . "</td>";
                 $htmlContent .= "<td>" . $page["description"] . "</td>";
                 $htmlContent .= "<td>";
                 $htmlContent .= "<a class='btn' href='/pageCreation?page=" . $page["id"] . "'>Editer</a>";
@@ -251,6 +265,23 @@ class Admin
             }
 
             echo $htmlContent;
+        }
+        else if(isset($_POST["requestType"]) ? ($_POST["requestType"] == "delete") : false)
+        {
+            /* Processing of page deletion */
+            $pageIdList = explode(",", $_POST["pageIdList"]);
+
+            for($i = 0; $i < count($pageIdList); $i++)
+            {
+                /* Deletion of the page */
+                $object = $page->setId($pageIdList[$i]);
+
+                if ($object != false)
+                {
+                    $page = $object;
+                    $page->delete();
+                }
+            }
         }
         else if(!isset($_POST["requestType"]))
         {
@@ -263,16 +294,50 @@ class Admin
         $isNew  = true;
         $page   = new Page();
 
+        if(isset($_POST["requestType"]) ? ($_POST["requestType"] == "insert") : false)
+        {
+            if(isset($_POST["data"]) ? ($_POST["data"] != "") : false &&
+                isset($_POST["pageUri"]) ? ($_POST["pageUri"] != "") : false &&
+                isset($_POST["pageDescription"]) ? ($_POST["pageDescription"] != "") : false)
+            {
+                $uri        = str_replace("/", "", $_POST["pageUri"]);
+                $uri        = "/" . $uri;
+                $pageList   = $page->select(["id"], ["uri" => $uri]);
+
+                if(count($pageList) <= 0)
+                {
+                    $page->setIdUser(1);            //===<> TEMPORAIRE
+                    $page->setUri($uri);
+                    $page->setDescription($_POST["pageDescription"]);
+                    $page->setContent($_POST["data"]);
+                    $page->setDateModification(date("Y-m-d H:i:s"));
+                    $page->save();
+                }
+            }
+        }
         if(isset($_POST["requestType"]) ? ($_POST["requestType"] == "update") : false)
         {
             if(isset($_POST["pageId"]) ? ($_POST["pageId"] != "") : false &&
-                isset($_POST["data"]) ? ($_POST["data"] != "") : false)
+                isset($_POST["data"]) ? ($_POST["data"] != "") : false &&
+                isset($_POST["pageUri"]) ? ($_POST["pageUri"] != "") : false &&
+                isset($_POST["pageDescription"]) ? ($_POST["pageDescription"] != "") : false)
             {
                 /* Update of the page information */
-                $page = $page->setId(intval($_POST["pageId"]));
-                $page->setContent($_POST["data"]);
-                var_dump($page);
-                $page->save();
+                $object = $page->setId(intval($_POST["pageId"]));
+
+                if ($object != false)
+                {
+                    $page = $object;
+                    $uri = str_replace("/", "", $_POST["pageUri"]);
+                    $uri = "/" . $uri;
+
+                    $page->setIdUser(1);            //===<> TEMPORAIRE
+                    $page->setUri($uri);
+                    $page->setDescription($_POST["pageDescription"]);
+                    $page->setContent($_POST["data"]);
+                    $page->setDateModification(date("Y-m-d H:i:s"));
+                    $page->save();
+                }
             }
         }
         else if(!isset($_POST["requestType"]))

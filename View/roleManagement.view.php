@@ -33,7 +33,7 @@
         <button id="delete" class="btn btn-delete" onclick="deleteRole()" type="button" name="button">Supprimer</button>
     </div>
 
-    <table id="roleTable">
+    <table id="roleTable" class="stripe hover cell-border">
         <thead>
         <tr>
             <th><input type="checkbox" onclick="checkAll(this)"></th>
