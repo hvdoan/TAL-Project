@@ -350,7 +350,7 @@ class Admin
 					$htmlContent .= "<label>Autoriser</label>";
 					$htmlContent .= "<input class='input-permission' type='radio' name='" . $actionList[$i]["id"] . "' value='1' checked>";
 					$htmlContent .= "<label>Refuser</label>";
-					$htmlContent .= "<input type='radio' name='" . $actionList[$i]["id"] . "' value='0'>";
+					$htmlContent .= "<input type='radio' name='" . $actionList[$i]["id"] .     < "' value='0'>";
 				}
 				else
 				{
@@ -383,8 +383,17 @@ class Admin
 
     public function managepage()
     {
-		if(!Verificator::checkLog())
-			header("Location: /login");
+  		  if(!Verificator::checkLog())
+	  		  header("Location: /login");
+
+        define("PERMANENT_PAGE", [
+            "home",
+            "presentation",
+            "galerie",
+            "faq",
+            "forum",
+            "donation"
+        ]);
 
         /* Format HTML structure for display page */
         $page = new Page();
@@ -400,9 +409,14 @@ class Admin
                 $user = $user->setId(intval($page["idUser"]));
 
                 $htmlContent .= "<tr>";
-                $htmlContent .= "<td><input class='idRole' type='checkbox' name='" . $page["id"] . "'></td>";
+
+                if (in_array(str_replace("/", "", $page["uri"]), PERMANENT_PAGE))
+                    $htmlContent .= "<td></td>";
+                else
+                    $htmlContent .= "<td><input class='idPage' type='checkbox' name='" . $page["id"] . "'></td>";
+
                 $htmlContent .= "<td>" . $user->getLastname() . " " . $user->getFirstname() . "</td>";
-                $htmlContent .= "<td>" . $page["uri"] . "</td>";
+                $htmlContent .= "<td id='" . $page["id"] . "'>" . $page["uri"] . "</td>";
                 $htmlContent .= "<td>" . $page["description"] . "</td>";
                 $htmlContent .= "<td>";
                 $htmlContent .= "<a class='btn' href='/pageCreation?page=" . $page["id"] . "'>Editer</a>";
@@ -411,6 +425,23 @@ class Admin
             }
 
             echo $htmlContent;
+        }
+        else if(isset($_POST["requestType"]) ? ($_POST["requestType"] == "delete") : false)
+        {
+            /* Processing of page deletion */
+            $pageIdList = explode(",", $_POST["pageIdList"]);
+
+            for($i = 0; $i < count($pageIdList); $i++)
+            {
+                /* Deletion of the page */
+                $object = $page->setId($pageIdList[$i]);
+
+                if ($object != false)
+                {
+                    $page = $object;
+                    $page->delete();
+                }
+            }
         }
         else if(!isset($_POST["requestType"]))
         {
@@ -427,48 +458,67 @@ class Admin
 			header("Location: /roleManagement");
 
         $isNew  = true;
-        $view   = new View("pageCreation", "back");
         $page   = new Page();
 
-        if(isset($_GET["page"]))
-            $page = $page->setId(intval($_GET["page"]));
+        if(isset($_POST["requestType"]) ? ($_POST["requestType"] == "insert") : false)
+        {
+            if(isset($_POST["data"]) ? ($_POST["data"] != "") : false &&
+                isset($_POST["pageUri"]) ? ($_POST["pageUri"] != "") : false &&
+                isset($_POST["pageDescription"]) ? ($_POST["pageDescription"] != "") : false)
+            {
+                $uri        = str_replace("/", "", $_POST["pageUri"]);
+                $uri        = "/" . $uri;
+                $pageList   = $page->select(["id"], ["uri" => $uri]);
 
-        $view->assign("page", $page);
+                if(count($pageList) <= 0)
+                {
+                    $page->setIdUser(1);            //===<> TEMPORAIRE
+                    $page->setUri($uri);
+                    $page->setDescription($_POST["pageDescription"]);
+                    $page->setContent($_POST["data"]);
+                    $page->setDateModification(date("Y-m-d H:i:s"));
+                    $page->save();
+                }
+            }
+        }
+        if(isset($_POST["requestType"]) ? ($_POST["requestType"] == "update") : false)
+        {
+            if(isset($_POST["pageId"]) ? ($_POST["pageId"] != "") : false &&
+                isset($_POST["data"]) ? ($_POST["data"] != "") : false &&
+                isset($_POST["pageUri"]) ? ($_POST["pageUri"] != "") : false &&
+                isset($_POST["pageDescription"]) ? ($_POST["pageDescription"] != "") : false)
+            {
+                /* Update of the page information */
+                $object = $page->setId(intval($_POST["pageId"]));
 
-		if(isset($_POST["requestType"]) && $_POST["requestType"] == "update")
-		{
-			if(isset($_POST["roleId"]) ? ($_POST["roleId"] != "") : false &&
-			isset($_POST["roleName"]) ? ($_POST["roleName"] != "") : false &&
-			isset($_POST["roleDescription"]) ? ($_POST["roleDescription"] != "") : false &&
-				isset($_POST["actionList"]))
-			{
-				/* Update of the role information */
-				$role = $role->setId(intval($_POST["roleId"]));
-				$role->setName($_POST["roleName"]);
-				$role->setDescription($_POST["roleDescription"]);
-				$role->save();
+                if ($object != false)
+                {
+                    $page = $object;
+                    $uri = str_replace("/", "", $_POST["pageUri"]);
+                    $uri = "/" . $uri;
 
-				/* Removal of role-related permissions */
-				$permission = new Permission();
-				$permissionList = $permission->select(["id"], ["idRole" => $role->getId()]);
+                    $page->setIdUser(1);            //===<> TEMPORAIRE
+                    $page->setUri($uri);
+                    $page->setDescription($_POST["pageDescription"]);
+                    $page->setContent($_POST["data"]);
+                    $page->setDateModification(date("Y-m-d H:i:s"));
+                    $page->save();
+                }
+            }
+        }
+        else if(!isset($_POST["requestType"]))
+        {
+            $view   = new View("pageCreation", "back");
 
-				for($j = 0; $j < count($permissionList); $j++)
-				{
-					$permission = $permission->setId($permissionList[$j]["id"]);
-					$permission->delete();
-				}
+            if(isset($_GET["page"]))
+            {
+                $object = $page->setId(intval($_GET["page"]));
 
-				/* Recreate updated permissions related to the role */
-				$actionList = explode(",", $_POST["actionList"]);
+                if ($object != false)
+                    $page = $object;
+            }
 
-				for($i = 0; $i < count($actionList); $i++)
-				{
-					$permission = new Permission();
-					$permission->setIdRole($role->getId());
-					$permission->setIdAction(intval($actionList[$i]));
-					$permission->save();
-				}
-			}
-		}
+            $view->assign("page", $page);
+        }
     }
 }

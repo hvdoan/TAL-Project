@@ -1,42 +1,5 @@
-<style>
-    h1
-    {
-        color: #0c0c0c !important;
-    }
-</style>
-
-<section class="ctn">
-    <h1>Modification de page</h1>
-
-    <div>
-        <label>URL : http://localhost/</label>
-
-        <?php if($this->data["page"]->getId()) { ?>
-            <input id="input-uri" type="text" name="uri" value="<?=str_replace("/", "", $this->data["page"]->getUri())?>">
-        <?php } else { ?>
-            <input id="input-uri" type="text" name="uri">
-        <?php } ?>
-    </div>
-
-    <div>
-        <label>Description de la page</label>
-
-        <?php if($this->data["page"]->getId()) { ?>
-            <input id="input-description" type="text" name="description" value="<?=$this->data["page"]->getDescription()?>">
-        <?php } else { ?>
-            <input id="input-description" type="text" name="description">
-        <?php } ?>
-    </div>
-</section>
-
 <section class="ctn">
     <div id="editorjs"></div>
-    <?php if($this->data["page"]->getId()) { ?>
-        <button id="save-button" class="btn" onclick="save('<?=$this->data["page"]->getId()?>')">Sauvegarder</button>
-        <pre id="output"></pre>
-    <?php } else { ?>
-        <button class="btn" onclick="save()">Créer</button>
-    <?php } ?>
 </section>
 
 <script src="../CSS/dist/crudPage.js"></script>
@@ -49,12 +12,15 @@
 <script type="text/javascript">
     let data;
 
-    <?php if(isset($this->data["page"])) { ?>
-        data = JSON.parse(<?=json_encode($this->data["page"]->getContent())?>);
+    <?php if(isset($this->data["data"])) { ?>
+        data = JSON.parse(<?=json_encode($this->data["data"])?>);
     <?php } ?>
+
+    console.log(data);
 
     let editor = new EditorJS({
         // autofocus: true,
+        readOnly: true,
         tools: {
             paragraph: {
                 class: Paragraph,
@@ -120,17 +86,4 @@
         defaultBlock: 'paragraph',
         data: data
     });
-
-    function save(pageId = "")
-    {
-        editor.save().then( savedData => {
-            let data = JSON.stringify(savedData, null, 4);
-            $('#output').html(data);
-
-            if(pageId !== "")
-                updatePage(pageId, data);
-            else
-                insertPage(data);
-        })
-    }
 </script>

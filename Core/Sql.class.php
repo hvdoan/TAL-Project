@@ -25,7 +25,8 @@ abstract class Sql
 	{
 		$sql = "SELECT * FROM ".$this->table." WHERE id = ".$id;
 		$query = $this->pdoInstance->getPDO()->query($sql);
-		return $query->fetchObject(get_called_class());
+
+        return $query->fetchObject(get_called_class());
 	}
 	
 	/**

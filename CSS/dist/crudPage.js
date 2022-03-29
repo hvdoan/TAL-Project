@@ -16,6 +16,11 @@ function displayPage()
             {
                 console.log("AJAX : request display completed");
                 $("#pageList").html(request.responseText);
+
+                $(document).ready( function ()
+                {
+                    $('#pageTable').DataTable();
+                } );
             }
         }
     };
@@ -27,11 +32,41 @@ function displayPage()
 }
 
 /**************************************************
+ * AJAX : INSERT ROLE
+ ***************************************************/
+function insertPage(data)
+{
+    const requestType       = "insert";
+    const pageUri           = $('#input-uri').val();
+    const pageDescription   = $('#input-description').val();
+
+    const request = new XMLHttpRequest();
+    request.open('POST', '/pageCreation');
+
+    request.onreadystatechange = function()
+    {
+        if(request.readyState === 4)
+        {
+            console.log("AJAX : request insert completed");
+            console.log(request.responseText);
+            window.location.href = "/pageManagement";
+        }
+    };
+
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    const body = `requestType=${requestType}&data=${data}&pageUri=${pageUri}&pageDescription=${pageDescription}`;
+
+    request.send(body);
+}
+
+/**************************************************
  * AJAX : UPDATE PAGE
  ***************************************************/
-function updateRole(idPage, data)
+function updatePage(pageId, data)
 {
-    const requestType = "update";
+    const requestType       = "update"
+    const pageUri           = $('#input-uri').val();
+    const pageDescription   = $('#input-description').val();
 
     const request = new XMLHttpRequest();
     request.open('POST', '/pageCreation');
@@ -41,13 +76,64 @@ function updateRole(idPage, data)
         if(request.readyState === 4)
         {
             console.log("AJAX : request update completed");
+            window.location.href = "/pageManagement";
         }
     };
 
+    console.log(pageId);
+    console.log(data);
+
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    const body = `requestType=${requestType}&idPage=${idPage}&data=${data}`;
+    const body = `requestType=${requestType}&pageId=${pageId}&data=${data}&pageUri=${pageUri}&pageDescription=${pageDescription}`;
 
     request.send(body);
+}
+
+/**************************************************
+ * AJAX : DELETE ROLE
+ ***************************************************/
+function deletePage()
+{
+    const requestType   = "delete";
+    let pageList        = $(".idPage");
+    let pageUriList    = [];
+    let pageIdList      = [];
+
+    for (let i = 0; i < pageList.length; i++)
+    {
+        if (pageList[i].checked)
+        {
+            pageIdList.push(pageList[i].name);
+            pageUriList.push($("#" + pageList[i].name).html());
+        }
+    }
+
+    if(pageUriList.length > 0)
+    {
+        if(confirm(("Etes-vous sûr de vouloir supprimer la ou les pages : " + pageUriList.join(", ") + " ?")))
+        {
+            const request = new XMLHttpRequest();
+            request.open('POST', '/pageManagement');
+
+            request.onreadystatechange = function()
+            {
+                if(request.readyState === 4)
+                {
+                    console.log("AJAX : request delete completed");
+                    displayPage();
+                }
+            };
+
+            request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            const body = `requestType=${requestType}&pageIdList=${pageIdList}`;
+
+            request.send(body);
+        }
+    }
+    else
+    {
+        alert("Sélectionnez au minimum une page à supprimer.");
+    }
 }
 
 /**************************************************

@@ -159,7 +159,7 @@ class User
     }
 
     public function activatedaccount()
-	{
+    {
         if (isset($_GET['email']) && isset($_GET['token']))
         {
             $view = new View("validateAccount");
@@ -176,5 +176,11 @@ class User
                 $user->save();
             }
         }
-	}
+    }
+
+    public function generic($data)
+    {
+        $view = new View("generic");
+        $view->assign("data", $data);
+    }
 }

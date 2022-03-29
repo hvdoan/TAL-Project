@@ -16,6 +16,13 @@ function displayRole()
             {
                 console.log("AJAX : request display completed");
                 $("#roleList").html(request.responseText);
+
+                $(document).ready( function ()
+                {
+                    $('#roleTable').DataTable({
+                        "ordering": false
+                    });
+                } );
             }
         }
     };
@@ -193,3 +200,8 @@ function closeForm()
  * EVENT LISTENER
  ***************************************************/
 $("#roleList").ready(displayRole);
+
+function checkAll(self)
+{
+    $(".idRole").prop("checked", $(self).prop("checked"));
+}

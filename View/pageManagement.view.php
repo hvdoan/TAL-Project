@@ -11,13 +11,14 @@
 
     <div class="ctn ctn-search">
         <input class="searchBar" type="text" placeholder="Recherche">
-        <button id="delete" class="btn btn-delete" onclick="deleteRole()" type="button" name="button">Supprimer</button>
+        <a class="btn btn-add" href="/pageCreation">Nouveau</a>
+        <button id="delete" class="btn btn-delete" onclick="deletePage()" type="button" name="button">Supprimer</button>
     </div>
 
-    <table id="pageTable">
+    <table id="pageTable" class="stripe hover cell-border">
         <thead>
         <tr>
-            <th><input type="checkbox"></th>
+            <th></th>
             <th>Utilisateur</th>
             <th>URI</th>
             <th>Description</th>
@@ -32,8 +33,4 @@
 
 <script src="../CSS/dist/crudPage.js"></script>
 <script>
-    $(document).ready( function ()
-    {
-        $('#pageTable').DataTable();
-    } );
 </script>
