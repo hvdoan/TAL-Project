@@ -152,6 +152,7 @@ function deleteRole()
 function openForm(id = "")
 {
     const requestType = "openForm";
+    let ctnRoleForm = $("#ctnRoleForm");
 
     const request = new XMLHttpRequest();
     request.open('POST', '/roleManagement');
@@ -163,9 +164,9 @@ function openForm(id = "")
             if (request.responseText !== "")
             {
                 console.log("AJAX : request open form completed");
-                $("#ctnRoleForm").html(request.responseText);
-                $("#ctnRoleForm").css("width", "100%");
-                $("#ctnRoleForm").css("height", "100%");
+                ctnRoleForm.html(request.responseText);
+                ctnRoleForm.css("width", "100%");
+                ctnRoleForm.css("height", "100%");
             }
         }
     };
@@ -181,9 +182,11 @@ function openForm(id = "")
  ***************************************************/
 function closeForm()
 {
-    $("#ctnRoleForm").html("");
-    $("#ctnRoleForm").css("width", "0");
-    $("#ctnRoleForm").css("height", "0");
+    let ctnRoleForm = $("#ctnRoleForm");
+
+    ctnRoleForm.html("");
+    ctnRoleForm.css("width", "0");
+    ctnRoleForm.css("height", "0");
 }
 
 /**************************************************

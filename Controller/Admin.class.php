@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Core\Verificator;
 use App\Core\View;
 use App\Model\Action;
 use App\Model\Page;
@@ -13,16 +14,31 @@ class Admin
 {
     public function dashboard()
     {
+    	if(!Verificator::checkLog())
+    		header("Location: /login");
+
+		if(!Verificator::checkPageAccess($_SESSION["permission"], PERM_ACCESS_ADMIN))
+			header("Location: /home");
+
         $view = new View("home", "back");
     }
 
 	public function configuration()
 	{
+		if(!Verificator::checkLog())
+			header("Location: /login");
+
 		echo "Ceci est un beau dashboard";
 	}
 	
 	public function usermanagement()
 	{
+		if(!Verificator::checkLog())
+			header("Location: /login");
+
+		if(!Verificator::checkPageAccess($_SESSION["permission"], PERM_MANAGE_USER))
+			header("Location: /dashboard");
+
 		$user = new UserModel();
 		$role = new Role();
 		
@@ -161,6 +177,12 @@ class Admin
 
 	public function managerole()
 	{
+		if(!Verificator::checkLog())
+			header("Location: /login");
+
+		if(!Verificator::checkPageAccess($_SESSION["permission"], PERM_MANAGE_ROLE))
+			header("Location: /dashboard");
+
         /* Format HTML structure for display role */
 		$role = new Role();
 
@@ -190,7 +212,9 @@ class Admin
 			}
 			
 			echo $htmlContent;
-		}else if(isset($_POST["requestType"]) && $_POST["requestType"] == "insert"){
+		}
+		else if(isset($_POST["requestType"]) && $_POST["requestType"] == "insert")
+		{
 			if((isset($_POST["roleName"]) && $_POST["roleName"] != "") && (isset($_POST["roleDescription"]) && $_POST["roleDescription"] != "") && isset($_POST["actionList"])){
                 /* Creation of the role */
 				$role->setName($_POST["roleName"]);
@@ -359,6 +383,9 @@ class Admin
 
     public function managepage()
     {
+		if(!Verificator::checkLog())
+			header("Location: /login");
+
         /* Format HTML structure for display page */
         $page = new Page();
 
@@ -393,6 +420,12 @@ class Admin
 
     public function creationpage()
     {
+		if(!Verificator::checkLog())
+			header("Location: /login");
+
+		if(!Verificator::checkPageAccess($_SESSION["permission"], PERM_MANAGE_PAGE))
+			header("Location: /roleManagement");
+
         $isNew  = true;
         $view   = new View("pageCreation", "back");
         $page   = new Page();
@@ -402,40 +435,40 @@ class Admin
 
         $view->assign("page", $page);
 
-    if(isset($_POST["requestType"]) && $_POST["requestType"] == "update")
-    {
-        if(isset($_POST["roleId"]) ? ($_POST["roleId"] != "") : false &&
-        isset($_POST["roleName"]) ? ($_POST["roleName"] != "") : false &&
-        isset($_POST["roleDescription"]) ? ($_POST["roleDescription"] != "") : false &&
-            isset($_POST["actionList"]))
-        {
-            /* Update of the role information */
-            $role = $role->setId(intval($_POST["roleId"]));
-            $role->setName($_POST["roleName"]);
-            $role->setDescription($_POST["roleDescription"]);
-            $role->save();
+		if(isset($_POST["requestType"]) && $_POST["requestType"] == "update")
+		{
+			if(isset($_POST["roleId"]) ? ($_POST["roleId"] != "") : false &&
+			isset($_POST["roleName"]) ? ($_POST["roleName"] != "") : false &&
+			isset($_POST["roleDescription"]) ? ($_POST["roleDescription"] != "") : false &&
+				isset($_POST["actionList"]))
+			{
+				/* Update of the role information */
+				$role = $role->setId(intval($_POST["roleId"]));
+				$role->setName($_POST["roleName"]);
+				$role->setDescription($_POST["roleDescription"]);
+				$role->save();
 
-            /* Removal of role-related permissions */
-            $permission = new Permission();
-            $permissionList = $permission->select(["id"], ["idRole" => $role->getId()]);
+				/* Removal of role-related permissions */
+				$permission = new Permission();
+				$permissionList = $permission->select(["id"], ["idRole" => $role->getId()]);
 
-            for($j = 0; $j < count($permissionList); $j++)
-            {
-                $permission = $permission->setId($permissionList[$j]["id"]);
-                $permission->delete();
-            }
+				for($j = 0; $j < count($permissionList); $j++)
+				{
+					$permission = $permission->setId($permissionList[$j]["id"]);
+					$permission->delete();
+				}
 
-            /* Recreate updated permissions related to the role */
-            $actionList = explode(",", $_POST["actionList"]);
+				/* Recreate updated permissions related to the role */
+				$actionList = explode(",", $_POST["actionList"]);
 
-            for($i = 0; $i < count($actionList); $i++)
-            {
-                $permission = new Permission();
-                $permission->setIdRole($role->getId());
-                $permission->setIdAction(intval($actionList[$i]));
-                $permission->save();
-            }
-        }
-    }
+				for($i = 0; $i < count($actionList); $i++)
+				{
+					$permission = new Permission();
+					$permission->setIdRole($role->getId());
+					$permission->setIdAction(intval($actionList[$i]));
+					$permission->save();
+				}
+			}
+		}
     }
 }

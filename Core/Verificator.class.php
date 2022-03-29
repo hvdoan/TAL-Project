@@ -5,7 +5,6 @@ namespace App\Core;
 
 class Verificator
 {
-
     public static function checkForm($config, $data): array
     {
         $result = [];
@@ -45,7 +44,6 @@ class Verificator
        return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
 
-
     public static function checkPassword($password): bool
     {
 
@@ -56,7 +54,23 @@ class Verificator
             ;
     }
 
+	public static function checkLog(): bool
+	{
+		$isLog = false;
 
+		if(isset($_SESSION["token"]) && isset($_COOKIE["token"]))
+		{
+			if($_SESSION["token"] == $_COOKIE["token"])
+			{
+				$isLog = true;
+			}
+		}
 
+		return $isLog;
+	}
 
+	public static function checkPageAccess($userAutorisations, $permissionNeeded)
+	{
+		return in_array($permissionNeeded, $userAutorisations);
+	}
 }
