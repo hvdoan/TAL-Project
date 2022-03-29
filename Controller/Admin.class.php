@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Core\Verificator;
 use App\Core\View;
 use App\Model\Action;
 use App\Model\Page;
@@ -13,16 +14,31 @@ class Admin
 {
     public function dashboard()
     {
+    	if(!Verificator::checkLog())
+    		header("Location: /login");
+
+		if(!Verificator::checkPageAccess($_SESSION["permission"], PERM_ACCESS_ADMIN))
+			header("Location: /home");
+
         $view = new View("home", "back");
     }
 
 	public function configuration()
 	{
+		if(!Verificator::checkLog())
+			header("Location: /login");
+
 		echo "Ceci est un beau dashboard";
 	}
 	
 	public function usermanagement()
 	{
+		if(!Verificator::checkLog())
+			header("Location: /login");
+
+		if(!Verificator::checkPageAccess($_SESSION["permission"], PERM_MANAGE_USER))
+			header("Location: /dashboard");
+
 		$user = new UserModel();
 		$role = new Role();
 		
@@ -161,6 +177,12 @@ class Admin
 
 	public function managerole()
 	{
+		if(!Verificator::checkLog())
+			header("Location: /login");
+
+		if(!Verificator::checkPageAccess($_SESSION["permission"], PERM_MANAGE_ROLE))
+			header("Location: /dashboard");
+
         /* Format HTML structure for display role */
 		$role = new Role();
 
@@ -190,7 +212,9 @@ class Admin
 			}
 			
 			echo $htmlContent;
-		}else if(isset($_POST["requestType"]) && $_POST["requestType"] == "insert"){
+		}
+		else if(isset($_POST["requestType"]) && $_POST["requestType"] == "insert")
+		{
 			if((isset($_POST["roleName"]) && $_POST["roleName"] != "") && (isset($_POST["roleDescription"]) && $_POST["roleDescription"] != "") && isset($_POST["actionList"])){
                 /* Creation of the role */
 				$role->setName($_POST["roleName"]);
@@ -326,7 +350,7 @@ class Admin
 					$htmlContent .= "<label>Autoriser</label>";
 					$htmlContent .= "<input class='input-permission' type='radio' name='" . $actionList[$i]["id"] . "' value='1' checked>";
 					$htmlContent .= "<label>Refuser</label>";
-					$htmlContent .= "<input type='radio' name='" . $actionList[$i]["id"] . "' value='0'>";
+					$htmlContent .= "<input type='radio' name='" . $actionList[$i]["id"] .     < "' value='0'>";
 				}
 				else
 				{
@@ -359,6 +383,9 @@ class Admin
 
     public function managepage()
     {
+  		  if(!Verificator::checkLog())
+	  		  header("Location: /login");
+
         define("PERMANENT_PAGE", [
             "home",
             "presentation",
@@ -424,6 +451,12 @@ class Admin
 
     public function creationpage()
     {
+		if(!Verificator::checkLog())
+			header("Location: /login");
+
+		if(!Verificator::checkPageAccess($_SESSION["permission"], PERM_MANAGE_PAGE))
+			header("Location: /roleManagement");
+
         $isNew  = true;
         $page   = new Page();
 
