@@ -54,7 +54,7 @@ class Verificator
             ;
     }
 
-	public static function checkLog(): bool
+	public static function checkConnection(): bool
 	{
 		$isLog = false;
 

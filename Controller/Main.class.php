@@ -8,7 +8,7 @@ class Main {
 
     public function home()
     {
-        echo "Page d'accueil";
+        header("Location: /home");
     }
 
 
@@ -17,6 +17,9 @@ class Main {
         $view = new View("contact");
     }
 
-
-
+    public function generic($data)
+    {
+        $view = new View("generic");
+        $view->assign("data", $data);
+    }
 }

@@ -32,25 +32,25 @@
   security:
     - admin
 
-/usermanagement:
+/user-management:
   controller: admin
   action: usermanagement
   security:
     - admin
 
-/roleManagement:
+/role-management:
   controller: admin
   action: managerole
   security:
     - admin
 
-/pageManagement:
+/page-management:
   controller: admin
   action: managepage
   security:
     - admin
 
-/pageCreation:
+/page-creation:
   controller: admin
   action: creationpage
   security:

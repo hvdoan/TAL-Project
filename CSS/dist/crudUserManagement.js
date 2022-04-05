@@ -6,7 +6,7 @@ function displayUser()
 	const requestType = "display";
 	
 	const request = new XMLHttpRequest();
-	request.open('POST', '/usermanagement');
+	request.open('POST', '/user-management');
 	
 	request.onreadystatechange = function(){
 		if(request.readyState === 4){
@@ -39,7 +39,7 @@ function updateUser()
 	const userIdRole        = $('#input-idRole').val();
 	
 	const request = new XMLHttpRequest();
-	request.open('POST', '/usermanagement');
+	request.open('POST', '/user-management');
 	
 	request.onreadystatechange = function(){
 		if(request.readyState === 4){
@@ -75,7 +75,7 @@ function deleteUser(){
 	if(userNameList.length > 0){
 		if(confirm((`Êtes-vous sûr de vouloir supprimer le(s) utilisateur(s) : ${userNameList.join(", ")} ?`))){
 			const request = new XMLHttpRequest();
-			request.open('POST', '/usermanagement');
+			request.open('POST', '/user-management');
 			
 			request.onreadystatechange = function(){
 				if(request.readyState === 4){
@@ -102,7 +102,7 @@ function openForm(id = "")
 	const requestType = "openForm";
 	
 	const request = new XMLHttpRequest();
-	request.open('POST', '/usermanagement');
+	request.open('POST', '/user-management');
 	
 	request.onreadystatechange = function()
 	{

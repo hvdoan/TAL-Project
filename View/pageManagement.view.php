@@ -19,9 +19,10 @@
         <thead>
         <tr>
             <th></th>
-            <th>Utilisateur</th>
+            <th>Modifié par</th>
             <th>URI</th>
             <th>Description</th>
+            <th>Dernière modification</th>
             <th>Action</th>
         </tr>
         </thead>
@@ -32,5 +33,3 @@
 </section>
 
 <script src="../CSS/dist/crudPage.js"></script>
-<script>
-</script>

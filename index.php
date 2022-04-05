@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Controller\Main;
 use App\Controller\User;
 use App\Core\View;
 use App\Model\Page;
@@ -39,13 +40,13 @@ $routes = yaml_parse_file($routeFile);
 if(empty($routes[$uri]) || empty($routes[$uri]["controller"]) || empty($routes[$uri]["action"])){
     $page = new Page();
     $idPage = $page->select(["id"], ["uri" => $uri]);
-    $object = $page->setId(intval($idPage));
+    $object = $page->setId(intval($idPage[0]["id"]));
 
     if ($object != false)
     {
         $page = $object;
 
-        $controller = new User();
+        $controller = new Main();
         $controller->generic($page->getContent());
     }
     else

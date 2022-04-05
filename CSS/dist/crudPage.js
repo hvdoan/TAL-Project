@@ -6,7 +6,7 @@ function displayPage()
     const requestType = "display";
 
     const request = new XMLHttpRequest();
-    request.open('POST', '/pageManagement');
+    request.open('POST', '/page-management');
 
     request.onreadystatechange = function()
     {
@@ -41,7 +41,7 @@ function insertPage(data)
     const pageDescription   = $('#input-description').val();
 
     const request = new XMLHttpRequest();
-    request.open('POST', '/pageCreation');
+    request.open('POST', '/page-creation');
 
     request.onreadystatechange = function()
     {
@@ -49,7 +49,7 @@ function insertPage(data)
         {
             console.log("AJAX : request insert completed");
             console.log(request.responseText);
-            window.location.href = "/pageManagement";
+            window.location.href = "/page-management";
         }
     };
 
@@ -69,14 +69,14 @@ function updatePage(pageId, data)
     const pageDescription   = $('#input-description').val();
 
     const request = new XMLHttpRequest();
-    request.open('POST', '/pageCreation');
+    request.open('POST', '/page-creation');
 
     request.onreadystatechange = function()
     {
         if(request.readyState === 4)
         {
             console.log("AJAX : request update completed");
-            window.location.href = "/pageManagement";
+            window.location.href = "/page-management";
         }
     };
 
@@ -113,7 +113,7 @@ function deletePage()
         if(confirm(("Etes-vous sûr de vouloir supprimer la ou les pages : " + pageUriList.join(", ") + " ?")))
         {
             const request = new XMLHttpRequest();
-            request.open('POST', '/pageManagement');
+            request.open('POST', '/page-management');
 
             request.onreadystatechange = function()
             {

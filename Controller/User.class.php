@@ -41,6 +41,7 @@ class User
 						if($object != false)
 							$role = $object;
 
+						$_SESSION['id'] = $userLoggedIn[0]["id"];
 						$_SESSION['role'] = $role->getName();
 
 						/*   GET USER PERMISSION ACTION   */
@@ -176,11 +177,5 @@ class User
                 $user->save();
             }
         }
-    }
-
-    public function generic($data)
-    {
-        $view = new View("generic");
-        $view->assign("data", $data);
     }
 }

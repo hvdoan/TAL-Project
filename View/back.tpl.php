@@ -21,27 +21,27 @@
 			</header>
 			
 			<ul class="nav nav--column">
-				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/statistics" || $_SERVER["REQUEST_URI"] == "/edit") ? "" : "close";?>">
+				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/dashboard" || $_SERVER["REQUEST_URI"] == "/edit") ? "" : "close";?>">
 					<i class="fa-solid fa-table-columns"></i>Tableau de bord<i class="fa-solid fa-angle-down"></i>
 					<ul>
-						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/statistics")? "opened" : "" ;?>" href="#">Statistiques</a>
+						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/dashboard")? "opened" : "" ;?>" href="/dashboard">Statistiques</a>
 						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/edit")? "opened" : "" ;?>" href="#">Edition</a>
 					</ul>
 				</li>
 				
-				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/usermanagement" || $_SERVER["REQUEST_URI"] == "/adduser") ? "" : "close";?>">
+				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/user-management" || $_SERVER["REQUEST_URI"] == "/adduser") ? "" : "close";?>">
 					<i class="fa-solid fa-user"></i>Gestion des utilisateurs<i class="fa-solid fa-angle-down"></i>
 					<ul>
-						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/usermanagement")? "opened" : "" ;?>" href="/usermanagement">Tous les utilisateurs</a>
+						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/user-management")? "opened" : "" ;?>" href="/user-management">Tous les utilisateurs</a>
 						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/adduser")? "opened" : "" ;?>" href="#">Ajout Utilisateur</a>
 					</ul>
 				</li>
 				
-				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/pagemanagement" || $_SERVER["REQUEST_URI"] == "/addpage") ? "" : "close";?>">
+				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/page-management" || $_SERVER["REQUEST_URI"] == "/page-creation") ? "" : "close";?>">
 					<i class="fa-solid fa-images"></i>Pages<i class="fa-solid fa-angle-down"></i>
 					<ul>
-						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/pagemanagement")? "opened" : "" ;?>" href="#">Gestions des pages</a>
-						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/addpage")? "opened" : "" ;?>" href="#">Ajout de page</a>
+						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/page-management")? "opened" : "" ;?>" href="/page-management">Gestions des pages</a>
+						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/page-creation")? "opened" : "" ;?>" href="/page-creation">Ajout de page</a>
 					</ul>
 				</li>
 				
@@ -61,7 +61,7 @@
 					</ul>
 				</li>
 				
-				<a class="btn bottom" href="#"><span>Déconnexion</span><i class="fa-solid fa-power-off"></i></a>
+				<a class="btn bottom" href="/login"><span>Déconnexion</span><i class="fa-solid fa-power-off"></i></a>
 			</ul>
 		</nav>
 		

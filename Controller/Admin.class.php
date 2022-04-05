@@ -9,15 +9,16 @@ use App\Model\Page;
 use App\Model\Permission;
 use App\Model\Role;
 use App\Model\User as UserModel;
+use DateTime;
 
 class Admin
 {
     public function dashboard()
     {
-    	if(!Verificator::checkLog())
+    	if(!Verificator::checkConnection())
     		header("Location: /login");
 
-		if(!Verificator::checkPageAccess($_SESSION["permission"], PERM_ACCESS_ADMIN))
+		if(!Verificator::checkPageAccess($_SESSION["permission"], "ADMIN_ACCESS"))
 			header("Location: /home");
 
         $view = new View("home", "back");
@@ -25,7 +26,7 @@ class Admin
 
 	public function configuration()
 	{
-		if(!Verificator::checkLog())
+		if(!Verificator::checkConnection())
 			header("Location: /login");
 
 		echo "Ceci est un beau dashboard";
@@ -33,10 +34,10 @@ class Admin
 	
 	public function usermanagement()
 	{
-		if(!Verificator::checkLog())
+		if(!Verificator::checkConnection())
 			header("Location: /login");
 
-		if(!Verificator::checkPageAccess($_SESSION["permission"], PERM_MANAGE_USER))
+		if(!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_USER"))
 			header("Location: /dashboard");
 
 		$user = new UserModel();
@@ -177,10 +178,10 @@ class Admin
 
 	public function managerole()
 	{
-		if(!Verificator::checkLog())
+		if(!Verificator::checkConnection())
 			header("Location: /login");
 
-		if(!Verificator::checkPageAccess($_SESSION["permission"], PERM_MANAGE_ROLE))
+		if(!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_ROLE"))
 			header("Location: /dashboard");
 
         /* Format HTML structure for display role */
@@ -350,7 +351,7 @@ class Admin
 					$htmlContent .= "<label>Autoriser</label>";
 					$htmlContent .= "<input class='input-permission' type='radio' name='" . $actionList[$i]["id"] . "' value='1' checked>";
 					$htmlContent .= "<label>Refuser</label>";
-					$htmlContent .= "<input type='radio' name='" . $actionList[$i]["id"] .     < "' value='0'>";
+					$htmlContent .= "<input type='radio' name='" . $actionList[$i]["id"] . "' value='0'>";
 				}
 				else
 				{
@@ -383,7 +384,7 @@ class Admin
 
     public function managepage()
     {
-  		  if(!Verificator::checkLog())
+  		  if(!Verificator::checkConnection())
 	  		  header("Location: /login");
 
         define("PERMANENT_PAGE", [
@@ -400,13 +401,15 @@ class Admin
 
         if(isset($_POST["requestType"]) && $_POST["requestType"] == "display")
         {
-            $pageList		= $page->select(["id", "idUser", "uri", "description"], []);
+            $pageList		= $page->select(["id", "idUser", "uri", "description", "dateModification"], []);
             $htmlContent	= "";
 
             foreach ($pageList as $page)
             {
                 $user = new UserModel();
                 $user = $user->setId(intval($page["idUser"]));
+
+                $date = new DateTime($page["dateModification"]);
 
                 $htmlContent .= "<tr>";
 
@@ -418,9 +421,8 @@ class Admin
                 $htmlContent .= "<td>" . $user->getLastname() . " " . $user->getFirstname() . "</td>";
                 $htmlContent .= "<td id='" . $page["id"] . "'>" . $page["uri"] . "</td>";
                 $htmlContent .= "<td>" . $page["description"] . "</td>";
-                $htmlContent .= "<td>";
-                $htmlContent .= "<a class='btn' href='/pageCreation?page=" . $page["id"] . "'>Editer</a>";
-                $htmlContent .= "</td>";
+                $htmlContent .= "<td>Le " . $date->format("d/m/Y à H\hi") . "</td>";
+                $htmlContent .= "<td><a class='btn' href='/page-creation?page=" . $page["id"] . "'>Editer</a></td>";
                 $htmlContent .= "</tr>";
             }
 
@@ -451,11 +453,11 @@ class Admin
 
     public function creationpage()
     {
-		if(!Verificator::checkLog())
+		if(!Verificator::checkConnection())
 			header("Location: /login");
 
-		if(!Verificator::checkPageAccess($_SESSION["permission"], PERM_MANAGE_PAGE))
-			header("Location: /roleManagement");
+		if(!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_PAGE"))
+			header("Location: /page-management");
 
         $isNew  = true;
         $page   = new Page();
@@ -497,7 +499,7 @@ class Admin
                     $uri = str_replace("/", "", $_POST["pageUri"]);
                     $uri = "/" . $uri;
 
-                    $page->setIdUser(1);            //===<> TEMPORAIRE
+                    $page->setIdUser($_SESSION["id"]);
                     $page->setUri($uri);
                     $page->setDescription($_POST["pageDescription"]);
                     $page->setContent($_POST["data"]);

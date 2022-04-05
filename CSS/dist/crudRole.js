@@ -6,7 +6,7 @@ function displayRole()
     const requestType = "display";
 
     const request = new XMLHttpRequest();
-    request.open('POST', '/roleManagement');
+    request.open('POST', '/role-management');
 
     request.onreadystatechange = function()
     {
@@ -51,7 +51,7 @@ function insertRole()
     }
 
     const request = new XMLHttpRequest();
-    request.open('POST', '/roleManagement');
+    request.open('POST', '/role-management');
 
     request.onreadystatechange = function()
     {
@@ -88,7 +88,7 @@ function updateRole()
     }
 
     const request = new XMLHttpRequest();
-    request.open('POST', '/roleManagement');
+    request.open('POST', '/role-management');
 
     request.onreadystatechange = function()
     {
@@ -130,7 +130,7 @@ function deleteRole()
         if(confirm(("Etes-vous sûr de vouloir supprimer le(s) rôle(s) : " + roleNameList.join(", ") + " ?")))
         {
             const request = new XMLHttpRequest();
-            request.open('POST', '/roleManagement');
+            request.open('POST', '/role-management');
 
             request.onreadystatechange = function()
             {
@@ -162,7 +162,7 @@ function openForm(id = "")
     let ctnRoleForm = $("#ctnRoleForm");
 
     const request = new XMLHttpRequest();
-    request.open('POST', '/roleManagement');
+    request.open('POST', '/role-management');
 
     request.onreadystatechange = function()
     {
