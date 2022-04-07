@@ -9,9 +9,8 @@
 <section class="ctn">
     <h1>Page</h1>
 
-    <div class="ctn ctn-search">
-        <input class="searchBar" type="text" placeholder="Recherche">
-        <a class="btn btn-add" href="/page-creation">Nouveau</a>
+    <div class="ctn ctn-add">
+        <button class="btn btn-add" onclick="location.href='/page-creation'">Nouveau</button>
         <button id="delete" class="btn btn-delete" onclick="deletePage()" type="button" name="button">Supprimer</button>
     </div>
 

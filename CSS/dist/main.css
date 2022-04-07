@@ -56,6 +56,22 @@ h2 {
   color: #272B40;
 }
 
+.btn-add,
+.btn-edit {
+  padding: 10px;
+  background: #3F445F;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.btn-add:hover,
+.btn-edit:hover {
+  background: #6d769e;
+  color: #fff;
+}
+
 .btn-delete {
   padding: 10px;
   background: #AD4E47;
@@ -643,6 +659,11 @@ nav > ul > .bottom,
   font-weight: bold;
 }
 
+.ctn > th {
+  text-align: left;
+  padding: 8px 10px !important;
+}
+
 .ctn-delete {
   display: flex;
   justify-content: flex-end;
@@ -658,18 +679,18 @@ nav > ul > .bottom,
   outline: none;
 }
 
-.ctn-search {
+.ctn-add {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  margin: 0;
+  margin: 0.5% 0;
   padding: 0;
   box-shadow: none;
 }
 
-.ctn-search > .searchBar {
+.ctn-add > .searchBar {
   width: 30%;
   height: 20px;
   border: solid 1px #000;
@@ -679,7 +700,7 @@ nav > ul > .bottom,
   font-weight: bold;
 }
 
-.ctn-search > .searchBar:focus {
+.ctn-add > .searchBar:focus {
   outline: none;
 }
 
@@ -749,6 +770,22 @@ nav > ul > .bottom,
 }
 
 #ctnUserForm > form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#ctnRoleForm {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+#ctnRoleForm > form {
   position: absolute;
   top: 50%;
   left: 50%;

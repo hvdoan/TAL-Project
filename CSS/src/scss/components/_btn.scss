@@ -1,46 +1,55 @@
-.btn
-{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+.btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 
-    width: fit-content;
-    height: fit-content;
-    padding: 5px 10px;
+  width: fit-content;
+  height: fit-content;
+  padding: 5px 10px;
 
-    background: $hard-blue;
-    border-radius: 7px;
-    text-decoration: none;
-    color: $white;
+  background: $hard-blue;
+  border-radius: 7px;
+  text-decoration: none;
+  color: $white;
 
-    cursor: pointer;
-    transition: .3s;
+  cursor: pointer;
+  transition: .3s;
 
-    &:hover
-    {
-        background: $white;
-        color: $hard-blue;
-    }
+  &:hover {
+	background: $white;
+	color: $hard-blue;
+  }
 
-    &-delete
-    {
-        padding: 10px;
-        background: $dark-orange;
-        border: none;
-        border-radius: 5px;
-        font-weight: bold;
-        letter-spacing: 1px;
+  &-add, &-edit {
+	padding: 10px;
+	background: $dark-blue;
+	border: none;
+	border-radius: 5px;
+	font-weight: bold;
+	letter-spacing: 1px;
 
-        &:hover
-        {
-            background: $light-orange;
-            color: $white;
-        }
-    }
+	&:hover {
+	  background: $light-blue;
+	  color: $white;
+	}
+  }
+
+  &-delete {
+	padding: 10px;
+	background: $dark-orange;
+	border: none;
+	border-radius: 5px;
+	font-weight: bold;
+	letter-spacing: 1px;
+
+	&:hover {
+	  background: $light-orange;
+	  color: $white;
+	}
+  }
 }
 
-.opened
-{
-    text-decoration: underline !important;
+.opened {
+  text-decoration: underline !important;
 }

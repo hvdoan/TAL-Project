@@ -61,7 +61,7 @@ class Admin
 					}
 					$htmlContent .= "<td>" . $role->getName() . "</td>";
 					
-					$htmlContent .= "<td><button class='btn' onclick='openForm(\"" . $user["id"] . "\")'>Editer</button></td>";
+					$htmlContent .= "<td><button class='btn btn-edit' onclick='openForm(\"" . $user["id"] . "\")'>Editer</button></td>";
 				$htmlContent .= "</tr>";
 			}
 			
@@ -207,7 +207,7 @@ class Admin
                 if($role["name"] == "Utilisateur" || $role["name"] == "Administrateur")
                     $htmlContent .= "<td></td>";
                 else
-                    $htmlContent .= "<td><button class='btn' onclick='openForm(\"" . $role["id"] . "\")'>Editer</button></td>";
+                    $htmlContent .= "<td><button class='btn btn-edit' onclick='openForm(\"" . $role["id"] . "\")'>Editer</button></td>";
 
                 $htmlContent .= "</tr>";
 			}
