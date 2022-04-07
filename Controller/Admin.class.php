@@ -157,10 +157,11 @@ class Admin
 					}
 					$htmlContent .= "</select>";
 				$htmlContent .= "</div>";
-				
-				$htmlContent .= "<input class='btn' onclick='closeForm()' type='button' value='Annuler'>";
-				$htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $user->getId() . "'>";
-				$htmlContent .= "<input class='btn' onclick='updateUser()' type='button' value='Modifier'>";
+				$htmlContent .= "<div class='section'>";
+					$htmlContent .= "<input class='btn btn-delete' onclick='closeForm()' type='button' value='Annuler'>";
+					$htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $user->getId() . "'>";
+					$htmlContent .= "<input class='btn btn-validate' onclick='updateUser()' type='button' value='Modifier'>";
+				$htmlContent .= "</div>";
 				
 			}else{
 				$htmlContent .= "<h1>Attention ! Vous n'avez pas sélectionné d'utilisateur</h1>";

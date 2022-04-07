@@ -34,7 +34,7 @@
 
         & > input
         {
-            width: 300px;
+            width: 100%;
             padding: 10px 0;
             background: none;
             border: none;
@@ -45,6 +45,26 @@
         & > input:focus
         {
             background: $blue-grey;
+            outline: none;
+        }
+
+        & > select{
+            width: 50%;
+            padding: 10px 0;
+            background: none;
+            border: none;
+            border-bottom: solid 1px $white;
+            color: $white;
+        }
+
+        & > select > option{
+            //background: $white;
+            background-color: $light-blue;
+            color: $white;
+        }
+
+        & > select:hover{
+            cursor: pointer;
             outline: none;
         }
 
@@ -62,6 +82,12 @@
         {
             display: none;
         }
+    }
+
+    & > .section{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
     }
 
     & > .submit
