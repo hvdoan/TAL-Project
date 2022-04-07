@@ -1,13 +1,35 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Template FRONT</title>
-    <meta name="description" content="Description de ma page">
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Template FRONT</title>
+        <meta name="description" content="Description de ma page">
+        <link rel="stylesheet" href="../CSS/dist/main.css">
+        <script src="https://kit.fontawesome.com/62e5467ba7.js" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="../CSS/dist/main.js"></script>
+    </head>
 
-    <?php include "View/".$this->view.".view.php"; ?>
+    <body>
+        <?php \App\Core\Notification::displayNotifications(); ?>
 
-</body>
+        <nav class="nav-ctn-row">
+            <header>
+                <img src="./../CSS/asset/img/logo.png" alt="logo">
+            </header>
+
+            <div class="nav">
+                <ul>
+                    <a class="btn" href="userManagement.Template.html">Game</a>
+                    <a class="btn" href="form.template.html">News</a>
+                    <a class="btn" href="#">About</a>
+                    <a class="btn" href="#">Forum</a>
+                    <a class="btn" href="#">Wiki</a>
+                </ul>
+            </div>
+        </nav>
+
+        <?php include "View/".$this->view.".view.php"; ?>
+
+    </body>
 </html>

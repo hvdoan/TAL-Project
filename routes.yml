@@ -22,10 +22,36 @@
   controller: user
   action: pwdforget
 
+/activation:
+  controller: user
+  action: activatedaccount
 
 /dashboard:
   controller: admin
   action: dashboard
   security:
     - admin
-    - user
+
+/user-management:
+  controller: admin
+  action: usermanagement
+  security:
+    - admin
+
+/role-management:
+  controller: admin
+  action: managerole
+  security:
+    - admin
+
+/page-management:
+  controller: admin
+  action: managepage
+  security:
+    - admin
+
+/page-creation:
+  controller: admin
+  action: creationpage
+  security:
+    - admin
