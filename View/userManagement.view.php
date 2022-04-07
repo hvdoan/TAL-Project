@@ -3,7 +3,7 @@
 <section class="ctn">
 	
 	<h1>Utilisateurs</h1>
-	<div class="ctn ctn-search">
+	<div class="ctn ctn-delete">
 		<button id="delete" class="btn btn-delete" onclick="deleteUser()" type="button" name="button">Supprimer</button>
 	</div>
 	

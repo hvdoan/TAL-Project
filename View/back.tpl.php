@@ -29,10 +29,11 @@
 					</ul>
 				</li>
 				
-				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/user-management" || $_SERVER["REQUEST_URI"] == "/adduser") ? "" : "close";?>">
+				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/user-management" || $_SERVER["REQUEST_URI"] == "/role-management" || $_SERVER["REQUEST_URI"] == "/adduser") ? "" : "close";?>">
 					<i class="fa-solid fa-user"></i>Gestion des utilisateurs<i class="fa-solid fa-angle-down"></i>
 					<ul>
 						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/user-management")? "opened" : "" ;?>" href="/user-management">Tous les utilisateurs</a>
+						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/role-management")? "opened" : "" ;?>" href="/role-management">Tous les roles</a>
 						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/adduser")? "opened" : "" ;?>" href="#">Ajout Utilisateur</a>
 					</ul>
 				</li>
