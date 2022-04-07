@@ -6,16 +6,16 @@ abstract class Sql
 {
 	private $pdoInstance;
 	private $table;
-	
+
 	public function __construct()
 	{
 		$this->pdoInstance = PDO::getIntance();
-		
+
 		//Si l'id n'est pas null alors on fait un update sinon on fait un insert
 		$calledClassExploded = explode("\\",get_called_class());
-		$this->table = DBPREFIXE.end($calledClassExploded);
+		$this->table = DBPREFIXE.ucwords(end($calledClassExploded));
 	}
-	
+
 	/**
 	 * @param int|null $id
 	 *
@@ -28,7 +28,7 @@ abstract class Sql
 
         return $query->fetchObject(get_called_class());
 	}
-	
+
 	/**
 	 * @return void
 	 */
@@ -50,7 +50,7 @@ abstract class Sql
 		$queryPrepared = $this->pdoInstance->getPDO()->prepare($sql);
 		$queryPrepared->execute( $columns );
 	}
-	
+
 	/**
 	 * @return void
 	 */
@@ -59,7 +59,7 @@ abstract class Sql
 		$sql = "DELETE FROM " . $this->table . " WHERE id=" . $this->getId();
 		$queryPrepared = $this->pdoInstance->getPDO()->query($sql);
 	}
-	
+
 	/**
 	 * @param array $values
 	 * @param array $params
@@ -68,10 +68,7 @@ abstract class Sql
 	 */
 	public function select(array $values,array $params)
 	{
-		$calledClassExploded = explode("\\",get_called_class());
-		$table = strtolower(DBPREFIXE.end($calledClassExploded));
-
-		$sql = "SELECT ".implode(", ", $values)." FROM ".$table." WHERE ";
+		$sql = "SELECT ".implode(", ", $values)." FROM ".$this->table." WHERE ";
 
 		foreach ($params as $key => $values) {
 			$sql .= $key." = :".$key." AND ";
@@ -84,7 +81,7 @@ abstract class Sql
 
 		return $queryPrepared->fetchAll(\PDO::FETCH_ASSOC);
 	}
-	
+
 	/**
 	 * @return bool|string
 	 */

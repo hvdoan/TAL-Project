@@ -40,7 +40,11 @@ $routes = yaml_parse_file($routeFile);
 if(empty($routes[$uri]) || empty($routes[$uri]["controller"]) || empty($routes[$uri]["action"])){
     $page = new Page();
     $idPage = $page->select(["id"], ["uri" => $uri]);
-    $object = $page->setId(intval($idPage[0]["id"]));
+
+	if($idPage)
+    	$object = $page->setId(intval($idPage[0]["id"]));
+	else
+		$object = false;
 
     if ($object != false)
     {

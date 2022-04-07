@@ -24,7 +24,7 @@ class User
             unset($_SESSION['flash']);
         }
         $user = new UserModel();
-  
+
         if(!empty($_POST))
         {
             $userLoggedIn = $user->select(['id', 'idRole', 'password', 'verifyAccount'], ['email' => $_POST['email']]);
@@ -80,10 +80,10 @@ class User
             }
         }
 
-        $view = new View("Login", "front");
+        $view = new View("login", "front");
         $view->assign("user", $user);
     }
-	
+
     public function register()
     {
         $user = new UserModel();

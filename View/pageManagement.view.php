@@ -11,7 +11,7 @@
 
     <div class="ctn ctn-search">
         <input class="searchBar" type="text" placeholder="Recherche">
-        <a class="btn btn-add" href="/pageCreation">Nouveau</a>
+        <a class="btn btn-add" href="/page-creation">Nouveau</a>
         <button id="delete" class="btn btn-delete" onclick="deletePage()" type="button" name="button">Supprimer</button>
     </div>
 

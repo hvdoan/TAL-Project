@@ -643,21 +643,6 @@ nav > ul > .bottom,
   font-weight: bold;
 }
 
-.ctn-delete {
-  display: flex;
-  justify-content: flex-end;
-  align-content: center;
-  width: 100%;
-  margin: 0.5% 0;
-  padding: 0;
-  box-sizing: border-box;
-  box-shadow: none;
-}
-
-.ctn-delete:focus {
-  outline: none;
-}
-
 .ctn-search {
   display: flex;
   flex-direction: row;
@@ -759,7 +744,7 @@ nav > ul > .bottom,
   padding: 10px 80px;
   border-radius: 5px;
   color: white;
-  margin-top: 8%;
+  margin-top: 20px;
   position: absolute;
   left: 0;
   right: 0;

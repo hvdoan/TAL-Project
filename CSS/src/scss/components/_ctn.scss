@@ -1,127 +1,127 @@
-.ctn {
-  min-width: 800px;
-  margin: 0 20px 20px 20px;
-  padding: 10px;
-  background: $white;
-  border-radius: 10px;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-  font-family: "Jaldi", sans-serif;
+.ctn
+{
+    min-width: 800px;
+    margin: 0 20px 20px 20px;
+    padding: 10px;
+    background: $white;
+    border-radius: 10px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    font-family: "Jaldi", sans-serif;
 
-  & > h1 {
-	font-family: $jaldi;
-	color: $black;
-	font-weight: bold;
-  }
+    & > h1
+    {
+        font-family: $jaldi;
+        color: $black;
+        font-weight: bold;
+    }
 
-  &-delete {
-	display: flex;
-	justify-content: flex-end;
-	align-content: center;
-	width: 100%;
-	margin: 0.5% 0;
-	padding: 0;
-	box-sizing: border-box;
-	box-shadow: none;
+    &-search
+    {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
 
-	&:focus {
-	  outline: none;
-	}
-  }
+        & > .searchBar
+        {
+            width: 30%;
+            height: 20px;
+            border: solid 1px #000;
+            border-radius: 5px;
+            font-size: rem(12);
+            color: $grey;
+            font-weight: bold;
 
-  &-search {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: center;
-	width: 100%;
-	margin: 0;
-	padding: 0;
-	box-shadow: none;
+            &:focus
+            {
+                outline: none;
+            }
+        }
+    }
 
-	& > .searchBar {
-	  width: 30%;
-	  height: 20px;
-	  border: solid 1px #000;
-	  border-radius: 5px;
-	  font-size: rem(12);
-	  color: $grey;
-	  font-weight: bold;
+    &-hover
+    {
+        position: absolute;
+        top: 500px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
 
-	  &:focus {
-		outline: none;
-	  }
-	}
-  }
+        & ~ section:nth-child(4)
+        {
+            margin-top: 300px;
+        }
+    }
 
-  &-hover {
-	position: absolute;
-	top: 500px;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-around;
+    &-article
+    {
+        display: flex;
+        flex-direction: row;
+        padding: 0 20px;
+        margin-bottom: 50px;
+        color: $white;
 
-	& ~ section:nth-child(4) {
-	  margin-top: 300px;
-	}
-  }
+        & > img{
+            padding: 0 10px;
+            max-width: 400px;
+            height: auto;
+        }
 
-  &-article {
-	display: flex;
-	flex-direction: row;
-	padding: 0 20px;
-	margin-bottom: 50px;
-	color: $white;
+        & > p
+        {
+            font-family: $jaldi;
+            padding: 0 10px;
+        }
 
-	& > img {
-	  padding: 0 10px;
-	  max-width: 400px;
-	  height: auto;
-	}
+        &-hover
+        {
+            width: 30%;
+            max-height: 250px;
+            overflow: hidden;
+            padding: 15px;
+            border-radius: 0 70px 0 0;
+            background: $deep-ocean;
 
-	& > p {
-	  font-family: $jaldi;
-	  padding: 0 10px;
-	}
+            & > h1
+            {
+                text-align: center;
+            }
 
-	&-hover {
-	  width: 30%;
-	  max-height: 250px;
-	  overflow: hidden;
-	  padding: 15px;
-	  border-radius: 0 70px 0 0;
-	  background: $deep-ocean;
+            & > .content
+            {
+                color: $white;
+                font-family: $jaldi;
 
-	  & > h1 {
-		text-align: center;
-	  }
-
-	  & > .content {
-		color: $white;
-		font-family: $jaldi;
-
-		& > img {
-		  float: left;
-		  margin-right: 10px;
-		  width: 100px;
-		  height: auto;
-		}
-	  }
-	}
-  }
+                & > img
+                {
+                    float: left;
+                    margin-right: 10px;
+                    width: 100px;
+                    height: auto;
+                }
+            }
+        }
+    }
 }
 
-#ctnUserForm {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1001;
-  background: rgba(0, 0, 0, .6);
+#ctnUserForm
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1001;
+    background: rgba(0, 0, 0, .6);
 }
 
-#ctnUserForm > form {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+#ctnUserForm > form
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
