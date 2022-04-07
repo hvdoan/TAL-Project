@@ -47,7 +47,6 @@ class View{
 	
 	public function __destruct()
 	{
-		//array("pseudo"=>"Prof") ---> $pseudo = "Prof";
 		extract($this->data);
 		include "View/" . $this->template . ".tpl.php";
 	}
