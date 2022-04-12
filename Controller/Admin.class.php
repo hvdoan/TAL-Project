@@ -492,7 +492,7 @@ class Admin
                 }
             }
         }
-        if(isset($_POST["requestType"]) ? ($_POST["requestType"] == "update") : false)
+        else if(isset($_POST["requestType"]) ? ($_POST["requestType"] == "update") : false)
         {
             if(isset($_POST["pageId"]) ? ($_POST["pageId"] != "") : false &&
                 isset($_POST["data"]) ? ($_POST["data"] != "") : false &&
