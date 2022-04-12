@@ -25,6 +25,9 @@
                     <a class="btn" href="#">About</a>
                     <a class="btn" href="#">Forum</a>
                     <a class="btn" href="#">Wiki</a>
+	                <?php if(isset($_SESSION['permission']) && in_array("ADMIN_ACCESS", $_SESSION['permission'])):?>
+		                <a class="btn" href="/dashboard">Dashboard</a>
+	                <?php endif;?>
                 </ul>
             </div>
         </nav>

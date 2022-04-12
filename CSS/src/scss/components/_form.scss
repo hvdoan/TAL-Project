@@ -1,88 +1,162 @@
-.form
-{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: fit-content;
-    padding: 40px 60px;
-    background: $dark-blue;
-    border-radius: 12px;
-    font-family: $jaldi;
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: fit-content;
+  padding: 40px 60px;
+  background: $dark-blue;
+  border-radius: 12px;
+  font-family: $jaldi;
 
-    & > h1
-    {
-        margin-bottom: 40px;
-        font-family: $jost;
-        text-align: center;
-        font-weight: 400;
-    }
+  & > h1 {
+	margin-bottom: 40px;
+	font-family: $jost;
+	text-align: center;
+	font-weight: 400;
+  }
 
-    & > .field
-    {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-        margin: 20px 0;
+  & > .fieldRow{
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	margin: 20px 0;
+	width: 25vw;
 
-        & > label
-        {
-            color: $white;
-            font-weight: bold;
-        }
+	& > label{
+	  //width: 100vw;
+	  color: $white;
+	  //font-weight: bold;
+	}
 
-        & > input
-        {
-            width: 300px;
-            padding: 10px 0;
-            background: none;
-            border: none;
-            border-bottom: solid 1px $white;
-            color: $white;
-        }
+	& > label:first-child{
+	  width: 100vw;
+	  color: $white;
+	  //font-weight: bold;
+	}
 
-        & > input:focus
-        {
-            background: $blue-grey;
-            outline: none;
-        }
+	& > input {
+	  width: 100%;
+	  margin: 10px 0;
+	  background: none;
+	  border: none;
+	  border-bottom: solid 1px $white;
+	  color: $white;
+	}
 
-        & > .right-ico
-        {
-            position: absolute;
-            bottom: 0;
-            left: 100%;
-            padding: 10px;
-            color: $white;
-            cursor: pointer;
-        }
+	& > input:focus {
+	  background: $blue-grey;
+	  outline: none;
+	}
 
-        & > .hide
-        {
-            display: none;
-        }
-    }
+	& > .hide {
+	  display: none;
+	}
+  }
 
-    & > .submit
-    {
-        margin-top: 40px;
-        padding: 10px 0;
-        background: none;
-        border: solid 2px $white;
-        border-radius: 25px;
-        color: $white;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        font-weight: bold;
-        transition: .3s;
-        cursor: pointer;
+  & > .fieldHeader{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	color: $white;
 
-        &:hover
-        {
-            background: $white;
-            color: $dark-blue;
-            transition: .3s;
-        }
-    }
+	& > label:first-child{
+	  width: 100%;
+	  color: $white;
+	  font-weight: bold;
+	}
+
+	& > label:last-child{
+	  margin: 0 1.1vw;
+	}
+
+  }
+
+  & > .field {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	margin: 20px 0;
+	width: 25vw;
+
+	& > label {
+	  color: $white;
+	  font-weight: bold;
+	}
+
+	& > input {
+	  width: 100%;
+	  padding: 10px 0;
+	  background: none;
+	  border: none;
+	  border-bottom: solid 1px $white;
+	  color: $white;
+	}
+
+	& > input:focus {
+	  background: $blue-grey;
+	  outline: none;
+	}
+
+	& > select {
+	  width: 50%;
+	  padding: 10px 0;
+	  background: none;
+	  border: none;
+	  border-bottom: solid 1px $white;
+	  color: $white;
+	}
+
+	& > select > option {
+	  //background: $white;
+	  background-color: $light-blue;
+	  color: $white;
+	}
+
+	& > select:hover {
+	  cursor: pointer;
+	  outline: none;
+	}
+
+	& > .right-ico {
+	  position: absolute;
+	  bottom: 0;
+	  left: 100%;
+	  padding: 10px;
+	  color: $white;
+	  cursor: pointer;
+	}
+
+	& > .hide {
+	  display: none;
+	}
+  }
+
+  & > .section {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+  }
+
+  & > .submit {
+	margin-top: 40px;
+	padding: 10px 0;
+	background: none;
+	border: solid 2px $white;
+	border-radius: 25px;
+	color: $white;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: bold;
+	transition: .3s;
+	cursor: pointer;
+
+	&:hover {
+	  background: $white;
+	  color: $dark-blue;
+	  transition: .3s;
+	}
+  }
 }

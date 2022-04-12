@@ -13,6 +13,11 @@
 	font-weight: bold;
   }
 
+  & > th {
+	text-align: left;
+	padding: 8px 10px !important;
+  }
+
   &-delete {
 	display: flex;
 	justify-content: flex-end;
@@ -28,13 +33,13 @@
 	}
   }
 
-  &-search {
+  &-add {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
 	width: 100%;
-	margin: 0;
+	margin: 0.5% 0;
 	padding: 0;
 	box-shadow: none;
 
@@ -124,4 +129,26 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+#ctnRoleForm
+{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  background: rgba(0, 0, 0, .6);
+}
+
+#ctnRoleForm > form
+{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#editorjs h1{
+	color: $black;
 }
