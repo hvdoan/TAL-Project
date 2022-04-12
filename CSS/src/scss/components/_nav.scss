@@ -73,6 +73,7 @@ nav,
   & > .nav {
 	display: flex;
 	flex-direction: row;
+	font-size: 1.1em;
 
 	&--column {
 	  flex-direction: column;
