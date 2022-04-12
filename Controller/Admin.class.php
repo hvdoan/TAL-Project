@@ -10,6 +10,7 @@ use App\Model\Permission;
 use App\Model\Role;
 use App\Model\User as UserModel;
 use DateTime;
+use App\Model\DonationTier;
 
 class Admin
 {
@@ -328,12 +329,13 @@ class Admin
 			}else{
 				$htmlContent	.= "<h1>Création d'un nouveau rôle</h1>";
 				$htmlContent	.= "<div class='field'>";
-				$htmlContent	.= "<label>Nom du rôle</label>";
-				$htmlContent	.= "<input id='input-name' type='text' name='name'>";
+					$htmlContent	.= "<label>Nom du rôle</label>";
+					$htmlContent	.= "<input id='input-name' type='text' name='name'>";
 				$htmlContent	.= "</div>";
 				$htmlContent	.= "<div class='field'>";
-				$htmlContent	.= "<label>Description</label>";
-				$htmlContent	.= "<input id='input-description' type='text' name='description'>";
+					$htmlContent	.= "<label>Description</label>";
+					$htmlContent	.= "<input id='input-description' type='text' name='description'>";
+				$htmlContent	.= "</div>";
 				$htmlContent	.= "<div class='fieldHeader'>";
 					$htmlContent	.= "<label>Gestions</label>";
 					$htmlContent	.= "<label>Autoriser</label>";
@@ -344,7 +346,7 @@ class Admin
 			for($i = 0; $i < count($actionList); $i++)
 			{
 				$htmlContent	.= "<div class='fieldRow'>";
-				$htmlContent	.= "<label>" . $actionList[$i]["description"] . "</label>";
+					$htmlContent	.= "<label>" . $actionList[$i]["description"] . "</label>";
 				$isFind			= false;
 
 				for($j = 0; $j < count($permissionList) && !$isFind; $j++)
@@ -379,7 +381,7 @@ class Admin
                 $htmlContent .= "<input class='btn btn-validate' onclick='updateRole()' type='button' value='Modifier'>";
             }
 			else
-				$htmlContent .= "<input class='btn' onclick='insertRole()' type='button' value='Créer'>";
+				$htmlContent .= "<input class='btn btn-validate' onclick='insertRole()' type='button' value='Créer'>";
 			$htmlContent .= "</div>";
 			$htmlContent .= "</form>";
 
@@ -532,4 +534,131 @@ class Admin
             $view->assign("page", $page);
         }
     }
+	
+	public function palierdonation()
+	{
+		if(!Verificator::checkConnection())
+			header("Location: /login");
+		
+		if(!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_DONATION_TIER"))
+			header("Location: /dashboard");
+		
+		$donationTier = new DonationTier();
+		
+		/* Display donationTier HTML Structure */
+		if(isset($_POST["requestType"]) && $_POST["requestType"] == "display"){
+			$donationTierList = $donationTier->select(["id", "name", "description", "price"], []);
+			$htmlContent = "";
+			
+			foreach($donationTierList as $donationTier){
+				$htmlContent .= "<tr>";
+				$htmlContent .= "<td><input class='idDonationTier' type='checkbox' name='" . $donationTier["id"] . "'></td>";
+				$htmlContent .= "<td>" . $donationTier["id"] . "</td>";
+				$htmlContent .= "<td id='" . $donationTier["id"] . "'>" . $donationTier["name"] . "</td>";
+				$htmlContent .= "<td>" . $donationTier["description"] . "</td>";
+				$htmlContent .= "<td>" . intval(($donationTier['price'] / 100)) . "," . ($donationTier['price'] % 100) . "</td>";
+				
+				$htmlContent .= "<td><button class='btn btn-edit' onclick='openForm(\"" . $donationTier["id"] . "\")'>Editer</button></td>";
+				$htmlContent .= "</tr>";
+			}
+			
+			echo $htmlContent;
+		}else if(isset($_POST["requestType"]) && $_POST["requestType"] == "insert"){
+			if((isset($_POST["donationTierName"]) && $_POST["donationTierName"] != "")
+				&& (isset($_POST["donationTierDescription"]) && $_POST["donationTierDescription"] != "")
+				&& (isset($_POST["donationTierPrice"]) && $_POST["donationTierPrice"] != "")){
+				
+				/* Creation of a donationTier */
+				$donationTier->setName($_POST["donationTierName"]);
+				$donationTier->setDescription($_POST["donationTierDescription"]);
+				$donationTier->setPrice($_POST["donationTierPrice"]);
+				$donationTier->save();
+			}
+		}else if(isset($_POST["requestType"]) && $_POST["requestType"] == "update"){
+			if((isset($_POST["donationTierId"]) && $_POST["donationTierId"] != "")
+				&& (isset($_POST["donationTierName"]) && $_POST["donationTierName"] != "")
+				&& (isset($_POST["donationTierDescription"]) && $_POST["donationTierDescription"] != "")
+				&& (isset($_POST["donationTierPrice"]) && $_POST["donationTierPrice"] != "")){
+				
+				/* Update of donationTier information */
+				$object = $donationTier->setId(intval($_POST["donationTierId"]));
+				if($object != false){
+					$donationTier = $object;
+				}
+				$donationTier->setName($_POST["donationTierName"]);
+				$donationTier->setDescription($_POST["donationTierDescription"]);
+				$donationTier->setPrice($_POST["donationTierPrice"]);
+				$donationTier->save();
+			}
+		}else if(isset($_POST["requestType"]) && $_POST["requestType"] == "delete"){
+			if(isset($_POST["donationTierIdList"]) && $_POST["donationTierIdList"] != ""){
+				/* Delete donationTier */
+				$donationTierIdList = explode(",", $_POST["donationTierIdList"]);
+				
+				for($i = 0 ; $i < count($donationTierIdList) ; $i++){
+					/* Deletion of the donationTier */
+					$object = $donationTier->setId($donationTierIdList[$i]);
+					if($object != false){
+						$donationTier = $object;
+					}
+					$donationTier->delete();
+				}
+			}
+		}else if(isset($_POST["requestType"]) && $_POST["requestType"] == "openForm"){
+			$htmlContent = "";
+			
+			if(isset($_POST["donationTierId"]) && $_POST["donationTierId"] != ""){
+				$object = $donationTier->setId(intval($_POST["donationTierId"]));
+				if($object != false){
+					$donationTier = $object;
+				}
+			}
+			
+			$htmlContent .= "<form class='form'>";
+			
+			if($donationTier->getId() != null){
+				$htmlContent .= "<h1>Modification du palier : n°" . $donationTier->getId() . " " . $donationTier->getName() . " " . "</h1>";
+				$htmlContent .= "<div class='field'>";
+					$htmlContent .= "<label>Nom</label>";
+					$htmlContent .= "<input id='input-name' type='text' name='name' value='" . $donationTier->getName() . "'>";
+					$htmlContent .= "<label>Description</label>";
+					$htmlContent .= "<input id='input-description' type='text' name='description' value='" . $donationTier->getDescription() . "'>";
+					$htmlContent .= "<label>Prix (en centimes)</label>";
+					$htmlContent .= "<input id='input-price' type='text' name='price' value='" . $donationTier->getPrice() . "'>";
+				$htmlContent .= "</div>";
+				$htmlContent .= "<div class='section'>";
+					$htmlContent .= "<input class='btn btn-delete' onclick='closeForm()' type='button' value='Annuler'>";
+			}else{
+				$htmlContent .= "<h1>Création d'un nouveau palier</h1>";
+				$htmlContent .= "<div class='field'>";
+					$htmlContent .= "<label>Nom du palier</label>";
+					$htmlContent .= "<input id='input-name' type='text' name='name'>";
+				$htmlContent .= "</div>";
+				$htmlContent .= "<div class='field'>";
+					$htmlContent .= "<label>Description du palier</label>";
+					$htmlContent .= "<input id='input-description' type='text' name='description'>";
+				$htmlContent .= "</div>";
+				$htmlContent .= "<div class='field'>";
+					$htmlContent .= "<label>Prix (en centimes)</label>";
+					$htmlContent .= "<input id='input-price' type='text' name='price'>";
+				$htmlContent .= "</div>";
+				$htmlContent .= "<div class='section'>";
+					$htmlContent .= "<input class='btn btn-delete' onclick='closeForm()' type='button' value='Annuler'>";
+			}
+			
+			if($donationTier->getId() != null){
+				$htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $donationTier->getId() . "'>";
+				$htmlContent .= "<input class='btn btn-validate' onclick='updateDonationTier()' type='button' value='Modifier'>";
+			}else
+				$htmlContent .= "<input class='btn btn-validate' onclick='insertDonationTier()' type='button' value='Créer'>";
+			$htmlContent .= "</div>";
+			$htmlContent .= "</form>";
+			
+			echo $htmlContent;
+		}else{
+			if(!isset($_POST["requestType"])){
+				$view = new View("donationTier", "back");
+			}
+		}
+	}
 }

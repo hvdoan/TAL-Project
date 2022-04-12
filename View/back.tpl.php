@@ -54,6 +54,13 @@
 					</ul>
 				</li>
 				
+				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/palier-donation") ? "" : "close"; ?>">
+					<i class="fa-solid fa-film"></i>Donation<i class="fa-solid fa-angle-down"></i>
+					<ul>
+						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/palier-donation") ? "opened" : ""; ?>" href="/palier-donation">Paliers de donation</a>
+					</ul>
+				</li>
+				
 				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/comments") ? "" : "close"; ?>">
 					<i class="fa-solid fa-gear"></i>Modération<i class="fa-solid fa-angle-down"></i>
 					<ul>

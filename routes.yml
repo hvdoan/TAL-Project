@@ -55,3 +55,9 @@
   action: creationpage
   security:
     - admin
+
+/palier-donation:
+  controller: admin
+  action: palierdonation
+  security:
+    - admin

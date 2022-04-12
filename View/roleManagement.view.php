@@ -8,12 +8,12 @@
 
     <table id="roleTable" class="stripe hover cell-border">
         <thead>
-        <tr>
-            <th><input type="checkbox" onclick="checkAll(this)"></th>
-            <th>Role</th>
-            <th>Description</th>
-            <th></th>
-        </tr>
+	        <tr>
+	            <th><input type="checkbox" onclick="checkAll(this)"></th>
+	            <th>Role</th>
+	            <th>Description</th>
+	            <th></th>
+	        </tr>
         </thead>
 
         <tbody id="roleList"></tbody>
