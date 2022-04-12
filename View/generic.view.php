@@ -1,4 +1,4 @@
-<section class="ctn">
+<section class="page">
     <div id="editorjs"></div>
 </section>
 

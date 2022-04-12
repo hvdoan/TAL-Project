@@ -16,7 +16,7 @@
 		
 		<nav id="nav">
 			<header>
-				<h1>TAL Project</h1>
+				<a href="/home"><h1>TAL Project</h1></a>
 				<i id="trigger-nav" class="fa-solid fa-bars"></i>
 			</header>
 			
@@ -29,7 +29,7 @@
 					</ul>
 				</li>
 				
-				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/user-management" || $_SERVER["REQUEST_URI"] == "/adduser") ? "" : "close"; ?>">
+				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/user-management" || $_SERVER["REQUEST_URI"] == "/role-management") ? "" : "close"; ?>">
 					<i class="fa-solid fa-user"></i>Gestion des utilisateurs<i class="fa-solid fa-angle-down"></i>
 					<ul>
 						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/user-management") ? "opened" : ""; ?>" href="/user-management">Tous les utilisateurs</a>

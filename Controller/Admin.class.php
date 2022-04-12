@@ -307,8 +307,7 @@ class Admin
 
 			$htmlContent .= "<form class='form'>";
 
-			if($role->getId() != null)
-			{
+			if($role->getId() != null){
 				$permission		= new Permission();
 				$permissionList	= $permission->select(["idAction"], ["idRole" => $role->getId()]);
 
@@ -321,9 +320,12 @@ class Admin
 				$htmlContent	.= "<label>Description</label>";
 				$htmlContent	.= "<input id='input-description' type='text' name='description' value='" . $role->getDescription() . "'>";
 				$htmlContent	.= "</div>";
-			}
-			else
-			{
+				$htmlContent	.= "<div class='fieldHeader'>";
+					$htmlContent	.= "<label>Gestions</label>";
+					$htmlContent	.= "<label>Autoriser</label>";
+					$htmlContent	.= "<label>Refuser</label>";
+				$htmlContent	.= "</div>";
+			}else{
 				$htmlContent	.= "<h1>Création d'un nouveau rôle</h1>";
 				$htmlContent	.= "<div class='field'>";
 				$htmlContent	.= "<label>Nom du rôle</label>";
@@ -332,12 +334,16 @@ class Admin
 				$htmlContent	.= "<div class='field'>";
 				$htmlContent	.= "<label>Description</label>";
 				$htmlContent	.= "<input id='input-description' type='text' name='description'>";
+				$htmlContent	.= "<div class='fieldHeader'>";
+					$htmlContent	.= "<label>Gestions</label>";
+					$htmlContent	.= "<label>Autoriser</label>";
+					$htmlContent	.= "<label>Refuser</label>";
 				$htmlContent	.= "</div>";
 			}
 
 			for($i = 0; $i < count($actionList); $i++)
 			{
-				$htmlContent	.= "<div class='field'>";
+				$htmlContent	.= "<div class='fieldRow'>";
 				$htmlContent	.= "<label>" . $actionList[$i]["description"] . "</label>";
 				$isFind			= false;
 
@@ -349,30 +355,32 @@ class Admin
 
 				if($isFind)
 				{
-					$htmlContent .= "<label>Autoriser</label>";
+//					$htmlContent .= "<label>Autoriser</label>";
 					$htmlContent .= "<input class='input-permission' type='radio' name='" . $actionList[$i]["id"] . "' value='1' checked>";
-					$htmlContent .= "<label>Refuser</label>";
+//					$htmlContent .= "<label>Refuser</label>";
 					$htmlContent .= "<input type='radio' name='" . $actionList[$i]["id"] . "' value='0'>";
 				}
 				else
 				{
-					$htmlContent .= "<label>Autoriser</label>";
+//					$htmlContent .= "<label>Autoriser</label>";
 					$htmlContent .= "<input class='input-permission' type='radio' name='" . $actionList[$i]["id"] . "' value='1'>";
-					$htmlContent .= "<label>Refuser</label>";
+//					$htmlContent .= "<label>Refuser</label>";
 					$htmlContent .= "<input type='radio' name='" . $actionList[$i]["id"] . "' value='0' checked>";
 				}
 				$htmlContent .= "</div>";
 			}
-
-			$htmlContent .= "<input class='btn' onclick='closeForm()' type='button' value='Annuler'>";
+			
+			$htmlContent .= "<div class='section'>";
+				$htmlContent .= "<input class='btn btn-delete' onclick='closeForm()' type='button' value='Annuler'>";
 
 			if($role->getId() != null)
             {
                 $htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $role->getId() . "'>";
-                $htmlContent .= "<input class='btn' onclick='updateRole()' type='button' value='Modifier'>";
+                $htmlContent .= "<input class='btn btn-validate' onclick='updateRole()' type='button' value='Modifier'>";
             }
 			else
 				$htmlContent .= "<input class='btn' onclick='insertRole()' type='button' value='Créer'>";
+			$htmlContent .= "</div>";
 			$htmlContent .= "</form>";
 
 			echo $htmlContent;
