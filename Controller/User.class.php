@@ -151,6 +151,9 @@ class User
     public function logout()
     {
         unset($_SESSION['token']);
+        unset($_SESSION['id']);
+        unset($_SESSION['permission']);
+        unset($_SESSION['role']);
         header('Location: /login');
     }
 

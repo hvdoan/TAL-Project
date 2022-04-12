@@ -61,7 +61,7 @@
 					</ul>
 				</li>
 				
-				<a class="btn bottom" href="/login"><span>Déconnexion</span><i class="fa-solid fa-power-off"></i></a>
+				<a class="btn bottom" href="/logout" "><span>Déconnexion</span><i class="fa-solid fa-power-off"></i></a>
 			</ul>
 		</nav>
 		
