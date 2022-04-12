@@ -56,6 +56,10 @@
   security:
     - admin
 
+/donation:
+  controller: main
+  action: donation
+
 /palier-donation:
   controller: admin
   action: palierdonation
