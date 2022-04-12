@@ -29,7 +29,7 @@
 	                <?php if(isset($_SESSION['permission']) && !empty($_SESSION['permission']) && in_array("ADMIN_ACCESS", $_SESSION['permission'])):?>
 		                <a class="btn" href="/dashboard">Dashboard</a>
 	                <?php endif;?>
-	                <?php if(isset($_SESSION['id']) && empty($_SESSION['token']) && $_SESSION['token'] === $_COOKIE['token']):?>
+	                <?php if(isset($_SESSION['id']) && !empty($_SESSION['token']) && $_SESSION['token'] === $_COOKIE['token']):?>
 		                <a class="btn" href="/logout">Déconnexion</a>
 	                <?php else:?>
 		                <a class="btn" href="/login">Connexion</a>
