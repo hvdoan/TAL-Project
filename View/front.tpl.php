@@ -15,7 +15,7 @@
 
         <nav class="nav-ctn-row">
             <header>
-                <img src="./../CSS/asset/img/logo.png" alt="logo">
+	            <a href="/home"><img src="./../CSS/asset/img/logo.png" alt="logo"></a>
             </header>
 
             <div class="nav">
@@ -25,7 +25,7 @@
                     <a class="btn" href="#">About</a>
                     <a class="btn" href="#">Forum</a>
                     <a class="btn" href="#">Wiki</a>
-                    <a class="btn" href="donation.view.php">Donation</a>
+                    <a class="btn" href="/donation">Donation</a>
 	                
 	                <?php if(isset($_SESSION['permission']) && !empty($_SESSION['permission']) && in_array("ADMIN_ACCESS", $_SESSION['permission'])):?>
 		                <a class="btn" href="/dashboard">Dashboard</a>
