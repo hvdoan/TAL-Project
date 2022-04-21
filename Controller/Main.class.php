@@ -21,9 +21,9 @@ class Main {
 
     public function donation()
     {
-        if(isset($_POST["requestType"]) ? ($_POST["requestType"] == "insert") : false)
+        if(isset($_POST["requestType"]) && $_POST["requestType"] == "insert")
         {
-            if(isset($_POST["price"]) ? ($_POST["price"] != "") : false)
+            if(isset($_POST["price"]) && $_POST["price"] != "")
             {
                 $donation = new Donation();
 
