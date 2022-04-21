@@ -11,6 +11,9 @@ session_start();
 
 require "conf.inc.php";
 
+/*
+ * AUTOLOADER
+ */
 function myAutoloader($class)
 {
 	// $class => CleanWords
@@ -23,20 +26,51 @@ function myAutoloader($class)
 
 spl_autoload_register("App\myAutoloader");
 
-//Réussir à récupérer l'URI
+/*
+ * CHECK WEBSITE CONFIG FILE
+ */
+$checkConfig = true;
+
+if(file_exists("ini.yml"))
+{
+    $ini = yaml_parse_file("ini.yml");
+
+    if (empty($ini["websiteName"]) ||
+        empty($ini["database"]["user"]) || empty($ini["database"]["password"]) || empty($ini["database"]["host"]) || empty($ini["database"]["port"]) ||
+        empty($ini["paypal"]["clientKey"]) || empty($ini["paypal"]["currency"]) ||
+        empty($ini["phpmailer"]["email"]) || empty($ini["phpmailer"]["password"]) || empty($ini["phpmailer"]["port"]))
+    {
+        $checkConfig = false;
+    }
+}
+else
+{
+    $checkConfig = false;
+}
+
+// Set URI
 $uri		= $_SERVER["REQUEST_URI"];
 $offset 	= strpos($uri, '?');
 
+// Remove GET data on URI
 if ($offset)
     $uri = substr($uri, 0, $offset);
 
+if(!$checkConfig && $uri != "/config")
+    header("Location: /config");
+if($checkConfig && $uri == "/config")
+    header("Location: /home");
+
+// Check existing route file
 $routeFile = "routes.yml";
-if(!file_exists($routeFile)){
-	die("Le fichier " . $routeFile . " n'existe pas");
-}
+if(!file_exists($routeFile))
+    die("Le fichier " . $routeFile . " n'existe pas");
 
 $routes = yaml_parse_file($routeFile);
 
+/*
+ * CONTROLLER
+ */
 if(empty($routes[$uri]) || empty($routes[$uri]["controller"]) || empty($routes[$uri]["action"])){
     $page = new Page();
     $idPage = $page->select(["id"], ["uri" => $uri]);
@@ -72,12 +106,12 @@ else
 
 
     $controllerFile = "Controller/" . $controller . ".class.php";
-    if(!file_exists($controllerFile)){
+    if(!file_exists($controllerFile))
         die("Le controller " . $controllerFile . " n'existe pas");
-    }
+
     //Dans l'idée on doit faire un require parce vital au fonctionnement
     //Mais comme on fait vérification avant du fichier le include est plus rapide a executer
-    include $controllerFile;
+    require $controllerFile;
 
     $controller = "App\\Controller\\".$controller;
     if( !class_exists($controller)){
