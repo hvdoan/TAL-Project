@@ -31,4 +31,4 @@
     </table>
 </section>
 
-<script src="../CSS/dist/crudPage.js"></script>
+<script src="../SASS/JS/crudPage.js"></script>

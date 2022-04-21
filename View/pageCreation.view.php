@@ -32,7 +32,7 @@
     <?php } ?>
 </section>
 
-<script src="../CSS/dist/crudPage.js"></script>
+<script src="../SASS/JS/crudPage.js"></script>
 <script src="/API/EditorJS/editor.js"></script>
 <script src="/API/EditorJS/Paragraph/bundle.js"></script>
 <script src="/API/EditorJS/Header/bundle.js"></script>

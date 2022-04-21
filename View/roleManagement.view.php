@@ -22,4 +22,4 @@
 
 <div id="ctnRoleForm"></div>
 
-<script src="../CSS/dist/crudRole.js"></script>
+<script src="../SASS/JS/crudRole.js"></script>

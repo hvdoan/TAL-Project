@@ -1,4 +1,4 @@
-<script src="../CSS/dist/crudUserManagement.js"></script>
+<script src="../SASS/JS/crudUserManagement.js"></script>
 
 <section class="ctn">
 	

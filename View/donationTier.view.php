@@ -24,4 +24,4 @@
 
 <div id="ctnDonationTierForm"></div>
 
-<script src="../CSS/dist/crudDonationTier.js"></script>
+<script src="../SASS/JS/crudDonationTier.js"></script>

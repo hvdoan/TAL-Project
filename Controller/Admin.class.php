@@ -239,9 +239,9 @@ class Admin
 		}
         else if(isset($_POST["requestType"]) && $_POST["requestType"] == "update")
         {
-            if(isset($_POST["roleId"]) ? ($_POST["roleId"] != "") : false &&
-                isset($_POST["roleName"]) ? ($_POST["roleName"] != "") : false &&
-                isset($_POST["roleDescription"]) ? ($_POST["roleDescription"] != "") : false &&
+            if((isset($_POST["roleId"]) ? ($_POST["roleId"] != "") : false) &&
+                (isset($_POST["roleName"]) ? ($_POST["roleName"] != "") : false) &&
+                (isset($_POST["roleDescription"]) ? ($_POST["roleDescription"] != "") : false) &&
                 isset($_POST["actionList"]))
             {
                 /* Update of the role information */
@@ -475,9 +475,9 @@ class Admin
 
         if(isset($_POST["requestType"]) ? ($_POST["requestType"] == "insert") : false)
         {
-            if(isset($_POST["data"]) ? ($_POST["data"] != "") : false &&
-                isset($_POST["pageUri"]) ? ($_POST["pageUri"] != "") : false &&
-                isset($_POST["pageDescription"]) ? ($_POST["pageDescription"] != "") : false)
+            if((isset($_POST["data"]) ? ($_POST["data"] != "") : false) &&
+                (isset($_POST["pageUri"]) ? ($_POST["pageUri"] != "") : false) &&
+                (isset($_POST["pageDescription"]) ? ($_POST["pageDescription"] != "") : false))
             {
                 $uri        = str_replace("/", "", $_POST["pageUri"]);
                 $uri        = "/" . $uri;
@@ -496,10 +496,10 @@ class Admin
         }
         else if(isset($_POST["requestType"]) ? ($_POST["requestType"] == "update") : false)
         {
-            if(isset($_POST["pageId"]) ? ($_POST["pageId"] != "") : false &&
-                isset($_POST["data"]) ? ($_POST["data"] != "") : false &&
-                isset($_POST["pageUri"]) ? ($_POST["pageUri"] != "") : false &&
-                isset($_POST["pageDescription"]) ? ($_POST["pageDescription"] != "") : false)
+            if((isset($_POST["pageId"]) ? ($_POST["pageId"] != "") : false) &&
+                (isset($_POST["data"]) ? ($_POST["data"] != "") : false) &&
+                (isset($_POST["pageUri"]) ? ($_POST["pageUri"] != "") : false) &&
+                (isset($_POST["pageDescription"]) ? ($_POST["pageDescription"] != "") : false))
             {
                 /* Update of the page information */
                 $object = $page->setId(intval($_POST["pageId"]));

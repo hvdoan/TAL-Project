@@ -71,7 +71,7 @@ class Config
                     catch (\Exception $e)
                     {
                         $result = false;
-                        Notification::CreateNotification("error", "Impossible de se connecter à la base de donnée.");
+                        Notification::CreateNotification("error", "Impossible de se connecter à la Base de donnée.");
                     }
 
                     if($result)

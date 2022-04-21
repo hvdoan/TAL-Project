@@ -3,11 +3,15 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Dashboard - <?=str_replace("/", "", $_SERVER["REQUEST_URI"])?></title>
-		<link rel="stylesheet" href="../CSS/dist/main.css">
+        <!-- CSS -->
+		<link rel="stylesheet" href="../Stylesheet/style.css">
+        <!-- FONT AWESOME -->
 		<script src="https://kit.fontawesome.com/62e5467ba7.js" crossorigin="anonymous"></script>
+        <!-- JQUERY -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<script src="../CSS/dist/main.js"></script>
-		<!--datatables-->
+        <!-- JS -->
+        <script src="../JS/main.min.js"></script>
+		<!-- datatables -->
 		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
 		<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
 	</head>
@@ -21,7 +25,7 @@
 			</header>
 			
 			<ul class="nav nav--column">
-				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/dashboard" || $_SERVER["REQUEST_URI"] == "/edit") ? "" : "close"; ?>">
+				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/dashboard" || $_SERuglVER["REQUEST_URI"] == "/edit") ? "" : "close"; ?>">
 					<i class="fa-solid fa-table-columns"></i>Tableau de bord<i class="fa-solid fa-angle-down"></i>
 					<ul>
 						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/dashboard") ? "opened" : ""; ?>" href="/dashboard">Statistiques</a>

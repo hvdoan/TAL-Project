@@ -4184,7 +4184,7 @@ class PHPMailer
      * If you don't want to apply these transformations to your HTML, just set Body and AltBody directly.
      *
      * @param string        $message  HTML message string
-     * @param string        $basedir  Absolute path to a base directory to prepend to relative paths to images
+     * @param string        $basedir  Absolute path to a Base directory to prepend to relative paths to images
      * @param bool|callable $advanced Whether to use the internal HTML to text converter
      *                                or your own custom converter
      * @return string The transformed message body

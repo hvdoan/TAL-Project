@@ -1,0 +1,17 @@
+@use "../Abstracts" as *;
+
+.page {
+  width: 100%;
+  height: 100vh;
+  background-color: $white;
+
+  & > div > span {
+    margin-top: 4%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+  }
+}
