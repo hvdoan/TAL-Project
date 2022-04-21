@@ -1,6 +1,6 @@
 .DS_Store
 .idea
-conf.inc.php
 
 CSS/webpack/node_modules/
 
+ini.yml

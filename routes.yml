@@ -71,3 +71,7 @@
   action: tag
   security:
     - admin
+    
+/config:
+  controller: config
+  action: config

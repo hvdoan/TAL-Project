@@ -16,7 +16,7 @@
 		
 		<nav id="nav">
 			<header>
-				<a href="/home"><h1>TAL Project</h1></a>
+				<a href="/home"><h1><?=WEBSITENAME?></h1></a>
 				<i id="trigger-nav" class="fa-solid fa-bars"></i>
 			</header>
 			
@@ -76,7 +76,7 @@
 		<main class="dashboard">
 			<header>
 				<div class="searchBar">
-					<input type="text" name="searchBar" , placeholder="Recherche">
+					<input type="text" name="searchBar", placeholder="Recherche">
 					<i class="fa-solid fa-magnifying-glass"></i>
 				</div>
 			</header>
