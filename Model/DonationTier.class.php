@@ -29,7 +29,7 @@ class DonationTier extends Sql
      */
     public function getName(): ?string
     {
-        return $this->name;
+        return htmlspecialchars($this->name, ENT_QUOTES);
     }
 
     /**
@@ -45,7 +45,7 @@ class DonationTier extends Sql
      */
     public function getDescription(): ?string
     {
-        return $this->description;
+        return htmlspecialchars($this->description, ENT_QUOTES);
     }
 
     /**

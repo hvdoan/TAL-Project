@@ -27,7 +27,7 @@ class Tag extends Sql{
 	 */
 	public function getName()
 	{
-		return $this->name;
+		return htmlspecialchars($this->name, ENT_QUOTES);
 	}
 	
 	/**
@@ -43,7 +43,7 @@ class Tag extends Sql{
 	 */
 	public function getDescription()
 	{
-		return $this->description;
+		return htmlspecialchars($this->description, ENT_QUOTES);
 	}
 	
 	/**

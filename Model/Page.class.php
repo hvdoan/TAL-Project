@@ -63,7 +63,7 @@ class Page extends Sql
      */
     public function getDescription(): ?string
     {
-        return $this->description;
+        return htmlspecialchars($this->description, ENT_QUOTES);
     }
 
     /**
@@ -79,7 +79,7 @@ class Page extends Sql
      */
     public function getContent(): ?string
     {
-        return $this->content;
+        return htmlspecialchars($this->content, ENT_QUOTES);
     }
 
     /**
