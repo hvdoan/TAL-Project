@@ -61,9 +61,10 @@
 					</ul>
 				</li>
 				
-				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/comments" || $_SERVER["REQUEST_URI"] == "/tag") ? "" : "close"; ?>">
+				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/forum" || $_SERVER["REQUEST_URI"] == "/tag" || $_SERVER["REQUEST_URI"] == "/comments") ? "" : "close"; ?>">
 					<i class="fa-solid fa-gear"></i>Modération<i class="fa-solid fa-angle-down"></i>
 					<ul>
+						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/forum") ? "opened" : ""; ?>" href="/forum">Forum</a>
 						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/tag") ? "opened" : ""; ?>" href="/tag">Catégories</a>
 						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/comments") ? "opened" : ""; ?>" href="/comments">Commentaires</a>
 					</ul>
