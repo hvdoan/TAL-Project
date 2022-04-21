@@ -9,8 +9,6 @@ use App\Model\Page;
 
 session_start();
 
-require "conf.inc.php";
-
 /*
  * AUTOLOADER
  */
@@ -35,10 +33,10 @@ if(file_exists("ini.yml"))
 {
     $ini = yaml_parse_file("ini.yml");
 
-    if (empty($ini["websiteName"]) ||
-        empty($ini["database"]["user"]) || empty($ini["database"]["password"]) || empty($ini["database"]["host"]) || empty($ini["database"]["port"]) ||
-        empty($ini["paypal"]["clientKey"]) || empty($ini["paypal"]["currency"]) ||
-        empty($ini["phpmailer"]["email"]) || empty($ini["phpmailer"]["password"]) || empty($ini["phpmailer"]["port"]))
+    if (empty($ini["websiteName"])          ||
+        empty($ini["database"]["user"])     || empty($ini["database"]["password"])  || empty($ini["database"]["host"]) || empty($ini["database"]["port"]) ||
+        empty($ini["paypal"]["clientKey"])  || empty($ini["paypal"]["currency"])    ||
+        empty($ini["phpmailer"]["email"])   || empty($ini["phpmailer"]["password"]) || empty($ini["phpmailer"]["port"]))
     {
         $checkConfig = false;
     }
@@ -60,6 +58,9 @@ if(!$checkConfig && $uri != "/config")
     header("Location: /config");
 if($checkConfig && $uri == "/config")
     header("Location: /home");
+if($uri != "/config")
+	require_once "conf.inc.php";
+
 
 // Check existing route file
 $routeFile = "routes.yml";

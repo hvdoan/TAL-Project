@@ -19,7 +19,7 @@ if(file_exists("ini.yml"))
         define("DBPREFIXE", "TALBDD_");
         define("DBCHARSET", "utf8");
     }
-
+	
     if (!empty($credentials["paypal"]["clientKey"]) && !empty($credentials["paypal"]["currency"]))
     {
         define("PAYPALKEYCLIENT", $credentials["paypal"]["clientKey"]);
@@ -35,4 +35,5 @@ if(file_exists("ini.yml"))
     }
 }
 else
-    die("erreur 404");
+//    die("erreur 404");
+	header("Location: /config");

@@ -47,7 +47,9 @@ class Config
                             "host" => $dbHost,
                             "port" => $dbPort,
                             "user" => $dbUser,
-                            "password" => $dbPassword
+                            "password" => $dbPassword,
+	                        "driver" => "mysql",
+	                        "charset" => "utf8"
                         ],
                         "paypal" => [
                             "clientKey" => $paypalClientKey,
@@ -63,8 +65,8 @@ class Config
                     $result = true;
                     try
                     {
-                        $pdo = new \PDO( DBDRIVER.":host=".$config["database"]["host"].";port=".$config["database"]["port"].";charset=".DBCHARSET
-                            ,$config["database"]["user"], $config["database"]["password"], [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_WARNING]);
+                        $pdo = new \PDO( $config["database"]["driver"].":host=".$config["database"]["host"].";port=".$config["database"]["port"].";charset=".$config["database"]["charset"],
+                                         $config["database"]["user"], $config["database"]["password"], [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_WARNING]);
                     }
                     catch (\Exception $e)
                     {
