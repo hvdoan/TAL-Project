@@ -1,4 +1,9 @@
-<script src="../SASS/JS/crudUserManagement.js"></script>
+<script type="text/javascript">
+    /**************************************************
+     * EVENT LISTENER
+     ***************************************************/
+    $("#userList").ready(displayUser);
+</script>
 
 <section class="ctn">
 	

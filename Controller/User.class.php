@@ -34,9 +34,8 @@ class User{
 						$role = new Role();
 						$object = $role->setId(intval($userLoggedIn[0]['idRole']));
 						
-						if($object != false){
+						if($object != false)
 							$role = $object;
-						}
 						
 						$_SESSION['id'] = $userLoggedIn[0]["id"];
 						$_SESSION['role'] = $role->getName();
@@ -57,11 +56,12 @@ class User{
 						}
 						
 						$user = $user->setId($userLoggedIn[0]['id']);
+                        $user->setIdrole(intval($userLoggedIn[0]['idRole']));
 						$user->generateToken();
 						
-						$_SESSION['token'] = $user->getToken();
-						
-						setcookie("token", $_SESSION['token'], time() + (60 * 15));
+						$_SESSION["token"] = $user->getToken();
+                        setcookie("token", $user->getToken(), time() + (60 * 15), "", "", true);
+
 						$user->save();
 						header("Location: /dashboard");
 					}else{

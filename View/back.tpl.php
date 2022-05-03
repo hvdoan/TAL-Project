@@ -17,7 +17,6 @@
 	</head>
 	
 	<body class="body-row">
-		
 		<nav id="nav">
 			<header>
 				<a href="/home"><h1><?=WEBSITENAME?></h1></a>
@@ -25,7 +24,7 @@
 			</header>
 			
 			<ul class="nav nav--column">
-				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/dashboard" || $_SERuglVER["REQUEST_URI"] == "/edit") ? "" : "close"; ?>">
+				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/dashboard" || $_SERVER["REQUEST_URI"] == "/edit") ? "" : "close"; ?>">
 					<i class="fa-solid fa-table-columns"></i>Tableau de bord<i class="fa-solid fa-angle-down"></i>
 					<ul>
 						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/dashboard") ? "opened" : ""; ?>" href="/dashboard">Statistiques</a>

@@ -8,10 +8,14 @@ function displayDonationTier()
 	const request = new XMLHttpRequest();
 	request.open('POST', '/palier-donation');
 	
-	request.onreadystatechange = function(){
-		if(request.readyState === 4){
-			if (request.responseText !== ""){
-				console.log("AJAX : display request completed");
+	request.onreadystatechange = function()
+	{
+		if(request.readyState === 4)
+		{
+			if (request.responseText === "login")
+				window.location.href = "/login";
+			else
+			{
 				$("#donationTierList").html(request.responseText);
 				
 				$(document).ready(function (){
@@ -35,6 +39,7 @@ function insertDonationTier(data)
 	const donationTierName          = $('#input-name').val();
 	const donationTierDescription   = $('#input-description').val();
 	const donationTierPrice         = $('#input-price').val();
+	const tokenForm         		= $('#tokenForm').val();
 	
 	const request = new XMLHttpRequest();
 	request.open('POST', '/palier-donation');
@@ -43,14 +48,15 @@ function insertDonationTier(data)
 	{
 		if(request.readyState === 4)
 		{
-			console.log("AJAX : request insert completed");
-			console.log(request.responseText);
-			window.location.href = "/palier-donation";
+			if (request.responseText === "login")
+				window.location.href = "/login";
+			else
+				window.location.href = "/palier-donation";
 		}
 	};
 	
 	request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	const body = `requestType=${requestType}&data=${data}&donationTierName=${donationTierName}&donationTierDescription=${donationTierDescription}&donationTierPrice=${donationTierPrice}`;
+	const body = `requestType=${requestType}&tokenForm=${tokenForm}&data=${data}&donationTierName=${donationTierName}&donationTierDescription=${donationTierDescription}&donationTierPrice=${donationTierPrice}`;
 	
 	request.send(body);
 }
@@ -65,21 +71,27 @@ function updateDonationTier()
 	const donationTierName          = $('#input-name').val();
 	const donationTierDescription   = $('#input-description').val();
 	const donationTierPrice         = $('#input-price').val();
+	const tokenForm         		= $('#tokenForm').val();
 	
 	const request = new XMLHttpRequest();
 	request.open('POST', '/palier-donation');
 	
-	request.onreadystatechange = function(){
-		if(request.readyState === 4){
-			console.log("AJAX : Update request completed");
-			console.log(request.responseText);
-			displayDonationTier();
-			closeForm();
+	request.onreadystatechange = function()
+	{
+		if(request.readyState === 4)
+		{
+			if (request.responseText === "login")
+				window.location.href = "/login";
+			else
+			{
+				displayDonationTier();
+				closeForm();
+			}
 		}
 	};
 	
 	request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	const body = `requestType=${requestType}&donationTierId=${donationTierId}&donationTierName=${donationTierName}&donationTierDescription=${donationTierDescription}&donationTierPrice=${donationTierPrice}`;
+	const body = `requestType=${requestType}&tokenForm=${tokenForm}&donationTierId=${donationTierId}&donationTierName=${donationTierName}&donationTierDescription=${donationTierDescription}&donationTierPrice=${donationTierPrice}`;
 	
 	request.send(body);
 }
@@ -93,8 +105,10 @@ function deleteDonationTier(){
 	let donationTierNameList    = [];
 	let donationTierIdList      = [];
 	
-	for (let i = 0; i < donationTierList.length; i++){
-		if (donationTierList[i].checked){
+	for (let i = 0; i < donationTierList.length; i++)
+	{
+		if (donationTierList[i].checked)
+		{
 			donationTierIdList.push(donationTierList[i].name);
 			donationTierNameList.push($("#" + donationTierList[i].name).html());
 		}
@@ -105,10 +119,14 @@ function deleteDonationTier(){
 			const request = new XMLHttpRequest();
 			request.open('POST', '/palier-donation');
 			
-			request.onreadystatechange = function(){
-				if(request.readyState === 4){
-					console.log("AJAX : delete request completed");
-					displayDonationTier();
+			request.onreadystatechange = function()
+			{
+				if(request.readyState === 4)
+				{
+					if (request.responseText === "login")
+						window.location.href = "/login";
+					else
+						displayDonationTier();
 				}
 			};
 			
@@ -136,9 +154,10 @@ function openForm(id = "")
 	{
 		if(request.readyState === 4)
 		{
-			if (request.responseText !== "")
+			if (request.responseText === "login")
+				window.location.href = "/login";
+			else
 			{
-				console.log("AJAX : request open form completed");
 				$("#ctnDonationTierForm").html(request.responseText);
 				$("#ctnDonationTierForm").css("width", "100%");
 				$("#ctnDonationTierForm").css("height", "100%");
@@ -161,8 +180,3 @@ function closeForm()
 	$("#ctnDonationTierForm").css("width", "0");
 	$("#ctnDonationTierForm").css("height", "0");
 }
-
-/**************************************************
- * EVENT LISTENER
- ***************************************************/
-$("#donationTierList").ready(displayDonationTier);

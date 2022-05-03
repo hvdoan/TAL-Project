@@ -12,17 +12,16 @@ function displayRole()
     {
         if(request.readyState === 4)
         {
-            if (request.responseText !== "")
+            if (request.responseText === "login")
+                window.location.href = "/login";
+            else
             {
-                console.log("AJAX : request display completed");
                 $("#roleList").html(request.responseText);
 
                 $(document).ready( function ()
                 {
-                    $('#roleTable').DataTable({
-                        "ordering": false
-                    });
-                } );
+                    $('#roleTable').DataTable();
+                });
             }
         }
     };
@@ -41,6 +40,7 @@ function insertRole()
     const requestType       = "insert";
     const roleName          = $('#input-name').val();
     const roleDescription   = $('#input-description').val();
+    const tokenForm         = $('#tokenForm').val();
     let actionList          = [];
     let permissionList      = $(".input-permission");
 
@@ -57,14 +57,18 @@ function insertRole()
     {
         if(request.readyState === 4)
         {
-            console.log("AJAX : request insert completed");
-            displayRole();
-            closeForm();
+            if (request.responseText === "login")
+                window.location.href = "/login";
+            else
+            {
+                displayRole();
+                closeForm();
+            }
         }
     };
 
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    const body = `requestType=${requestType}&roleName=${roleName}&roleDescription=${roleDescription}&actionList=${actionList}`;
+    const body = `requestType=${requestType}&tokenForm=${tokenForm}&roleName=${roleName}&roleDescription=${roleDescription}&actionList=${actionList}`;
 
     request.send(body);
 }
@@ -78,6 +82,7 @@ function updateRole()
     const roleId            = $('#input-id').val();
     const roleName          = $('#input-name').val();
     const roleDescription   = $('#input-description').val();
+    const tokenForm         = $('#tokenForm').val();
     let actionList          = [];
     let permissionList      = $(".input-permission");
 
@@ -94,14 +99,18 @@ function updateRole()
     {
         if(request.readyState === 4)
         {
-            console.log("AJAX : request insert completed");
-            displayRole();
-            closeForm();
+            if (request.responseText === "login")
+                window.location.href = "/login";
+            else
+            {
+                displayRole();
+                closeForm();
+            }
         }
     };
 
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    const body = `requestType=${requestType}&roleId=${roleId}&roleName=${roleName}&roleDescription=${roleDescription}&actionList=${actionList}`;
+    const body = `requestType=${requestType}&tokenForm=${tokenForm}&roleId=${roleId}&roleName=${roleName}&roleDescription=${roleDescription}&actionList=${actionList}`;
 
     request.send(body);
 }
@@ -136,8 +145,10 @@ function deleteRole()
             {
                 if(request.readyState === 4)
                 {
-                    console.log("AJAX : request delete completed");
-                    displayRole();
+                    if (request.responseText === "login")
+                        window.location.href = "/login";
+                    else
+                        displayRole();
                 }
             };
 
@@ -168,9 +179,10 @@ function openForm(id = "")
     {
         if(request.readyState === 4)
         {
-            if (request.responseText !== "")
+            if (request.responseText === "login")
+                window.location.href = "/login";
+            else
             {
-                console.log("AJAX : request open form completed");
                 ctnRoleForm.html(request.responseText);
                 ctnRoleForm.css("width", "100%");
                 ctnRoleForm.css("height", "100%");
@@ -195,11 +207,6 @@ function closeForm()
     ctnRoleForm.css("width", "0");
     ctnRoleForm.css("height", "0");
 }
-
-/**************************************************
- * EVENT LISTENER
- ***************************************************/
-$("#roleList").ready(displayRole);
 
 function checkAll(self)
 {

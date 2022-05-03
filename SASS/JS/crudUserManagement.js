@@ -8,12 +8,16 @@ function displayUser()
 	const request = new XMLHttpRequest();
 	request.open('POST', '/user-management');
 	
-	request.onreadystatechange = function(){
-		if(request.readyState === 4){
-			if (request.responseText !== ""){
-				console.log("AJAX : display request completed");
+	request.onreadystatechange = function()
+	{
+		if(request.readyState === 4)
+		{
+			if (request.responseText === "login")
+				window.location.href = "/login";
+			else
+			{
 				$("#userList").html(request.responseText);
-				
+
 				$(document).ready(function (){
 					$('#userManagementTable').DataTable();
 				});
@@ -37,21 +41,26 @@ function updateUser()
 	const userFirstname     = $('#input-firstname').val();
 	const userEmail         = $('#input-email').val();
 	const userIdRole        = $('#input-idRole').val();
+	const tokenForm         = $('#tokenForm').val();
 	
 	const request = new XMLHttpRequest();
 	request.open('POST', '/user-management');
 	
 	request.onreadystatechange = function(){
-		if(request.readyState === 4){
-			console.log("AJAX : Update request completed");
-			console.log(request.responseText);
-			displayUser();
-			closeForm();
+		if(request.readyState === 4)
+		{
+			if (request.responseText === "login")
+				window.location.href = "/login";
+			else
+			{
+				displayUser();
+				closeForm();
+			}
 		}
 	};
 	
 	request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	const body = `requestType=${requestType}&userId=${userId}&userLastname=${userLastName}&userFirstname=${userFirstname}&userEmail=${userEmail}&userIdRole=${userIdRole}`;
+	const body = `requestType=${requestType}&tokenForm=${tokenForm}&userId=${userId}&userLastname=${userLastName}&userFirstname=${userFirstname}&userEmail=${userEmail}&userIdRole=${userIdRole}`;
 	
 	request.send(body);
 }
@@ -77,10 +86,14 @@ function deleteUser(){
 			const request = new XMLHttpRequest();
 			request.open('POST', '/user-management');
 			
-			request.onreadystatechange = function(){
-				if(request.readyState === 4){
-					console.log("AJAX : delete request completed");
-					displayUser();
+			request.onreadystatechange = function()
+			{
+				if(request.readyState === 4)
+				{
+					if (request.responseText === "login")
+						window.location.href = "/login";
+					else
+						displayUser();
 				}
 			};
 			
@@ -108,7 +121,9 @@ function openForm(id = "")
 	{
 		if(request.readyState === 4)
 		{
-			if (request.responseText !== "")
+			if (request.responseText === "login")
+				window.location.href = "/login";
+			else
 			{
 				console.log("AJAX : request open form completed");
 				$("#ctnUserForm").html(request.responseText);
@@ -133,8 +148,3 @@ function closeForm()
 	$("#ctnUserForm").css("width", "0");
 	$("#ctnUserForm").css("height", "0");
 }
-
-/**************************************************
- * EVENT LISTENER
- ***************************************************/
-$("#userList").ready(displayUser);

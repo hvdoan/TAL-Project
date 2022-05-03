@@ -22,4 +22,9 @@
 
 <div id="ctnRoleForm"></div>
 
-<script src="../SASS/JS/crudRole.js"></script>
+<script type="text/javascript">
+    /**************************************************
+     * EVENT LISTENER
+     ***************************************************/
+    $("#roleList").ready(displayRole);
+</script>

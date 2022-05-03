@@ -20,6 +20,9 @@
             <input id="input-description" type="text" name="description">
         <?php } ?>
     </div>
+
+    <!--    CSRF-->
+    <input id="tokenForm" type="hidden" name="tokenForm" value="<?=$this->data["tokenForm"]?>">
 </section>
 
 <section class="ctn">

@@ -24,4 +24,9 @@
 
 <div id="ctnDonationTierForm"></div>
 
-<script src="../SASS/JS/crudDonationTier.js"></script>
+<script type="text/javascript">
+    /**************************************************
+     * EVENT LISTENER
+     ***************************************************/
+    $("#donationTierList").ready(displayDonationTier);
+</script>

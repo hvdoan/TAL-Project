@@ -16,6 +16,13 @@ body,
     }
 }
 
+.page
+{
+    width: 100%;
+    height: calc(100vh - $nav-max-height);
+    background-color: $white;
+}
+
 h1
 {
     font-size: rem(24);

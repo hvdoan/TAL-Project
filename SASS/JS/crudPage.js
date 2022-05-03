@@ -12,15 +12,16 @@ function displayPage()
     {
         if(request.readyState === 4)
         {
-            if (request.responseText !== "")
+            if (request.responseText === "login")
+                window.location.href = "/login";
+            else
             {
-                console.log("AJAX : request display completed");
                 $("#pageList").html(request.responseText);
 
                 $(document).ready( function ()
                 {
                     $('#pageTable').DataTable();
-                } );
+                });
             }
         }
     };
@@ -32,13 +33,14 @@ function displayPage()
 }
 
 /**************************************************
- * AJAX : INSERT ROLE
+ * AJAX : INSERT PAGE
  ***************************************************/
 function insertPage(data)
 {
     const requestType       = "insert";
     const pageUri           = $('#input-uri').val();
     const pageDescription   = $('#input-description').val();
+    const tokenForm         = $('#tokenForm').val();
 
     const request = new XMLHttpRequest();
     request.open('POST', '/page-creation');
@@ -47,14 +49,15 @@ function insertPage(data)
     {
         if(request.readyState === 4)
         {
-            console.log("AJAX : request insert completed");
-            console.log(request.responseText);
-            window.location.href = "/page-management";
+            if (request.responseText === "login")
+                window.location.href = "/login";
+            else
+                window.location.href = "/page-management";
         }
     };
 
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    const body = `requestType=${requestType}&data=${data}&pageUri=${pageUri}&pageDescription=${pageDescription}`;
+    const body = `requestType=${requestType}&tokenForm=${tokenForm}&data=${data}&pageUri=${pageUri}&pageDescription=${pageDescription}`;
 
     request.send(body);
 }
@@ -67,6 +70,7 @@ function updatePage(pageId, data)
     const requestType       = "update"
     const pageUri           = $('#input-uri').val();
     const pageDescription   = $('#input-description').val();
+    const tokenForm         = $('#tokenForm').val();
 
     const request = new XMLHttpRequest();
     request.open('POST', '/page-creation');
@@ -75,22 +79,21 @@ function updatePage(pageId, data)
     {
         if(request.readyState === 4)
         {
-            console.log("AJAX : request update completed");
-            window.location.href = "/page-management";
+            if (request.responseText === "login")
+                window.location.href = "/login";
+            else
+                window.location.href = "/page-management";
         }
     };
 
-    console.log(pageId);
-    console.log(data);
-
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    const body = `requestType=${requestType}&pageId=${pageId}&data=${data}&pageUri=${pageUri}&pageDescription=${pageDescription}`;
+    const body = `requestType=${requestType}&tokenForm=${tokenForm}&pageId=${pageId}&data=${data}&pageUri=${pageUri}&pageDescription=${pageDescription}`;
 
     request.send(body);
 }
 
 /**************************************************
- * AJAX : DELETE ROLE
+ * AJAX : DELETE PAGE
  ***************************************************/
 function deletePage()
 {
@@ -119,8 +122,10 @@ function deletePage()
             {
                 if(request.readyState === 4)
                 {
-                    console.log("AJAX : request delete completed");
-                    displayPage();
+                    if (request.responseText === "login")
+                        window.location.href = "/login";
+                    else
+                        displayPage();
                 }
             };
 
@@ -135,8 +140,3 @@ function deletePage()
         alert("Sélectionnez au minimum une page à supprimer.");
     }
 }
-
-/**************************************************
- * EVENT LISTENER
- ***************************************************/
-$("#pageList").ready(displayPage);
