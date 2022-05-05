@@ -58,18 +58,25 @@
 				</li>
 				
 				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/palier-donation") ? "" : "close"; ?>">
-					<i class="fa-solid fa-film"></i>Donation<i class="fa-solid fa-angle-down"></i>
+                    <i class="fa-solid fa-circle-dollar-to-slot"></i></i>Donation<i class="fa-solid fa-angle-down"></i>
 					<ul>
 						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/palier-donation") ? "opened" : ""; ?>" href="/palier-donation">Paliers de donation</a>
 					</ul>
 				</li>
 				
 				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/comments") ? "" : "close"; ?>">
-					<i class="fa-solid fa-gear"></i>Modération<i class="fa-solid fa-angle-down"></i>
+                    <i class="fa-solid fa-comments"></i></i>Modération<i class="fa-solid fa-angle-down"></i>
 					<ul>
 						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/comments") ? "opened" : ""; ?>" href="/comments">Commentaires</a>
 					</ul>
 				</li>
+
+                <li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/api-configuration") ? "" : "close"; ?>">
+                    <i class="fa-solid fa-gear"></i>API<i class="fa-solid fa-angle-down"></i>
+                    <ul>
+                        <a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/api-configuration") ? "opened" : ""; ?>" href="/api-configuration">Configuration</a>
+                    </ul>
+                </li>
 				
 				<a class="btn bottom" href="/logout" "><span>Déconnexion</span><i class="fa-solid fa-power-off"></i></a>
 			</ul>

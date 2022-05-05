@@ -12,7 +12,12 @@ $light-orange: #d4716a;
 $dark-green: #259736;
 $light-green: #35be49;
 
-.dark-blue
+.bg\:dark-blue
 {
     background-color: $hard-blue !important;
+}
+
+.dark-blue
+{
+    color: $dark-blue;
 }

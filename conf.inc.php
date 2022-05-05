@@ -29,7 +29,7 @@ if(file_exists("ini.yml"))
     if (!empty($credentials["phpmailer"]["email"]) && !empty($credentials["phpmailer"]["password"]) &&
         !empty($credentials["phpmailer"]["port"]))
     {
-        define("PHPMAILERUSERNAME", $credentials["phpmailer"]["email"]);
+        define("PHPMAILEREMAIL", $credentials["phpmailer"]["email"]);
         define("PHPMAILERPASSWORD", $credentials["phpmailer"]["password"]);
         define("PHPMAILERPORT", $credentials["phpmailer"]["port"]);
     }

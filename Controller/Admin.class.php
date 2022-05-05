@@ -78,12 +78,16 @@ class Admin
                     $htmlContent .= "<td>" . $user["email"] . "</td>";
 
                     $object = $role->setId(intval($user["idRole"]));
+
                     if($object != false){
                         $role = $object;
                     }
                     $htmlContent .= "<td>" . $role->getName() . "</td>";
 
-                    $htmlContent .= "<td><button class='btn btn-edit' onclick='openForm(\"" . $user["id"] . "\")'>Editer</button></td>";
+                    if($user["id"] != $_SESSION["id"])
+                        $htmlContent .= "<td><button class='btn btn-edit' onclick='openUserForm(\"" . $user["id"] . "\")'>Editer</button></td>";
+                    else
+                        $htmlContent .= "<td></td>";
                     $htmlContent .= "</tr>";
                 }
 
@@ -141,8 +145,6 @@ class Admin
                     $user->setEmail($_POST["userEmail"]);
                     $user->setIdRole(intval($_POST["userIdRole"]));
                     $user->save();
-
-                    echo "1";
                 }
             }
 		}
@@ -218,7 +220,7 @@ class Admin
                     $htmlContent .= "</select>";
                     $htmlContent .= "</div>";
                     $htmlContent .= "<div class='section'>";
-                    $htmlContent .= "<input class='btn btn-delete' onclick='closeForm()' type='button' value='Annuler'>";
+                    $htmlContent .= "<input class='btn btn-delete' onclick='closeUserForm()' type='button' value='Annuler'>";
                     $htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $user->getId() . "'>";
                     $htmlContent .= "<input class='btn btn-validate' onclick='updateUser()' type='button' value='Modifier'>";
                     $htmlContent .= "</div>";
@@ -280,7 +282,7 @@ class Admin
                     if ($role["name"] == "Utilisateur" || $role["name"] == "Administrateur")
                         $htmlContent .= "<td></td>";
                     else
-                        $htmlContent .= "<td><button class='btn btn-edit' onclick='openForm(\"" . $role["id"] . "\")'>Editer</button></td>";
+                        $htmlContent .= "<td><button class='btn btn-edit' onclick='openRoleForm(\"" . $role["id"] . "\")'>Editer</button></td>";
 
                     $htmlContent .= "</tr>";
                 }
@@ -460,7 +462,7 @@ class Admin
                 }
 
                 $htmlContent .= "<div class='section'>";
-                $htmlContent .= "<input class='btn btn-delete' onclick='closeForm()' type='button' value='Annuler'>";
+                $htmlContent .= "<input class='btn btn-delete' onclick='closeRoleForm()' type='button' value='Annuler'>";
 
                 if ($role->getId() != null) {
                     $htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $role->getId() . "'>";
@@ -701,7 +703,7 @@ class Admin
                     $htmlContent .= "<td>" . $donationTier["description"] . "</td>";
                     $htmlContent .= "<td>" . intval(($donationTier['price'] / 100)) . "," . ($donationTier['price'] % 100) . "</td>";
 
-                    $htmlContent .= "<td><button class='btn btn-edit' onclick='openForm(\"" . $donationTier["id"] . "\")'>Editer</button></td>";
+                    $htmlContent .= "<td><button class='btn btn-edit' onclick='openDonationForm(\"" . $donationTier["id"] . "\")'>Editer</button></td>";
                     $htmlContent .= "</tr>";
                 }
 
@@ -808,7 +810,7 @@ class Admin
                         $htmlContent .= "<input id='input-price' type='text' name='price' value='" . $donationTier->getPrice() . "'>";
                     $htmlContent .= "</div>";
                     $htmlContent .= "<div class='section'>";
-                        $htmlContent .= "<input class='btn btn-delete' onclick='closeForm()' type='button' value='Annuler'>";
+                        $htmlContent .= "<input class='btn btn-delete' onclick='closeDonationForm()' type='button' value='Annuler'>";
                 }
                 else
                 {
@@ -826,7 +828,7 @@ class Admin
                         $htmlContent .= "<input id='input-price' type='text' name='price'>";
                     $htmlContent .= "</div>";
                     $htmlContent .= "<div class='section'>";
-                        $htmlContent .= "<input class='btn btn-delete' onclick='closeForm()' type='button' value='Annuler'>";
+                        $htmlContent .= "<input class='btn btn-delete' onclick='closeDonationForm()' type='button' value='Annuler'>";
                 }
 
                 if($donationTier->getId() != null)
@@ -852,4 +854,66 @@ class Admin
 				$view = new View("donationTier", "back");
 		}
 	}
+
+    public function api()
+    {
+        /* Reload the login session time if connexion status is true */
+        if(Verificator::checkConnection())
+            Verificator::reloadConnection();
+        else
+            header("Location: /login");
+
+        /* Check access permission */
+        if(!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_USER"))
+            header("Location: /dashboard");
+
+        if((isset($_POST["requestType"]) && $_POST["requestType"] == "updatePaypal") &&
+            (isset($_POST["tokenForm"]) && isset($_SESSION["tokenForm"]) ? $_POST["tokenForm"] == $_SESSION["tokenForm"] : false))
+        {
+            if(!empty($_POST["clientKey"]) && !empty($_POST["currency"]))
+            {
+                $config = yaml_parse_file("ini.yml");
+
+                $clientKey  = addslashes($_POST["clientKey"]);
+                $currency   = addslashes($_POST["currency"]);
+
+                $config["paypal"]["clientKey"]     = $clientKey;
+                $config["paypal"]["currency"]      = $currency;
+
+                $configFile = fopen("ini.yml", "w");
+                yaml_emit_file("ini.yml", $config);
+                fclose($configFile);
+
+                header("Location: /api-configuration");
+            }
+        }
+        else if((isset($_POST["requestType"]) && $_POST["requestType"] == "updateEmail") &&
+            (isset($_POST["tokenForm"]) && isset($_SESSION["tokenForm"]) ? $_POST["tokenForm"] == $_SESSION["tokenForm"] : false))
+        {
+            if(!empty($_POST["email"]) && !empty($_POST["password"]) && !empty($_POST["port"]))
+            {
+                $config = yaml_parse_file("ini.yml");
+
+                $email      = addslashes($_POST["email"]);
+                $password   = addslashes($_POST["password"]);
+                $port       = addslashes($_POST["port"]);
+
+                $config["phpmailer"]["email"]       = $email;
+                $config["phpmailer"]["password"]    = $password;
+                $config["phpmailer"]["port"]        = $port;
+
+                $configFile = fopen("ini.yml", "w");
+                yaml_emit_file("ini.yml", $config);
+                fclose($configFile);
+
+                header("Location: /api-configuration");
+            }
+        }
+
+        $view = new View("api_configuration", "back");
+
+        $token = md5(uniqid());
+        $_SESSION["tokenForm"] = $token;
+        $view->assign("tokenForm", $token);
+    }
 }

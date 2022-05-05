@@ -1,8 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Jockey+One&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Jaldi&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,400;0,700;1,400&display=swap");
-.dark-blue {
+.bg\:dark-blue {
   background-color: #272B40 !important;
+}
+
+.dark-blue {
+  color: #3F445F;
 }
 
 body,
@@ -21,7 +25,7 @@ body-row,
 
 .page {
   width: 100%;
-  height: calc(100vh - 60px);
+  min-height: calc(100vh - 60px);
   background-color: #fff;
 }
 
@@ -37,6 +41,34 @@ h2 {
   font-size: rem(16);
 }
 
+#hide-icon,
+#show-icon {
+  cursor: pointer;
+}
+
+.hide {
+  display: none !important;
+}
+
+.flex,
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+flex-jc\:center {
+  justify-content: center;
+}
+
+flex-ai\:center {
+  align-items: center;
+}
+
 .page > div > span {
   margin-top: 4%;
   display: flex;
@@ -45,6 +77,66 @@ h2 {
   width: 100%;
   height: 100%;
   opacity: 0.5;
+}
+
+#api-configuration > .ctn > form > h1 {
+  color: #3F445F;
+}
+#api-configuration > .ctn > form > hr {
+  margin-bottom: 20px;
+  color: #3F445F;
+}
+#api-configuration > .ctn > form > .field {
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
+}
+#api-configuration > .ctn > form > .field > label {
+  color: #272B40;
+  font-weight: bold;
+}
+#api-configuration > .ctn > form > .field > input {
+  width: 100%;
+  padding-bottom: 2px;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: solid 1px;
+  color: #3F445F;
+}
+#api-configuration > .ctn > form > .field > input:focus {
+  outline: none;
+}
+#api-configuration > .ctn > form > .field > .row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+}
+#api-configuration > .ctn > form > .field > .row > input {
+  width: calc(100% - 40px);
+  padding-bottom: 2px;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: solid 1px;
+  color: #3F445F;
+}
+#api-configuration > .ctn > form > .field > .row > input:focus {
+  outline: none;
+}
+#api-configuration > .ctn > form > .field > i {
+  width: min-content;
+}
+#api-configuration > .ctn > form > .field > select {
+  width: min-content;
+}
+#api-configuration > .ctn > form > .field-submit {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+#api-configuration > .ctn > form > .field-submit > button {
+  margin-top: 40px;
 }
 
 .banner {
@@ -119,14 +211,18 @@ h2 {
 .btn-validate {
   padding: 10px;
   background: #259736;
+  color: #fff;
   border: none;
   border-radius: 5px;
   font-weight: bold;
   letter-spacing: 1px;
+  transition: 0.3s;
+  cursor: pointer;
 }
 .btn-validate:hover {
   background: #35be49;
   color: #fff;
+  transition: 0.3s;
 }
 .btn-delete {
   padding: 10px;

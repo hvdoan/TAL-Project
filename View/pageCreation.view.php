@@ -2,7 +2,7 @@
     <h1>Modification de page</h1>
 
     <div>
-        <label>URL : http://localhost/</label>
+        <label>URL : https://<?=WEBSITENAME?>.fr/</label>
 
         <?php if($this->data["page"]->getId()) { ?>
             <input id="input-uri" type="text" name="uri" value="<?=str_replace("/", "", $this->data["page"]->getUri())?>">

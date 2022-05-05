@@ -2,7 +2,7 @@
 	<h1>Paliers de donation</h1>
 	
 	<div class="ctn ctn-add">
-		<button id="add" class="btn btn-add" onclick="openForm()" type="button" name="button">Nouveau</button>
+		<button id="add" class="btn btn-add" onclick="openDonationForm()" type="button" name="button">Nouveau</button>
 		<button id="delete" class="btn btn-delete" onclick="deleteDonationTier()" type="button" name="button">Supprimer</button>
 	</div>
 	

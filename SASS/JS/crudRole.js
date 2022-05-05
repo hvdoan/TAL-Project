@@ -62,7 +62,7 @@ function insertRole()
             else
             {
                 displayRole();
-                closeForm();
+                closeRoleForm();
             }
         }
     };
@@ -104,7 +104,7 @@ function updateRole()
             else
             {
                 displayRole();
-                closeForm();
+                closeRoleForm();
             }
         }
     };
@@ -167,7 +167,7 @@ function deleteRole()
 /**************************************************
  * AJAX : OPEN ROLE FORM
  ***************************************************/
-function openForm(id = "")
+function openRoleForm(id = "")
 {
     const requestType = "openForm";
     let ctnRoleForm = $("#ctnRoleForm");
@@ -199,7 +199,7 @@ function openForm(id = "")
 /**************************************************
  * CLOSE ROLE FORM
  ***************************************************/
-function closeForm()
+function closeRoleForm()
 {
     let ctnRoleForm = $("#ctnRoleForm");
 

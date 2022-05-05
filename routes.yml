@@ -1,71 +1,75 @@
 /:
-  controller: main
-  action: home
+    controller: main
+    action: home
 
 /contact:
-  controller: main
-  action: contact
+    controller: main
+    action: contact
 
 /login:
-  controller: user
-  action: login
+    controller: user
+    action: login
 
 /logout:
-  controller: user
-  action: logout
+    controller: user
+    action: logout
 
 /register:
-  controller: user
-  action: register
+    controller: user
+    action: register
 
 /forget:
-  controller: user
-  action: pwdforget
+    controller: user
+    action: pwdforget
 
 /activation:
-  controller: user
-  action: activatedaccount
+    controller: user
+    action: activatedaccount
 
 /dashboard:
-  controller: admin
-  action: dashboard
-  security:
-    - admin
+    controller: admin
+    action: dashboard
+    security:
+        - admin
 
 /user-management:
-  controller: admin
-  action: usermanagement
-  security:
-    - admin
+    controller: admin
+    action: usermanagement
+    security:
+        - admin
 
 /role-management:
-  controller: admin
-  action: managerole
-  security:
-    - admin
+    controller: admin
+    action: managerole
+    security:
+        - admin
 
 /page-management:
-  controller: admin
-  action: managepage
-  security:
-    - admin
+    controller: admin
+    action: managepage
+    security:
+        - admin
 
 /page-creation:
-  controller: admin
-  action: creationpage
-  security:
-    - admin
+    controller: admin
+    action: creationpage
+    security:
+        - admin
 
 /donation:
-  controller: main
-  action: donation
+    controller: main
+    action: donation
 
 /palier-donation:
-  controller: admin
-  action: palierdonation
-  security:
-    - admin
+    controller: admin
+    action: palierdonation
+    security:
+        - admin
 
 /config:
-  controller: config
-  action: config
+    controller: config
+    action: config
+
+/api-configuration:
+    controller: admin
+    action: api

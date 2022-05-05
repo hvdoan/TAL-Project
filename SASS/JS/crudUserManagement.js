@@ -54,7 +54,8 @@ function updateUser()
 			else
 			{
 				displayUser();
-				closeForm();
+				closeUserForm();
+				console.log(request.responseText);
 			}
 		}
 	};
@@ -110,7 +111,7 @@ function deleteUser(){
 /**************************************************
  * AJAX : OPEN USER FORM
  ***************************************************/
-function openForm(id = "")
+function openUserForm(id = "")
 {
 	const requestType = "openForm";
 	
@@ -142,7 +143,7 @@ function openForm(id = "")
 /**************************************************
  * CLOSE USER FORM
  ***************************************************/
-function closeForm()
+function closeUserForm()
 {
 	$("#ctnUserForm").html("");
 	$("#ctnUserForm").css("width", "0");

@@ -143,7 +143,7 @@ function deleteDonationTier(){
 /**************************************************
  * AJAX : OPEN DONATION TIER FORM
  ***************************************************/
-function openForm(id = "")
+function openDonationForm(id = "")
 {
 	const requestType = "openForm";
 	
@@ -158,6 +158,7 @@ function openForm(id = "")
 				window.location.href = "/login";
 			else
 			{
+				console.log(request.responseText);
 				$("#ctnDonationTierForm").html(request.responseText);
 				$("#ctnDonationTierForm").css("width", "100%");
 				$("#ctnDonationTierForm").css("height", "100%");
@@ -174,7 +175,7 @@ function openForm(id = "")
 /**************************************************
  * CLOSE DONATION TIER FORM
  ***************************************************/
-function closeForm()
+function closeDonationForm()
 {
 	$("#ctnDonationTierForm").html("");
 	$("#ctnDonationTierForm").css("width", "0");
