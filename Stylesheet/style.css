@@ -139,6 +139,22 @@ flex-ai\:center {
   margin-top: 40px;
 }
 
+#ctnForumForm {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+#ctnForumForm > form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .banner {
   display: block;
   width: 100%;
@@ -445,6 +461,22 @@ flex-ai\:center {
 }
 
 #ctnDonationTierForm > form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#ctnTagForm {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+#ctnTagForm > form {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -984,6 +1016,10 @@ nav > ul > .bottom,
 }
 .table > .tbody > .tr > .td:nth-child(5) {
   width: 25%;
+}
+
+.paginate_button.current {
+  border-radius: 10px !important;
 }
 
 /*# sourceMappingURL=style.css.map */

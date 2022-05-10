@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Core\Verificator;
 use App\Core\View;
 use App\Model\Action;
+use App\Model\Forum;
 use App\Model\Page;
 use App\Model\Permission;
 use App\Model\Role;
@@ -861,118 +862,7 @@ class Admin
 		if(!Verificator::checkConnection())
 			header("Location: /login");
 		
-		if(!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_DONATION_TIER"))
-			header("Location: /dashboard");
-		
-		$tag = new Tag();
-		
-		/* Display donationTier HTML Structure */
-		if(isset($_POST["requestType"]) && $_POST["requestType"] == "display"){
-			$tags = $tag->select(["id", "name", "description"], []);
-			$htmlContent = "";
-			
-			foreach($tags as $tag){
-				$htmlContent .= "<tr>";
-					$htmlContent .= "<td><input class='idTag' type='checkbox' name='" . $tag["id"] . "'></td>";
-					$htmlContent .= "<td>" . $tag["id"] . "</td>";
-					$htmlContent .= "<td id='" . $tag["id"] . "'>" . $tag["name"] . "</td>";
-					$htmlContent .= "<td>" . $tag["description"] . "</td>";
-					
-					$htmlContent .= "<td><button class='btn btn-edit' onclick='openForm(\"" . $tag["id"] . "\")'>Editer</button></td>";
-				$htmlContent .= "</tr>";
-			}
-			
-			echo $htmlContent;
-		}else if(isset($_POST["requestType"]) && $_POST["requestType"] == "insert"){
-			if((isset($_POST["tagName"]) && $_POST["tagName"] != "")
-				&& (isset($_POST["tagDescription"]) && $_POST["tagDescription"] != "")){
-				
-				/* Creation of a donationTier */
-				$tag->setName($_POST["tagName"]);
-				$tag->setDescription($_POST["tagDescription"]);
-				$tag->save();
-			}
-		}else if(isset($_POST["requestType"]) && $_POST["requestType"] == "update"){
-			if((isset($_POST["tagId"]) && $_POST["tagId"] != "")
-				&& (isset($_POST["tagName"]) && $_POST["tagName"] != "")
-				&& (isset($_POST["tagDescription"]) && $_POST["tagDescription"] != "")){
-				
-				/* Update of donationTier information */
-				$object = $tag->setId(intval($_POST["tagId"]));
-				if($object != false)
-					$tag = $object;
-				$tag->setName($_POST["tagName"]);
-				$tag->setDescription($_POST["tagDescription"]);
-				$tag->save();
-			}
-		}else if(isset($_POST["requestType"]) && $_POST["requestType"] == "delete"){
-			if(isset($_POST["tagIdList"]) && $_POST["tagIdList"] != ""){
-				/* Delete tag */
-				$tagIdList = explode(",", $_POST["tagIdList"]);
-				
-				for($i = 0 ; $i < count($tagIdList) ; $i++){
-					/* Deletion of the tag */
-					$object = $tag->setId($tagIdList[$i]);
-					if($object != false)
-						$tag = $object;
-					$tag->delete();
-				}
-			}
-		}else if(isset($_POST["requestType"]) && $_POST["requestType"] == "openForm"){
-			$htmlContent = "";
-			
-			if(isset($_POST["tagId"]) && $_POST["tagId"] != ""){
-				$object = $tag->setId(intval($_POST["tagId"]));
-				if($object != false)
-					$tag = $object;
-			}
-			
-			$htmlContent .= "<form class='form'>";
-			
-			if($tag->getId() != null){
-				$htmlContent .= "<h1>Modification de la catégorie : n°" . $tag->getId() . " " . $tag->getName() . " " . "</h1>";
-				$htmlContent .= "<div class='field'>";
-					$htmlContent .= "<label>Nom</label>";
-					$htmlContent .= "<input id='input-name' type='text' name='name' value='" . $tag->getName() . "'>";
-					$htmlContent .= "<label>Description</label>";
-					$htmlContent .= "<input id='input-description' type='text' name='description' value='" . $tag->getDescription() . "'>";
-				$htmlContent .= "</div>";
-				$htmlContent .= "<div class='section'>";
-					$htmlContent .= "<input class='btn btn-delete' onclick='closeForm()' type='button' value='Annuler'>";
-			}else{
-				$htmlContent .= "<h1>Création d'une nouvelle catégorie</h1>";
-				$htmlContent .= "<div class='field'>";
-					$htmlContent .= "<label>Nom de la catégorie</label>";
-					$htmlContent .= "<input id='input-name' type='text' name='name'>";
-				$htmlContent .= "</div>";
-				$htmlContent .= "<div class='field'>";
-					$htmlContent .= "<label>Description de la catégorie</label>";
-					$htmlContent .= "<input id='input-description' type='text' name='description'>";
-				$htmlContent .= "</div>";
-				$htmlContent .= "<div class='section'>";
-					$htmlContent .= "<input class='btn btn-delete' onclick='closeForm()' type='button' value='Annuler'>";
-			}
-			
-			if($tag->getId() != null){
-				$htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $tag->getId() . "'>";
-				$htmlContent .= "<input class='btn btn-validate' onclick='updateTag()' type='button' value='Modifier'>";
-			}else
-				$htmlContent .= "<input class='btn btn-validate' onclick='insertTag()' type='button' value='Créer'>";
-			$htmlContent .= "</div>";
-			$htmlContent .= "</form>";
-			
-			echo $htmlContent;
-		}else
-			if(!isset($_POST["requestType"]))
-				$view = new View("tag", "back");
-	}
-	
-	public function forum()
-	{
-		if(!Verificator::checkConnection())
-			header("Location: /login");
-		
-		if(!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_DONATION_TIER"))
+		if(!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_FORUM"))
 			header("Location: /dashboard");
 		
 		$tag = new Tag();
@@ -1139,4 +1029,469 @@ class Admin
         $_SESSION["tokenForm"] = $token;
         $view->assign("tokenForm", $token);
     }
+	
+	public function forumManagement()
+	{
+		/* Get the connexion status */
+		$isConnected = Verificator::checkConnection();
+		
+		/* Reload the login session time if connexion status is true */
+		if($isConnected)
+			Verificator::reloadConnection();
+		
+		/* Check access permission */
+		if(!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_FORUM"))
+			header("Location: /dashboard");
+		
+		$forum = new Forum();
+		$user = new UserModel();
+		$tag = new Tag();
+		
+		/* Display users HTML Structure */
+		if(isset($_POST["requestType"]) && $_POST["requestType"] == "display")
+		{
+			if(!$isConnected)
+				echo "login";
+			else
+			{
+				$forumList = $forum->select(["id", "idUser", "idTag", "title", "content", "creationDate", "updateDate"], []);
+				$htmlContent = "";
+				
+				foreach($forumList as $forum)
+				{
+					$htmlContent .= "<tr>";
+					$htmlContent .= "<td><input class='idForum' type='checkbox' name='" . $forum["id"] . "'></td>";
+					$htmlContent .= "<td>" . $forum["id"] . "</td>";
+					$htmlContent .= "<td id='" . $forum["id"] . "'>" . $forum["title"] . "</td>";
+					$htmlContent .= "<td>" . $forum["content"] . "</td>";
+					
+					$object = $tag->setId(intval($forum["idTag"]));
+					if($object != false){
+						$tag = $object;
+					}
+					$htmlContent .= "<td>" . $tag->getName() . "</td>";
+					
+					$object = $user->setId(intval($forum["idUser"]));
+					if($object != false){
+						$user = $object;
+					}
+					$htmlContent .= "<td>" . $user->getFirstname() . " " . $user->getLastname() . "</td>";
+					
+					$htmlContent .= "<td>" . $forum["creationDate"] . "</td>";
+					$htmlContent .= "<td>" . $forum["updateDate"] . "</td>";
+					
+					$htmlContent .= "<td><button class='btn btn-edit' onclick='openForumForm(\"" . $forum["id"] . "\")'>Editer</button></td>";
+					$htmlContent .= "</tr>";
+				}
+				
+				echo $htmlContent;
+			}
+		}
+		else if((isset($_POST["requestType"]) ? $_POST["requestType"] == "insert" : false) &&
+			(isset($_POST["tokenForm"]) && isset($_SESSION["tokenForm"]) ? $_POST["tokenForm"] == $_SESSION["tokenForm"] : false))
+		{
+			if(!$isConnected)
+				echo "login";
+			else{
+				if( (isset($_POST["forumTitle"]) && $_POST["forumTitle"] != "") &&
+					(isset($_POST["forumContent"]) && $_POST["forumContent"] != "") &&
+					(isset($_POST["forumIdUser"]) && $_POST["forumIdUser"] != "") &&
+					(isset($_POST["forumIdTag"]) && $_POST["forumIdTag"] != "")){
+					/* Creation of a forum */
+					$forum->setTitle($_POST["forumTitle"]);
+					$forum->setContent($_POST["forumContent"]);
+					$forum->setIdUser($_POST["forumIdUser"]);
+					$forum->setIdTag($_POST["forumIdTag"]);
+					$forum->creationDate();
+					$forum->updateDate();
+					$forum->save();
+					
+					$object = $forum->setId(intval($forum->getLastInsertId()));
+					if($object != false){
+						$forum = $object;
+					}
+					
+				}
+			}
+		}
+		else if((isset($_POST["requestType"]) ? $_POST["requestType"] == "update" : false) &&
+			(isset($_POST["tokenForm"]) && isset($_SESSION["tokenForm"]) ? $_POST["tokenForm"] == $_SESSION["tokenForm"] : false))
+		{
+			if(!$isConnected)
+				echo "login";
+			else
+			{
+				if((isset($_POST["forumId"]) && $_POST["forumId"] != "")
+					&& (isset($_POST["forumTitle"]) && $_POST["forumTitle"] != "")
+					&& (isset($_POST["forumContent"]) && $_POST["forumContent"] != "")
+					&& (isset($_POST["forumIdUser"]) && $_POST["forumIdUser"] != "")
+					&& (isset($_POST["forumIdTag"]) && $_POST["forumIdTag"] != ""))
+				{
+					/* Update of forum information */
+					$object = $forum->setId(intval($_POST["forumId"]));
+					
+					if($object != false)
+						$forum = $object;
+					
+					$forum->setTitle($_POST["forumTitle"]);
+					$forum->setContent($_POST["forumContent"]);
+					$forum->setIdUser($_POST["forumIdUser"]);
+					$forum->setIdTag($_POST["forumIdTag"]);
+					$forum->updateDate();
+					$forum->save();
+				}
+			}
+		}
+		else if((isset($_POST["requestType"]) && $_POST["requestType"] == "delete"))
+		{
+			if(!$isConnected)
+				echo "login";
+			else
+			{
+				if (isset($_POST["forumIdList"]) && $_POST["forumIdList"] != "") {
+					/* Delete forums */
+					$forumIdList = explode(",", $_POST["forumIdList"]);
+					
+					for ($i = 0; $i < count($forumIdList); $i++) {
+						/* Deletion of the forum */
+						$object = $forum->setId($forumIdList[$i]);
+						if ($object != false) {
+							$forum = $object;
+						}
+						$forum->delete();
+					}
+				}
+			}
+		}
+		
+		else if(isset($_POST["requestType"]) && $_POST["requestType"] == "openForm")
+		{
+			if(!$isConnected)
+				echo "login";
+			else
+			{
+				
+				if(isset($_POST["forumId"]) && $_POST["forumId"] != ""){
+					$object = $forum->setId(intval($_POST["forumId"]));
+					if($object != false)
+						$forum = $object;
+				}
+				
+				$tagList = $tag->select(["id", "name"], []);
+				$htmlContent = "";
+				
+				$object = $user->setId(intval($forum->getIdUser()));
+				if($object != false){
+					$user = $object;
+				}
+				
+				$token = md5(uniqid());
+				$_SESSION["tokenForm"] = $token;
+				
+				$htmlContent .= "<form class='form'>";
+				
+				// @CSRF
+				$htmlContent .= "<input id='tokenForm' type='hidden' name='tokenForm' value='" . $token . "'>";
+				
+				if ($forum->getId() != null){
+					$htmlContent .= "<h1>Modification du forum : n°" . $forum->getId() . "</h1>";
+					$htmlContent .= "<div class='field'>";
+						$htmlContent .= "<label>Titre</label>";
+						$htmlContent .= "<input id='input-title' type='text' name='title' value='" . $forum->getTitle() . "'>";
+						$htmlContent .= "<label>Contenu</label>";
+						$htmlContent .= "<input id='input-content' type='text' name='content' value='" . $forum->getContent() . "'>";
+						$htmlContent .= "<label>Auteur</label>";
+						$htmlContent .= "<input type='text' value='" . $user->getFirstname() . " " . $user->getLastname() . "' disabled>";
+						$htmlContent .= "<input id='input-idUser' type='hidden' name='idUser' value='" . $user->getId() . "'>";
+					$htmlContent .= "</div>";
+					$htmlContent .= "<div class='field'>";
+						$htmlContent .= "<label for='input-idTag'>Catégorie</label>";
+						$htmlContent .= "<select name='forumIdTag' id='input-idTag'>";
+							foreach($tagList as $tag){
+								$htmlContent .= "<option value='" . $tag["id"] . "'";
+								$htmlContent .= ($tag["id"] == $forum->getIdTag()) ? "selected>" : ">";
+								$htmlContent .= $tag["name"] . "</option>";
+							}
+						$htmlContent .= "</select>";
+					$htmlContent .= "</div>";
+					$htmlContent .= "<div class='section'>";
+						$htmlContent .= "<input class='btn btn-delete' onclick='closeForumForm()' type='button' value='Annuler'>";
+				}else
+				{
+					$htmlContent .= "<h1>Création d'un nouveau forum</h1>";
+					$htmlContent .= "<div class='field'>";
+						$htmlContent .= "<label>Titre du forum</label>";
+						$htmlContent .= "<input id='input-title' type='text' name='title'>";
+					$htmlContent .= "</div>";
+					$htmlContent .= "<div class='field'>";
+						$htmlContent .= "<label>Contenu du forum</label>";
+						$htmlContent .= "<input id='input-content' type='text' name='content'>";
+					$htmlContent .= "</div>";
+					$htmlContent .= "<div class='field'>";
+						$htmlContent .= "<select name='forumIdTag' id='input-idTag'>";
+						foreach($tagList as $tag){
+							$htmlContent .= "<option value='" . $tag["id"] . "'>" . $tag["name"] . "</option>";
+						}
+						$htmlContent .= "</select>";
+					$htmlContent .= "</div>";
+					$htmlContent .= "<input id='input-idUser' type='hidden' name='idUser' value='" . $_SESSION['id'] . "'>";
+					$htmlContent .= "<div class='section'>";
+						$htmlContent .= "<input class='btn btn-delete' onclick='closeForumForm()' type='button' value='Annuler'>";
+				}
+				
+				if($forum->getId() != null)
+				{
+					$htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $forum->getId() . "'>";
+					$htmlContent .= "<input class='btn btn-validate' onclick='updateForum()' type='button' value='Modifier'>";
+				}
+				else
+					$htmlContent .= "<input class='btn btn-validate' onclick='insertForum()' type='button' value='Créer'>";
+				
+				$htmlContent .= "</div>";
+				}
+				$htmlContent .= "</form>";
+				echo $htmlContent;
+			
+		}else{
+			if(!$isConnected)
+				header("Location: /login");
+			
+			if(!isset($_POST["requestType"])){
+				$view = new View("forumManagement", "back");
+			}
+		}
+	}
+	
+	public function messageManagement()
+	{
+		/* Get the connexion status */
+		$isConnected = Verificator::checkConnection();
+		
+		/* Reload the login session time if connexion status is true */
+		if($isConnected)
+			Verificator::reloadConnection();
+		
+		/* Check access permission */
+		if(!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_FORUM"))
+			header("Location: /dashboard");
+		
+		$forum = new Forum();
+		$user = new UserModel();
+		$tag = new Tag();
+		
+		/* Display users HTML Structure */
+		if(isset($_POST["requestType"]) && $_POST["requestType"] == "display")
+		{
+			if(!$isConnected)
+				echo "login";
+			else
+			{
+				$forumList = $forum->select(["id", "idUser", "idTag", "title", "content", "creationDate", "updateDate"], []);
+				$htmlContent = "";
+				
+				foreach($forumList as $forum)
+				{
+					$htmlContent .= "<tr>";
+					$htmlContent .= "<td><input class='idForum' type='checkbox' name='" . $forum["id"] . "'></td>";
+					$htmlContent .= "<td>" . $forum["id"] . "</td>";
+					$htmlContent .= "<td id='" . $forum["id"] . "'>" . $forum["title"] . "</td>";
+					$htmlContent .= "<td>" . $forum["content"] . "</td>";
+					
+					$object = $tag->setId(intval($forum["idTag"]));
+					if($object != false){
+						$tag = $object;
+					}
+					$htmlContent .= "<td>" . $tag->getName() . "</td>";
+					
+					$object = $user->setId(intval($forum["idUser"]));
+					if($object != false){
+						$user = $object;
+					}
+					$htmlContent .= "<td>" . $user->getFirstname() . " " . $user->getLastname() . "</td>";
+					
+					$htmlContent .= "<td>" . $forum["creationDate"] . "</td>";
+					$htmlContent .= "<td>" . $forum["updateDate"] . "</td>";
+					
+					$htmlContent .= "<td><button class='btn btn-edit' onclick='openForumForm(\"" . $forum["id"] . "\")'>Editer</button></td>";
+					$htmlContent .= "</tr>";
+				}
+				
+				echo $htmlContent;
+			}
+		}
+		else if((isset($_POST["requestType"]) ? $_POST["requestType"] == "insert" : false) &&
+			(isset($_POST["tokenForm"]) && isset($_SESSION["tokenForm"]) ? $_POST["tokenForm"] == $_SESSION["tokenForm"] : false))
+		{
+			if(!$isConnected)
+				echo "login";
+			else{
+				if( (isset($_POST["forumTitle"]) && $_POST["forumTitle"] != "") &&
+					(isset($_POST["forumContent"]) && $_POST["forumContent"] != "") &&
+					(isset($_POST["forumIdUser"]) && $_POST["forumIdUser"] != "") &&
+					(isset($_POST["forumIdTag"]) && $_POST["forumIdTag"] != "")){
+					/* Creation of a forum */
+					$forum->setTitle($_POST["forumTitle"]);
+					$forum->setContent($_POST["forumContent"]);
+					$forum->setIdUser($_POST["forumIdUser"]);
+					$forum->setIdTag($_POST["forumIdTag"]);
+					$forum->creationDate();
+					$forum->updateDate();
+					$forum->save();
+					
+					$object = $forum->setId(intval($forum->getLastInsertId()));
+					if($object != false){
+						$forum = $object;
+					}
+					
+				}
+			}
+		}
+		else if((isset($_POST["requestType"]) ? $_POST["requestType"] == "update" : false) &&
+			(isset($_POST["tokenForm"]) && isset($_SESSION["tokenForm"]) ? $_POST["tokenForm"] == $_SESSION["tokenForm"] : false))
+		{
+			if(!$isConnected)
+				echo "login";
+			else
+			{
+				if((isset($_POST["forumId"]) && $_POST["forumId"] != "")
+					&& (isset($_POST["forumTitle"]) && $_POST["forumTitle"] != "")
+					&& (isset($_POST["forumContent"]) && $_POST["forumContent"] != "")
+					&& (isset($_POST["forumIdUser"]) && $_POST["forumIdUser"] != "")
+					&& (isset($_POST["forumIdTag"]) && $_POST["forumIdTag"] != ""))
+				{
+					/* Update of forum information */
+					$object = $forum->setId(intval($_POST["forumId"]));
+					
+					if($object != false)
+						$forum = $object;
+					
+					$forum->setTitle($_POST["forumTitle"]);
+					$forum->setContent($_POST["forumContent"]);
+					$forum->setIdUser($_POST["forumIdUser"]);
+					$forum->setIdTag($_POST["forumIdTag"]);
+					$forum->updateDate();
+					$forum->save();
+				}
+			}
+		}
+		else if((isset($_POST["requestType"]) && $_POST["requestType"] == "delete"))
+		{
+			if(!$isConnected)
+				echo "login";
+			else
+			{
+				if (isset($_POST["forumIdList"]) && $_POST["forumIdList"] != "") {
+					/* Delete forums */
+					$forumIdList = explode(",", $_POST["forumIdList"]);
+					
+					for ($i = 0; $i < count($forumIdList); $i++) {
+						/* Deletion of the forum */
+						$object = $forum->setId($forumIdList[$i]);
+						if ($object != false) {
+							$forum = $object;
+						}
+						$forum->delete();
+					}
+				}
+			}
+		}
+		
+		else if(isset($_POST["requestType"]) && $_POST["requestType"] == "openForm")
+		{
+			if(!$isConnected)
+				echo "login";
+			else
+			{
+				
+				if(isset($_POST["forumId"]) && $_POST["forumId"] != ""){
+					$object = $forum->setId(intval($_POST["forumId"]));
+					if($object != false)
+						$forum = $object;
+				}
+				
+				$tagList = $tag->select(["id", "name"], []);
+				$htmlContent = "";
+				
+				$object = $user->setId(intval($forum->getIdUser()));
+				if($object != false){
+					$user = $object;
+				}
+				
+				$token = md5(uniqid());
+				$_SESSION["tokenForm"] = $token;
+				
+				$htmlContent .= "<form class='form'>";
+				
+				// @CSRF
+				$htmlContent .= "<input id='tokenForm' type='hidden' name='tokenForm' value='" . $token . "'>";
+				
+				if ($forum->getId() != null){
+					$htmlContent .= "<h1>Modification du forum : n°" . $forum->getId() . "</h1>";
+					$htmlContent .= "<div class='field'>";
+						$htmlContent .= "<label>Titre</label>";
+						$htmlContent .= "<input id='input-title' type='text' name='title' value='" . $forum->getTitle() . "'>";
+						$htmlContent .= "<label>Contenu</label>";
+						$htmlContent .= "<input id='input-content' type='text' name='content' value='" . $forum->getContent() . "'>";
+						$htmlContent .= "<label>Auteur</label>";
+						$htmlContent .= "<input type='text' value='" . $user->getFirstname() . " " . $user->getLastname() . "' disabled>";
+						$htmlContent .= "<input id='input-idUser' type='hidden' name='idUser' value='" . $user->getId() . "'>";
+					$htmlContent .= "</div>";
+					$htmlContent .= "<div class='field'>";
+						$htmlContent .= "<label for='input-idTag'>Catégorie</label>";
+						$htmlContent .= "<select name='forumIdTag' id='input-idTag'>";
+							foreach($tagList as $tag){
+								$htmlContent .= "<option value='" . $tag["id"] . "'";
+								$htmlContent .= ($tag["id"] == $forum->getIdTag()) ? "selected>" : ">";
+								$htmlContent .= $tag["name"] . "</option>";
+							}
+						$htmlContent .= "</select>";
+					$htmlContent .= "</div>";
+					$htmlContent .= "<div class='section'>";
+						$htmlContent .= "<input class='btn btn-delete' onclick='closeForumForm()' type='button' value='Annuler'>";
+				}else
+				{
+					$htmlContent .= "<h1>Création d'un nouveau forum</h1>";
+					$htmlContent .= "<div class='field'>";
+						$htmlContent .= "<label>Titre du forum</label>";
+						$htmlContent .= "<input id='input-title' type='text' name='title'>";
+					$htmlContent .= "</div>";
+					$htmlContent .= "<div class='field'>";
+						$htmlContent .= "<label>Contenu du forum</label>";
+						$htmlContent .= "<input id='input-content' type='text' name='content'>";
+					$htmlContent .= "</div>";
+					$htmlContent .= "<div class='field'>";
+						$htmlContent .= "<select name='forumIdTag' id='input-idTag'>";
+						foreach($tagList as $tag){
+							$htmlContent .= "<option value='" . $tag["id"] . "'>" . $tag["name"] . "</option>";
+						}
+						$htmlContent .= "</select>";
+					$htmlContent .= "</div>";
+					$htmlContent .= "<input id='input-idUser' type='hidden' name='idUser' value='" . $_SESSION['id'] . "'>";
+					$htmlContent .= "<div class='section'>";
+						$htmlContent .= "<input class='btn btn-delete' onclick='closeForumForm()' type='button' value='Annuler'>";
+				}
+				
+				if($forum->getId() != null)
+				{
+					$htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $forum->getId() . "'>";
+					$htmlContent .= "<input class='btn btn-validate' onclick='updateForum()' type='button' value='Modifier'>";
+				}
+				else
+					$htmlContent .= "<input class='btn btn-validate' onclick='insertForum()' type='button' value='Créer'>";
+				
+				$htmlContent .= "</div>";
+				}
+				$htmlContent .= "</form>";
+				echo $htmlContent;
+			
+		}else{
+			if(!$isConnected)
+				header("Location: /login");
+			
+			if(!isset($_POST["requestType"])){
+				$view = new View("forumManagement", "back");
+			}
+		}
+	}
+	
 }
