@@ -37,7 +37,7 @@
 					<a class="btn" href="#">Wiki</a>
 					<a class="btn" href="/donation">Donation</a>
 					
-					<?php if(isset($_SESSION['permission']) && !empty($_SESSION['permission']) && in_array("ADMIN_ACCESS", $_SESSION['permission'])): ?>
+					<?php if(Verificator::checkConnection() && isset($_SESSION['permission']) && !empty($_SESSION['permission']) && in_array("ADMIN_ACCESS", $_SESSION['permission'])): ?>
 						<a class="btn" href="/dashboard">Dashboard</a>
 					<?php endif;
 					if(isset($_SESSION['id']) && !empty($_SESSION['token']) && isset($_COOKIE['token']) && $_SESSION['token'] === $_COOKIE['token']):?>

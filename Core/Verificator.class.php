@@ -59,11 +59,6 @@ class Verificator
 	public static function checkConnection(): bool
 	{
 		$isConnected = false;
-//        echo "<pre>";
-//        var_dump($_SESSION["token"]);
-//        var_dump($_COOKIE["token"]);
-//        echo "</pre>";
-//        die();
 
 		if(isset($_SESSION["token"]) && isset($_COOKIE["token"]) && isset($_SESSION["id"]))
         {
