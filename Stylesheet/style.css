@@ -451,6 +451,22 @@ flex-ai\:center {
   transform: translate(-50%, -50%);
 }
 
+#ctnTagForm {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+#ctnTagForm > form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 #editorjs h1 {
   color: #000;
 }
@@ -819,8 +835,19 @@ nav > ul > li,
   color: #fff;
   cursor: pointer;
 }
-nav > ul > li > i,
-.nav-ctn > ul > li > i {
+nav > ul > li > .nav-section-link,
+.nav-ctn > ul > li > .nav-section-link {
+  width: fit-content;
+  border-bottom: solid 2px #272B40;
+  transition: 0.2s;
+}
+nav > ul > li > .nav-section-link:hover,
+.nav-ctn > ul > li > .nav-section-link:hover {
+  border-bottom: solid 2px #fff;
+  transition: 0.2s;
+}
+nav > ul > li > .nav-section-link > i,
+.nav-ctn > ul > li > .nav-section-link > i {
   margin: 0 8px;
 }
 nav > ul > li > ul,
@@ -984,6 +1011,36 @@ nav > ul > .bottom,
 }
 .table > .tbody > .tr > .td:nth-child(5) {
   width: 25%;
+}
+
+.paginate_button.current {
+  border-radius: 10px !important;
+}
+
+.avatar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+}
+.avatar > span {
+  padding: 0 10px;
+}
+.avatar > #avatar-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border: solid 2px #fff;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.avatar > #avatar-container > img {
+  max-width: 30px;
+  max-height: 30px;
 }
 
 /*# sourceMappingURL=style.css.map */

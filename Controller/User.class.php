@@ -25,21 +25,27 @@ class User{
 		$user = new UserModel();
 		
 		if(!empty($_POST)){
-			$userLoggedIn = $user->select(['id', 'idRole', 'password', 'verifyAccount'], ['email' => $_POST['email']]);
+			$userLoggedIn = $user->select(['id', 'idRole', 'password', 'verifyAccount', 'firstname', 'lastname', 'avatar'], ['email' => $_POST['email']]);
 			
 			if(!empty($userLoggedIn)){
 				if(password_verify($_POST['password'], $userLoggedIn[0]['password'])){
 					if($userLoggedIn[0]['verifyAccount']){
 						/*   GET USER ROLE   */
-						$role = new Role();
+						$role   = new Role();
 						$object = $role->setId(intval($userLoggedIn[0]['idRole']));
 						
 						if($object != false)
 							$role = $object;
 						
-						$_SESSION['id'] = $userLoggedIn[0]["id"];
-						$_SESSION['role'] = $role->getName();
-						
+						$_SESSION['id']         = $userLoggedIn[0]["id"];
+						$_SESSION['role']       = $role->getName();
+						$_SESSION['firstname']  = $userLoggedIn[0]["firstname"];
+						$_SESSION['lastname']   = $userLoggedIn[0]["lastname"];
+						$_SESSION['avatar']     = $userLoggedIn[0]["avatar"];
+
+
+
+
 						/*   GET USER PERMISSION ACTION   */
 						$_SESSION["permission"] = [];
 						$permission = new Permission();

@@ -7,6 +7,7 @@ class User extends Sql
 {
     protected $id = null;
     protected $idRole = null;
+    protected $avatar = null;
     protected $firstname = null;
     protected $lastname = null;
     protected $email;
@@ -44,6 +45,22 @@ class User extends Sql
 	{
 		$this->idRole = $idRole;
 	}
+
+    /**
+     * @return null|string
+     */
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * @param null|string
+     */
+    public function setAvatar(?string $avatar): void
+    {
+        $this->avatar = $avatar;
+    }
 
     /**
      * @return null|string
