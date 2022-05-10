@@ -4,10 +4,14 @@
 		<meta charset="UTF-8">
 		<title>Template FRONT</title>
 		<meta name="description" content="Description de ma page">
-		<link rel="stylesheet" href="../CSS/dist/main.css">
+        <!-- CSS -->
+        <link rel="stylesheet" href="../Stylesheet/style.css">
+        <!-- FONT AWESOME -->
 		<script src="https://kit.fontawesome.com/62e5467ba7.js" crossorigin="anonymous"></script>
+        <!-- JQUERY -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<script src="../CSS/dist/main.js"></script>
+        <!-- JS -->
+        <script src="../JS/main.min.js"></script>
 	</head>
 	
 	<body>
@@ -21,7 +25,7 @@
 		
 		<nav class="nav-ctn-row">
 			<header>
-				<a href="/home"><img src="./../CSS/asset/img/logo.png" alt="logo"></a>
+				<a href="/home"><img src="../SASS/asset/img/logo.png" alt="logo"></a>
 			</header>
 			
 			<div class="nav">

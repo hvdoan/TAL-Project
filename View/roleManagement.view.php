@@ -2,7 +2,7 @@
     <h1>Role</h1>
 
     <div class="ctn ctn-add">
-        <button id="add" class="btn btn-add" onclick="openForm()" type="button" name="button">Nouveau</button>
+        <button id="add" class="btn btn-add" onclick="openRoleForm()" type="button" name="button">Nouveau</button>
         <button id="delete" class="btn btn-delete" onclick="deleteRole()" type="button" name="button">Supprimer</button>
     </div>
 
@@ -22,4 +22,9 @@
 
 <div id="ctnRoleForm"></div>
 
-<script src="../CSS/dist/crudRole.js"></script>
+<script type="text/javascript">
+    /**************************************************
+     * EVENT LISTENER
+     ***************************************************/
+    $("#roleList").ready(displayRole);
+</script>

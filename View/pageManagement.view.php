@@ -31,4 +31,9 @@
     </table>
 </section>
 
-<script src="../CSS/dist/crudPage.js"></script>
+<script type="text/javascript">
+    /**************************************************
+     * EVENT LISTENER
+     ***************************************************/
+    $("#pageList").ready(displayPage);
+</script>

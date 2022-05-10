@@ -58,12 +58,35 @@ class Verificator
 
 	public static function checkConnection(): bool
 	{
-		$isLog = false;
+		$isConnected = false;
+//        echo "<pre>";
+//        var_dump($_SESSION["token"]);
+//        var_dump($_COOKIE["token"]);
+//        echo "</pre>";
+//        die();
+
 		if(isset($_SESSION["token"]) && isset($_COOKIE["token"]) && isset($_SESSION["id"]))
-			if($_SESSION["token"] == $_COOKIE["token"] && $_SESSION["id"] != "")
-				$isLog = true;
-		return $isLog;
+        {
+            if($_SESSION["token"] == $_COOKIE["token"] && $_SESSION["id"] != "")
+                $isConnected = true;
+        }
+
+		return $isConnected;
 	}
+    
+    public static function reloadConnection(): void
+    {
+        if(self::checkConnection())
+        {
+            unset($_SESSION["token"]);
+            unset($_COOKIE["token"]);
+
+            $token = md5(uniqid());
+
+            $_SESSION["token"] = $token;
+            setcookie("token", $token, time() + (60 * 15), "", "", true);
+        }
+    }
 	
 	public static function unsetSession(): void{
 		if(!self::checkConnection()){

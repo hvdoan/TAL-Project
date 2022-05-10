@@ -3,20 +3,23 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Dashboard - <?=str_replace("/", "", $_SERVER["REQUEST_URI"])?></title>
-		<link rel="stylesheet" href="../CSS/dist/main.css">
+        <!-- CSS -->
+		<link rel="stylesheet" href="../Stylesheet/style.css">
+        <!-- FONT AWESOME -->
 		<script src="https://kit.fontawesome.com/62e5467ba7.js" crossorigin="anonymous"></script>
+        <!-- JQUERY -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<script src="../CSS/dist/main.js"></script>
-		<!--datatables-->
+        <!-- JS -->
+        <script src="../JS/main.min.js"></script>
+		<!-- datatables -->
 		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
 		<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
 	</head>
 	
 	<body class="body-row">
-		
 		<nav id="nav">
 			<header>
-				<a href="/home"><h1>TAL Project</h1></a>
+				<a href="/home"><h1><?=WEBSITENAME?></h1></a>
 				<i id="trigger-nav" class="fa-solid fa-bars"></i>
 			</header>
 			
@@ -55,18 +58,25 @@
 				</li>
 				
 				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/palier-donation") ? "" : "close"; ?>">
-					<i class="fa-solid fa-film"></i>Donation<i class="fa-solid fa-angle-down"></i>
+                    <i class="fa-solid fa-circle-dollar-to-slot"></i></i>Donation<i class="fa-solid fa-angle-down"></i>
 					<ul>
 						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/palier-donation") ? "opened" : ""; ?>" href="/palier-donation">Paliers de donation</a>
 					</ul>
 				</li>
 				
 				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/comments") ? "" : "close"; ?>">
-					<i class="fa-solid fa-gear"></i>Modération<i class="fa-solid fa-angle-down"></i>
+                    <i class="fa-solid fa-comments"></i></i>Modération<i class="fa-solid fa-angle-down"></i>
 					<ul>
 						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/comments") ? "opened" : ""; ?>" href="/comments">Commentaires</a>
 					</ul>
 				</li>
+
+                <li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/api-configuration") ? "" : "close"; ?>">
+                    <i class="fa-solid fa-gear"></i>API<i class="fa-solid fa-angle-down"></i>
+                    <ul>
+                        <a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/api-configuration") ? "opened" : ""; ?>" href="/api-configuration">Configuration</a>
+                    </ul>
+                </li>
 				
 				<a class="btn bottom" href="/logout" "><span>Déconnexion</span><i class="fa-solid fa-power-off"></i></a>
 			</ul>
@@ -75,7 +85,7 @@
 		<main class="dashboard">
 			<header>
 				<div class="searchBar">
-					<input type="text" name="searchBar" , placeholder="Recherche">
+					<input type="text" name="searchBar", placeholder="Recherche">
 					<i class="fa-solid fa-magnifying-glass"></i>
 				</div>
 			</header>

@@ -2,7 +2,7 @@
     <h1>Modification de page</h1>
 
     <div>
-        <label>URL : http://localhost/</label>
+        <label>URL : https://<?=WEBSITENAME?>.fr/</label>
 
         <?php if($this->data["page"]->getId()) { ?>
             <input id="input-uri" type="text" name="uri" value="<?=str_replace("/", "", $this->data["page"]->getUri())?>">
@@ -20,6 +20,9 @@
             <input id="input-description" type="text" name="description">
         <?php } ?>
     </div>
+
+    <!--    CSRF-->
+    <input id="tokenForm" type="hidden" name="tokenForm" value="<?=$this->data["tokenForm"]?>">
 </section>
 
 <section class="ctn">
@@ -32,7 +35,7 @@
     <?php } ?>
 </section>
 
-<script src="../CSS/dist/crudPage.js"></script>
+<script src="../SASS/JS/crudPage.js"></script>
 <script src="/API/EditorJS/editor.js"></script>
 <script src="/API/EditorJS/Paragraph/bundle.js"></script>
 <script src="/API/EditorJS/Header/bundle.js"></script>

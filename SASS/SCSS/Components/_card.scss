@@ -1,0 +1,61 @@
+@use "../Abstracts" as *;
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  width: auto;
+  min-height: 50vh;
+
+  & > div.checked {
+	background-color: $light-blue !important;
+  }
+
+  & > div {
+	width: 100%;
+	max-width: 300px;
+	margin: 20px;
+	padding: 1rem;
+	border-radius: 5px;
+	background-color: $light-grey;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	text-align: center;
+	transition: all 0.3s ease-in-out;
+	color: $black;
+	font-family: "Jaldi", sans-serif;
+	cursor: pointer;
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	-khtml-user-select: none; /* Konqueror HTML */
+	-moz-user-select: none; /* Old versions of Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+
+	&:hover {
+	  transform: scale(1.05);
+	}
+
+	& > div > h1 {
+	  font-size: 2rem;
+	  margin: 0;
+	  padding: 0;
+	  font-weight: bold;
+	  color: $black;
+	  font-family: "Jaldi", sans-serif;
+	}
+
+	& > h1 {
+	  color: $black;
+	  font-family: "Jaldi", sans-serif;
+	}
+  }
+}
+
+#paypal-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2%;
+  height: 20vh;
+}
