@@ -169,6 +169,22 @@
   transform: translate(-50%, -50%);
 }
 
+#ctnTagForm {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  background: rgba(0, 0, 0, .6);
+}
+
+#ctnTagForm > form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 #editorjs h1{
 	color: $black;
 }

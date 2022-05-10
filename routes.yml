@@ -66,6 +66,12 @@
     security:
         - admin
 
+/tag:
+  controller: admin
+  action: tag
+  security:
+    - admin
+    
 /config:
     controller: config
     action: config

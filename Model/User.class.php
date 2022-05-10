@@ -66,7 +66,7 @@ class User extends Sql
      */
     public function getLastname(): ?string
     {
-        return $this->lastname;
+        return htmlspecialchars($this->lastname, ENT_QUOTES);
     }
 
     /**

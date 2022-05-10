@@ -8,6 +8,7 @@ use App\Model\Action;
 use App\Model\Page;
 use App\Model\Permission;
 use App\Model\Role;
+use App\Model\Tag;
 use App\Model\User as UserModel;
 use DateTime;
 use App\Model\DonationTier;
