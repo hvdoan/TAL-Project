@@ -855,6 +855,228 @@ class Admin
 				$view = new View("donationTier", "back");
 		}
 	}
+	
+	public function tag()
+	{
+		if(!Verificator::checkConnection())
+			header("Location: /login");
+		
+		if(!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_DONATION_TIER"))
+			header("Location: /dashboard");
+		
+		$tag = new Tag();
+		
+		/* Display donationTier HTML Structure */
+		if(isset($_POST["requestType"]) && $_POST["requestType"] == "display"){
+			$tags = $tag->select(["id", "name", "description"], []);
+			$htmlContent = "";
+			
+			foreach($tags as $tag){
+				$htmlContent .= "<tr>";
+					$htmlContent .= "<td><input class='idTag' type='checkbox' name='" . $tag["id"] . "'></td>";
+					$htmlContent .= "<td>" . $tag["id"] . "</td>";
+					$htmlContent .= "<td id='" . $tag["id"] . "'>" . $tag["name"] . "</td>";
+					$htmlContent .= "<td>" . $tag["description"] . "</td>";
+					
+					$htmlContent .= "<td><button class='btn btn-edit' onclick='openForm(\"" . $tag["id"] . "\")'>Editer</button></td>";
+				$htmlContent .= "</tr>";
+			}
+			
+			echo $htmlContent;
+		}else if(isset($_POST["requestType"]) && $_POST["requestType"] == "insert"){
+			if((isset($_POST["tagName"]) && $_POST["tagName"] != "")
+				&& (isset($_POST["tagDescription"]) && $_POST["tagDescription"] != "")){
+				
+				/* Creation of a donationTier */
+				$tag->setName($_POST["tagName"]);
+				$tag->setDescription($_POST["tagDescription"]);
+				$tag->save();
+			}
+		}else if(isset($_POST["requestType"]) && $_POST["requestType"] == "update"){
+			if((isset($_POST["tagId"]) && $_POST["tagId"] != "")
+				&& (isset($_POST["tagName"]) && $_POST["tagName"] != "")
+				&& (isset($_POST["tagDescription"]) && $_POST["tagDescription"] != "")){
+				
+				/* Update of donationTier information */
+				$object = $tag->setId(intval($_POST["tagId"]));
+				if($object != false)
+					$tag = $object;
+				$tag->setName($_POST["tagName"]);
+				$tag->setDescription($_POST["tagDescription"]);
+				$tag->save();
+			}
+		}else if(isset($_POST["requestType"]) && $_POST["requestType"] == "delete"){
+			if(isset($_POST["tagIdList"]) && $_POST["tagIdList"] != ""){
+				/* Delete tag */
+				$tagIdList = explode(",", $_POST["tagIdList"]);
+				
+				for($i = 0 ; $i < count($tagIdList) ; $i++){
+					/* Deletion of the tag */
+					$object = $tag->setId($tagIdList[$i]);
+					if($object != false)
+						$tag = $object;
+					$tag->delete();
+				}
+			}
+		}else if(isset($_POST["requestType"]) && $_POST["requestType"] == "openForm"){
+			$htmlContent = "";
+			
+			if(isset($_POST["tagId"]) && $_POST["tagId"] != ""){
+				$object = $tag->setId(intval($_POST["tagId"]));
+				if($object != false)
+					$tag = $object;
+			}
+			
+			$htmlContent .= "<form class='form'>";
+			
+			if($tag->getId() != null){
+				$htmlContent .= "<h1>Modification de la catégorie : n°" . $tag->getId() . " " . $tag->getName() . " " . "</h1>";
+				$htmlContent .= "<div class='field'>";
+					$htmlContent .= "<label>Nom</label>";
+					$htmlContent .= "<input id='input-name' type='text' name='name' value='" . $tag->getName() . "'>";
+					$htmlContent .= "<label>Description</label>";
+					$htmlContent .= "<input id='input-description' type='text' name='description' value='" . $tag->getDescription() . "'>";
+				$htmlContent .= "</div>";
+				$htmlContent .= "<div class='section'>";
+					$htmlContent .= "<input class='btn btn-delete' onclick='closeForm()' type='button' value='Annuler'>";
+			}else{
+				$htmlContent .= "<h1>Création d'une nouvelle catégorie</h1>";
+				$htmlContent .= "<div class='field'>";
+					$htmlContent .= "<label>Nom de la catégorie</label>";
+					$htmlContent .= "<input id='input-name' type='text' name='name'>";
+				$htmlContent .= "</div>";
+				$htmlContent .= "<div class='field'>";
+					$htmlContent .= "<label>Description de la catégorie</label>";
+					$htmlContent .= "<input id='input-description' type='text' name='description'>";
+				$htmlContent .= "</div>";
+				$htmlContent .= "<div class='section'>";
+					$htmlContent .= "<input class='btn btn-delete' onclick='closeForm()' type='button' value='Annuler'>";
+			}
+			
+			if($tag->getId() != null){
+				$htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $tag->getId() . "'>";
+				$htmlContent .= "<input class='btn btn-validate' onclick='updateTag()' type='button' value='Modifier'>";
+			}else
+				$htmlContent .= "<input class='btn btn-validate' onclick='insertTag()' type='button' value='Créer'>";
+			$htmlContent .= "</div>";
+			$htmlContent .= "</form>";
+			
+			echo $htmlContent;
+		}else
+			if(!isset($_POST["requestType"]))
+				$view = new View("tag", "back");
+	}
+	
+	public function forum()
+	{
+		if(!Verificator::checkConnection())
+			header("Location: /login");
+		
+		if(!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_DONATION_TIER"))
+			header("Location: /dashboard");
+		
+		$tag = new Tag();
+		
+		/* Display donationTier HTML Structure */
+		if(isset($_POST["requestType"]) && $_POST["requestType"] == "display"){
+			$tags = $tag->select(["id", "name", "description"], []);
+			$htmlContent = "";
+			
+			foreach($tags as $tag){
+				$htmlContent .= "<tr>";
+					$htmlContent .= "<td><input class='idTag' type='checkbox' name='" . $tag["id"] . "'></td>";
+					$htmlContent .= "<td>" . $tag["id"] . "</td>";
+					$htmlContent .= "<td id='" . $tag["id"] . "'>" . $tag["name"] . "</td>";
+					$htmlContent .= "<td>" . $tag["description"] . "</td>";
+					
+					$htmlContent .= "<td><button class='btn btn-edit' onclick='openForm(\"" . $tag["id"] . "\")'>Editer</button></td>";
+				$htmlContent .= "</tr>";
+			}
+			
+			echo $htmlContent;
+		}else if(isset($_POST["requestType"]) && $_POST["requestType"] == "insert"){
+			if((isset($_POST["tagName"]) && $_POST["tagName"] != "")
+				&& (isset($_POST["tagDescription"]) && $_POST["tagDescription"] != "")){
+				
+				/* Creation of a donationTier */
+				$tag->setName($_POST["tagName"]);
+				$tag->setDescription($_POST["tagDescription"]);
+				$tag->save();
+			}
+		}else if(isset($_POST["requestType"]) && $_POST["requestType"] == "update"){
+			if((isset($_POST["tagId"]) && $_POST["tagId"] != "")
+				&& (isset($_POST["tagName"]) && $_POST["tagName"] != "")
+				&& (isset($_POST["tagDescription"]) && $_POST["tagDescription"] != "")){
+				
+				/* Update of donationTier information */
+				$object = $tag->setId(intval($_POST["tagId"]));
+				if($object != false)
+					$tag = $object;
+				$tag->setName($_POST["tagName"]);
+				$tag->setDescription($_POST["tagDescription"]);
+				$tag->save();
+			}
+		}else if(isset($_POST["requestType"]) && $_POST["requestType"] == "delete"){
+			if(isset($_POST["tagIdList"]) && $_POST["tagIdList"] != ""){
+				/* Delete tag */
+				$tagIdList = explode(",", $_POST["tagIdList"]);
+				
+				for($i = 0 ; $i < count($tagIdList) ; $i++){
+					/* Deletion of the tag */
+					$object = $tag->setId($tagIdList[$i]);
+					if($object != false)
+						$tag = $object;
+					$tag->delete();
+				}
+			}
+		}else if(isset($_POST["requestType"]) && $_POST["requestType"] == "openForm"){
+			$htmlContent = "";
+			
+			if(isset($_POST["tagId"]) && $_POST["tagId"] != ""){
+				$object = $tag->setId(intval($_POST["tagId"]));
+				if($object != false)
+					$tag = $object;
+			}
+			
+			$htmlContent .= "<form class='form'>";
+			
+			if($tag->getId() != null){
+				$htmlContent .= "<h1>Modification de la catégorie : n°" . $tag->getId() . " " . $tag->getName() . " " . "</h1>";
+				$htmlContent .= "<div class='field'>";
+					$htmlContent .= "<label>Nom</label>";
+					$htmlContent .= "<input id='input-name' type='text' name='name' value='" . $tag->getName() . "'>";
+					$htmlContent .= "<label>Description</label>";
+					$htmlContent .= "<input id='input-description' type='text' name='description' value='" . $tag->getDescription() . "'>";
+				$htmlContent .= "</div>";
+				$htmlContent .= "<div class='section'>";
+					$htmlContent .= "<input class='btn btn-delete' onclick='closeForm()' type='button' value='Annuler'>";
+			}else{
+				$htmlContent .= "<h1>Création d'une nouvelle catégorie</h1>";
+				$htmlContent .= "<div class='field'>";
+					$htmlContent .= "<label>Nom de la catégorie</label>";
+					$htmlContent .= "<input id='input-name' type='text' name='name'>";
+				$htmlContent .= "</div>";
+				$htmlContent .= "<div class='field'>";
+					$htmlContent .= "<label>Description de la catégorie</label>";
+					$htmlContent .= "<input id='input-description' type='text' name='description'>";
+				$htmlContent .= "</div>";
+				$htmlContent .= "<div class='section'>";
+					$htmlContent .= "<input class='btn btn-delete' onclick='closeForm()' type='button' value='Annuler'>";
+			}
+			
+			if($tag->getId() != null){
+				$htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $tag->getId() . "'>";
+				$htmlContent .= "<input class='btn btn-validate' onclick='updateTag()' type='button' value='Modifier'>";
+			}else
+				$htmlContent .= "<input class='btn btn-validate' onclick='insertTag()' type='button' value='Créer'>";
+			$htmlContent .= "</div>";
+			$htmlContent .= "</form>";
+			
+			echo $htmlContent;
+		}else
+			if(!isset($_POST["requestType"]))
+				$view = new View("tag", "back");
+	}
 
     public function api()
     {
