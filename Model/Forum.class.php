@@ -13,6 +13,11 @@ class Forum extends Sql{
 	protected $creationDate = null;
 	protected $updateDate = null;
 	
+	public function __construct()
+	{
+		parent::__construct();
+	}
+	
 	/**
 	 * @return null
 	 */

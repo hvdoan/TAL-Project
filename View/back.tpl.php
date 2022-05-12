@@ -64,12 +64,12 @@
 					</ul>
 				</li>
 				
-				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/forum-management" || $_SERVER["REQUEST_URI"] == "/tag" || $_SERVER["REQUEST_URI"] == "/comments") ? "" : "close"; ?>">
+				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/forum-management" || $_SERVER["REQUEST_URI"] == "/tag" || $_SERVER["REQUEST_URI"] == "/message-management") ? "" : "close"; ?>">
 					<i class="fa-solid fa-gear"></i>Modération<i class="fa-solid fa-angle-down"></i>
 					<ul>
 						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/forum-management") ? "opened" : ""; ?>" href="/forum-management">Forums</a>
 						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/tag") ? "opened" : ""; ?>" href="/tag">Catégories</a>
-						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/comments") ? "opened" : ""; ?>" href="/comments">Commentaires</a>
+						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/message-management") ? "opened" : ""; ?>" href="/message-management">Commentaires</a>
 					</ul>
 				</li>
 

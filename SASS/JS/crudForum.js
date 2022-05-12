@@ -42,12 +42,6 @@ function insertForum(data)
 	const forumIdTag   = $('#input-idTag').val();
 	const tokenForm    = $('#tokenForm').val();
 	
-	console.log(forumTitle);
-	console.log(forumContent);
-	console.log(forumIdUser);
-	console.log(forumIdTag);
-	
-	
 	const request = new XMLHttpRequest();
 	request.open('POST', '/forum-management');
 	
@@ -140,7 +134,7 @@ function deleteForum(){
 			request.send(body);
 		}
 	}else{
-		alert("Sélectionnez au minimum un utilisateur à supprimer.");
+		alert("Sélectionnez au minimum un message à supprimer.");
 	}
 }
 
