@@ -1,10 +1,18 @@
 /:
-    controller: main
-    action: home
+  controller: main
+  action: home
 
 /contact:
-    controller: main
-    action: contact
+  controller: main
+  action: contact
+
+/forum-list:
+  controller: main
+  action: forumList
+
+/forum:
+  controller: main
+  action: forum
 
 /login:
     controller: user

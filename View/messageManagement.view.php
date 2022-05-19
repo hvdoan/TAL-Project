@@ -11,10 +11,10 @@
 			<tr>
 				<th><input type="checkbox" onclick="checkAll(this)"></th>
 				<th>Id</th>
-				<th>Titre</th>
-				<th>Contenu</th>
-				<th>Catégorie</th>
 				<th>Auteur</th>
+				<th>Forum relié</th>
+				<th>Id message parent</th>
+				<th>Contenu</th>
 				<th>Date de création</th>
 				<th>Date de mise à jour</th>
 				<th></th>

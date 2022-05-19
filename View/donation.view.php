@@ -1,7 +1,7 @@
 <script src="../SASS/JS/donationView.js"></script>
 <div class="page">
 	
-	<div class="imgDonation"><h1>DONATION</h1></div>
+	<div class="imgBanner"><h1>DONATION</h1></div>
 	
 	<div class="cards" id="cards">
 		<?php
@@ -9,7 +9,7 @@
 			$i = 0;
 			foreach($this->data["listDonationTier"] as $donationTier){
 				?>
-				<div class="checked" onclick="checkSelf(this)">
+				<div class="checked" onclick="checkSelf(this)" type="donation">
 					<div>
 						<h1><?=$donationTier["price"] / 100?> €</h1>
 						<?php if($i == 0){ ?>

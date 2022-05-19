@@ -33,7 +33,7 @@
 					<a class="btn" href="#">Game</a>
 					<a class="btn" href="#">News</a>
 					<a class="btn" href="#">About</a>
-					<a class="btn" href="#">Forum</a>
+					<a class="btn" href="/forum-list">Forums</a>
 					<a class="btn" href="#">Wiki</a>
 					<a class="btn" href="/donation">Donation</a>
 					

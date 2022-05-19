@@ -13,14 +13,41 @@
     }
 }
 
-.imgDonation{
+.imgBannerForum[type="Correction"]{
+    color: $white;
+    //background-image: url('/SASS/asset/img/bannerImg1.jpg');
+    background-color: #4158D0;
+    background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+    position: relative;
+    z-index: 1;
+    border-radius: 10px 10px 0 0;
+    width: 100%;
+}
+.imgBannerForum[type="Version"]{
+    color: $white;
+    background-color: #74EBD5;
+    background-image: linear-gradient(90deg, #74EBD5 0%, #9FACE6 100%);
+    position: relative;
+    z-index: 1;
+    border-radius: 10px 10px 0 0;
+}
+.imgBannerForum[type="Notre jeu"]{
+    color: $white;
+    background-color: #00DBDE;
+    background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%);
+    position: relative;
+    z-index: 1;
+    border-radius: 10px 10px 0 0;
+}
+
+.imgBanner{
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     height: 300px;
     overflow: hidden;
-    background-image: url('/SASS/asset/img/imgDonation2.png');
+    background-image: url('/SASS/asset/img/imgBanner.png');
     position: relative;
     z-index: 1;
     @include bg-cover();
