@@ -13,7 +13,6 @@ class Main {
         header("Location: /home");
     }
 
-
     public function contact()
     {
         $view = new View("contact");
