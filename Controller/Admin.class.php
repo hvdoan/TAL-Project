@@ -131,23 +131,47 @@ class Admin
                 echo "login";
 		    else
             {
-                if( (isset($_POST["userId"]) ? $_POST["userId"] != "" : false) &&
-	                (isset($_POST["userLastname"]) ? $_POST["userLastname"] != "" : false) &&
-	                (isset($_POST["userFirstname"]) ? $_POST["userFirstname"] != "" : false) &&
-	                (isset($_POST["userEmail"]) ? $_POST["userEmail"] != "" : false) &&
-	                (isset($_POST["userIdRole"]) ? $_POST["userIdRole"] != "" : false) ){
-					
+                if((isset($_POST["userId"]) && $_POST["userId"] != "")
+                    && (!empty($_FILES["avatar"]))
+                    && (isset($_POST["userLastname"]) && $_POST["userLastname"] != "")
+                    && (isset($_POST["userFirstname"]) && $_POST["userFirstname"] != "")
+                    && (isset($_POST["userEmail"]) && $_POST["userEmail"] != "")
+                    && (isset($_POST["userIdRole"]) && $_POST["userIdRole"] != ""))
+                {
+                    /* Get avatar file info */
+                    $fileName   = basename($_FILES["avatar"]["name"]);
+                    $fileType   = pathinfo($fileName, PATHINFO_EXTENSION);
+
+                    /* Escape SQL injection */
+                    $lastname           = addslashes($_POST["userLastname"]);
+                    $firstname          = addslashes($_POST["userFirstname"]);
+                    $email              = addslashes($_POST["userEmail"]);
+                    $idRole             = addslashes($_POST["userIdRole"]);
+                    $imageContent       = "";
+
+                    $allowTypes = array("jpg","png","jpeg","gif");
+
+                    if(in_array($fileType, $allowTypes))
+                    {
+                        $image          = $_FILES['avatar']['tmp_name'];
+                        $imageContent   = base64_encode(file_get_contents($image));
+                        var_dump($imageContent);
+                    }
+                  
                     /* Update of user information */
                     $object = $user->setId(intval($_POST["userId"]));
 
                     if($object != false)
                         $user = $object;
 
-                    $user->setFirstname($_POST["userFirstname"]);
-                    $user->setLastname($_POST["userLastname"]);
-                    $user->setEmail($_POST["userEmail"]);
-                    $user->setIdRole(intval($_POST["userIdRole"]));
+                    $user->setAvatar($imageContent);
+                    $user->setFirstname($firstname);
+                    $user->setLastname($lastname);
+                    $user->setEmail($email);
+                    $user->setIdRole(intval($idRole));
                     $user->save();
+
+                    echo "1";
                 }
             }
 		}
@@ -221,6 +245,10 @@ class Admin
                         $htmlContent .= $role["name"] . "</option>";
                     }
                     $htmlContent .= "</select>";
+                    $htmlContent .= "</div>";
+                    $htmlContent .= "<div class='field'>";
+                    $htmlContent .= "<label>Avatar</label>";
+                    $htmlContent .= "<input id='input-avatar' type='file' name='avatar'>";
                     $htmlContent .= "</div>";
                     $htmlContent .= "<div class='section'>";
                     $htmlContent .= "<input class='btn btn-delete' onclick='closeUserForm()' type='button' value='Annuler'>";

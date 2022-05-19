@@ -99,3 +99,9 @@
 /api-configuration:
     controller: admin
     action: api
+
+/search:
+    controller: search
+    action: search
+
+/hugo:

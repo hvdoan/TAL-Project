@@ -66,21 +66,45 @@ abstract class Sql
 	 *
 	 * @return bool|array
 	 */
-	public function select(array $values,array $params)
+	public function select(array $values, array $params, string $endQuery = "")
 	{
-		$sql = "SELECT ".implode(", ", $values)." FROM ".$this->table." WHERE ";
+		$sql = "SELECT ".implode(", ", $values)." FROM ".$this->table;
+
+        if (count($params) > 0)
+            $sql .= " WHERE ";
 
 		foreach ($params as $key => $values) {
 			$sql .= $key." = :".$key." AND ";
 		}
 
-		$sql = substr($sql,0,-4);
+        if (count($params) > 0)
+    		$sql = substr($sql,0,-5);
+
+        $sql .= $endQuery;
 
 		$queryPrepared = $this->pdoInstance->getPDO()->prepare($sql);
 		$queryPrepared->execute( $params );
 
+
 		return $queryPrepared->fetchAll(\PDO::FETCH_ASSOC);
 	}
+
+    public function selectLikeString(array $values, array $params, $searchString, $searchParam)
+    {
+        $query = "";
+
+        if (count($params) == 0)
+            $query .= " WHERE ";
+
+        /* Build query */
+        foreach ($searchParam as $param)
+            $query .= $param . " LIKE '%" . $searchString . "%' OR ";
+
+        /* Remove the last "AND" */
+        $query = substr($query,0,-4);
+
+        return $this->select($values, $params, $query);
+    }
 
 	/**
 	 * @return bool|string
