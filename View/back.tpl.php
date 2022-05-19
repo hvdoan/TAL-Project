@@ -64,12 +64,12 @@
 					</ul>
 				</li>
 				
-				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/forum" || $_SERVER["REQUEST_URI"] == "/tag" || $_SERVER["REQUEST_URI"] == "/comments") ? "" : "close"; ?>">
-                    <div class="nav-section-link"><i class="fa-solid fa-comments"></i>Modération<i class="fa-solid fa-angle-down"></i></div>
+				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/forum-management" || $_SERVER["REQUEST_URI"] == "/tag" || $_SERVER["REQUEST_URI"] == "/message-management") ? "" : "close"; ?>">
+					<div class="nav-section-link"><i class="fa-solid fa-comments"></i>Modération<i class="fa-solid fa-angle-down"></i></div>
 					<ul>
-						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/forum") ? "opened" : ""; ?>" href="/forum">Forum</a>
+						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/forum-management") ? "opened" : ""; ?>" href="/forum-management">Forums</a>
 						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/tag") ? "opened" : ""; ?>" href="/tag">Catégories</a>
-						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/comments") ? "opened" : ""; ?>" href="/comments">Commentaires</a>
+						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/message-management") ? "opened" : ""; ?>" href="/message-management">Commentaires</a>
 					</ul>
 				</li>
 

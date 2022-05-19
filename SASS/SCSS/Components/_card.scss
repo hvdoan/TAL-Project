@@ -12,9 +12,9 @@
 	background-color: $light-blue !important;
   }
 
-  & > div {
+  & > div[type="donation"] {
 	width: 100%;
-	max-width: 300px;
+	max-width: 25%;
 	margin: 20px;
 	padding: 1rem;
 	border-radius: 5px;
@@ -36,6 +36,10 @@
 	  transform: scale(1.05);
 	}
 
+	& h2 {
+	  margin: 0 1em 0 0;
+	}
+
 	& > div > h1 {
 	  font-size: 2rem;
 	  margin: 0;
@@ -49,6 +53,113 @@
 	  color: $black;
 	  font-family: "Jaldi", sans-serif;
 	}
+  }
+
+  & > div[type="forum"] {
+	width: 100%;
+	max-width: 25%;
+	margin: 20px;
+	border-radius: 15px;
+	background-color: $white;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	text-align: center;
+	transition: all 0.3s ease-in-out;
+	color: $black;
+	font-family: "Jaldi", sans-serif;
+	cursor: pointer;
+	//padding: 1.2em;
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	-khtml-user-select: none; /* Konqueror HTML */
+	-moz-user-select: none; /* Old versions of Firefox */
+	-ms-user-select: none; /* Internet Explorer/Edge */
+	user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+
+	&:hover {
+	  transform: scale(1.05);
+	}
+
+	& h2 {
+	  margin: 0 1em 0 0;
+	}
+
+	& .forumHeader {
+	  display: flex;
+	  justify-content: flex-start;
+	  align-items: flex-start;
+
+	  & > h1 {
+		color: $white;
+	  }
+	}
+
+	& hr {
+	  border: 0;
+	  margin: 0 5%;
+	  border-top: 2px solid $dark-blue;
+	}
+
+	& .informationContainer {
+	  display: flex;
+	  justify-content: space-between;
+	  align-items: flex-start;
+	  padding: 4%;
+
+	  & > div {
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		margin: 0 1em 0 0;
+
+		& > label {
+		  display: flex;
+		  color: $hard-blue;
+		  font-weight: bold;
+		}
+
+		& > p {
+		  display: flex;
+		  margin: 0;
+		  padding: 0;
+		}
+	  }
+	}
+
+	& .descriptionContainer{
+	  padding: 4%;
+
+	  & > label {
+		display: flex;
+		color: $hard-blue;
+		font-weight: bold;
+	  }
+
+	  & > p {
+		display: flex;
+		margin: 0;
+		padding: 0;
+	  }
+	}
+
+	& > div > h1 {
+	  font-size: 2rem;
+	  margin: 0;
+	  padding: 0;
+	  font-weight: bold;
+	  color: $black;
+	  font-family: "Jaldi", sans-serif;
+	}
+
+	& > h1 {
+	  color: $black;
+	  font-family: "Jaldi", sans-serif;
+	}
+  }
+
+  & p {
+	padding: 5%;
+	font-size: 1.1rem;
+	text-align: justify;
   }
 }
 

@@ -139,6 +139,38 @@ flex-ai\:center {
   margin-top: 40px;
 }
 
+#ctnForumForm {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+#ctnForumForm > form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#ctnMessageForm {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+#ctnMessageForm > form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .banner {
   display: block;
   width: 100%;
@@ -151,21 +183,49 @@ flex-ai\:center {
   background-repeat: no-repeat;
 }
 
-.imgDonation {
+.imgBannerForum[type=Correction] {
+  color: #fff;
+  background-color: #4158D0;
+  background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+  position: relative;
+  z-index: 1;
+  border-radius: 10px 10px 0 0;
+  width: 100%;
+}
+
+.imgBannerForum[type=Version] {
+  color: #fff;
+  background-color: #74EBD5;
+  background-image: linear-gradient(90deg, #74EBD5 0%, #9FACE6 100%);
+  position: relative;
+  z-index: 1;
+  border-radius: 10px 10px 0 0;
+}
+
+.imgBannerForum[type="Notre jeu"] {
+  color: #fff;
+  background-color: #00DBDE;
+  background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%);
+  position: relative;
+  z-index: 1;
+  border-radius: 10px 10px 0 0;
+}
+
+.imgBanner {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 300px;
   overflow: hidden;
-  background-image: url("/SASS/asset/img/imgDonation2.png");
+  background-image: url("/SASS/asset/img/imgBanner.png");
   position: relative;
   z-index: 1;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
-.imgDonation > h1 {
+.imgBanner > h1 {
   color: #fff;
   font-size: 4em;
   font-weight: bold;
@@ -252,9 +312,9 @@ flex-ai\:center {
 .cards > div.checked {
   background-color: #6d769e !important;
 }
-.cards > div {
+.cards > div[type=donation] {
   width: 100%;
-  max-width: 300px;
+  max-width: 25%;
   margin: 20px;
   padding: 1rem;
   border-radius: 5px;
@@ -278,10 +338,13 @@ flex-ai\:center {
   user-select: none;
   /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }
-.cards > div:hover {
+.cards > div[type=donation]:hover {
   transform: scale(1.05);
 }
-.cards > div > div > h1 {
+.cards > div[type=donation] h2 {
+  margin: 0 1em 0 0;
+}
+.cards > div[type=donation] > div > h1 {
   font-size: 2rem;
   margin: 0;
   padding: 0;
@@ -289,9 +352,105 @@ flex-ai\:center {
   color: #000;
   font-family: "Jaldi", sans-serif;
 }
-.cards > div > h1 {
+.cards > div[type=donation] > h1 {
   color: #000;
   font-family: "Jaldi", sans-serif;
+}
+.cards > div[type=forum] {
+  width: 100%;
+  max-width: 25%;
+  margin: 20px;
+  border-radius: 15px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+  color: #000;
+  font-family: "Jaldi", sans-serif;
+  cursor: pointer;
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Old versions of Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+.cards > div[type=forum]:hover {
+  transform: scale(1.05);
+}
+.cards > div[type=forum] h2 {
+  margin: 0 1em 0 0;
+}
+.cards > div[type=forum] .forumHeader {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.cards > div[type=forum] .forumHeader > h1 {
+  color: #fff;
+}
+.cards > div[type=forum] hr {
+  border: 0;
+  margin: 0 5%;
+  border-top: 2px solid #3F445F;
+}
+.cards > div[type=forum] .informationContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 4%;
+}
+.cards > div[type=forum] .informationContainer > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 0 1em 0 0;
+}
+.cards > div[type=forum] .informationContainer > div > label {
+  display: flex;
+  color: #272B40;
+  font-weight: bold;
+}
+.cards > div[type=forum] .informationContainer > div > p {
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+.cards > div[type=forum] .descriptionContainer {
+  padding: 4%;
+}
+.cards > div[type=forum] .descriptionContainer > label {
+  display: flex;
+  color: #272B40;
+  font-weight: bold;
+}
+.cards > div[type=forum] .descriptionContainer > p {
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+.cards > div[type=forum] > div > h1 {
+  font-size: 2rem;
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+  color: #000;
+  font-family: "Jaldi", sans-serif;
+}
+.cards > div[type=forum] > h1 {
+  color: #000;
+  font-family: "Jaldi", sans-serif;
+}
+.cards p {
+  padding: 5%;
+  font-size: 1.1rem;
+  text-align: justify;
 }
 
 #paypal-button-container {
@@ -1071,6 +1230,104 @@ nav > ul > .bottom,
 
 .paginate_button.current {
   border-radius: 10px !important;
+}
+
+.border {
+  border-right: solid 1px #fff;
+  border-radius: 10px;
+  padding: 2% !important;
+}
+
+.forum {
+  margin: 4%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  flex-direction: column;
+  font-family: "Jaldi", sans-serif;
+}
+.forum .forumHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 92.1vw;
+}
+.forum .forumHeader > div {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.forum .forumHeader > div > h1 {
+  color: #fff;
+  width: 35em;
+}
+.forum .forumHeader > div > h2 {
+  margin: 0 1em 0 0;
+}
+.forum .forumHeader > h2 {
+  margin: 0 1em 0 1em;
+}
+.forum .forumDescription {
+  width: 90.3vw;
+  border: solid #3F445F;
+  border-width: 0 1px 1px 1px;
+  border-radius: 0 0 15px 15px;
+  padding: 1em;
+}
+
+.allMessage {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  flex-direction: column;
+  margin: 4%;
+  font-family: "Jaldi", sans-serif;
+}
+.allMessage p {
+  margin: 0;
+}
+.allMessage .containerMessage {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.allMessage .containerMessage > svg {
+  margin: 0 0 0 2vw;
+}
+.allMessage svg {
+  display: flex;
+  width: 40px;
+  height: 40px;
+}
+.allMessage .message {
+  position: relative;
+  margin: 1em 0;
+  padding: 1em;
+  border-radius: 15px;
+  border: 1px solid #3F445F;
+  width: 90vw;
+  display: flex;
+}
+.allMessage .message svg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: red;
+}
+.allMessage .message > .headerMessage {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  margin-right: 2vw;
+}
+.allMessage .answerMessage {
+  margin: 0 0 1em 3em;
+  width: 83.5vw;
+}
+
+.bold {
+  font-weight: bold;
 }
 
 .avatar {

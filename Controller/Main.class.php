@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Core\View;
 use App\Model\Donation;
 use App\Model\DonationTier;
+use App\Model\Forum;
 
 class Main {
 
@@ -17,6 +18,31 @@ class Main {
     {
         $view = new View("contact");
     }
+	
+	public function forumList()
+	{
+		$view = new View("forum-list");
+		$forum = new Forum();
+		$forumList = $forum->select(["id", "title", "content", "idUser", "idTag", "creationDate", "updateDate"], []);
+		
+		$view->assign("forumList", $forumList);
+	}
+	
+	public function forum()
+	{
+		
+		$view = new View("forum");
+		$forum = new Forum();
+		if(empty($_GET["forum"])){
+			header("Location: /forum-list");
+		}else{
+			$forumId = htmlspecialchars($_GET["forum"]);
+			$forum = $forum->select(["id", "title", "content", "idUser", "idTag", "creationDate", "updateDate"], ["id" => $forumId]);
+			
+			$view->assign("forum", $forum);
+		}
+		
+	}
 
     public function donation()
     {
