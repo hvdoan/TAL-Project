@@ -972,7 +972,7 @@ nav > ul > .bottom,
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  width: 100px;
+  width: 150px;
 }
 #searchBarContainer > #searchResultContainer > #searchResult > .field > .label-container > .label {
   padding: 0 15px;
@@ -989,6 +989,9 @@ nav > ul > .bottom,
 }
 #searchBarContainer > #searchResultContainer > #searchResult > .field > .label-container > .label-page {
   background: #22a6b3;
+}
+#searchBarContainer > #searchResultContainer > #searchResult > .field > .label-container > .label-configurationPage {
+  background: #f0932b;
 }
 #searchBarContainer > #searchResultContainer > #searchResult > .field > * {
   font-family: "Jaldi", sans-serif;
