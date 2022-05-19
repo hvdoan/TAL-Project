@@ -2,6 +2,8 @@
 
 namespace App\Core;
 
+use App\Controller\User;
+
 
 class Verificator
 {
@@ -56,17 +58,39 @@ class Verificator
 
 	public static function checkConnection(): bool
 	{
-		$isLog = false;
+		$isConnected = false;
 
-		if(isset($_SESSION["token"]) && isset($_COOKIE["token"]))
-		{
-			if($_SESSION["token"] == $_COOKIE["token"])
-			{
-				$isLog = true;
-			}
+		if(isset($_SESSION["token"]) && isset($_COOKIE["token"]) && isset($_SESSION["id"]))
+        {
+            if($_SESSION["token"] == $_COOKIE["token"] && $_SESSION["id"] != "")
+                $isConnected = true;
+        }
+
+		return $isConnected;
+	}
+    
+    public static function reloadConnection(): void
+    {
+        if(self::checkConnection())
+        {
+            unset($_SESSION["token"]);
+            unset($_COOKIE["token"]);
+
+            $token = md5(uniqid());
+
+            $_SESSION["token"] = $token;
+            setcookie("token", $token, time() + (60 * 15), "", "", true);
+        }
+    }
+	
+	public static function unsetSession(): void{
+		if(!self::checkConnection()){
+//			var_dump("bonsoir");
+//			unset($_SESSION['token']);
+//			unset($_SESSION['id']);
+//			unset($_SESSION['permission']);
+//			unset($_SESSION['role']);
 		}
-
-		return $isLog;
 	}
 
 	public static function checkPageAccess($userAutorisations, $permissionNeeded)

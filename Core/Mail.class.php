@@ -26,16 +26,14 @@ class Mail
 
 	private function prepareSetting()
 	{
-		$config = parse_ini_file('Config/email.ini',true, INI_SCANNER_NORMAL);
-
 		//Server settings
 		$this->email->isSMTP();                                      	   //Send using SMTP
 		$this->email->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
 		$this->email->SMTPAuth   = true;                                   //Enable SMTP authentication
-		$this->email->Username   = $config['EMAIL']['EMAIL_USERNAME'];                     //SMTP username
-		$this->email->Password   = $config['EMAIL']['EMAIL_PASSWORD'];                               //SMTP password
+		$this->email->Username   = PHPMAILEREMAIL;                     //SMTP username
+		$this->email->Password   = PHPMAILERPASSWORD;                               //SMTP password
 		$this->email->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-		$this->email->Port       = $config['EMAIL']['EMAIL_PORT'];                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+		$this->email->Port       = PHPMAILERPORT;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
 		//Recipients
 		$this->email->setFrom('no-reply@tal.com', 'Admin');

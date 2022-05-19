@@ -1,0 +1,109 @@
+@use "../Abstracts" as *;
+
+.forum{
+  margin: 4%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  flex-direction: column;
+  font-family: "Jaldi", sans-serif;
+
+  & .forumHeader {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 92.1vw;
+
+	& > div{
+	  display: flex;
+	  justify-content: flex-start;
+	  align-items: center;
+
+	  & > h1 {
+		color: $white;
+		width: 35em;
+	  }
+
+	  & > h2 {
+		margin: 0 1em 0 0;
+	  }
+	}
+
+	& > h2 {
+	  margin: 0 1em 0 1em;
+	}
+  }
+
+  & .forumDescription{
+	width: 90.3vw;
+	border: solid $dark-blue;
+	border-width: 0 1px 1px 1px;
+	border-radius: 0 0 15px 15px;
+	padding: 1em;
+  }
+
+}
+
+.allMessage {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  flex-direction: column;
+  margin: 4%;
+  font-family: "Jaldi", sans-serif;
+
+  & p{
+	margin: 0;
+  }
+
+  & .containerMessage{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	& > svg{
+	  margin: 0 0 0 2vw;
+	}
+  }
+
+  & svg{
+	display: flex;
+	width: 40px;
+	height: 40px;
+  }
+
+  //border-radius: 15px;
+  //border: 1px solid $dark-blue;
+
+  & .message {
+	position: relative;
+	margin: 1em 0;
+	padding: 1em;
+	border-radius: 15px;
+	border: 1px solid $dark-blue;
+	width: 90vw;
+
+	display: flex;
+
+	& svg{
+	  position: absolute;
+	  top: 0;
+	  right: 0;
+	  color: red;
+	}
+
+	& > .headerMessage{
+		display: flex;
+		justify-content: flex-start;
+		align-items: flex-start;
+	  	flex-direction: column;
+	  	margin-right: 2vw;
+		//width: 100%;
+	}
+  }
+
+  & .answerMessage{
+	margin: 0 0 1em 3em;
+	width: 83.5vw;
+  }
+}

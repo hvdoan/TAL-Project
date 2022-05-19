@@ -1,0 +1,23 @@
+$white: #fff;
+$black: #000;
+$grey: #988F8F;
+$light-grey: #EDF0F2;
+$blue-grey: rgba(142, 153, 163, 0.19);
+$light-blue: #6d769e;
+$dark-blue: #3F445F;
+$hard-blue: #272B40;
+$deep-ocean: #404661;
+$dark-orange: #AD4E47;
+$light-orange: #d4716a;
+$dark-green: #259736;
+$light-green: #35be49;
+
+.bg\:dark-blue
+{
+    background-color: $hard-blue !important;
+}
+
+.dark-blue
+{
+    color: $dark-blue;
+}
