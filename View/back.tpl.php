@@ -86,18 +86,21 @@
 		
 		<main class="dashboard">
 			<header>
-				<div class="searchBar">
-					<input type="text" name="searchBar", placeholder="Recherche">
-					<i class="fa-solid fa-magnifying-glass"></i>
-				</div>
+                <div id="searchBarContainer">
+                    <div class="searchBar">
+                        <input id="searchBar" type="text" name="searchBar", placeholder="Recherche">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    <div id="searchResultContainer"></div>
+                </div>
 
                 <div class="avatar">
                     <span><?=$_SESSION["firstname"]?> <?=$_SESSION["lastname"]?></span>
                     <div id="avatar-container">
-                        <?php if($_SESSION['avitatar'] != "") : ?>
-                            <img src="data:<?=mime_content_type($_SESSION['avatar'])?>>;base64, <?=$_SESSION['avatar']?>">
+                        <?php if($_SESSION['avatar'] != "") : ?>
+                            <img class="icon" src="data:<?=mime_content_type($_SESSION['avatar'])?>>;base64, <?=$_SESSION['avatar']?>">
                         <?php else : ?>
-                            <i class="fa-solid fa-user-astronaut"></i>
+                            <i class="icon fa-solid fa-user-astronaut"></i>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -105,5 +108,19 @@
 
 			<?php include "View/" . $this->view . ".view.php"; ?>
 		</main>
+
+        <script type="text/javascript">
+            /* Execute AJAX after the enter key is pressed */
+            // $("#searchBar").keyup(function (event) {
+            //     if (event.keyCode === 13) {
+            //         search($(this).val());
+            //     }
+            // });
+
+            /* Execute AJAX after 200ms of the last keystroke */
+            $("#searchBar").keyup(delay(function (e) {
+                search($(this).val());
+            }, 200));
+        </script>
 	</body>
 </html>

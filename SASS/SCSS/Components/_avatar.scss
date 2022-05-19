@@ -11,6 +11,8 @@
     & > span
     {
         padding: 0 10px;
+        font-size: 1.2rem;
+        font-family: $jaldi;
     }
 
     & > #avatar-container
@@ -19,16 +21,18 @@
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        width: 30px;
-        height: 30px;
-        border: solid 2px $white;
+        width: 40px;
+        height: 40px;
+        background: $light-grey;
         border-radius: 50%;
         overflow: hidden;
 
-        & > img
+        & > .icon
         {
-            max-width: 30px;
-            max-height: 30px;
+            max-width: 40px;
+            max-height: 40px;
+            color: $dark-blue;
+            font-size: 1.5rem;
         }
     }
 }
