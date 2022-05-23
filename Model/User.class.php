@@ -312,7 +312,7 @@ class User extends Sql
                     "type"=>"text",
                     "label"=>"Nom",
                     "placeholder"=>"Votre Nom ...",
-                    "value"=>$_SESSION['lastname'],
+                    "value"=>$this->getLastname(),
                     "class"=>"inputForm",
                     "id"=>"nomForm",
                     "error"=>"Nom incorrect"
@@ -321,7 +321,7 @@ class User extends Sql
                     "type"=>"text",
                     "label"=>"Prénom",
                     "placeholder"=>"Votre Prénom ...",
-                    "value"=>$_SESSION['firstname'],
+                    "value"=>$this->getFirstname(),
                     "class"=>"inputForm",
                     "id"=>"prenomForm",
                     "error"=>"Prénom incorrect"
@@ -330,7 +330,7 @@ class User extends Sql
                     "type"=>"email",
                     "label"=>"Email",
                     "placeholder"=>"Votre email ...",
-                    "value"=>$_SESSION['email'],
+                    "value"=>$this->getEmail(),
                     "class"=>"inputForm",
                     "id"=>"emailForm",
                     "error"=>"Email incorrect"
@@ -342,14 +342,13 @@ class User extends Sql
                     "class"=>"inputForm",
                     "id"=>"pwdForm"
                 ],
-                "passwordConfirm"=>[
+                "newpassword"=>[
                     "type"=>"password",
-                    "label"=>"Confirmer Mot de passe",
-                    "placeholder"=>"Confirmation ...",
+                    "label"=>"Nouveau Mot de passe",
+                    "placeholder"=>"Nouveau mot de passe ...",
                     "class"=>"inputForm",
                     "id"=>"pwdConfirmForm",
-                    "confirm"=>"password",
-                    "error"=>"Votre mot de passe de confirmation ne correspond pas",
+                    "error"=>"Votre nouveau mot de passe n'est pas valide",
                 ],
             ]
         ];
