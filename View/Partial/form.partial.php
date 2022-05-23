@@ -9,6 +9,7 @@
                 type="<?= $input["type"]??"text" ?>"
                 name="<?= $name?>"
                 placeholder="<?= $input["placeholder"]??"" ?>"
+                value="<?= $input["value"]??"" ?>"
                 id="<?= $input["id"]??"" ?>"
                 class="<?= $input["class"]??"" ?>"
                 <?= empty($input["required"])?"":'required="required"' ?>

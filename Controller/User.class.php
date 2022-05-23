@@ -25,7 +25,7 @@ class User{
 		$user = new UserModel();
 		
 		if(!empty($_POST)){
-			$userLoggedIn = $user->select(['id', 'idRole', 'password', 'verifyAccount', 'firstname', 'lastname', 'avatar'], ['email' => $_POST['email']]);
+			$userLoggedIn = $user->select(['id', 'idRole', 'password', 'verifyAccount', 'firstname', 'lastname', 'email', 'avatar'], ['email' => $_POST['email']]);
 			
 			if(!empty($userLoggedIn)){
 				if(password_verify($_POST['password'], $userLoggedIn[0]['password'])){
@@ -39,8 +39,9 @@ class User{
 						
 						$_SESSION['id']         = $userLoggedIn[0]["id"];
 						$_SESSION['role']       = $role->getName();
-						$_SESSION['firstname']  = $userLoggedIn[0]["firstname"];
+						$_SESSION['firstname']   = $userLoggedIn[0]["firstname"];
 						$_SESSION['lastname']   = $userLoggedIn[0]["lastname"];
+						$_SESSION['email']      = $userLoggedIn[0]["email"];
 						$_SESSION['avatar']     = $userLoggedIn[0]["avatar"];
 
 
@@ -175,4 +176,28 @@ class User{
 			}
 		}
 	}
+
+    public function userSetting()
+    {
+        $user = new UserModel();
+
+        if(!empty($_POST)){
+            $object = $user->setId(intval($_SESSION["id"]));
+
+            if($object != false)
+                $user = $object;
+
+            $user->setFirstname($_POST['firstname']);
+            $user->setLastname($_POST['lastname']);
+            $user->setEmail($_POST['email']);
+            $_SESSION['firstname']   = $_POST['firstname'];
+            $_SESSION['lastname']   = $_POST['lastname'];
+            $_SESSION['email']      = $_POST['email'];
+            $user->save();
+            Notification::CreateNotification("success", "Modification des parametres sauvegardé");
+        }
+
+        $view = new View("user-setting");
+        $view->assign("user", $user);
+    }
 }

@@ -295,4 +295,63 @@ class User extends Sql
             ]
         ];
     }
+
+    public function getUserSettingForm(): array
+    {
+        return [
+            "config"=>[
+                "method"=>"POST",
+                "action"=>"",
+                "submit"=>"Enregistrer",
+                "classForm"=>"",
+                "classSubmit"=>"submit",
+                "title"=>"",
+            ],
+            'inputs'=>[
+                "lastname"=>[
+                    "type"=>"text",
+                    "label"=>"Nom",
+                    "placeholder"=>"Votre Nom ...",
+                    "value"=>$_SESSION['lastname'],
+                    "class"=>"inputForm",
+                    "id"=>"nomForm",
+                    "error"=>"Nom incorrect"
+                ],
+                "firstname"=>[
+                    "type"=>"text",
+                    "label"=>"Prénom",
+                    "placeholder"=>"Votre Prénom ...",
+                    "value"=>$_SESSION['firstname'],
+                    "class"=>"inputForm",
+                    "id"=>"prenomForm",
+                    "error"=>"Prénom incorrect"
+                ],
+                "email"=>[
+                    "type"=>"email",
+                    "label"=>"Email",
+                    "placeholder"=>"Votre email ...",
+                    "value"=>$_SESSION['email'],
+                    "class"=>"inputForm",
+                    "id"=>"emailForm",
+                    "error"=>"Email incorrect"
+                ],
+                "password"=>[
+                    "type"=>"password",
+                    "label"=>"Mot de passe",
+                    "placeholder"=>"Votre mot de passe ...",
+                    "class"=>"inputForm",
+                    "id"=>"pwdForm"
+                ],
+                "passwordConfirm"=>[
+                    "type"=>"password",
+                    "label"=>"Confirmer Mot de passe",
+                    "placeholder"=>"Confirmation ...",
+                    "class"=>"inputForm",
+                    "id"=>"pwdConfirmForm",
+                    "confirm"=>"password",
+                    "error"=>"Votre mot de passe de confirmation ne correspond pas",
+                ],
+            ]
+        ];
+    }
 }

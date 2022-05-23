@@ -42,6 +42,7 @@
 					<?php endif;
 					if(isset($_SESSION['id']) && !empty($_SESSION['token']) && isset($_COOKIE['token']) && $_SESSION['token'] === $_COOKIE['token']):?>
 						<a class="btn" href="/logout">Déconnexion</a>
+                        <a class="btn" href="/user-setting"><img class="icon" src="data:<?=mime_content_type($_SESSION['avatar'])?>>;base64, <?=$_SESSION['avatar']?>"></a>
 					<?php else: ?>
 						<a class="btn" href="/login">Connexion</a>
 						<a class="btn" href="/register">Inscription</a>
