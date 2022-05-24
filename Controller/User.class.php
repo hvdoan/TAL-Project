@@ -25,7 +25,7 @@ class User{
 		$user = new UserModel();
 		
 		if(!empty($_POST)){
-			$userLoggedIn = $user->select(['id', 'idRole', 'password', 'verifyAccount', 'firstname', 'lastname', 'avatar'], ['email' => $_POST['email']]);
+			$userLoggedIn = $user->select(['id', 'idRole', 'password', 'verifyAccount', 'firstname', 'lastname', 'email', 'avatar'], ['email' => $_POST['email']]);
 			
 			if(!empty($userLoggedIn)){
 				if(password_verify($_POST['password'], $userLoggedIn[0]['password'])){
@@ -39,8 +39,9 @@ class User{
 						
 						$_SESSION['id']         = $userLoggedIn[0]["id"];
 						$_SESSION['role']       = $role->getName();
-						$_SESSION['firstname']  = $userLoggedIn[0]["firstname"];
+						$_SESSION['firstname']   = $userLoggedIn[0]["firstname"];
 						$_SESSION['lastname']   = $userLoggedIn[0]["lastname"];
+						$_SESSION['email']      = $userLoggedIn[0]["email"];
 						$_SESSION['avatar']     = $userLoggedIn[0]["avatar"];
 
 
@@ -175,4 +176,51 @@ class User{
 			}
 		}
 	}
+
+    public function userSetting()
+    {
+        $user = new UserModel();
+
+        $object = $user->setId(intval($_SESSION["id"]));
+
+        if($object != false)
+            $user = $object;
+
+        if(!empty($_POST)){
+
+            $user->setFirstname($_POST['firstname']);
+            $user->setLastname($_POST['lastname']);
+            $user->setEmail($_POST['email']);
+            $_SESSION['firstname']   = $_POST['firstname'];
+            $_SESSION['lastname']   = $_POST['lastname'];
+            $_SESSION['email']      = $_POST['email'];
+
+            if($_POST['password'] == "" && $_POST['newpassword'] == ""){
+                $user->save();
+                Notification::CreateNotification("success", "Modification des parametres sauvegardé");
+            } else {
+                if ($_POST['newpassword'] != "" && $_POST['password'] == "") {
+                    Notification::CreateNotification('error', 'Entrer votre mot de passe actuel pour avoir enregistrer votre nouveau mot de passe ');
+                } else if (password_verify($_POST['password'], $user->getPassword())) {
+                    $result = Verificator::checkForm($user->getUserSettingForm(), $_POST);
+                    if(empty($result)) {
+                        $user->setPassword($_POST['newpassword']);
+                        $user->save();
+                        Notification::CreateNotification("success", "Modification des parametres sauvegardé");
+                    } else {
+                        $msg = "";
+                        foreach($result as $item){
+                            $msg .= "-" . $item . "<br>";
+                        }
+                        Notification::CreateNotification("error", $msg);
+                    }
+                } else {
+                    Notification::CreateNotification('error', 'Mot de passe incorrect');
+                }
+            }
+        }
+
+        $view = new View("user-setting");
+        $view->assign("user", $user);
+    }
 }

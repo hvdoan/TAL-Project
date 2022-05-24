@@ -295,4 +295,62 @@ class User extends Sql
             ]
         ];
     }
+
+    public function getUserSettingForm(): array
+    {
+        return [
+            "config"=>[
+                "method"=>"POST",
+                "action"=>"",
+                "submit"=>"Enregistrer",
+                "classForm"=>"",
+                "classSubmit"=>"btn btn-validate",
+                "title"=>"",
+            ],
+            'inputs'=>[
+                "lastname"=>[
+                    "type"=>"text",
+                    "label"=>"Nom",
+                    "placeholder"=>"Votre Nom ...",
+                    "value"=>$this->getLastname(),
+                    "class"=>"inputForm",
+                    "id"=>"nomForm",
+                    "error"=>"Nom incorrect"
+                ],
+                "firstname"=>[
+                    "type"=>"text",
+                    "label"=>"Prénom",
+                    "placeholder"=>"Votre Prénom ...",
+                    "value"=>$this->getFirstname(),
+                    "class"=>"inputForm",
+                    "id"=>"prenomForm",
+                    "error"=>"Prénom incorrect"
+                ],
+                "email"=>[
+                    "type"=>"email",
+                    "label"=>"Email",
+                    "placeholder"=>"Votre email ...",
+                    "value"=>$this->getEmail(),
+                    "class"=>"inputForm",
+                    "id"=>"emailForm",
+                    "error"=>"Email incorrect"
+                ],
+                "password"=>[
+                    "type"=>"password",
+                    "label"=>"Mot de passe",
+                    "placeholder"=>"Votre mot de passe ...",
+                    "class"=>"inputForm",
+                    "id"=>"pwdForm"
+                ],
+                "newpassword"=>[
+                    "type"=>"password",
+                    "label"=>"Nouveau Mot de passe",
+                    "placeholder"=>"Nouveau mot de passe ...",
+                    "class"=>"inputForm",
+                    "id"=>"pwdConfirmForm",
+                    "error"=>"Votre nouveau mot de passe n'est pas valide",
+                ],
+            ]
+        ];
+    }
 }
