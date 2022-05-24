@@ -304,7 +304,7 @@ class User extends Sql
                 "action"=>"",
                 "submit"=>"Enregistrer",
                 "classForm"=>"",
-                "classSubmit"=>"submit",
+                "classSubmit"=>"btn btn-validate",
                 "title"=>"",
             ],
             'inputs'=>[
