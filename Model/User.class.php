@@ -278,4 +278,29 @@ class User extends Sql
             ]
         ];
     }
+
+    public function getForgotPasswordForm(): array
+    {
+        return [
+            "config"=>[
+                "method"=>"POST",
+                "action"=>"",
+                "submit"=>"M'envoyer un mail",
+                "classForm"=>"form",
+                "classSubmit"=>"submit",
+                "title"=>"Récupération du compte",
+            ],
+            'inputs'=>[
+                "email"=>[
+                    "type"=>"email",
+                    "label"=>"Email",
+                    "placeholder"=>"Votre email ...",
+                    "required"=>true,
+                    "class"=>"inputForm",
+                    "id"=>"emailForm",
+                    "error"=>"Email incorrect"
+                ]
+            ]
+        ];
+    }
 }

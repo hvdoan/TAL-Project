@@ -149,7 +149,35 @@ class User{
 	
 	public function pwdforget()
 	{
-		echo "Mot de passe oublié";
+        $user = new UserModel();
+
+        if(!empty($_POST)){
+            $result = Verificator::checkForm($user->getForgotPasswordForm(), $_POST);
+
+            if(empty($result)) {
+
+                $content = "
+                    <h1>Cliquez sur le lien ci-dessous pour changer votre mot de passe :</h1>
+                    <a href='localhost/activation?email=" . $_POST['email'] ."'>Activation de votre compte.</a>
+                ";
+
+                $email = new Mail();
+                $email->prepareContent($_POST['email'], "Reinitialisation du mot de passe", $content, "Test");
+                $email->send();
+
+                Notification::CreateNotification("success", "Si le compte existe, un mail vient de vous etre envoyé");
+
+            } else {
+                $msg = "";
+                foreach ($result as $item) {
+                    $msg .= "-" . $item . "<br>";
+                }
+                Notification::CreateNotification("error", $msg);
+            }
+        }
+
+        $view = new View("forgot-password");
+        $view->assign("user", $user);
 	}
 	
 	public function activatedaccount()
