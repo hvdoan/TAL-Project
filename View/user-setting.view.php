@@ -1,5 +1,6 @@
-<h1 style="color: black">Parametres utilisateur</h1>
+<h1 style="color: black; margin: 20px auto 0;">Parametres utilisateur</h1>
 <div style="
+    margin: 20px auto 0;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -17,4 +18,4 @@
 </div>
 
 <?php $this->includePartial("form", $user->getUserSettingForm()) ?>
-
+<button class="btn btn-delete" style="margin-left: 50px; width: 240px; margin-top: 20px">Supprimer mon compte</button>
