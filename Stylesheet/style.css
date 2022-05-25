@@ -139,6 +139,38 @@ flex-ai\:center {
   margin-top: 40px;
 }
 
+#ctnForumForm {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+#ctnForumForm > form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#ctnMessageForm {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+#ctnMessageForm > form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 #ctnUserForm > form {
   display: flex;
   flex-direction: column;
@@ -880,6 +912,32 @@ form > .field-row > .field {
   flex-direction: column;
   width: 100%;
   margin: 10px 30px;
+}
+
+.formSetting {
+  display: flex;
+  flex-direction: column;
+  width: 30rem;
+  margin-left: 50px;
+  margin-top: 50px;
+}
+.formSetting .field {
+  margin: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.formSetting .field input {
+  width: 50%;
+  padding: 10px;
+}
+.formSetting label {
+  font-family: "Jaldi", sans-serif;
+  font-size: 1.1rem;
+}
+.formSetting .btn {
+  margin-top: 30px;
+  width: 240px;
 }
 
 @media screen and (min-width: 540px) {

@@ -171,6 +171,114 @@ flex-ai\:center {
   transform: translate(-50%, -50%);
 }
 
+#ctnUserForm > form {
+  display: flex;
+  flex-direction: column;
+  width: 750px;
+  padding: 30px 0 0 0 !important;
+  background: #fff;
+  border-radius: 7px;
+  overflow: hidden;
+}
+#ctnUserForm > form > .field-row > hr {
+  width: 100%;
+  height: 1px;
+  margin: 0 30px;
+  box-sizing: border-box;
+  background: #3F445F;
+  border: none;
+}
+#ctnUserForm > form > .field-row > .field > h1 {
+  margin: 10px 0;
+  color: #272B40;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+}
+#ctnUserForm > form > .field-row > .field > label {
+  color: #988F8F;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+#ctnUserForm > form > .field-row > .field > .input {
+  padding: 8px;
+  background: #EDF0F2;
+  color: #272B40;
+  border: none;
+}
+#ctnUserForm > form > .field-row > .field > .input:focus {
+  outline: none;
+}
+#ctnUserForm > form > .field-row > .field > select {
+  width: fit-content;
+  padding: 5px 10px;
+  background: #988F8F;
+  border: none;
+  color: #fff;
+  font-family: "Jaldi", sans-serif;
+  text-transform: uppercase;
+}
+#ctnUserForm > form > .field-row > .field > .disabled {
+  background: #988F8F;
+  color: #fff;
+}
+#ctnUserForm > form > .field-row > #id-ctn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  padding: 2px 7px;
+  background: #22a6b3;
+  border-radius: 7px;
+}
+#ctnUserForm > form > .field-row > #id-ctn > span {
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: bold;
+  text-transform: capitalize;
+  letter-spacing: 1px;
+}
+#ctnUserForm > form > .field-cta {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 20px 0;
+  box-sizing: border-box;
+  background: #EDF0F2;
+}
+#ctnUserForm > form > .field-cta > input {
+  padding: 10px 25px;
+  border: none;
+  border-radius: 25px;
+  text-transform: uppercase;
+  font-weight: bold;
+  transition: 0.3s;
+  cursor: pointer;
+}
+#ctnUserForm > form > .field-cta > input:hover {
+  transition: 0.3s;
+}
+#ctnUserForm > form > .field-cta > .cancel {
+  background: none;
+  color: #988F8F;
+  transition: 0.3s;
+}
+#ctnUserForm > form > .field-cta > .cancel:hover {
+  color: #716767;
+  transition: 0.3s;
+}
+#ctnUserForm > form > .field-cta > .validate {
+  margin: 0 30px 0 10px;
+  background: #35be49;
+  color: #fff;
+  transition: 0.3s;
+}
+#ctnUserForm > form > .field-cta > .validate:hover {
+  color: #259736;
+  transition: 0.3s;
+}
+
 .banner {
   display: block;
   width: 100%;
@@ -786,6 +894,26 @@ flex-ai\:center {
   transition: 0.3s;
 }
 
+/* V2 */
+form {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+}
+form > .field-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+form > .field-row > .field {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 10px 30px;
+}
+
 .formSetting {
   display: flex;
   flex-direction: column;
@@ -1130,9 +1258,9 @@ nav > ul > .bottom,
   display: none;
   position: absolute;
   transform: translateY(5px);
-  padding: 10px 0;
   background: #272B40;
   border-radius: 7px;
+  overflow: hidden;
 }
 #searchBarContainer > #searchResultContainer > #searchResult {
   display: flex;
@@ -1157,7 +1285,7 @@ nav > ul > .bottom,
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  width: 100px;
+  width: 150px;
 }
 #searchBarContainer > #searchResultContainer > #searchResult > .field > .label-container > .label {
   padding: 0 15px;
@@ -1174,6 +1302,9 @@ nav > ul > .bottom,
 }
 #searchBarContainer > #searchResultContainer > #searchResult > .field > .label-container > .label-page {
   background: #22a6b3;
+}
+#searchBarContainer > #searchResultContainer > #searchResult > .field > .label-container > .label-configurationPage {
+  background: #f0932b;
 }
 #searchBarContainer > #searchResultContainer > #searchResult > .field > * {
   font-family: "Jaldi", sans-serif;
