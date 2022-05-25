@@ -190,10 +190,8 @@ class User{
 
             $user->setFirstname($_POST['firstname']);
             $user->setLastname($_POST['lastname']);
-            $user->setEmail($_POST['email']);
             $_SESSION['firstname']   = $_POST['firstname'];
             $_SESSION['lastname']   = $_POST['lastname'];
-            $_SESSION['email']      = $_POST['email'];
 
             if($_POST['password'] == "" && $_POST['newpassword'] == ""){
                 $user->save();

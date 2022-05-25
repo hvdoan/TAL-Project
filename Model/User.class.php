@@ -303,7 +303,7 @@ class User extends Sql
                 "method"=>"POST",
                 "action"=>"",
                 "submit"=>"Enregistrer",
-                "classForm"=>"",
+                "classForm"=>"formSetting",
                 "classSubmit"=>"btn btn-validate",
                 "title"=>"",
             ],
@@ -333,6 +333,7 @@ class User extends Sql
                     "value"=>$this->getEmail(),
                     "class"=>"inputForm",
                     "id"=>"emailForm",
+                    "disabled"=>true,
                     "error"=>"Email incorrect"
                 ],
                 "password"=>[

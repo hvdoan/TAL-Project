@@ -13,7 +13,8 @@
                 id="<?= $input["id"]??"" ?>"
                 class="<?= $input["class"]??"" ?>"
                 <?= empty($input["required"])?"":'required="required"' ?>
-        ><br>
+                <?= empty($input["disabled"])?"":'disabled="disabled"' ?>
+        >
     </div>
 
     <?php endforeach;?>
