@@ -38,7 +38,7 @@ class Search
 
             foreach ($listResult as $result)
             {
-                $html .= "<a class='field' href=''>";
+                $html .= "<a class='field' href='".$result["url"]."'>";
                 $html .= "<div class='information-container'>";
                 $html .= "<span>".$result["information"]."</span>";
                 $html .= "</div>";
@@ -50,6 +50,8 @@ class Search
                     $html .= "<span class='label label-role'>".$result["label"]."</span>";
                 else if($result["label"] == "page")
                     $html .= "<span class='label label-page'>".$result["label"]."</span>";
+                else if($result["label"] == "configuration page")
+                    $html .= "<span class='label label-configurationPage'>".$result["label"]."</span>";
 
                 $html .= "</div>";
                 $html .= "</a>";
@@ -111,7 +113,8 @@ class Search
 
             $listResult[] = [
                 "information" => $user["firstname"]." ".$user["lastname"],
-                "label" => "utilisateur"
+                "label" => "utilisateur",
+                "url" => "/user-management"
             ];
         }
 
@@ -144,7 +147,8 @@ class Search
 
             $listResult[] = [
                 "information" => $role["name"],
-                "label" => "role"
+                "label" => "role",
+                "url" => "/role-management"
             ];
         }
 
@@ -176,8 +180,14 @@ class Search
 //                </div>";
 
             $listResult[] = [
-                "information" => $page["uri"],
-                "label" => "page"
+                "information" => str_replace("/", "", $page["uri"]),
+                "label" => "page",
+                "url" => $page["uri"]
+            ];
+            $listResult[] = [
+                "information" => str_replace("/", "", $page["uri"]),
+                "label" => "configuration page",
+                "url" => "/page-management"
             ];
         }
 
