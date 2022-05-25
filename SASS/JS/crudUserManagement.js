@@ -153,6 +153,32 @@ function openUserForm(id = "")
 }
 
 /**************************************************
+ * AJAX : DISPLAY USER AVATAR
+ ***************************************************/
+function displayUserAvatar()
+{
+	let formData = new FormData();
+
+	formData.append("requestType", "displayAvatar");
+	formData.append("avatar", $('#input-avatar')[0].files[0]);
+
+	console.log($('#input-avatar')[0].files[0]);
+
+	const request = new XMLHttpRequest();
+	request.open('POST', '/user-management');
+
+	request.onreadystatechange = function(){
+		if(request.readyState === 4)
+		{
+			console.log(request.responseText);
+			$("#avatar-preview").html(request.responseText);
+		}
+	};
+
+	request.send(formData);
+}
+
+/**************************************************
  * CLOSE USER FORM
  ***************************************************/
 function closeUserForm()

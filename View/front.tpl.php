@@ -2,7 +2,7 @@
 <html lang="fr">
 	<head>
 		<meta charset="UTF-8">
-		<title>Template FRONT</title>
+		<title><?=WEBSITENAME?></title>
 		<meta name="description" content="Description de ma page">
         <!-- CSS -->
         <link rel="stylesheet" href="../Stylesheet/style.css">
