@@ -40,13 +40,14 @@
         display: none;
         position: absolute;
         transform: translateY(5px);
-        padding: 10px 0;
+
         background: $hard-blue;
         border-radius: 7px;
+        overflow: hidden;
 
         & > #searchResult
         {
-            display: flex;
+              display: flex;
             flex-direction: column;
 
             & > .field

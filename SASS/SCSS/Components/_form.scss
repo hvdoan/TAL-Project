@@ -180,3 +180,32 @@
 		}
 	}
 }
+
+
+/* V2 */
+form
+{
+	display: flex;
+	flex-direction: column;
+
+	padding: 30px;
+
+	& > .field-row
+	{
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+
+		width: 100%;
+
+		& > .field
+		{
+			display: flex;
+			flex-direction: column;
+
+			width: 100%;
+			margin: 10px 30px;
+		}
+	}
+}
