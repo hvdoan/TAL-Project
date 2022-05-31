@@ -6,7 +6,7 @@
     flex-direction: column;
 
     width: 750px;
-    padding: 30px 0 0 0 !important;
+    padding: 10px 0 0 0 !important;
 
     background: $white;
     border-radius: 7px;
@@ -59,27 +59,76 @@
                 }
             }
 
-            & > select
+            & > #select-avatar-ctn
             {
-                width: fit-content;
-                padding: 5px 10px;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
 
-                background: $grey;
-                border: none;
+                & >  #avatar-preview
+                {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    width: 40px;
+                    height: 40px;
+                    background: $light-grey;
+                    border-radius: 50%;
+                    overflow: hidden;
 
-                color: $white;
-                font-family: $jaldi;
-                text-transform: uppercase;
+                    & > .icon
+                    {
+                        max-width: 40px;
+                        max-height: 40px;
+                        color: $dark-blue;
+                        font-size: 1.5rem;
+                    }
+                }
+
+                & > label:nth-child(2)
+                {
+                    margin: 0 10px;
+                    color: $dark-blue;
+                    transition: .3s;
+                    cursor: pointer;
+
+                    &:hover
+                    {
+                        text-decoration: underline;
+                        transition: .3s;
+                    }
+                }
             }
 
-            & > .disabled
+            & > #select-ctn
             {
-                background: $grey;
-                color: $white;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+
+                & > select
+                {
+                    width: fit-content;
+                    padding: 5px 10px;
+
+                    background: $light-grey;
+                    border: none;
+
+                    color: $hard-blue;
+                    font-family: $jaldi;
+                    text-transform: uppercase;
+                }
+
+                & > .questionMark
+                {
+                    margin: 0 10px;
+                    color: $red;
+                }
             }
         }
 
-        & > #id-ctn
+        & > #role-ctn
         {
             display: flex;
             flex-direction: row;
@@ -94,6 +143,8 @@
 
             & > span
             {
+                width: max-content;
+
                 color: $white;
                 font-size: .7rem;
                 font-weight: bold;
@@ -111,6 +162,7 @@
         align-items: center;
 
         padding: 20px 0;
+        margin-top: 10px;
         box-sizing: border-box;
 
         background: $light-grey;
@@ -156,9 +208,15 @@
 
             &:hover
             {
-                color: $dark-green;
+                background: $dark-green;
                 transition: .3s;
             }
         }
+    }
+
+    & .disabled
+    {
+        background: $grey !important;
+        color: $white !important;
     }
 }

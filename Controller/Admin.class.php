@@ -86,11 +86,7 @@ class Admin
                         $role = $object;
                     }
                     $htmlContent .= "<td>" . $role->getName() . "</td>";
-
-                    if($user["id"] != $_SESSION["id"])
-                        $htmlContent .= "<td><button class='btn btn-edit' onclick='openUserForm(\"" . $user["id"] . "\")'>Editer</button></td>";
-                    else
-                        $htmlContent .= "<td></td>";
+                    $htmlContent .= "<td><button class='btn btn-edit' onclick='openUserForm(\"" . $user["id"] . "\")'>Editer</button></td>";
                     $htmlContent .= "</tr>";
                 }
 
@@ -197,6 +193,8 @@ class Admin
 		}
         else if(isset($_POST["requestType"]) && $_POST["requestType"] == "openForm")
         {
+            $canChangeRole = true;
+
             if(!$isConnected)
                 echo "login";
             else
@@ -215,11 +213,18 @@ class Admin
                         $user->setIdRole($getUserIdRole[0]["idRole"]);
 
                         $role = new Role();
-                        $object = $role->setId($user->getId());
+                        $object = $role->setId($user->getIdRole());
 
 						if ($object != false)
 						{
-							$role = $object;
+							$role       = $object;
+                            $listAction = $role->getAction();
+
+                            foreach($listAction as $action)
+                            {
+                                if($action->getCode() == "MANAGE_USER")
+                                    $canChangeRole = false;
+                            }
 						}
                     }
                 }
@@ -231,15 +236,16 @@ class Admin
                 {
 					$htmlContent .= "<form class='form'>";
 
-					// @CSRF
+					/* @CSRF */
 					$htmlContent .= "<input id='tokenForm' type='hidden' name='tokenForm' value='" . $token . "'>";
 
+                    /* Header */
 					$htmlContent .= "<div class='field-row'>";
 					$htmlContent .= "<div class='field'>";
                     $htmlContent .= "<h1>Modification de l'utilisateur : " . $user->getFirstname() . " " . strtoupper($user->getLastname()) . "</h1>";
 					$htmlContent .= "</div>";
 
-					$htmlContent .= "<div id='id-ctn' class='field'>";
+					$htmlContent .= "<div id='role-ctn' class='field'>";
                     $htmlContent .= "<span>" . $role->getName() . "</span>";
 					$htmlContent .= "</div>";
 					$htmlContent .= "</div>";
@@ -248,6 +254,7 @@ class Admin
 					$htmlContent .= "<hr>";
 					$htmlContent .= "</div>";
 
+                    /* Name field */
 					$htmlContent .= "<div class='field-row'>";
                     $htmlContent .= "<div class='field'>";
                     $htmlContent .= "<label>Nom</label>";
@@ -260,35 +267,56 @@ class Admin
 					$htmlContent .= "</div>";
 					$htmlContent .= "</div>";
 
+                    /* Email field */
 					$htmlContent .= "<div class='field-row'>";
 					$htmlContent .= "<div class='field'>";
                     $htmlContent .= "<label>Email</label>";
-                    $htmlContent .= "<input id='input-email' class='input disabled' type='text' name='email' value='" . $user->getEmail() . "'>";
+                    $htmlContent .= "<input id='input-email' class='input disabled' type='text' name='email' value='" . $user->getEmail() . "' disabled>";
                     $htmlContent .= "</div>";
 					$htmlContent .= "</div>";
 
+                    /* Role field */
 					$htmlContent .= "<div class='field-row'>";
                     $htmlContent .= "<div class='field'>";
                     $htmlContent .= "<label for='input-idRole'>Rôles</label>";
-                    $htmlContent .= "<select name='userIdRole' id='input-idRole'>";
+                    $htmlContent .= "<div id='select-ctn'>";
+
+                    if($_SESSION["role"] != "Administrateur" && !$canChangeRole)
+                        $htmlContent .= "<select class='disabled' name='userIdRole' id='input-idRole' disabled>";
+                    else
+                        $htmlContent .= "<select name='userIdRole' id='input-idRole'>";
+
                     foreach ($roleList as $role)
                     {
                         $htmlContent .= "<option value='" . $role["id"] . "'";
                         $htmlContent .= ($role["id"] == $user->getIdRole()) ? "selected>" : ">";
                         $htmlContent .= $role["name"] . "</option>";
                     }
+
                     $htmlContent .= "</select>";
+
+                    if($_SESSION["id"] == $user->getId())
+                        $htmlContent .= "<i class='fa-solid fa-circle-exclamation questionMark' data-toggle='tooltip' title='Impossible de changer son propre rôle.'></i>";
+                    else if($_SESSION["role"] != "Administrateur" && !$canChangeRole)
+                        $htmlContent .= "<i class='fa-solid fa-circle-exclamation questionMark' data-toggle='tooltip' title='Modification du rôle impossible, permission pas assez élevé.'></i>";
+
+                    $htmlContent .= "</div>";
                     $htmlContent .= "</div>";
 					$htmlContent .= "</div>";
 
+                    /* avatar field */
 					$htmlContent .= "<div class='field-row'>";
                     $htmlContent .= "<div class='field'>";
-					$htmlContent .= "<div id='avatar-preview'></div>";
                     $htmlContent .= "<label>Avatar</label>";
-                    $htmlContent .= "<input id='input-avatar' type='file' name='avatar' onchange='displayUserAvatar()'>";
+                    $htmlContent .= "<div id='select-avatar-ctn'>";
+                    $htmlContent .= "<div id='avatar-preview'><i class='fa-solid fa-plus'></i></div>";
+                    $htmlContent .= "<label for='input-avatar'>Choisir une image</label>";
+                    $htmlContent .= "<input id='input-avatar' class='hide' type='file' name='avatar' onchange='displayUserAvatar()'>";
+                    $htmlContent .= "</div>";
                     $htmlContent .= "</div>";
 					$htmlContent .= "</div>";
 
+                    /* cta */
 					$htmlContent .= "<div class='field-row field-cta'>";
 					$htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $user->getId() . "'>";
 					$htmlContent .= "<input class='cancel' onclick='closeUserForm()' type='button' value='Annuler'>";
