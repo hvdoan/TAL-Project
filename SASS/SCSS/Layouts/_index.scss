@@ -1,5 +1,9 @@
+@forward "form_partial";
 @forward "donation";
 @forward "api_configuration";
 @forward "forum_management";
 @forward "message_management";
 @forward "user_management";
+@forward "role_management";
+@forward "donation_tier";
+@forward "tag";
