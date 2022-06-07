@@ -86,11 +86,7 @@ class Admin
                         $role = $object;
                     }
                     $htmlContent .= "<td>" . $role->getName() . "</td>";
-
-                    if($user["id"] != $_SESSION["id"])
-                        $htmlContent .= "<td><button class='btn btn-edit' onclick='openUserForm(\"" . $user["id"] . "\")'>Editer</button></td>";
-                    else
-                        $htmlContent .= "<td></td>";
+                    $htmlContent .= "<td><button class='btn btn-edit' onclick='openUserForm(\"" . $user["id"] . "\")'>Editer</button></td>";
                     $htmlContent .= "</tr>";
                 }
 
@@ -131,39 +127,48 @@ class Admin
                 echo "login";
 		    else
             {
-                if((isset($_POST["userId"]) && $_POST["userId"] != "")
-                    && (!empty($_FILES["avatar"]))
-                    && (isset($_POST["userLastname"]) && $_POST["userLastname"] != "")
-                    && (isset($_POST["userFirstname"]) && $_POST["userFirstname"] != "")
-                    && (isset($_POST["userEmail"]) && $_POST["userEmail"] != "")
-                    && (isset($_POST["userIdRole"]) && $_POST["userIdRole"] != ""))
+                if(!empty($_POST["userId"])
+                    && !empty($_POST["userLastname"])
+                    && !empty($_POST["userFirstname"])
+                    && !empty($_POST["userEmail"])
+                    && !empty($_POST["userIdRole"]))
                 {
-                    /* Get avatar file info */
-                    $fileName   = basename($_FILES["avatar"]["name"]);
-                    $fileType   = pathinfo($fileName, PATHINFO_EXTENSION);
+                    $avatarToSet = 0;
+
+                    if (!empty($_FILES["avatar"]))
+                    {
+                        $avatarToSet = 1;
+
+                        /* Get avatar file info */
+                        $fileName   = basename($_FILES["avatar"]["name"]);
+                        $fileType   = pathinfo($fileName, PATHINFO_EXTENSION);
+
+                        $imageContent       = "";
+
+                        $allowTypes = array("jpg","png","jpeg","gif");
+
+                        if(in_array($fileType, $allowTypes))
+                        {
+                            $image          = $_FILES['avatar']['tmp_name'];
+                            $imageContent   = base64_encode(file_get_contents($image));
+                        }
+                    }
 
                     /* Escape SQL injection */
-                    $lastname           = addslashes($_POST["userLastname"]);
-                    $firstname          = addslashes($_POST["userFirstname"]);
-                    $email              = addslashes($_POST["userEmail"]);
-                    $idRole             = addslashes($_POST["userIdRole"]);
-                    $imageContent       = "";
+                    $lastname       = addslashes($_POST["userLastname"]);
+                    $firstname      = addslashes($_POST["userFirstname"]);
+                    $email          = addslashes($_POST["userEmail"]);
+                    $idRole         = addslashes($_POST["userIdRole"]);
 
-                    $allowTypes = array("jpg","png","jpeg","gif");
-
-                    if(in_array($fileType, $allowTypes))
-                    {
-                        $image          = $_FILES['avatar']['tmp_name'];
-                        $imageContent   = base64_encode(file_get_contents($image));
-                    }
-                  
                     /* Update of user information */
                     $object = $user->setId(intval($_POST["userId"]));
 
                     if($object != false)
                         $user = $object;
 
-                    $user->setAvatar($imageContent);
+                    if ($avatarToSet)
+                        $user->setAvatar($imageContent);
+
                     $user->setFirstname($firstname);
                     $user->setLastname($lastname);
                     $user->setEmail($email);
@@ -197,6 +202,9 @@ class Admin
 		}
         else if(isset($_POST["requestType"]) && $_POST["requestType"] == "openForm")
         {
+            $canChangeRole      = true;
+            $noPermissionType   = 0;
+
             if(!$isConnected)
                 echo "login";
             else
@@ -215,11 +223,37 @@ class Admin
                         $user->setIdRole($getUserIdRole[0]["idRole"]);
 
                         $role = new Role();
-                        $object = $role->setId($user->getId());
+                        $object = $role->setId($user->getIdRole());
 
 						if ($object != false)
 						{
-							$role = $object;
+							$role       = $object;
+                            $listAction = $role->getAction();
+
+                            foreach($listAction as $action)
+                            {
+                                /*
+                                 * Permission not granted in the following cases:
+                                 *   - Change of own role
+                                 *   - Change of role of an administrator
+                                 *   - Change of role that has user management rights as non-super admin
+                                 * */
+                                if($_SESSION["id"] == $user->getId())
+                                {
+                                    $canChangeRole = false;
+                                    $noPermissionType = 1;
+                                }
+                                else if($action->getCode() == "MANAGE_USER" && $_SESSION["role"] != "Administrateur")
+                                {
+                                    $canChangeRole = false;
+                                    $noPermissionType = 2;
+                                }
+                                else if($role->getName() == "Administrateur")
+                                {
+                                    $canChangeRole = false;
+                                    $noPermissionType = 2;
+                                }
+                            }
 						}
                     }
                 }
@@ -231,15 +265,16 @@ class Admin
                 {
 					$htmlContent .= "<form class='form'>";
 
-					// @CSRF
+					/* @CSRF */
 					$htmlContent .= "<input id='tokenForm' type='hidden' name='tokenForm' value='" . $token . "'>";
 
+                    /* Header */
 					$htmlContent .= "<div class='field-row'>";
 					$htmlContent .= "<div class='field'>";
                     $htmlContent .= "<h1>Modification de l'utilisateur : " . $user->getFirstname() . " " . strtoupper($user->getLastname()) . "</h1>";
 					$htmlContent .= "</div>";
 
-					$htmlContent .= "<div id='id-ctn' class='field'>";
+					$htmlContent .= "<div id='role-ctn' class='field'>";
                     $htmlContent .= "<span>" . $role->getName() . "</span>";
 					$htmlContent .= "</div>";
 					$htmlContent .= "</div>";
@@ -248,51 +283,73 @@ class Admin
 					$htmlContent .= "<hr>";
 					$htmlContent .= "</div>";
 
+                    /* Name field */
 					$htmlContent .= "<div class='field-row'>";
                     $htmlContent .= "<div class='field'>";
-                    $htmlContent .= "<label>Nom</label>";
+                    $htmlContent .= "<label>Nom *</label>";
                     $htmlContent .= "<input id='input-lastname' class='input' type='text' name='lastname' value='" . $user->getLastname() . "'>";
 					$htmlContent .= "</div>";
 
 					$htmlContent .= "<div class='field'>";
-                    $htmlContent .= "<label>Prénom</label>";
+                    $htmlContent .= "<label>Prénom *</label>";
                     $htmlContent .= "<input id='input-firstname' class='input' type='text' name='firstname' value='" . $user->getFirstname() . "'>";
 					$htmlContent .= "</div>";
 					$htmlContent .= "</div>";
 
+                    /* Email field */
 					$htmlContent .= "<div class='field-row'>";
 					$htmlContent .= "<div class='field'>";
-                    $htmlContent .= "<label>Email</label>";
-                    $htmlContent .= "<input id='input-email' class='input disabled' type='text' name='email' value='" . $user->getEmail() . "'>";
+                    $htmlContent .= "<label>Email *</label>";
+                    $htmlContent .= "<input id='input-email' class='input disabled' type='text' name='email' value='" . $user->getEmail() . "' disabled>";
                     $htmlContent .= "</div>";
 					$htmlContent .= "</div>";
 
+                    /* Role field */
 					$htmlContent .= "<div class='field-row'>";
                     $htmlContent .= "<div class='field'>";
-                    $htmlContent .= "<label for='input-idRole'>Rôles</label>";
-                    $htmlContent .= "<select name='userIdRole' id='input-idRole'>";
+                    $htmlContent .= "<label for='input-idRole'>Rôles *</label>";
+                    $htmlContent .= "<div id='select-ctn'>";
+
+                    if($noPermissionType)
+                        $htmlContent .= "<select class='disabled' name='userIdRole' id='input-idRole' disabled>";
+                    else
+                        $htmlContent .= "<select name='userIdRole' id='input-idRole'>";
+
                     foreach ($roleList as $role)
                     {
                         $htmlContent .= "<option value='" . $role["id"] . "'";
                         $htmlContent .= ($role["id"] == $user->getIdRole()) ? "selected>" : ">";
                         $htmlContent .= $role["name"] . "</option>";
                     }
+
                     $htmlContent .= "</select>";
+
+                    if($noPermissionType == 1)
+                        $htmlContent .= "<i class='fa-solid fa-circle-exclamation questionMark' data-toggle='tooltip' title='Impossible de changer son propre rôle.'></i>";
+                    else if($noPermissionType == 2)
+                        $htmlContent .= "<i class='fa-solid fa-circle-exclamation questionMark' data-toggle='tooltip' title='Modification du rôle impossible, permission pas assez élevé.'></i>";
+
+                    $htmlContent .= "</div>";
                     $htmlContent .= "</div>";
 					$htmlContent .= "</div>";
 
+                    /* avatar field */
 					$htmlContent .= "<div class='field-row'>";
                     $htmlContent .= "<div class='field'>";
-					$htmlContent .= "<div id='avatar-preview'></div>";
                     $htmlContent .= "<label>Avatar</label>";
-                    $htmlContent .= "<input id='input-avatar' type='file' name='avatar' onchange='displayUserAvatar()'>";
+                    $htmlContent .= "<div id='select-avatar-ctn'>";
+                    $htmlContent .= "<div id='avatar-preview'><i class='fa-solid fa-plus'></i></div>";
+                    $htmlContent .= "<label for='input-avatar'>Choisir une image</label>";
+                    $htmlContent .= "<input id='input-avatar' class='hide' type='file' name='avatar' onchange='displayUserAvatar()'>";
+                    $htmlContent .= "</div>";
                     $htmlContent .= "</div>";
 					$htmlContent .= "</div>";
 
+                    /* cta */
 					$htmlContent .= "<div class='field-row field-cta'>";
 					$htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $user->getId() . "'>";
-					$htmlContent .= "<input class='cancel' onclick='closeUserForm()' type='button' value='Annuler'>";
-					$htmlContent .= "<input class='validate' onclick='updateUser()' type='button' value='Modifier'>";
+					$htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeUserForm()' type='button' value='Annuler'>";
+					$htmlContent .= "<input class='btn-form btn-form-validate' onclick='updateUser()' type='button' value='Modifier'>";
 					$htmlContent .= "</div>";
 
 					$htmlContent .= "</form>";
@@ -488,6 +545,9 @@ class Admin
                 if ($_POST["roleId"] != "")
                     $role = $role->setId(intval($_POST["roleId"]));
 
+                $permission = new Permission();
+                $permissionList = $permission->select(["idAction"], ["idRole" => $role->getId()]);
+
                 $token = md5(uniqid());
                 $_SESSION["tokenForm"] = $token;
 
@@ -496,43 +556,38 @@ class Admin
                 // @CSRF
                 $htmlContent .= "<input id='tokenForm' type='hidden' name='tokenForm' value='" . $token . "'>";
 
-                if ($role->getId() != null) {
-                    $permission = new Permission();
-                    $permissionList = $permission->select(["idAction"], ["idRole" => $role->getId()]);
+                /* Header */
+                $htmlContent .= "<div class='field-row'>";
+                $htmlContent .= "<div class='field'>";
+                $htmlContent .= "<h1>Paramétrage du rôle : " . $role->getName() . "</h1>";
+                $htmlContent .= "</div>";
+                $htmlContent .= "</div>";
 
-                    $htmlContent .= "<h1>Modification du rôle : " . $role->getName() . "</h1>";
-                    $htmlContent .= "<div class='field'>";
-                    $htmlContent .= "<label>Nom du rôle</label>";
-                    $htmlContent .= "<input id='input-name' type='text' name='name' value='" . $role->getName() . "'>";
-                    $htmlContent .= "</div>";
-                    $htmlContent .= "<div class='field'>";
-                    $htmlContent .= "<label>Description</label>";
-                    $htmlContent .= "<input id='input-description' type='text' name='description' value='" . $role->getDescription() . "'>";
-                    $htmlContent .= "</div>";
-                    $htmlContent .= "<div class='fieldHeader'>";
-                    $htmlContent .= "<label>Gestions</label>";
-                    $htmlContent .= "<label>Autoriser</label>";
-                    $htmlContent .= "<label>Refuser</label>";
-                    $htmlContent .= "</div>";
-                } else {
-                    $htmlContent .= "<h1>Création d'un nouveau rôle</h1>";
-                    $htmlContent .= "<div class='field'>";
-                    $htmlContent .= "<label>Nom du rôle</label>";
-                    $htmlContent .= "<input id='input-name' type='text' name='name'>";
-                    $htmlContent .= "</div>";
-                    $htmlContent .= "<div class='field'>";
-                    $htmlContent .= "<label>Description</label>";
-                    $htmlContent .= "<input id='input-description' type='text' name='description'>";
-                    $htmlContent .= "</div>";
-                    $htmlContent .= "<div class='fieldHeader'>";
-                    $htmlContent .= "<label>Gestions</label>";
-                    $htmlContent .= "<label>Autoriser</label>";
-                    $htmlContent .= "<label>Refuser</label>";
-                    $htmlContent .= "</div>";
-                }
+                /* Separator */
+                $htmlContent .= "<div class='field-row'>";
+                $htmlContent .= "<hr>";
+                $htmlContent .= "</div>";
 
+                /* Name field */
+                $htmlContent .= "<div class='field-row'>";
+                $htmlContent .= "<div class='field'>";
+                $htmlContent .= "<label>Nom du rôle</label>";
+                $htmlContent .= "<input id='input-name' class='input' type='text' name='name' value='" . $role->getName() . "'>";
+                $htmlContent .= "</div>";
+                $htmlContent .= "</div>";
+
+                /* Description field */
+                $htmlContent .= "<div class='field-row'>";
+                $htmlContent .= "<div class='field'>";
+                $htmlContent .= "<label>Description</label>";
+                $htmlContent .= "<input id='input-description' class='input' type='text' name='description' value='" . $role->getDescription() . "'>";
+                $htmlContent .= "</div>";
+                $htmlContent .= "</div>";
+
+                /* Permission field */
                 for ($i = 0; $i < count($actionList); $i++) {
-                    $htmlContent .= "<div class='fieldRow'>";
+                    $htmlContent .= "<div class='field-row permissions'>";
+                    $htmlContent .= "<div class='field'>";
                     $htmlContent .= "<label>" . $actionList[$i]["description"] . "</label>";
                     $isFind = false;
 
@@ -541,28 +596,37 @@ class Admin
                             $isFind = true;
                     }
 
-                    if ($isFind) {
-                        //					$htmlContent .= "<label>Autoriser</label>";
-                        $htmlContent .= "<input class='input-permission' type='radio' name='" . $actionList[$i]["id"] . "' value='1' checked>";
-                        //					$htmlContent .= "<label>Refuser</label>";
-                        $htmlContent .= "<input type='radio' name='" . $actionList[$i]["id"] . "' value='0'>";
-                    } else {
-                        //					$htmlContent .= "<label>Autoriser</label>";
-                        $htmlContent .= "<input class='input-permission' type='radio' name='" . $actionList[$i]["id"] . "' value='1'>";
-                        //					$htmlContent .= "<label>Refuser</label>";
-                        $htmlContent .= "<input type='radio' name='" . $actionList[$i]["id"] . "' value='0' checked>";
+                    $htmlContent .= "<label for='switch-" . $actionList[$i]["id"] . "' class='btn-switch'>";
+
+                    if ($isFind)
+                    {
+                        $htmlContent .= "<input id='switch-" . $actionList[$i]["id"] . "' class='input-permission' type='checkbox' name='" . $actionList[$i]["id"] . "' checked>";
+//                        $htmlContent .= "<input class='input-permission' type='radio' name='" . $actionList[$i]["id"] . "' value='1' checked>";
+//                        $htmlContent .= "<input type='radio' name='" . $actionList[$i]["id"] . "' value='0'>";
                     }
+                    else
+                    {
+                        $htmlContent .= "<input id='switch-" . $actionList[$i]["id"] . "' class='input-permission' type='checkbox' name='" . $actionList[$i]["id"] . "'>";
+//                        $htmlContent .= "<input class='input-permission' type='radio' name='" . $actionList[$i]["id"] . "' value='1'>";
+//                        $htmlContent .= "<input type='radio' name='" . $actionList[$i]["id"] . "' value='0' checked>";
+                    }
+
+                    $htmlContent .= "<span class='slider'></span>";
+                    $htmlContent .= "</label>";
+
+                    $htmlContent .= "</div>";
                     $htmlContent .= "</div>";
                 }
 
-                $htmlContent .= "<div class='section'>";
-                $htmlContent .= "<input class='btn btn-delete' onclick='closeRoleForm()' type='button' value='Annuler'>";
+                /* cta */
+                $htmlContent .= "<div class='field-cta'>";
+                $htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeRoleForm()' type='button' value='Annuler'>";
 
                 if ($role->getId() != null) {
                     $htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $role->getId() . "'>";
-                    $htmlContent .= "<input class='btn btn-validate' onclick='updateRole()' type='button' value='Modifier'>";
+                    $htmlContent .= "<input class='btn-form btn-form-validate' onclick='updateRole()' type='button' value='Modifier'>";
                 } else
-                    $htmlContent .= "<input class='btn btn-validate' onclick='insertRole()' type='button' value='Créer'>";
+                    $htmlContent .= "<input class='btn-form btn-form-validate' onclick='insertRole()' type='button' value='Créer'>";
                 $htmlContent .= "</div>";
                 $htmlContent .= "</form>";
 
@@ -892,46 +956,53 @@ class Admin
                 // @CSRF
                 $htmlContent .= "<input id='tokenForm' type='hidden' name='tokenForm' value='" . $token . "'>";
 
-                if($donationTier->getId() != null)
-                {
-                    $htmlContent .= "<h1>Modification du palier : n°" . $donationTier->getId() . " " . $donationTier->getName() . " " . "</h1>";
-                    $htmlContent .= "<div class='field'>";
-                        $htmlContent .= "<label>Nom</label>";
-                        $htmlContent .= "<input id='input-name' type='text' name='name' value='" . $donationTier->getName() . "'>";
-                        $htmlContent .= "<label>Description</label>";
-                        $htmlContent .= "<input id='input-description' type='text' name='description' value='" . $donationTier->getDescription() . "'>";
-                        $htmlContent .= "<label>Prix (en centimes)</label>";
-                        $htmlContent .= "<input id='input-price' type='text' name='price' value='" . $donationTier->getPrice() . "'>";
-                    $htmlContent .= "</div>";
-                    $htmlContent .= "<div class='section'>";
-                        $htmlContent .= "<input class='btn btn-delete' onclick='closeDonationForm()' type='button' value='Annuler'>";
-                }
-                else
-                {
-                    $htmlContent .= "<h1>Création d'un nouveau palier</h1>";
-                    $htmlContent .= "<div class='field'>";
-                        $htmlContent .= "<label>Nom du palier</label>";
-                        $htmlContent .= "<input id='input-name' type='text' name='name'>";
-                    $htmlContent .= "</div>";
-                    $htmlContent .= "<div class='field'>";
-                        $htmlContent .= "<label>Description du palier</label>";
-                        $htmlContent .= "<input id='input-description' type='text' name='description'>";
-                    $htmlContent .= "</div>";
-                    $htmlContent .= "<div class='field'>";
-                        $htmlContent .= "<label>Prix (en centimes)</label>";
-                        $htmlContent .= "<input id='input-price' type='text' name='price'>";
-                    $htmlContent .= "</div>";
-                    $htmlContent .= "<div class='section'>";
-                        $htmlContent .= "<input class='btn btn-delete' onclick='closeDonationForm()' type='button' value='Annuler'>";
-                }
+                /* Header */
+                $htmlContent .= "<div class='field-row'>";
+                $htmlContent .= "<div class='field'>";
+                $htmlContent .= "<h1>Paramétrage du rôle : " . $donationTier->getName() . "</h1>";
+                $htmlContent .= "</div>";
+                $htmlContent .= "</div>";
+
+                /* Separator */
+                $htmlContent .= "<div class='field-row'>";
+                $htmlContent .= "<hr>";
+                $htmlContent .= "</div>";
+
+                /* Name field */
+                $htmlContent .= "<div class='field-row'>";
+                $htmlContent .= "<div class='field'>";
+                $htmlContent .= "<label>Nom</label>";
+                $htmlContent .= "<input id='input-name' class='input' type='text' name='name' value='" . $donationTier->getName() . "'>";
+                $htmlContent .= "</div>";
+                $htmlContent .= "</div>";
+
+                /* Description field */
+                $htmlContent .= "<div class='field-row'>";
+                $htmlContent .= "<div class='field'>";
+                $htmlContent .= "<label>Description</label>";
+                $htmlContent .= "<input id='input-description' class='input' type='text' name='description' value='" . $donationTier->getDescription() . "'>";
+                $htmlContent .= "</div>";
+                $htmlContent .= "</div>";
+
+                /* Price field */
+                $htmlContent .= "<div class='field-row'>";
+                $htmlContent .= "<div class='field'>";
+                $htmlContent .= "<label>Prix (en centimes)</label>";
+                $htmlContent .= "<input id='input-price' class='input' type='text' name='price' value='" . $donationTier->getPrice() . "'>";
+                $htmlContent .= "</div>";
+                $htmlContent .= "</div>";
+
+                /* cta */
+                $htmlContent .= "<div class='field-cta'>";
+                $htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeDonationForm()' type='button' value='Annuler'>";
 
                 if($donationTier->getId() != null)
                 {
                     $htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $donationTier->getId() . "'>";
-                    $htmlContent .= "<input class='btn btn-validate' onclick='updateDonationTier()' type='button' value='Modifier'>";
+                    $htmlContent .= "<input class='btn-form btn-form-validate' onclick='updateDonationTier()' type='button' value='Modifier'>";
                 }
                 else
-                    $htmlContent .= "<input class='btn btn-validate' onclick='insertDonationTier()' type='button' value='Créer'>";
+                    $htmlContent .= "<input class='btn-form btn-form-validate' onclick='insertDonationTier()' type='button' value='Créer'>";
 
                 $htmlContent .= "</div>";
                 $htmlContent .= "</form>";
@@ -1021,36 +1092,44 @@ class Admin
 			}
 			
 			$htmlContent .= "<form class='form'>";
-			
-			if($tag->getId() != null){
-				$htmlContent .= "<h1>Modification de la catégorie : n°" . $tag->getId() . " " . $tag->getName() . " " . "</h1>";
-				$htmlContent .= "<div class='field'>";
-					$htmlContent .= "<label>Nom</label>";
-					$htmlContent .= "<input id='input-name' type='text' name='name' value='" . $tag->getName() . "'>";
-					$htmlContent .= "<label>Description</label>";
-					$htmlContent .= "<input id='input-description' type='text' name='description' value='" . $tag->getDescription() . "'>";
-				$htmlContent .= "</div>";
-				$htmlContent .= "<div class='section'>";
-					$htmlContent .= "<input class='btn btn-delete' onclick='closeForm()' type='button' value='Annuler'>";
-			}else{
-				$htmlContent .= "<h1>Création d'une nouvelle catégorie</h1>";
-				$htmlContent .= "<div class='field'>";
-					$htmlContent .= "<label>Nom de la catégorie</label>";
-					$htmlContent .= "<input id='input-name' type='text' name='name'>";
-				$htmlContent .= "</div>";
-				$htmlContent .= "<div class='field'>";
-					$htmlContent .= "<label>Description de la catégorie</label>";
-					$htmlContent .= "<input id='input-description' type='text' name='description'>";
-				$htmlContent .= "</div>";
-				$htmlContent .= "<div class='section'>";
-					$htmlContent .= "<input class='btn btn-delete' onclick='closeForm()' type='button' value='Annuler'>";
-			}
+
+            /* Header */
+            $htmlContent .= "<div class='field-row'>";
+            $htmlContent .= "<div class='field'>";
+            $htmlContent .= "<h1>Paramétrage de la catégorie : " . $tag->getName() . "</h1>";
+            $htmlContent .= "</div>";
+            $htmlContent .= "</div>";
+
+            /* Separator */
+            $htmlContent .= "<div class='field-row'>";
+            $htmlContent .= "<hr>";
+            $htmlContent .= "</div>";
+
+            /* Name field */
+            $htmlContent .= "<div class='field-row'>";
+            $htmlContent .= "<div class='field'>";
+            $htmlContent .= "<label>Nom</label>";
+            $htmlContent .= "<input id='input-name' class='input' type='text' name='name' value='" . $tag->getName() . "'>";
+            $htmlContent .= "</div>";
+            $htmlContent .= "</div>";
+
+            /* Description field */
+            $htmlContent .= "<div class='field-row'>";
+            $htmlContent .= "<div class='field'>";
+            $htmlContent .= "<label>Description</label>";
+            $htmlContent .= "<input id='input-description' class='input' type='text' name='description' value='" . $tag->getDescription() . "'>";
+            $htmlContent .= "</div>";
+            $htmlContent .= "</div>";
+
+            /* cta */
+            $htmlContent .= "<div class='field-cta'>";
+            $htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeForm()' type='button' value='Annuler'>";
 			
 			if($tag->getId() != null){
 				$htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $tag->getId() . "'>";
-				$htmlContent .= "<input class='btn btn-validate' onclick='updateTag()' type='button' value='Modifier'>";
+				$htmlContent .= "<input class='btn-form btn-form-validate' onclick='updateTag()' type='button' value='Modifier'>";
 			}else
-				$htmlContent .= "<input class='btn btn-validate' onclick='insertTag()' type='button' value='Créer'>";
+				$htmlContent .= "<input class='btn-form btn-form-validate' onclick='insertTag()' type='button' value='Créer'>";
 			$htmlContent .= "</div>";
 			$htmlContent .= "</form>";
 			

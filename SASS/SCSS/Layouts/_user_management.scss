@@ -2,84 +2,82 @@
 
 #ctnUserForm > form
 {
-    display: flex;
-    flex-direction: column;
-
     width: 750px;
-    padding: 30px 0 0 0 !important;
-
-    background: $white;
-    border-radius: 7px;
-    overflow: hidden;
 
     & > .field-row
     {
-
-        & > hr
-        {
-            width: 100%;
-            height: 1px;
-            margin: 0 30px;
-            box-sizing: border-box;
-
-            background: $dark-blue;
-            border: none;
-        }
-
         & > .field
         {
-            & > h1
+            & > #select-avatar-ctn
             {
-                margin: 10px 0;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
 
-                color: $hard-blue;
-
-                font-size: 1.2rem;
-                text-transform: uppercase;
-            }
-
-            & > label
-            {
-                color: $grey;
-                text-transform: uppercase;
-                font-weight: bold;
-            }
-
-            & > .input
-            {
-                padding: 8px;
-
-                background: $light-grey;
-                color: $hard-blue;
-                border: none;
-
-                &:focus
+                & >  #avatar-preview
                 {
-                    outline: none;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    width: 40px;
+                    height: 40px;
+                    background: $light-grey;
+                    border-radius: 50%;
+                    overflow: hidden;
+
+                    & > .icon
+                    {
+                        max-width: 40px;
+                        max-height: 40px;
+                        color: $dark-blue;
+                        font-size: 1.5rem;
+                    }
+                }
+
+                & > label:nth-child(2)
+                {
+                    margin: 0 10px;
+                    color: $dark-blue;
+                    transition: .3s;
+                    cursor: pointer;
+
+                    &:hover
+                    {
+                        text-decoration: underline;
+                        transition: .3s;
+                    }
                 }
             }
 
-            & > select
+            & > #select-ctn
             {
-                width: fit-content;
-                padding: 5px 10px;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
 
-                background: $grey;
-                border: none;
+                & > select
+                {
+                    width: fit-content;
+                    padding: 5px 10px;
 
-                color: $white;
-                font-family: $jaldi;
-                text-transform: uppercase;
-            }
+                    background: $light-grey;
+                    border: none;
 
-            & > .disabled
-            {
-                background: $grey;
-                color: $white;
+                    color: $hard-blue;
+                    font-family: $jaldi;
+                    text-transform: uppercase;
+                }
+
+                & > .questionMark
+                {
+                    margin: 0 10px;
+                    color: $red;
+                }
             }
         }
 
-        & > #id-ctn
+        & > #role-ctn
         {
             display: flex;
             flex-direction: row;
@@ -94,70 +92,13 @@
 
             & > span
             {
+                width: max-content;
+
                 color: $white;
                 font-size: .7rem;
                 font-weight: bold;
                 text-transform: capitalize;
                 letter-spacing: 1px;
-            }
-        }
-    }
-
-    & > .field-cta
-    {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
-        align-items: center;
-
-        padding: 20px 0;
-        box-sizing: border-box;
-
-        background: $light-grey;
-
-        & > input
-        {
-            padding: 10px 25px;
-
-            border: none;
-            border-radius: 25px;
-
-            text-transform: uppercase;
-            font-weight: bold;
-            transition: .3s;
-            cursor: pointer;
-
-            &:hover
-            {
-                transition: .3s;
-            }
-        }
-
-        & > .cancel
-        {
-            background: none;
-            color: $grey;
-            transition: .3s;
-
-            &:hover
-            {
-                color: $dark-grey;
-                transition: .3s;
-            }
-        }
-
-        & > .validate
-        {
-            margin: 0 30px 0 10px;
-
-            background: $light-green;
-            color: $white;
-            transition: .3s;
-
-            &:hover
-            {
-                color: $dark-green;
-                transition: .3s;
             }
         }
     }
