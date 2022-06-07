@@ -20,7 +20,6 @@
 			use App\Core\Verificator;
 			
 			Notification::displayNotifications();
-			Verificator::unsetSession();
 		?>
 		
 		<nav class="nav-ctn-row">
@@ -37,28 +36,28 @@
 					<a class="btn" href="#">Wiki</a>
 					<a class="btn" href="/donation">Donation</a>
 					
-					<?php if(Verificator::checkConnection() && isset($_SESSION['permission']) && !empty($_SESSION['permission']) && in_array("ADMIN_ACCESS", $_SESSION['permission'])): ?>
+					<?php if($this->data["isConnected"] && isset($_SESSION['permission']) && !empty($_SESSION['permission']) && in_array("ADMIN_ACCESS", $_SESSION['permission'])): ?>
 						<a class="btn" href="/dashboard">Dashboard</a>
 					<?php endif;
+          
+            if(isset($_SESSION['id']) && !empty($_SESSION['token']) && isset($_COOKIE['token']) && $_SESSION['token'] === $_COOKIE['token']):?>
+                <label class="avatar" for="trigger-user-menu">
+                    <div id="avatar-container">
+                        <?php if($_SESSION['avatar'] != "") : ?>
+                            <img class="icon" src="data:<?=mime_content_type($_SESSION['avatar'])?>>;base64, <?=$_SESSION['avatar']?>">
+                        <?php else : ?>
+                            <i class="icon fa-solid fa-user-astronaut"></i>
+                        <?php endif; ?>
+                    </div>
+                </label>
 
-                    if(isset($_SESSION['id']) && !empty($_SESSION['token']) && isset($_COOKIE['token']) && $_SESSION['token'] === $_COOKIE['token']):?>
-                        <label class="avatar" for="trigger-user-menu">
-                            <div id="avatar-container">
-                                <?php if($_SESSION['avatar'] != "") : ?>
-                                    <img class="icon" src="data:<?=mime_content_type($_SESSION['avatar'])?>>;base64, <?=$_SESSION['avatar']?>">
-                                <?php else : ?>
-                                    <i class="icon fa-solid fa-user-astronaut"></i>
-                                <?php endif; ?>
-                            </div>
-                        </label>
+                <input id="trigger-user-menu" type="checkbox" name="trigger-user-menu">
 
-                        <input id="trigger-user-menu" type="checkbox" name="trigger-user-menu">
-
-                        <div id="user-menu">
-                            <span class="header-square"></span>
-                            <a href="/user-setting">Paramètre</a>
-                            <a class="red" href="/logout">Déconnexion</a>
-                        </div>
+                <div id="user-menu">
+                    <span class="header-square"></span>
+                    <a href="/user-setting">Paramètre</a>
+                    <a class="red" href="/logout">Déconnexion</a>
+                </div>
 					<?php else: ?>
 						<a class="btn" href="/login">Connexion</a>
 						<a class="btn" href="/register">Inscription</a>
