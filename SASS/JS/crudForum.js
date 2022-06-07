@@ -113,7 +113,7 @@ function deleteForum(){
 	}
 	
 	if(forumNameList.length > 0){
-		if(confirm((`Êtes-vous sûr de vouloir supprimer le(s) forum(s) : ${forumNameList.join(", ")} ?`))){
+		if(confirm((`Êtes-vous sûr de vouloir supprimer le(s) forum(s) : ${forumNameList.join(", ")} ainsi que toutes ses dépendances?`))){
 			const request = new XMLHttpRequest();
 			request.open('POST', '/forum-management');
 			
