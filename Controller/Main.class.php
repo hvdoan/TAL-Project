@@ -146,7 +146,7 @@ class Main {
 												$htmlContent .= "<p class='bold'>" . $userMessage->getFirstname() . " " . $userMessage->getLastname() . "</p>";
 											$htmlContent .= "</div>";
 											$htmlContent .= "<div>";
-												$htmlContent .= "<small>" . $message["updateDate"] . "</small>";
+												$htmlContent .= "<small>" . date("d/m/Y", strtotime($message["updateDate"])) . "</small>";
 												if($isConnected)
 													$htmlContent .= "<a class='pointer' onclick='insertAnAnswer(" . $forumId . ", " . $message["id"] . ")'>Répondre</a>";
 											$htmlContent .= "</div>";
@@ -206,7 +206,7 @@ class Main {
 													$htmlContent .= "<p class='bold'>" . $userAnswer->getFirstname() . " " . $userAnswer->getLastname() . "</p>";
 												$htmlContent .= "</div>";
 												$htmlContent .= "<div>";
-													$htmlContent .= "<small>" . $answer["updateDate"] . "</small>";
+													$htmlContent .= "<small>" . date("d/m/Y", strtotime($answer["updateDate"])) . "</small>";
 													if($isConnected)
 														$htmlContent .= "<a class='pointer' onclick='insertAnAnswer(" . $forumId . ", " . $answer["id"] . ")'>Répondre</a>";
 												$htmlContent .= "</div>";
@@ -323,18 +323,32 @@ class Main {
 					// @CSRF
 					$htmlContent .= "<input id='tokenForm' type='hidden' name='tokenForm' value='" . $token . "'>";
 					
-					$htmlContent .= "<h1>Création d'un nouveau message</h1>";
-					$htmlContent .= "<div class='field'>";
-						$htmlContent .= "<label>Contenu du message</label>";
-						$htmlContent .= "<input id='input-content' type='text' name='content'>";
+					/* Field header */
+					$htmlContent .= "<div class='field-row'>";
+						$htmlContent .= "<div class='field'>";
+							$htmlContent .= "<h1>Création d'un nouveau message</h1>";
+						$htmlContent .= "</div>";
 					$htmlContent .= "</div>";
+					
+					/* Field content */
+					$htmlContent .= "<div class='field-row'>";
+						$htmlContent .= "<div class='field'>";
+							$htmlContent .= "<label>Contenu du message</label>";
+							$htmlContent .= "<textarea id='input-content' name='content' rows='5'></textarea>";
+						$htmlContent .= "</div>";
+					$htmlContent .= "</div>";
+				
+					/* Field hidden */
 					$htmlContent .= "<input id='input-idUser' type='hidden' name='idUser' value='" . $_SESSION['id'] . "'>";
 					$htmlContent .= "<input id='input-idMessage' type='hidden' name='idMessage' value='0'>";
 					$htmlContent .= "<input id='input-idForum' type='hidden' name='idForum' value='" . $forumId . "'>";
-					$htmlContent .= "<div class='section'>";
-						$htmlContent .= "<input class='btn btn-delete' onclick='closeMessageForm()' type='button' value='Annuler'>";
-						$htmlContent .= "<input class='btn btn-validate' onclick='insertMessageFront(" . $forumId . ")' type='button' value='Créer'>";
+				
+					/* Field cta */
+					$htmlContent .= "<div class='field-cta'>";
+						$htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeMessageForm()' type='button' value='Annuler'>";
+						$htmlContent .= "<input class='btn-form btn-form-validate' onclick='insertMessageFront(" . $forumId . ")' type='button' value='Créer'>";
 					$htmlContent .= "</div>";
+					
 				$htmlContent .= "</form>";
 				echo $htmlContent;
 			}

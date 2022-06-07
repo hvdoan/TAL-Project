@@ -1,18 +1,21 @@
 @use "../Abstracts" as *;
 
 .forum {
-  margin: 2% 4%;
   display: flex;
   justify-content: space-evenly;
-  align-items: flex-start;
+  align-items: center;
   flex-direction: column;
   font-family: "Jaldi", sans-serif;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 2% 4%;
+
 
   & .forumHeader {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	width: 92.1vw;
+	width: 100%;
 
 	& > div {
 	  display: flex;
@@ -35,7 +38,9 @@
   }
 
   & .forumDescription {
-	width: 90.3vw;
+	//width: 90.3vw;
+	width: 100%;
+	box-sizing: border-box;
 	border: solid $dark-blue;
 	border-width: 0 1px 1px 1px;
 	border-radius: 0 0 15px 15px;
@@ -49,7 +54,9 @@
   justify-content: space-evenly;
   align-items: flex-start;
   flex-direction: column;
-  margin: 1% 4%;
+  padding: 1% 4%;
+  width: 100%;
+  box-sizing: border-box;
   font-family: "Jaldi", sans-serif;
 
   & p {
@@ -60,7 +67,7 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	//flex-direction: column;
+	width: 100%;
 
 	& > svg {
 	  margin: 0 0 0 2vw;
@@ -78,15 +85,16 @@
 	margin: 1em 0;
 	padding: 1em;
 	border-radius: 15px;
-	border: 1px solid $dark-blue;
+	//border: 1px solid $dark-blue;
 	width: 90vw;
+	box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
 
-	& .messageParent{
+	& .messageParent {
 	  display: flex;
 	  width: 100%;
 
@@ -121,7 +129,7 @@
 		}
 	  }
 
-	  & > .messageContent{
+	  & > .messageContent {
 		margin-left: 2vw;
 	  }
 	}
@@ -129,7 +137,7 @@
 
   & .answerMessage {
 	margin: 0 0 1em 3em;
-	width: 83.5vw;
+	width: 100%;
   }
 
   & .divInsertAnswer {
@@ -139,38 +147,39 @@
 	flex-direction: column;
 	width: 100%;
 
-	& > hr{
-	  width: 80%;
+	& > hr {
+	  width: 90%;
 	  margin: 1em 0;
 	}
 
 	& form {
 	  width: 100%;
+	  display: flex;
+	  justify-content: space-between;
+	  align-items: center;
 
 	  & > input[type=text] {
-		float: left;
 		width: 79%;
-		min-height: 2em;
+		height: 3em;
 	  }
 
 	  & > button {
-		float: right;
 		width: 20%;
-		min-height: 2em;
+		height: 3em;
 	  }
 	}
   }
 }
 
 .hidden {
-  display: none!important;
+  display: none !important;
 }
 
 .pointer {
   cursor: pointer;
 }
 
-#containerForumFront > .button{
+#containerForumFront > .button {
   font-family: "Jaldi", sans-serif;
   display: flex;
   justify-content: center;
