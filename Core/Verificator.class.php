@@ -59,7 +59,7 @@ class Verificator
 	public static function checkConnection(): bool
 	{
 		$isConnected = false;
-
+		
 		if(isset($_SESSION["token"]) && isset($_COOKIE["token"]) && isset($_SESSION["id"]))
         {
             if($_SESSION["token"] == $_COOKIE["token"] && $_SESSION["id"] != "")
@@ -85,11 +85,10 @@ class Verificator
 	
 	public static function unsetSession(): void{
 		if(!self::checkConnection()){
-//			var_dump("bonsoir");
-//			unset($_SESSION['token']);
-//			unset($_SESSION['id']);
-//			unset($_SESSION['permission']);
-//			unset($_SESSION['role']);
+			unset($_SESSION['token']);
+			unset($_SESSION['id']);
+			unset($_SESSION['permission']);
+			unset($_SESSION['role']);
 		}
 	}
 

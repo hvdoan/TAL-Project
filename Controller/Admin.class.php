@@ -1250,6 +1250,26 @@ class Admin
 						if ($object != false) {
 							$forum = $object;
 						}
+						
+						$message = new Message();
+						$messages = $message->select(["id"], ["idForum" => $forum->getId()]);
+						foreach($messages as $message){
+							$object = $message->setId($message["id"]);
+							if ($object != false) {
+								$message = $object;
+							}
+							
+							$answer = new Message();
+							$answers = $answer->select(["id"], ["idMessage" => $message->getId()]);
+							foreach($answers as $answer){
+								$object = $answer->setId($answer["id"]);
+								if ($object != false) {
+									$answer = $object;
+								}
+								$answer->delete();
+							}
+							$message->delete();
+						}
 						$forum->delete();
 					}
 				}
@@ -1473,6 +1493,16 @@ class Admin
 						$object = $message->setId($messageIdList[$i]);
 						if ($object != false) {
 							$message = $object;
+						}
+						
+						$answers = $message->select(["id"], ["idMessage" => $message->getId()]);
+						foreach($answers as $answer){
+							$object = $message->setId($answer["id"]);
+							if ($object != false) {
+								$answer = $object;
+							}
+							
+							$answer->delete();
 						}
 						$message->delete();
 					}

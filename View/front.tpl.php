@@ -20,7 +20,6 @@
 			use App\Core\Verificator;
 			
 			Notification::displayNotifications();
-			Verificator::unsetSession();
 		?>
 		
 		<nav class="nav-ctn-row">
@@ -37,10 +36,11 @@
 					<a class="btn" href="#">Wiki</a>
 					<a class="btn" href="/donation">Donation</a>
 					
-					<?php if(Verificator::checkConnection() && isset($_SESSION['permission']) && !empty($_SESSION['permission']) && in_array("ADMIN_ACCESS", $_SESSION['permission'])): ?>
+					<?php if($this->data["isConnected"] && isset($_SESSION['permission']) && !empty($_SESSION['permission']) && in_array("ADMIN_ACCESS", $_SESSION['permission'])): ?>
 						<a class="btn" href="/dashboard">Dashboard</a>
 					<?php endif;
-					if(isset($_SESSION['id']) && !empty($_SESSION['token']) && isset($_COOKIE['token']) && $_SESSION['token'] === $_COOKIE['token']):?>
+					
+					if($this->data["isConnected"]):?>
 						<a class="btn" href="/logout">Déconnexion</a>
                         <a class="avatar" href="/user-setting">
                             <div id="avatar-container">

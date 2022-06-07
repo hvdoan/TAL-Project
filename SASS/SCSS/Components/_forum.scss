@@ -1,7 +1,7 @@
 @use "../Abstracts" as *;
 
-.forum{
-  margin: 4%;
+.forum {
+  margin: 2% 4%;
   display: flex;
   justify-content: space-evenly;
   align-items: flex-start;
@@ -14,7 +14,7 @@
 	align-items: center;
 	width: 92.1vw;
 
-	& > div{
+	& > div {
 	  display: flex;
 	  justify-content: flex-start;
 	  align-items: center;
@@ -34,7 +34,7 @@
 	}
   }
 
-  & .forumDescription{
+  & .forumDescription {
 	width: 90.3vw;
 	border: solid $dark-blue;
 	border-width: 0 1px 1px 1px;
@@ -49,31 +49,29 @@
   justify-content: space-evenly;
   align-items: flex-start;
   flex-direction: column;
-  margin: 4%;
+  margin: 1% 4%;
   font-family: "Jaldi", sans-serif;
 
-  & p{
+  & p {
 	margin: 0;
   }
 
-  & .containerMessage{
+  & .containerMessage {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	//flex-direction: column;
 
-	& > svg{
+	& > svg {
 	  margin: 0 0 0 2vw;
 	}
   }
 
-  & svg{
+  & svg {
 	display: flex;
 	width: 40px;
 	height: 40px;
   }
-
-  //border-radius: 15px;
-  //border: 1px solid $dark-blue;
 
   & .message {
 	position: relative;
@@ -84,26 +82,97 @@
 	width: 90vw;
 
 	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
 
-	& svg{
-	  position: absolute;
-	  top: 0;
-	  right: 0;
-	  color: red;
-	}
+	& .messageParent{
+	  display: flex;
+	  width: 100%;
 
-	& > .headerMessage{
+	  & svg {
+		position: absolute;
+		top: 0;
+		right: 0;
+		color: red;
+	  }
+
+	  & > .headerMessage {
 		display: flex;
-		justify-content: flex-start;
-		align-items: flex-start;
-	  	flex-direction: column;
-	  	margin-right: 2vw;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		padding-right: 2vw;
+		border-right: 1px solid $dark-blue;
 		//width: 100%;
+
+		& > div {
+		  display: flex;
+		  justify-content: space-between;
+		  align-items: center;
+		  width: 100%;
+		}
+
+		& > .userMessage {
+		  display: flex;
+		  justify-content: space-between;
+		  align-items: center;
+		  min-width: 12em;
+		}
+	  }
+
+	  & > .messageContent{
+		margin-left: 2vw;
+	  }
 	}
   }
 
-  & .answerMessage{
+  & .answerMessage {
 	margin: 0 0 1em 3em;
 	width: 83.5vw;
   }
+
+  & .divInsertAnswer {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: column;
+	width: 100%;
+
+	& > hr{
+	  width: 80%;
+	  margin: 1em 0;
+	}
+
+	& form {
+	  width: 100%;
+
+	  & > input[type=text] {
+		float: left;
+		width: 79%;
+		min-height: 2em;
+	  }
+
+	  & > button {
+		float: right;
+		width: 20%;
+		min-height: 2em;
+	  }
+	}
+  }
+}
+
+.hidden {
+  display: none!important;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+#containerForumFront > .button{
+  font-family: "Jaldi", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
