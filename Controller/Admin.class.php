@@ -127,39 +127,48 @@ class Admin
                 echo "login";
 		    else
             {
-                if((isset($_POST["userId"]) && $_POST["userId"] != "")
-                    && (!empty($_FILES["avatar"]))
-                    && (isset($_POST["userLastname"]) && $_POST["userLastname"] != "")
-                    && (isset($_POST["userFirstname"]) && $_POST["userFirstname"] != "")
-                    && (isset($_POST["userEmail"]) && $_POST["userEmail"] != "")
-                    && (isset($_POST["userIdRole"]) && $_POST["userIdRole"] != ""))
+                if(!empty($_POST["userId"])
+                    && !empty($_POST["userLastname"])
+                    && !empty($_POST["userFirstname"])
+                    && !empty($_POST["userEmail"])
+                    && !empty($_POST["userIdRole"]))
                 {
-                    /* Get avatar file info */
-                    $fileName   = basename($_FILES["avatar"]["name"]);
-                    $fileType   = pathinfo($fileName, PATHINFO_EXTENSION);
+                    $avatarToSet = 0;
+
+                    if (!empty($_FILES["avatar"]))
+                    {
+                        $avatarToSet = 1;
+
+                        /* Get avatar file info */
+                        $fileName   = basename($_FILES["avatar"]["name"]);
+                        $fileType   = pathinfo($fileName, PATHINFO_EXTENSION);
+
+                        $imageContent       = "";
+
+                        $allowTypes = array("jpg","png","jpeg","gif");
+
+                        if(in_array($fileType, $allowTypes))
+                        {
+                            $image          = $_FILES['avatar']['tmp_name'];
+                            $imageContent   = base64_encode(file_get_contents($image));
+                        }
+                    }
 
                     /* Escape SQL injection */
-                    $lastname           = addslashes($_POST["userLastname"]);
-                    $firstname          = addslashes($_POST["userFirstname"]);
-                    $email              = addslashes($_POST["userEmail"]);
-                    $idRole             = addslashes($_POST["userIdRole"]);
-                    $imageContent       = "";
+                    $lastname       = addslashes($_POST["userLastname"]);
+                    $firstname      = addslashes($_POST["userFirstname"]);
+                    $email          = addslashes($_POST["userEmail"]);
+                    $idRole         = addslashes($_POST["userIdRole"]);
 
-                    $allowTypes = array("jpg","png","jpeg","gif");
-
-                    if(in_array($fileType, $allowTypes))
-                    {
-                        $image          = $_FILES['avatar']['tmp_name'];
-                        $imageContent   = base64_encode(file_get_contents($image));
-                    }
-                  
                     /* Update of user information */
                     $object = $user->setId(intval($_POST["userId"]));
 
                     if($object != false)
                         $user = $object;
 
-                    $user->setAvatar($imageContent);
+                    if ($avatarToSet)
+                        $user->setAvatar($imageContent);
+
                     $user->setFirstname($firstname);
                     $user->setLastname($lastname);
                     $user->setEmail($email);
@@ -193,7 +202,8 @@ class Admin
 		}
         else if(isset($_POST["requestType"]) && $_POST["requestType"] == "openForm")
         {
-            $canChangeRole = true;
+            $canChangeRole      = true;
+            $noPermissionType   = 0;
 
             if(!$isConnected)
                 echo "login";
@@ -222,8 +232,27 @@ class Admin
 
                             foreach($listAction as $action)
                             {
-                                if($action->getCode() == "MANAGE_USER")
+                                /*
+                                 * Permission not granted in the following cases:
+                                 *   - Change of own role
+                                 *   - Change of role of an administrator
+                                 *   - Change of role that has user management rights as non-super admin
+                                 * */
+                                if($_SESSION["id"] == $user->getId())
+                                {
                                     $canChangeRole = false;
+                                    $noPermissionType = 1;
+                                }
+                                else if($action->getCode() == "MANAGE_USER" && $_SESSION["role"] != "Administrateur")
+                                {
+                                    $canChangeRole = false;
+                                    $noPermissionType = 2;
+                                }
+                                else if($role->getName() == "Administrateur")
+                                {
+                                    $canChangeRole = false;
+                                    $noPermissionType = 2;
+                                }
                             }
 						}
                     }
@@ -257,12 +286,12 @@ class Admin
                     /* Name field */
 					$htmlContent .= "<div class='field-row'>";
                     $htmlContent .= "<div class='field'>";
-                    $htmlContent .= "<label>Nom</label>";
+                    $htmlContent .= "<label>Nom *</label>";
                     $htmlContent .= "<input id='input-lastname' class='input' type='text' name='lastname' value='" . $user->getLastname() . "'>";
 					$htmlContent .= "</div>";
 
 					$htmlContent .= "<div class='field'>";
-                    $htmlContent .= "<label>Prénom</label>";
+                    $htmlContent .= "<label>Prénom *</label>";
                     $htmlContent .= "<input id='input-firstname' class='input' type='text' name='firstname' value='" . $user->getFirstname() . "'>";
 					$htmlContent .= "</div>";
 					$htmlContent .= "</div>";
@@ -270,7 +299,7 @@ class Admin
                     /* Email field */
 					$htmlContent .= "<div class='field-row'>";
 					$htmlContent .= "<div class='field'>";
-                    $htmlContent .= "<label>Email</label>";
+                    $htmlContent .= "<label>Email *</label>";
                     $htmlContent .= "<input id='input-email' class='input disabled' type='text' name='email' value='" . $user->getEmail() . "' disabled>";
                     $htmlContent .= "</div>";
 					$htmlContent .= "</div>";
@@ -278,10 +307,10 @@ class Admin
                     /* Role field */
 					$htmlContent .= "<div class='field-row'>";
                     $htmlContent .= "<div class='field'>";
-                    $htmlContent .= "<label for='input-idRole'>Rôles</label>";
+                    $htmlContent .= "<label for='input-idRole'>Rôles *</label>";
                     $htmlContent .= "<div id='select-ctn'>";
 
-                    if($_SESSION["role"] != "Administrateur" && !$canChangeRole)
+                    if($noPermissionType)
                         $htmlContent .= "<select class='disabled' name='userIdRole' id='input-idRole' disabled>";
                     else
                         $htmlContent .= "<select name='userIdRole' id='input-idRole'>";
@@ -295,9 +324,9 @@ class Admin
 
                     $htmlContent .= "</select>";
 
-                    if($_SESSION["id"] == $user->getId())
+                    if($noPermissionType == 1)
                         $htmlContent .= "<i class='fa-solid fa-circle-exclamation questionMark' data-toggle='tooltip' title='Impossible de changer son propre rôle.'></i>";
-                    else if($_SESSION["role"] != "Administrateur" && !$canChangeRole)
+                    else if($noPermissionType == 2)
                         $htmlContent .= "<i class='fa-solid fa-circle-exclamation questionMark' data-toggle='tooltip' title='Modification du rôle impossible, permission pas assez élevé.'></i>";
 
                     $htmlContent .= "</div>";

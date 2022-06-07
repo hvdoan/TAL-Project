@@ -67,7 +67,6 @@ function updateUser()
 			{
 				displayUser();
 				closeUserForm();
-				console.log(request.responseText);
 			}
 		}
 	};
