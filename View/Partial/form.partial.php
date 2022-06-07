@@ -9,10 +9,12 @@
                 type="<?= $input["type"]??"text" ?>"
                 name="<?= $name?>"
                 placeholder="<?= $input["placeholder"]??"" ?>"
+                value="<?= $input["value"]??"" ?>"
                 id="<?= $input["id"]??"" ?>"
                 class="<?= $input["class"]??"" ?>"
                 <?= empty($input["required"])?"":'required="required"' ?>
-        ><br>
+                <?= empty($input["disabled"])?"":'disabled="disabled"' ?>
+        >
     </div>
 
     <?php endforeach;?>

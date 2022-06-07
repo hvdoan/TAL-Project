@@ -155,7 +155,6 @@ class Admin
                     {
                         $image          = $_FILES['avatar']['tmp_name'];
                         $imageContent   = base64_encode(file_get_contents($image));
-                        var_dump($imageContent);
                     }
                   
                     /* Update of user information */
@@ -214,57 +213,121 @@ class Admin
                     {
                         $user = $object;
                         $user->setIdRole($getUserIdRole[0]["idRole"]);
+
+                        $role = new Role();
+                        $object = $role->setId($user->getId());
+
+						if ($object != false)
+						{
+							$role = $object;
+						}
                     }
                 }
 
                 $token = md5(uniqid());
                 $_SESSION["tokenForm"] = $token;
 
-                $htmlContent .= "<form class='form'>";
-
-                // @CSRF
-                $htmlContent .= "<input id='tokenForm' type='hidden' name='tokenForm' value='" . $token . "'>";
-
                 if ($user->getId() != null)
                 {
-                    $htmlContent .= "<h1>Modification de l'utilisateur : n°" . $user->getId() . " " . $user->getFirstname() . " " . strtoupper($user->getLastname()) . "</h1>";
+					$htmlContent .= "<form class='form'>";
+
+					// @CSRF
+					$htmlContent .= "<input id='tokenForm' type='hidden' name='tokenForm' value='" . $token . "'>";
+
+					$htmlContent .= "<div class='field-row'>";
+					$htmlContent .= "<div class='field'>";
+                    $htmlContent .= "<h1>Modification de l'utilisateur : " . $user->getFirstname() . " " . strtoupper($user->getLastname()) . "</h1>";
+					$htmlContent .= "</div>";
+
+					$htmlContent .= "<div id='id-ctn' class='field'>";
+                    $htmlContent .= "<span>" . $role->getName() . "</span>";
+					$htmlContent .= "</div>";
+					$htmlContent .= "</div>";
+
+					$htmlContent .= "<div class='field-row'>";
+					$htmlContent .= "<hr>";
+					$htmlContent .= "</div>";
+
+					$htmlContent .= "<div class='field-row'>";
                     $htmlContent .= "<div class='field'>";
                     $htmlContent .= "<label>Nom</label>";
-                    $htmlContent .= "<input id='input-lastname' type='text' name='lastname' value='" . $user->getLastname() . "'>";
+                    $htmlContent .= "<input id='input-lastname' class='input' type='text' name='lastname' value='" . $user->getLastname() . "'>";
+					$htmlContent .= "</div>";
+
+					$htmlContent .= "<div class='field'>";
                     $htmlContent .= "<label>Prénom</label>";
-                    $htmlContent .= "<input id='input-firstname' type='text' name='firstname' value='" . $user->getFirstname() . "'>";
+                    $htmlContent .= "<input id='input-firstname' class='input' type='text' name='firstname' value='" . $user->getFirstname() . "'>";
+					$htmlContent .= "</div>";
+					$htmlContent .= "</div>";
+
+					$htmlContent .= "<div class='field-row'>";
+					$htmlContent .= "<div class='field'>";
                     $htmlContent .= "<label>Email</label>";
-                    $htmlContent .= "<input id='input-email' type='text' name='email' value='" . $user->getEmail() . "'>";
+                    $htmlContent .= "<input id='input-email' class='input disabled' type='text' name='email' value='" . $user->getEmail() . "'>";
                     $htmlContent .= "</div>";
+					$htmlContent .= "</div>";
+
+					$htmlContent .= "<div class='field-row'>";
                     $htmlContent .= "<div class='field'>";
                     $htmlContent .= "<label for='input-idRole'>Rôles</label>";
                     $htmlContent .= "<select name='userIdRole' id='input-idRole'>";
-                    foreach ($roleList as $role) {
+                    foreach ($roleList as $role)
+                    {
                         $htmlContent .= "<option value='" . $role["id"] . "'";
                         $htmlContent .= ($role["id"] == $user->getIdRole()) ? "selected>" : ">";
                         $htmlContent .= $role["name"] . "</option>";
                     }
                     $htmlContent .= "</select>";
                     $htmlContent .= "</div>";
+					$htmlContent .= "</div>";
+
+					$htmlContent .= "<div class='field-row'>";
                     $htmlContent .= "<div class='field'>";
+					$htmlContent .= "<div id='avatar-preview'></div>";
                     $htmlContent .= "<label>Avatar</label>";
-                    $htmlContent .= "<input id='input-avatar' type='file' name='avatar'>";
+                    $htmlContent .= "<input id='input-avatar' type='file' name='avatar' onchange='displayUserAvatar()'>";
                     $htmlContent .= "</div>";
-                    $htmlContent .= "<div class='section'>";
-                    $htmlContent .= "<input class='btn btn-delete' onclick='closeUserForm()' type='button' value='Annuler'>";
-                    $htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $user->getId() . "'>";
-                    $htmlContent .= "<input class='btn btn-validate' onclick='updateUser()' type='button' value='Modifier'>";
-                    $htmlContent .= "</div>";
+					$htmlContent .= "</div>";
 
-                } else {
-                    $htmlContent .= "<h1>Attention ! Vous n'avez pas sélectionné d'utilisateur</h1>";
+					$htmlContent .= "<div class='field-row field-cta'>";
+					$htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $user->getId() . "'>";
+					$htmlContent .= "<input class='cancel' onclick='closeUserForm()' type='button' value='Annuler'>";
+					$htmlContent .= "<input class='validate' onclick='updateUser()' type='button' value='Modifier'>";
+					$htmlContent .= "</div>";
+
+					$htmlContent .= "</form>";
                 }
-
-                $htmlContent .= "</form>";
 
                 echo $htmlContent;
             }
-		}else{
+		}
+		else if((isset($_POST["requestType"]) ? $_POST["requestType"] == "displayAvatar" : false) /* &&
+			(isset($_POST["tokenForm"]) && isset($_SESSION["tokenForm"]) ? $_POST["tokenForm"] == $_SESSION["tokenForm"] : false)*/)
+		{
+			if(!$isConnected)
+				echo "login";
+			else
+			{
+				if(!empty($_FILES["avatar"]))
+				{
+					/* Get avatar file info */
+					$fileName   = basename($_FILES["avatar"]["name"]);
+					$fileType   = pathinfo($fileName, PATHINFO_EXTENSION);
+
+					$allowTypes = array("jpg","png","jpeg","gif");
+
+					if(in_array($fileType, $allowTypes))
+					{
+						$image          = $_FILES['avatar']['tmp_name'];
+						$imageContent   = base64_encode(file_get_contents($image));
+					}
+
+					echo "<img class='icon' src='data:<?=mime_content_type(" . $fileType . ")?>>;base64, " . $imageContent . "'>";
+				}
+			}
+		}
+        else
+		{
             if(!$isConnected)
                 header("Location: /login");
 

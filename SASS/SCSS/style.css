@@ -155,22 +155,6 @@ flex-ai\:center {
   transform: translate(-50%, -50%);
 }
 
-#ctnForumFrontForm {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1001;
-  background: rgba(0, 0, 0, 0.6);
-}
-
-#ctnForumFrontForm > form {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
 #ctnMessageForm {
   position: absolute;
   top: 50%;
@@ -1412,7 +1396,7 @@ nav > ul > .bottom,
 }
 
 .forum {
-  margin: 2% 4%;
+  margin: 4%;
   display: flex;
   justify-content: space-evenly;
   align-items: flex-start;
@@ -1453,7 +1437,7 @@ nav > ul > .bottom,
   justify-content: space-evenly;
   align-items: flex-start;
   flex-direction: column;
-  margin: 1% 4%;
+  margin: 4%;
   font-family: "Jaldi", sans-serif;
 }
 .allMessage p {
@@ -1480,85 +1464,23 @@ nav > ul > .bottom,
   border: 1px solid #3F445F;
   width: 90vw;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
 }
-.allMessage .message .messageParent {
-  display: flex;
-  width: 100%;
-}
-.allMessage .message .messageParent svg {
+.allMessage .message svg {
   position: absolute;
   top: 0;
   right: 0;
   color: red;
 }
-.allMessage .message .messageParent > .headerMessage {
+.allMessage .message > .headerMessage {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   flex-direction: column;
-  padding-right: 2vw;
-  border-right: 1px solid #3F445F;
-}
-.allMessage .message .messageParent > .headerMessage > div {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-.allMessage .message .messageParent > .headerMessage > .userMessage {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  min-width: 12em;
-}
-.allMessage .message .messageParent > .messageContent {
-  margin-left: 2vw;
+  margin-right: 2vw;
 }
 .allMessage .answerMessage {
   margin: 0 0 1em 3em;
   width: 83.5vw;
-}
-.allMessage .divInsertAnswer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: column;
-  width: 100%;
-}
-.allMessage .divInsertAnswer > hr {
-  width: 80%;
-  margin: 1em 0;
-}
-.allMessage .divInsertAnswer form {
-  width: 100%;
-}
-.allMessage .divInsertAnswer form > input[type=text] {
-  float: left;
-  width: 79%;
-  min-height: 2em;
-}
-.allMessage .divInsertAnswer form > button {
-  float: right;
-  width: 20%;
-  min-height: 2em;
-}
-
-.hidden {
-  display: none !important;
-}
-
-.pointer {
-  cursor: pointer;
-}
-
-#containerForumFront > .button {
-  font-family: "Jaldi", sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .bold {
@@ -1593,13 +1515,6 @@ nav > ul > .bottom,
   max-height: 40px;
   color: #3F445F;
   font-size: 1.5rem;
-}
-
-.userAvatar > img {
-  width: 2vw;
-  height: 2vw;
-  object-fit: cover;
-  border-radius: 100%;
 }
 
 /*# sourceMappingURL=style.css.map */

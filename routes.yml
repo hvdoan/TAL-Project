@@ -34,6 +34,12 @@
     controller: user
     action: activatedaccount
 
+/user-setting:
+  controller: user
+  action: userSetting
+  security:
+       - admin
+
 /dashboard:
     controller: admin
     action: dashboard

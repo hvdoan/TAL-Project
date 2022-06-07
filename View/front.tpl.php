@@ -2,7 +2,7 @@
 <html lang="fr">
 	<head>
 		<meta charset="UTF-8">
-		<title>Template FRONT</title>
+		<title><?=WEBSITENAME?></title>
 		<meta name="description" content="Description de ma page">
         <!-- CSS -->
         <link rel="stylesheet" href="../Stylesheet/style.css">
@@ -42,6 +42,15 @@
 					
 					if($this->data["isConnected"]):?>
 						<a class="btn" href="/logout">Déconnexion</a>
+                        <a class="avatar" href="/user-setting">
+                            <div id="avatar-container">
+                                <?php if($_SESSION['avatar'] != "") : ?>
+                                    <img class="icon" src="data:<?=mime_content_type($_SESSION['avatar'])?>>;base64, <?=$_SESSION['avatar']?>">
+                                <?php else : ?>
+                                    <i class="icon fa-solid fa-user-astronaut"></i>
+                                <?php endif; ?>
+                            </div>
+                        </a>
 					<?php else: ?>
 						<a class="btn" href="/login">Connexion</a>
 						<a class="btn" href="/register">Inscription</a>

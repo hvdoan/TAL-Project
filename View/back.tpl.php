@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
 	<head>
 		<meta charset="utf-8">
-		<title>Dashboard - <?=str_replace("/", "", $_SERVER["REQUEST_URI"])?></title>
+		<title><?=WEBSITENAME?> | Dashboard - <?=str_replace("/", "", $_SERVER["REQUEST_URI"])?></title>
         <!-- CSS -->
 		<link rel="stylesheet" href="../Stylesheet/style.css">
         <!-- FONT AWESOME -->
@@ -88,7 +88,7 @@
 			<header>
                 <div id="searchBarContainer">
                     <div class="searchBar">
-                        <input id="searchBar" type="text" name="searchBar", placeholder="Recherche">
+                        <input id="searchBar" type="text" name="searchBar" placeholder="Recherche">
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </div>
                     <div id="searchResultContainer"></div>
