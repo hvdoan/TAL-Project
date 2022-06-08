@@ -1387,7 +1387,8 @@ class Admin
 					$htmlContent .= "</div>";
 					$htmlContent .= "<div class='section'>";
 						$htmlContent .= "<input class='btn btn-delete' onclick='closeForumForm()' type='button' value='Annuler'>";
-				}else
+				}
+                else
 				{
 					$htmlContent .= "<h1>Création d'un nouveau forum</h1>";
 					$htmlContent .= "<div class='field'>";
