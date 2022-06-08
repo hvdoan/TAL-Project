@@ -1,0 +1,17 @@
+@use "../Abstracts" as *;
+
+#ctnForumFrontForm {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  background: rgba(0, 0, 0, .6);
+}
+
+#ctnForumFrontForm > form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

@@ -98,7 +98,7 @@
                     <span><?=$_SESSION["firstname"]?> <?=$_SESSION["lastname"]?></span>
                     <div id="avatar-container">
                         <?php if($_SESSION['avatar'] != "") : ?>
-                            <img class="icon" src="data:<?=mime_content_type($_SESSION['avatar'])?>>;base64, <?=$_SESSION['avatar']?>">
+                            <img class="icon" src="data:<?=mime_content_type($_SESSION['avatar'])?>;base64, <?=$_SESSION['avatar']?>">
                         <?php else : ?>
                             <i class="icon fa-solid fa-user-astronaut"></i>
                         <?php endif; ?>
