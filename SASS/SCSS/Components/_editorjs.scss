@@ -1,0 +1,20 @@
+@use "../Abstracts" as *;
+
+#editorjs
+{
+    & .image-tool__caption
+    {
+        display: none !important;
+    }
+
+    & .ce-header
+    {
+        text-align: center;
+        //background: $yellow;
+    }
+
+    & .ce-paragraph
+    {
+        //background: $sky;
+    }
+}
