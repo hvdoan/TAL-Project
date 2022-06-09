@@ -1776,6 +1776,12 @@ nav > ul > .bottom,
   transition: 0.4s;
 }
 
+#editorjs .image-tool__caption {
+  display: none !important;
+}
+#editorjs .ce-header {
+  text-align: center;
+}
 .userAvatar > img {
   width: 2vw;
   height: 2vw;
