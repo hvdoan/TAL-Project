@@ -195,6 +195,15 @@ class User{
 
     public function userSetting()
     {
+        /* Get the connexion status */
+        $isConnected = Verificator::checkConnection();
+
+        if(!$isConnected)
+        {
+            Verificator::unsetSession();
+            header("Location: /home");
+        }
+
         $user = new UserModel();
 
         $object = $user->setId(intval($_SESSION["id"]));
@@ -236,5 +245,6 @@ class User{
 
         $view = new View("user-setting");
         $view->assign("user", $user);
+        $view->assign("isConnected", $isConnected);
     }
 }
