@@ -1,20 +1,23 @@
 @use "../Abstracts" as *;
 
-.forum{
-  margin: 4%;
+.forum {
   display: flex;
   justify-content: space-evenly;
-  align-items: flex-start;
+  align-items: center;
   flex-direction: column;
   font-family: "Jaldi", sans-serif;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 2% 4%;
+
 
   & .forumHeader {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	width: 92.1vw;
+	width: 100%;
 
-	& > div{
+	& > div {
 	  display: flex;
 	  justify-content: flex-start;
 	  align-items: center;
@@ -34,8 +37,9 @@
 	}
   }
 
-  & .forumDescription{
-	width: 90.3vw;
+  & .forumDescription {
+	width: 100%;
+	box-sizing: border-box;
 	border: solid $dark-blue;
 	border-width: 0 1px 1px 1px;
 	border-radius: 0 0 15px 15px;
@@ -49,61 +53,137 @@
   justify-content: space-evenly;
   align-items: flex-start;
   flex-direction: column;
-  margin: 4%;
+  padding: 1% 4%;
+  width: 100%;
+  box-sizing: border-box;
   font-family: "Jaldi", sans-serif;
 
-  & p{
+  & p {
 	margin: 0;
   }
 
-  & .containerMessage{
+  & .containerMessage {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	width: 100%;
 
-	& > svg{
+	& > svg {
 	  margin: 0 0 0 2vw;
 	}
   }
 
-  & svg{
+  & svg {
 	display: flex;
 	width: 40px;
 	height: 40px;
   }
-
-  //border-radius: 15px;
-  //border: 1px solid $dark-blue;
 
   & .message {
 	position: relative;
 	margin: 1em 0;
 	padding: 1em;
 	border-radius: 15px;
-	border: 1px solid $dark-blue;
-	width: 90vw;
+	width: 100%;
+	box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 
 	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
 
-	& svg{
-	  position: absolute;
-	  top: 0;
-	  right: 0;
-	  color: red;
-	}
+	& .messageParent {
+	  display: flex;
+	  width: 100%;
 
-	& > .headerMessage{
+	  & svg {
+		position: absolute;
+		top: 0;
+		right: 0;
+		color: red;
+	  }
+
+	  & .warning {
+		position: absolute;
+		bottom: 5px;
+		right: 5px;
+		width: 28px;
+		height: 28px;
+	  }
+
+	  & > .headerMessage {
 		display: flex;
-		justify-content: flex-start;
-		align-items: flex-start;
-	  	flex-direction: column;
-	  	margin-right: 2vw;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		padding-right: 2vw;
+		border-right: 1px solid $dark-blue;
 		//width: 100%;
+
+		& > div {
+		  display: flex;
+		  justify-content: space-between;
+		  align-items: center;
+		  width: 100%;
+		}
+
+		& > .userMessage {
+		  display: flex;
+		  justify-content: space-between;
+		  align-items: center;
+		  min-width: 12em;
+		}
+	  }
+
+	  & > .messageContent {
+		margin-left: 2vw;
+	  }
 	}
   }
 
-  & .answerMessage{
+  & .answerMessage {
 	margin: 0 0 1em 3em;
-	width: 83.5vw;
+	width: 100%;
   }
+
+  & .divInsertAnswer {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: column;
+	width: 100%;
+
+	& > hr {
+	  width: 90%;
+	  margin: 1em 0;
+	}
+
+	& form {
+	  width: 100%;
+	  display: flex;
+	  justify-content: space-between;
+	  align-items: center;
+
+	  & > input[type=text] {
+		width: 79%;
+		height: 3em;
+	  }
+
+	  & > button {
+		width: 20%;
+		height: 3em;
+	  }
+	}
+  }
+}
+
+.hidden {
+  display: none !important;
+}
+
+#containerForumFront > .button {
+  font-family: "Jaldi", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -1,5 +1,4 @@
-
-<form class="<?= $data["config"]["classForm"]??"" ?>" method="<?= $data["config"]["method"]??"POST" ?>"  action="<?= $data["config"]["action"]??"" ?>">
+<form class="<?= $data["config"]["classForm"]??"" ?> form-partial" method="<?= $data["config"]["method"]??"POST" ?>"  action="<?= $data["config"]["action"]??"" ?>">
     <h1><?= $data["config"]["title"]??"" ?></h1>
     <?php foreach ($data["inputs"] as $name=>$input) :?>
 
@@ -9,10 +8,12 @@
                 type="<?= $input["type"]??"text" ?>"
                 name="<?= $name?>"
                 placeholder="<?= $input["placeholder"]??"" ?>"
+                value="<?= $input["value"]??"" ?>"
                 id="<?= $input["id"]??"" ?>"
                 class="<?= $input["class"]??"" ?>"
                 <?= empty($input["required"])?"":'required="required"' ?>
-        ><br>
+                <?= empty($input["disabled"])?"":'disabled="disabled"' ?>
+        >
     </div>
 
     <?php endforeach;?>

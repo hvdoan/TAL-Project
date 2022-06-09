@@ -7,6 +7,7 @@ class User extends Sql
 {
     protected $id = null;
     protected $idRole = null;
+    protected $avatar = null;
     protected $firstname = null;
     protected $lastname = null;
     protected $email;
@@ -44,6 +45,22 @@ class User extends Sql
 	{
 		$this->idRole = $idRole;
 	}
+
+    /**
+     * @return null|string
+     */
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * @param null|string
+     */
+    public function setAvatar(?string $avatar): void
+    {
+        $this->avatar = $avatar;
+    }
 
     /**
      * @return null|string
@@ -187,7 +204,7 @@ class User extends Sql
                 "method"=>"POST",
                 "action"=>"",
                 "submit"=>"S'inscrire",
-                "classForm"=>"form",
+                "classForm"=>"",
                 "classSubmit"=>"submit",
                 "title"=>"Inscription",
             ],
@@ -253,7 +270,7 @@ class User extends Sql
                 "method"=>"POST",
                 "action"=>"",
                 "submit"=>"Se connecter",
-                "classForm"=>"form",
+                "classForm"=>"",
                 "classSubmit"=>"submit",
                 "title"=>"Connexion",
             ],
@@ -275,6 +292,65 @@ class User extends Sql
                     "class"=>"inputForm",
                     "id"=>"pwdForm"
                 ]
+            ]
+        ];
+    }
+
+    public function getUserSettingForm(): array
+    {
+        return [
+            "config"=>[
+                "method"=>"POST",
+                "action"=>"",
+                "submit"=>"Enregistrer",
+                "classForm"=>"formSetting",
+                "classSubmit"=>"btn btn-validate",
+                "title"=>"",
+            ],
+            'inputs'=>[
+                "lastname"=>[
+                    "type"=>"text",
+                    "label"=>"Nom",
+                    "placeholder"=>"Votre Nom ...",
+                    "value"=>$this->getLastname(),
+                    "class"=>"inputForm",
+                    "id"=>"nomForm",
+                    "error"=>"Nom incorrect"
+                ],
+                "firstname"=>[
+                    "type"=>"text",
+                    "label"=>"Prénom",
+                    "placeholder"=>"Votre Prénom ...",
+                    "value"=>$this->getFirstname(),
+                    "class"=>"inputForm",
+                    "id"=>"prenomForm",
+                    "error"=>"Prénom incorrect"
+                ],
+                "email"=>[
+                    "type"=>"email",
+                    "label"=>"Email",
+                    "placeholder"=>"Votre email ...",
+                    "value"=>$this->getEmail(),
+                    "class"=>"inputForm",
+                    "id"=>"emailForm",
+                    "disabled"=>true,
+                    "error"=>"Email incorrect"
+                ],
+                "password"=>[
+                    "type"=>"password",
+                    "label"=>"Mot de passe",
+                    "placeholder"=>"Votre mot de passe ...",
+                    "class"=>"inputForm",
+                    "id"=>"pwdForm"
+                ],
+                "newpassword"=>[
+                    "type"=>"password",
+                    "label"=>"Nouveau Mot de passe",
+                    "placeholder"=>"Nouveau mot de passe ...",
+                    "class"=>"inputForm",
+                    "id"=>"pwdConfirmForm",
+                    "error"=>"Votre nouveau mot de passe n'est pas valide",
+                ],
             ]
         ];
     }

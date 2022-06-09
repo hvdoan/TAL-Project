@@ -42,6 +42,7 @@
 <script src="/API/EditorJS/List/bundle.js"></script>
 <script src="/API/EditorJS/List/nested-list.js"></script>
 <script src="/API/EditorJS/Image/bundle.js"></script>
+<script src="/API/EditorJS/Alignment/bundle.js"></script>
 <script type="text/javascript">
     let data;
 
@@ -68,37 +69,9 @@
                 class: ImageTool,
                 config: {
                     endpoints: {
-                        byFile: 'http://localhost:81/Resources/uploadFile/castlestory_1.jpg', // Your backend file uploader endpoint
-                        byUrl: 'http://localhost:81/Resources/fetchUrl/castlestory_1.jpg' // Your endpoint that provides uploading by Url
+                        byFile: '/Resources/uploadFile/test.php', // Your backend file uploader endpoint
+                        byUrl: '/Resources/fetchUrl/test.php' // Your endpoint that provides uploading by Url
                     }
-                    // uploader: {
-                    //     uploadByFile(file) {
-                    //         console.log(file)
-                    //         // your own uploading logic here
-                    //         return MyAjax.upload(file).then(() => {
-                    //             console.log(file)
-                    //             return {
-                    //                 success: 1,
-                    //                 file: {
-                    //                     url: 'http://localhost:81/test.png',
-                    //                     // any other image data you want to store, such as width, height, color, extension, etc
-                    //                 }
-                    //             };
-                    //         });
-                    //     },
-                    //     uploadByUrl(url) {
-                    //         // your ajax request for uploading
-                    //         return MyAjax.upload(file).then(() => {
-                    //             return {
-                    //                 success: 1,
-                    //                 file: {
-                    //                     url: 'http://localhost:81/test.png',
-                    //                 // any other image data you want to store, such as width, height, color, extension, etc
-                    //                 }
-                    //             };
-                    //         });
-                    //     }
-                    // }
                 }
             },
             list: {
@@ -108,6 +81,16 @@
                     defaultStyle: 'unordered'
                 }
             },
+            alignment: {
+                class:AlignmentBlockTune,
+                config:{
+                    default: "right",
+                    blocks: {
+                        header: 'center',
+                        list: 'right'
+                    }
+                },
+            }
             // nestedList: {
             //     class: NestedList,
             //     inlineToolbar: true,

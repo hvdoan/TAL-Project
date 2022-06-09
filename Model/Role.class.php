@@ -55,6 +55,28 @@ class Role extends Sql
 		$this->description = $description;
 	}
 
+    /**
+     * @return null|array
+     */
+    public function getAction(): array
+    {
+        $permission     = new Permission();
+        $listPermission = $permission->select(["idAction"], ["idRole" => intval($this->id)]);
+
+        $listAction = [];
+
+        foreach ($listPermission as $permission)
+        {
+            $action = new Action();
+            $action = $action->setId($permission["idAction"]);
+
+            if($action)
+                $listAction[] = $action;
+        }
+
+        return $listAction;
+    }
+
 	public function getAddRoleForm(): array
 	{
 		return [
