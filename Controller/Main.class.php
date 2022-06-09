@@ -82,6 +82,9 @@ class Main {
 				$user = $object;
 			}
 			
+			$token = md5(uniqid());
+			$_SESSION["tokenForm"] = $token;
+			
 			$messages   = $message->select(["id", "idUser", "idForum", "idMessage", "content", "updateDate"], ["idForum" => $forum[0]["id"]], " ORDER BY updateDate DESC");
 			$answers    = $answer->select(["id", "idUser", "idMessage", "content", "updateDate"], ["idForum" => $forum[0]["id"]]);
 			
@@ -164,11 +167,14 @@ class Main {
 									$htmlContent .= "<div id='divInsertAnswer" . $message["id"] . "' class='divInsertAnswer hidden'>";
 										$htmlContent .= "<hr>";
 										$htmlContent .= "<form>";
-											$htmlContent .= "<input type='hidden' id='input-idForum' name='idForum' value='" . $forumId . "'>";
-											$htmlContent .= "<input type='hidden' id='input-idUser' name='idUser' value='" . $_SESSION["id"] . "'>";
-											$htmlContent .= "<input type='hidden' id='input-idMessage' name='idMessage' value='" . $message["id"] . "'>";
-											$htmlContent .= "<input type='text' id='input-content' name='content' placeholder='Réponse...'>";
-											$htmlContent .= "<button class='btn btn-primary' onclick='insertMessageFront(" . $forumId . ", " . $message["id"] . ")'>Répondre</button>";
+											// @CSRF
+											$htmlContent .= "<input type='hidden' id='tokenForm" . $message["id"] . "' name='tokenForm' value='" . $token . "'>";
+											
+											$htmlContent .= "<input type='hidden' id='input-idForum" . $message["id"] . "' name='idForum' value='" . $forumId . "'>";
+											$htmlContent .= "<input type='hidden' id='input-idUser" . $message["id"] . "' name='idUser' value='" . $_SESSION["id"] . "'>";
+											$htmlContent .= "<input type='hidden' id='input-idMessage" . $message["id"] . "' name='idMessage' value='" . $message["id"] . "'>";
+											$htmlContent .= "<input type='text' id='input-content" . $message["id"] . "' name='messageContent' placeholder='Réponse...'>";
+											$htmlContent .= "<button class='btn btn-primary' type='button' onclick='insertMessageFront(" . $forumId . ", " . $message["id"] . ")'>Répondre</button>";
 										$htmlContent .= "</form>";
 									$htmlContent .= "</div>";
 								}
@@ -228,12 +234,15 @@ class Main {
 									if($isConnected){
 										$htmlContent .= "<div id='divInsertAnswer" . $answer["id"] . "' class='divInsertAnswer hidden'>";
 											$htmlContent .= "<hr>";
-											$htmlContent .= "<form>";
-												$htmlContent .= "<input type='hidden' id='input-idForum' name='idForum' value='" . $forumId . "'>";
-												$htmlContent .= "<input type='hidden' id='input-idUser' name='idUser' value='" . $_SESSION["id"] . "'>";
-												$htmlContent .= "<input type='hidden' id='input-idMessage' name='idMessage' value='" . $answer["id"] . "'>";
-												$htmlContent .= "<input type='text' id='input-content' name='content' placeholder='Réponse...'>";
-												$htmlContent .= "<button class='btn btn-primary' onclick='insertMessageFront(" . $forumId . ", " . $answer["id"] . ")'>Répondre</button>";
+											$htmlContent .= "<form method='post'>";
+												// @CSRF
+												$htmlContent .= "<input type='hidden' id='tokenForm" . $answer["id"] . "' name='tokenForm' value='" . $token . "'>";
+												
+												$htmlContent .= "<input type='hidden' id='input-idForum" . $answer["id"] . "' name='idForum' value='" . $forumId . "'>";
+												$htmlContent .= "<input type='hidden' id='input-idUser" . $answer["id"] . "' name='idUser' value='" . $_SESSION["id"] . "'>";
+												$htmlContent .= "<input type='hidden' id='input-idMessage" . $answer["id"] . "' name='idMessage' value='" . $message["id"] . "'>";
+												$htmlContent .= "<input type='text' id='input-content" . $answer["id"] . "' name='messageContent' placeholder='Réponse...'>";
+												$htmlContent .= "<button class='btn btn-primary' type='button' onclick='insertMessageFront(" . $forumId . ", " . $answer["id"] . ")'>Répondre</button>";
 											$htmlContent .= "</form>";
 										$htmlContent .= "</div>";
 									}
@@ -249,10 +258,12 @@ class Main {
 		}
 		else if((isset($_POST["requestType"]) ? $_POST["requestType"] == "insertMessageFront" : false) &&
 				(isset($_POST["tokenForm"]) && isset($_SESSION["tokenForm"]) ? $_POST["tokenForm"] == $_SESSION["tokenForm"] : false)){
+			
 			if( (isset($_POST["messageIdUser"]) ? $_POST["messageIdUser"] != "" : false) &&
-				(isset($_POST["messageIdForum"]) ? $_POST["messageIdForum"] != "" : false) &&
-				(isset($_POST["messageIdMessage"]) ? $_POST["messageIdMessage"] != "" : false) &&
-				(isset($_POST["messageContent"]) ? $_POST["messageContent"] != "" : false)){
+					(isset($_POST["messageIdForum"]) ? $_POST["messageIdForum"] != "" : false) &&
+					(isset($_POST["messageIdMessage"]) ? $_POST["messageIdMessage"] != "" : false) &&
+					(isset($_POST["messageContent"]) ? $_POST["messageContent"] != "" : false)){
+				
 				/* Creation of a message for the front forum */
 				$message->setIdUser($_POST["messageIdUser"]);
 				$message->setIdForum($_POST["messageIdForum"]);
@@ -266,11 +277,11 @@ class Main {
 				if($object != false){
 					$message = $object;
 				}
-				
-				
+				echo $message->getUpdateDate();
 			}
-		}else if( (isset($_POST["requestType"]) ? $_POST["requestType"] == "insertForumFront" : false) &&
-			(isset($_POST["tokenForm"]) && isset($_SESSION["tokenForm"]) ? $_POST["tokenForm"] == $_SESSION["tokenForm"] : false)){
+		}
+		else if((isset($_POST["requestType"]) ? $_POST["requestType"] == "insertForumFront" : false) &&
+				 (isset($_POST["tokenForm"]) && isset($_SESSION["tokenForm"]) ? $_POST["tokenForm"] == $_SESSION["tokenForm"] : false)){
 			if( (isset($_POST["forumTitle"]) ? $_POST["forumTitle"] != "" : false) &&
 				(isset($_POST["forumContent"]) ? $_POST["forumContent"] != "" : false) &&
 				(isset($_POST["forumIdUser"]) ? $_POST["forumIdUser"] != "" : false) &&
@@ -288,7 +299,6 @@ class Main {
 				if($object != false){
 					$forum = $object;
 				}
-				
 			}
 		}
 		else if((isset($_POST["requestType"]) && $_POST["requestType"] == "deleteMessageFront")){
@@ -323,15 +333,13 @@ class Main {
 			}else{
 				$htmlContent = "";
 				
-				//$forumList = $forum->select(["id", "title"], []);
-				
 				$token = md5(uniqid());
 				$_SESSION["tokenForm"] = $token;
 				
 				$htmlContent .= "<form class='form'>";
 				
 					// @CSRF
-					$htmlContent .= "<input id='tokenForm' type='hidden' name='tokenForm' value='" . $token . "'>";
+					$htmlContent .= "<input id='tokenForm0' type='hidden' name='tokenForm' value='" . $token . "'>";
 					
 					/* Field header */
 					$htmlContent .= "<div class='field-row'>";
@@ -344,19 +352,19 @@ class Main {
 					$htmlContent .= "<div class='field-row'>";
 						$htmlContent .= "<div class='field'>";
 							$htmlContent .= "<label>Contenu du message</label>";
-							$htmlContent .= "<textarea id='input-content' name='content' rows='5'></textarea>";
+							$htmlContent .= "<textarea id='input-content0' name='content' rows='5'></textarea>";
 						$htmlContent .= "</div>";
 					$htmlContent .= "</div>";
 				
 					/* Field hidden */
-					$htmlContent .= "<input id='input-idUser' type='hidden' name='idUser' value='" . $_SESSION['id'] . "'>";
-					$htmlContent .= "<input id='input-idMessage' type='hidden' name='idMessage' value='0'>";
-					$htmlContent .= "<input id='input-idForum' type='hidden' name='idForum' value='" . $forumId . "'>";
+					$htmlContent .= "<input id='input-idUser0' type='hidden' name='idUser' value='" . $_SESSION['id'] . "'>";
+					$htmlContent .= "<input id='input-idMessage0' type='hidden' name='idMessage' value='0'>";
+					$htmlContent .= "<input id='input-idForum0' type='hidden' name='idForum' value='" . $forumId . "'>";
 				
 					/* Field cta */
 					$htmlContent .= "<div class='field-cta'>";
 						$htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeMessageForm()' type='button' value='Annuler'>";
-						$htmlContent .= "<input class='btn-form btn-form-validate' onclick='insertMessageFront(" . $forumId . ")' type='button' value='Créer'>";
+						$htmlContent .= "<input class='btn-form btn-form-validate' onclick='insertMessageFront(" . $forumId . ", 0)' type='button' value='Créer'>";
 					$htmlContent .= "</div>";
 					
 				$htmlContent .= "</form>";

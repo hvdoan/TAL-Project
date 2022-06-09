@@ -63,17 +63,11 @@ function insertForumFront(data)
 function insertMessageFront(idForum, idMessage)
 {
 	const requestType      = "insertMessageFront";
-	const messageIdUser    = $('#input-idUser').val();
-	const messageIdForum   = $('#input-idForum').val();
-	const messageIdMessage = $('#input-idMessage').val();
-	const messageContent   = $('#input-content').val();
-	const tokenForm        = $('#tokenForm').val();
-	console.log(messageIdUser);
-	console.log(messageIdForum);
-	console.log(messageIdMessage);
-	console.log(messageContent);
-	console.log(idMessage);
-	
+	const messageIdUser    = $('#input-idUser' + idMessage).val();
+	const messageIdForum   = $('#input-idForum' + idMessage).val();
+	const messageIdMessage = $('#input-idMessage' + idMessage).val();
+	const messageContent   = $('#input-content' + idMessage).val();
+	const tokenForm        = $('#tokenForm' + idMessage).val();
 	
 	const request = new XMLHttpRequest();
 	request.open('POST', '/forum?forum=' + idForum);
@@ -82,23 +76,9 @@ function insertMessageFront(idForum, idMessage)
 	{
 		if(request.readyState === 4)
 		{
-			closeForumForm();
+			closeMessageForm();
 			displayForumFront(idForum);
-			
-			if(document.getElementById(request.responseText) !== undefined){
-				// console.log($('#message' + request.responseText).innerHTML);
-				// $('#message' + request.responseText).scrollIntoView({behavior: "smooth"});
-				// document.querySelector('#message' + request.responseText).scrollIntoView({behavior: "smooth"});
-				let a = $('#' + request.responseText);
-				console.log(a);
-				$('html, body').animate({
-					scroll: a.offset()
-				});
-			}
-			
-			// let divNumber = request.responseText.toString();
-			// console.log('message' + divNumber);
-			// document.getElementById('message' + divNumber).scrollIntoView({behavior: "smooth"});
+			console.log(request.responseText);
 		}
 	};
 	
@@ -106,69 +86,17 @@ function insertMessageFront(idForum, idMessage)
 	const body = `requestType=${requestType}&tokenForm=${tokenForm}&messageIdUser=${messageIdUser}&messageIdForum=${messageIdForum}&messageIdMessage=${messageIdMessage}&messageContent=${messageContent}`;
 	
 	request.send(body);
-	return true;
 }
-
 
 /**************************************************
- * AJAX : INSERT MESSAGE FRONT
+ * AJAX : OPEN ANSWER FORM
  ***************************************************/
-function insertAnswerFront(idForum)
-{
-	const requestType      = "insertAnswerFront";
-	const messageIdUser    = $('#input-idUser').val();
-	const messageIdForum   = $('#input-idForum').val();
-	const messageIdMessage = $('#input-idMessage').val();
-	const messageContent   = $('#input-content').val();
-	const tokenForm        = $('#tokenForm').val();
-	console.log(messageIdUser);
-	console.log(messageIdForum);
-	console.log(messageIdMessage);
-	console.log(messageContent);
-	
-	
-	const request = new XMLHttpRequest();
-	request.open('POST', '/forum?forum=' + idForum);
-	
-	request.onreadystatechange = function()
-	{
-		if(request.readyState === 4)
-		{
-			closeForumForm();
-			displayForumFront(idForum);
-			
-			if(document.getElementById(request.responseText) !== undefined){
-				// console.log($('#message' + request.responseText).innerHTML);
-				// $('#message' + request.responseText).scrollIntoView({behavior: "smooth"});
-				// document.querySelector('#message' + request.responseText).scrollIntoView({behavior: "smooth"});
-				let a = $('#' + request.responseText);
-				console.log(a);
-				$('html, body').animate({
-					scroll: a.offset()
-				});
-			}
-			
-			// let divNumber = request.responseText.toString();
-			// console.log('message' + divNumber);
-			// document.getElementById('message' + divNumber).scrollIntoView({behavior: "smooth"});
-		}
-	};
-	
-	request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	const body = `requestType=${requestType}&tokenForm=${tokenForm}&messageIdUser=${messageIdUser}&messageIdForum=${messageIdForum}&messageIdMessage=${messageIdMessage}&messageContent=${messageContent}`;
-	
-	request.send(body);
-	return true;
-}
-
-
-
 function insertAnAnswer(idForum, idMessage){
 	let imgWarning = document.getElementById('imgWarning' + idMessage);
-	console.log(imgWarning);
 	if($('#divInsertAnswer' + idMessage).hasClass('hidden')){
 		$('#divInsertAnswer' + idMessage).removeClass("hidden");
 		imgWarning.style.bottom = "85px";
+		$("#input-content" + idMessage).focus();
 	}else{
 		$('#divInsertAnswer' + idMessage).addClass("hidden");
 		imgWarning.style.bottom = "5px";
