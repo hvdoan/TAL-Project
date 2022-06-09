@@ -26,6 +26,34 @@ function displayForumFront(idForum)
 }
 
 /**************************************************
+ * AJAX : OPEN FORUM FORM
+ ***************************************************/
+function openForumFormFront(id = "")
+{
+	const requestType = "openFormFront";
+	
+	const request = new XMLHttpRequest();
+	request.open('POST', '/forum-list');
+	
+	request.onreadystatechange = function()
+	{
+		if(request.readyState === 4)
+		{
+			$("#ctnForumFormFront").html(request.responseText);
+			$("#ctnForumFormFront").css("width", "100%");
+			$("#ctnForumFormFront").css("height", "100%");
+			$("#input-title").focus();
+			console.log("AJAX : request open form completed");
+		}
+	};
+	
+	request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	const body = `requestType=${requestType}&forumId=${id}`;
+	
+	request.send(body);
+}
+
+/**************************************************
  * AJAX : INSERT FORUM FRONT
  ***************************************************/
 function insertForumFront(data)
@@ -38,16 +66,13 @@ function insertForumFront(data)
 	const tokenForm    = $('#tokenForm').val();
 	
 	const request = new XMLHttpRequest();
-	request.open('POST', '/forum');
+	request.open('POST', '/forum-list');
 	
 	request.onreadystatechange = function()
 	{
 		if(request.readyState === 4)
 		{
-			if (request.responseText === "login")
-				window.location.href = "/login";
-			else
-				window.location.href = "/forum";
+			window.location.href = "/forum-list";
 		}
 	};
 	
@@ -146,6 +171,7 @@ function openForumFrontForm(idForum)
 				$("#ctnForumFrontForm").html(request.responseText);
 				$("#ctnForumFrontForm").css("width", "100%");
 				$("#ctnForumFrontForm").css("height", "100%");
+				$("#input-content0").focus();
 				console.log("AJAX : request open form completed");
 		}
 	};
@@ -158,11 +184,21 @@ function openForumFrontForm(idForum)
 }
 
 /**************************************************
- * CLOSE FORUM FORM
+ * CLOSE MESSAGE FORM
  ***************************************************/
 function closeMessageForm()
 {
 	$("#ctnForumFrontForm").html("");
 	$("#ctnForumFrontForm").css("width", "0");
 	$("#ctnForumFrontForm").css("height", "0");
+}
+
+/**************************************************
+ * CLOSE FORUM FORM
+ ***************************************************/
+function closeForumForm()
+{
+	$("#ctnForumFormFront").html("");
+	$("#ctnForumFormFront").css("width", "0");
+	$("#ctnForumFormFront").css("height", "0");
 }

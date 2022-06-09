@@ -2,6 +2,14 @@
 	
 	<div class="imgBanner"><h1>Forums</h1></div>
 	
+	<?php if($this->data["isConnected"]){ ?>
+		<div class='centerElement button'>
+			<button id='add' class='btn btn-add' onclick='openForumFormFront()' type='button' name='button'>Nouveau</button>
+		</div>
+		
+		<div id="ctnForumFormFront"></div>
+	<?php } ?>
+	
 	<div class="cards" id="cards">
 		<?php use App\Model\Message; use App\Model\Tag; use App\Model\User;
 		
@@ -32,9 +40,10 @@
 					$user = $object;
 				}
 				?>
+				
 				<div type="forum" onclick="location.href = '/forum?forum=<?=$forum["id"]?>'">
 					<div class="forumHeader imgBannerForum" type="<?=$tag->getName()?>">
-						<h2 class="border"><?=$tag->getName()?></h2>
+						<h2 class="border boxShadow"><?=$tag->getName()?></h2>
 						<h1><?=$forum["title"]?></h1>
 					</div>
 					<div class="informationContainer">
