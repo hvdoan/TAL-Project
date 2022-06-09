@@ -1556,7 +1556,7 @@ nav > ul > .bottom,
 }
 .forum .forumHeader > div > h1 {
   color: #fff;
-  width: 35em;
+  width: 65vw;
 }
 .forum .forumHeader > div > h2 {
   margin: 0 1em 0 0;
@@ -1653,7 +1653,7 @@ nav > ul > .bottom,
   margin-left: 2vw;
 }
 .allMessage .answerMessage {
-  margin: 0 0 1em 3em;
+  margin: 0.5em 0 0.5em 3em;
   width: 100%;
 }
 .allMessage .divInsertAnswer {
