@@ -1605,7 +1605,7 @@ nav > ul > .bottom,
   margin: 1em 0;
   padding: 1em;
   border-radius: 15px;
-  width: 90vw;
+  width: 100%;
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
   display: flex;
   flex-direction: column;
@@ -1679,10 +1679,6 @@ nav > ul > .bottom,
   display: none !important;
 }
 
-.pointer {
-  cursor: pointer;
-}
-
 #containerForumFront > .button {
   font-family: "Jaldi", sans-serif;
   display: flex;
@@ -1692,6 +1688,14 @@ nav > ul > .bottom,
 
 .bold {
   font-weight: bold;
+}
+
+.underlineHover:hover {
+  text-decoration: underline;
+}
+
+.pointer {
+  cursor: pointer;
 }
 
 .avatar {

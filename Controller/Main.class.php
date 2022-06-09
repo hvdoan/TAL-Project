@@ -148,7 +148,7 @@ class Main {
 											$htmlContent .= "<div>";
 												$htmlContent .= "<small>" . date("d/m/Y", strtotime($message["updateDate"])) . "</small>";
 												if($isConnected)
-													$htmlContent .= "<a class='pointer' onclick='insertAnAnswer(" . $forumId . ", " . $message["id"] . ")'>Répondre</a>";
+													$htmlContent .= "<a class='pointer underlineHover' onclick='insertAnAnswer(" . $forumId . ", " . $message["id"] . ")'>Répondre</a>";
 											$htmlContent .= "</div>";
 										$htmlContent .= "</div>";
 										$htmlContent .= "<div class='messageContent'>";
@@ -208,7 +208,7 @@ class Main {
 												$htmlContent .= "<div>";
 													$htmlContent .= "<small>" . date("d/m/Y", strtotime($answer["updateDate"])) . "</small>";
 													if($isConnected)
-														$htmlContent .= "<a class='pointer' onclick='insertAnAnswer(" . $forumId . ", " . $answer["id"] . ")'>Répondre</a>";
+														$htmlContent .= "<a class='pointer underlineHover' onclick='insertAnAnswer(" . $forumId . ", " . $answer["id"] . ")'>Répondre</a>";
 												$htmlContent .= "</div>";
 											$htmlContent .= "</div>";
 											$htmlContent .= "<div class='messageContent'>";
