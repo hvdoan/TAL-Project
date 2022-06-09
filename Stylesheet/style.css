@@ -311,6 +311,23 @@ flex-ai\:center {
   border: solid 1px #000;
 }
 
+#ctnForumFormFront {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+#ctnForumFormFront > form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 25%;
+}
+
 #ctnMessageForm {
   position: absolute;
   top: 50%;
@@ -643,7 +660,7 @@ body {
   justify-content: space-around;
   align-items: center;
   width: auto;
-  min-height: 50vh;
+  min-height: 40vh;
 }
 .cards > div.checked {
   background-color: #6d769e !important;
@@ -721,14 +738,18 @@ body {
   transform: scale(1.05);
 }
 .cards > div[type=forum] h2 {
-  margin: 0 1em 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 .cards > div[type=forum] .forumHeader {
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
+  height: 6vw;
 }
 .cards > div[type=forum] .forumHeader > h1 {
+  padding: 0 0.5em;
   color: #fff;
 }
 .cards > div[type=forum] hr {
@@ -1528,9 +1549,12 @@ nav > ul > .bottom,
 }
 
 .border {
-  border-right: solid 1px #fff;
   border-radius: 10px;
-  padding: 2% !important;
+  padding: 0 2% !important;
+}
+
+.boxShadow {
+  box-shadow: rgba(33, 35, 38, 0.25) 10px 0px 10px -10px;
 }
 
 .forum {
@@ -1684,6 +1708,16 @@ nav > ul > .bottom,
 
 .hidden {
   display: none !important;
+}
+
+.centerElement {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.centerElement > button {
+  margin: 2em 0;
 }
 
 #containerForumFront > .button {

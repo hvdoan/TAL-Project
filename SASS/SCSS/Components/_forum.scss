@@ -181,6 +181,17 @@
   display: none !important;
 }
 
+.centerElement {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  & > button {
+  	margin: 2em 0;
+  }
+}
+
 #containerForumFront > .button {
   font-family: "Jaldi", sans-serif;
   display: flex;
