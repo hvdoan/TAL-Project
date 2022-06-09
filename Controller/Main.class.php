@@ -135,6 +135,11 @@ class Main {
 												$htmlContent .= "</svg>";
 											$htmlContent .= "</a>";
 										}
+										if($isConnected){
+											$htmlContent .= "<a class='pointer' onclick='deleteMessageFront(" . $forumId . ", " . $message['id'] . ")'>";
+												$htmlContent .= "<img src='/SASS/asset/img/warning.png' alt='Signaler' class='warning' id='imgWarning" . $message['id'] . "'>";
+											$htmlContent .= "</a>";
+										}
 										$htmlContent .= "<div class='headerMessage'>";
 											$htmlContent .= "<div class='userMessage'>";
 												$htmlContent .= "<div id='avatar-container' class='userAvatar'>";
@@ -193,6 +198,11 @@ class Main {
 													$htmlContent .= "<svg xmlns='http://www.w3.org/2000/svg' fill='currentColor' class='bi bi-x' viewBox='0 0 16 16'>";
 														$htmlContent .= "<path d='M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z'/>";
 													$htmlContent .= "</svg>";
+												$htmlContent .= "</a>";
+											}
+											if($isConnected){
+												$htmlContent .= "<a class='pointer' onclick='deleteMessageFront(" . $forumId . ", " . $answer['id'] . ")'>";
+													$htmlContent .= "<img src='/SASS/asset/img/warning.png' alt='Signaler' class='warning' id='imgWarning" . $answer['id'] . "'>";
 												$htmlContent .= "</a>";
 											}
 											$htmlContent .= "<div class='headerMessage'>";

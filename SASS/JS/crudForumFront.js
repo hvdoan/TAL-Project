@@ -164,10 +164,14 @@ function insertAnswerFront(idForum)
 
 
 function insertAnAnswer(idForum, idMessage){
+	let imgWarning = document.getElementById('imgWarning' + idMessage);
+	console.log(imgWarning);
 	if($('#divInsertAnswer' + idMessage).hasClass('hidden')){
 		$('#divInsertAnswer' + idMessage).removeClass("hidden");
+		imgWarning.style.bottom = "85px";
 	}else{
 		$('#divInsertAnswer' + idMessage).addClass("hidden");
+		imgWarning.style.bottom = "5px";
 	}
 }
 

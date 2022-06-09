@@ -1622,6 +1622,13 @@ nav > ul > .bottom,
   right: 0;
   color: red;
 }
+.allMessage .message .messageParent .warning {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 28px;
+  height: 28px;
+}
 .allMessage .message .messageParent > .headerMessage {
   display: flex;
   justify-content: center;

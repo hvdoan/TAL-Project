@@ -103,6 +103,14 @@
 		color: red;
 	  }
 
+	  & .warning {
+		position: absolute;
+		bottom: 5px;
+		right: 5px;
+		width: 28px;
+		height: 28px;
+	  }
+
 	  & > .headerMessage {
 		display: flex;
 		justify-content: center;
