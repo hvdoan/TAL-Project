@@ -128,11 +128,16 @@ class Main {
 								}
 								$htmlContent .= "<div class='message " . (($message['idMessage'] != 0)? "answerMessage" : "") . "'>";
 									$htmlContent .= "<div class='messageParent'>";
-										if(isset($_SESSION['id']) ? $userMessage->getId() == $_SESSION["id"] : false){
+										if($isConnected){
 											$htmlContent .= "<a class='pointer' onclick='deleteMessageFront(" . $forumId . ", " . $message['id'] . ")'>";
 												$htmlContent .= "<svg xmlns='http://www.w3.org/2000/svg' fill='currentColor' class='bi bi-x' viewBox='0 0 16 16'>";
 													$htmlContent .= "<path d='M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z'/>";
 												$htmlContent .= "</svg>";
+											$htmlContent .= "</a>";
+										}
+										if($isConnected){
+											$htmlContent .= "<a class='pointer' onclick='deleteMessageFront(" . $forumId . ", " . $message['id'] . ")'>";
+												$htmlContent .= "<img src='/SASS/asset/img/warning.png' alt='Signaler' class='warning' id='imgWarning" . $message['id'] . "'>";
 											$htmlContent .= "</a>";
 										}
 										$htmlContent .= "<div class='headerMessage'>";
@@ -146,9 +151,9 @@ class Main {
 												$htmlContent .= "<p class='bold'>" . $userMessage->getFirstname() . " " . $userMessage->getLastname() . "</p>";
 											$htmlContent .= "</div>";
 											$htmlContent .= "<div>";
-												$htmlContent .= "<small>" . $message["updateDate"] . "</small>";
+												$htmlContent .= "<small>" . date("d/m/Y", strtotime($message["updateDate"])) . "</small>";
 												if($isConnected)
-													$htmlContent .= "<a class='pointer' onclick='insertAnAnswer(" . $forumId . ", " . $message["id"] . ")'>Répondre</a>";
+													$htmlContent .= "<a class='pointer underlineHover' onclick='insertAnAnswer(" . $forumId . ", " . $message["id"] . ")'>Répondre</a>";
 											$htmlContent .= "</div>";
 										$htmlContent .= "</div>";
 										$htmlContent .= "<div class='messageContent'>";
@@ -188,11 +193,16 @@ class Main {
 									}
 									$htmlContent .= "<div class='message " . (($answer['idMessage'] != 0)? "answerMessage" : "") . "'>";
 										$htmlContent .= "<div class='messageParent'>";
-											if(isset($_SESSION['id']) ? $userAnswer->getId() == $_SESSION["id"] : false){
+											if($isConnected){
 												$htmlContent .= "<a class='pointer' onclick='deleteMessageFront(" . $forumId . ", " . $answer['id'] . ")'>";
 													$htmlContent .= "<svg xmlns='http://www.w3.org/2000/svg' fill='currentColor' class='bi bi-x' viewBox='0 0 16 16'>";
 														$htmlContent .= "<path d='M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z'/>";
 													$htmlContent .= "</svg>";
+												$htmlContent .= "</a>";
+											}
+											if($isConnected){
+												$htmlContent .= "<a class='pointer' onclick='deleteMessageFront(" . $forumId . ", " . $answer['id'] . ")'>";
+													$htmlContent .= "<img src='/SASS/asset/img/warning.png' alt='Signaler' class='warning' id='imgWarning" . $answer['id'] . "'>";
 												$htmlContent .= "</a>";
 											}
 											$htmlContent .= "<div class='headerMessage'>";
@@ -206,9 +216,9 @@ class Main {
 													$htmlContent .= "<p class='bold'>" . $userAnswer->getFirstname() . " " . $userAnswer->getLastname() . "</p>";
 												$htmlContent .= "</div>";
 												$htmlContent .= "<div>";
-													$htmlContent .= "<small>" . $answer["updateDate"] . "</small>";
+													$htmlContent .= "<small>" . date("d/m/Y", strtotime($answer["updateDate"])) . "</small>";
 													if($isConnected)
-														$htmlContent .= "<a class='pointer' onclick='insertAnAnswer(" . $forumId . ", " . $answer["id"] . ")'>Répondre</a>";
+														$htmlContent .= "<a class='pointer underlineHover' onclick='insertAnAnswer(" . $forumId . ", " . $answer["id"] . ")'>Répondre</a>";
 												$htmlContent .= "</div>";
 											$htmlContent .= "</div>";
 											$htmlContent .= "<div class='messageContent'>";
@@ -323,18 +333,32 @@ class Main {
 					// @CSRF
 					$htmlContent .= "<input id='tokenForm' type='hidden' name='tokenForm' value='" . $token . "'>";
 					
-					$htmlContent .= "<h1>Création d'un nouveau message</h1>";
-					$htmlContent .= "<div class='field'>";
-						$htmlContent .= "<label>Contenu du message</label>";
-						$htmlContent .= "<input id='input-content' type='text' name='content'>";
+					/* Field header */
+					$htmlContent .= "<div class='field-row'>";
+						$htmlContent .= "<div class='field'>";
+							$htmlContent .= "<h1>Création d'un nouveau message</h1>";
+						$htmlContent .= "</div>";
 					$htmlContent .= "</div>";
+					
+					/* Field content */
+					$htmlContent .= "<div class='field-row'>";
+						$htmlContent .= "<div class='field'>";
+							$htmlContent .= "<label>Contenu du message</label>";
+							$htmlContent .= "<textarea id='input-content' name='content' rows='5'></textarea>";
+						$htmlContent .= "</div>";
+					$htmlContent .= "</div>";
+				
+					/* Field hidden */
 					$htmlContent .= "<input id='input-idUser' type='hidden' name='idUser' value='" . $_SESSION['id'] . "'>";
 					$htmlContent .= "<input id='input-idMessage' type='hidden' name='idMessage' value='0'>";
 					$htmlContent .= "<input id='input-idForum' type='hidden' name='idForum' value='" . $forumId . "'>";
-					$htmlContent .= "<div class='section'>";
-						$htmlContent .= "<input class='btn btn-delete' onclick='closeMessageForm()' type='button' value='Annuler'>";
-						$htmlContent .= "<input class='btn btn-validate' onclick='insertMessageFront(" . $forumId . ")' type='button' value='Créer'>";
+				
+					/* Field cta */
+					$htmlContent .= "<div class='field-cta'>";
+						$htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeMessageForm()' type='button' value='Annuler'>";
+						$htmlContent .= "<input class='btn-form btn-form-validate' onclick='insertMessageFront(" . $forumId . ")' type='button' value='Créer'>";
 					$htmlContent .= "</div>";
+					
 				$htmlContent .= "</form>";
 				echo $htmlContent;
 			}

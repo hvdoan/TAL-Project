@@ -305,6 +305,10 @@ flex-ai\:center {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: 25%;
+}
+#ctnForumFrontForm > form textarea {
+  border: solid 1px #000;
 }
 
 #ctnMessageForm {
@@ -409,6 +413,30 @@ flex-ai\:center {
 
 #ctnTagForm > form {
   width: 450px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3F445F;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6d769e;
+}
+
+body {
+  scrollbar-color: #3F445F #f1f1f1;
+  /* ascensseur bleu sur fond blanc */
+  scrollbar-size: 10px;
+  /* taille de l'ascenseur */
 }
 
 .banner {
@@ -1506,18 +1534,20 @@ nav > ul > .bottom,
 }
 
 .forum {
-  margin: 2% 4%;
   display: flex;
   justify-content: space-evenly;
-  align-items: flex-start;
+  align-items: center;
   flex-direction: column;
   font-family: "Jaldi", sans-serif;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 2% 4%;
 }
 .forum .forumHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 92.1vw;
+  width: 100%;
 }
 .forum .forumHeader > div {
   display: flex;
@@ -1535,7 +1565,8 @@ nav > ul > .bottom,
   margin: 0 1em 0 1em;
 }
 .forum .forumDescription {
-  width: 90.3vw;
+  width: 100%;
+  box-sizing: border-box;
   border: solid #3F445F;
   border-width: 0 1px 1px 1px;
   border-radius: 0 0 15px 15px;
@@ -1547,7 +1578,9 @@ nav > ul > .bottom,
   justify-content: space-evenly;
   align-items: flex-start;
   flex-direction: column;
-  margin: 1% 4%;
+  padding: 1% 4%;
+  width: 100%;
+  box-sizing: border-box;
   font-family: "Jaldi", sans-serif;
 }
 .allMessage p {
@@ -1557,6 +1590,7 @@ nav > ul > .bottom,
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 .allMessage .containerMessage > svg {
   margin: 0 0 0 2vw;
@@ -1571,8 +1605,8 @@ nav > ul > .bottom,
   margin: 1em 0;
   padding: 1em;
   border-radius: 15px;
-  border: 1px solid #3F445F;
-  width: 90vw;
+  width: 100%;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -1587,6 +1621,13 @@ nav > ul > .bottom,
   top: 0;
   right: 0;
   color: red;
+}
+.allMessage .message .messageParent .warning {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 28px;
+  height: 28px;
 }
 .allMessage .message .messageParent > .headerMessage {
   display: flex;
@@ -1613,7 +1654,7 @@ nav > ul > .bottom,
 }
 .allMessage .answerMessage {
   margin: 0 0 1em 3em;
-  width: 83.5vw;
+  width: 100%;
 }
 .allMessage .divInsertAnswer {
   display: flex;
@@ -1623,29 +1664,26 @@ nav > ul > .bottom,
   width: 100%;
 }
 .allMessage .divInsertAnswer > hr {
-  width: 80%;
+  width: 90%;
   margin: 1em 0;
 }
 .allMessage .divInsertAnswer form {
   width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .allMessage .divInsertAnswer form > input[type=text] {
-  float: left;
   width: 79%;
-  min-height: 2em;
+  height: 3em;
 }
 .allMessage .divInsertAnswer form > button {
-  float: right;
   width: 20%;
-  min-height: 2em;
+  height: 3em;
 }
 
 .hidden {
   display: none !important;
-}
-
-.pointer {
-  cursor: pointer;
 }
 
 #containerForumFront > .button {
@@ -1657,6 +1695,14 @@ nav > ul > .bottom,
 
 .bold {
   font-weight: bold;
+}
+
+.underlineHover:hover {
+  text-decoration: underline;
+}
+
+.pointer {
+  cursor: pointer;
 }
 
 .avatar {
