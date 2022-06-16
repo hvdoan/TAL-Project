@@ -92,6 +92,12 @@
   security:
     - admin
 
+/warning-management:
+  controller: admin
+  action: warningManagement
+  security:
+    - admin
+
 /tag:
   controller: admin
   action: tag

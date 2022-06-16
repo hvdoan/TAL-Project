@@ -103,7 +103,6 @@ function insertMessageFront(idForum, idMessage)
 		{
 			closeMessageForm();
 			displayForumFront(idForum);
-			console.log(request.responseText);
 		}
 	};
 	

@@ -344,6 +344,23 @@ flex-ai\:center {
   transform: translate(-50%, -50%);
 }
 
+#ctnWarningForm {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+#ctnWarningForm > form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 25%;
+}
+
 #ctnUserForm > form {
   width: 750px;
 }
@@ -378,20 +395,6 @@ flex-ai\:center {
 #ctnUserForm > form > .field-row > .field > #select-avatar-ctn > label:nth-child(2):hover {
   text-decoration: underline;
   transition: 0.3s;
-}
-#ctnUserForm > form > .field-row > .field > #select-ctn {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-#ctnUserForm > form > .field-row > .field > #select-ctn > select {
-  width: fit-content;
-  padding: 5px 10px;
-  background: #EDF0F2;
-  border: none;
-  color: #272B40;
-  font-family: "Jaldi", sans-serif;
-  text-transform: uppercase;
 }
 #ctnUserForm > form > .field-row > .field > #select-ctn > .questionMark {
   margin: 0 10px;
@@ -1057,6 +1060,25 @@ body {
 .form > .field-row > .field > .input:focus {
   outline: none;
 }
+.form > .field-row > .field > #select-ctn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.form > .field-row > .field > #select-ctn > select {
+  width: fit-content;
+  padding: 5px 10px;
+  cursor: pointer;
+  background: #EDF0F2;
+  border: none;
+  color: #272B40;
+  font-family: "Jaldi", sans-serif;
+  text-transform: uppercase;
+}
+.form > .field-row .disabled {
+  background: #988F8F !important;
+  color: #fff !important;
+}
 .form > .field-cta {
   display: flex;
   flex-direction: row;
@@ -1067,33 +1089,28 @@ body {
   box-sizing: border-box;
   background: #EDF0F2;
 }
-.form .disabled {
-  background: #988F8F !important;
-  color: #fff !important;
-}
-
-.formSetting {
+.form .formSetting {
   display: flex;
   flex-direction: column;
   width: 30rem;
   margin-left: 50px;
   margin-top: 50px;
 }
-.formSetting .field {
+.form .formSetting .field {
   margin: 5px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.formSetting .field input {
+.form .formSetting .field input {
   width: 50%;
   padding: 10px;
 }
-.formSetting label {
+.form .formSetting label {
   font-family: "Jaldi", sans-serif;
   font-size: 1.1rem;
 }
-.formSetting .btn {
+.form .formSetting .btn {
   margin-top: 30px;
   width: 240px;
 }
