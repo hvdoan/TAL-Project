@@ -41,7 +41,7 @@ class User{
 						$role   = new Role();
 						$object = $role->setId(intval($userLoggedIn[0]['idRole']));
 						
-						if($object != false)
+						if($object)
 							$role = $object;
 						
 						$_SESSION['id']         = $userLoggedIn[0]["id"];
@@ -63,7 +63,7 @@ class User{
 							$action = new Action();
 							$object = $action->setId(intval($actionList[$i]["idAction"]));
 							
-							if($object != false){
+							if($object){
 								$action = $object;
 								$_SESSION["permission"][] = $action->getCode();
 							}
@@ -208,7 +208,7 @@ class User{
 
         $object = $user->setId(intval($_SESSION["id"]));
 
-        if($object != false)
+        if($object)
             $user = $object;
 
         if(!empty($_POST)){

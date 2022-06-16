@@ -21,9 +21,9 @@
 					$user = new User();
 					$object = $tag->setId(intval($forum["idTag"]));
 					
-					if($object != false){
+					if($object)
 						$tag = $object;
-					}
+					
 					
 					$numberOfMessages = count($message->select(["id"], ["idForum" => $forum["id"]]));
 					$recentActivitys = $message->select(["updateDate"], ["idForum" => $forum["id"]]);
@@ -36,9 +36,8 @@
 				
 				$object = $user->setId(intval($forum["idUser"]));
 				
-				if($object != false){
+				if($object)
 					$user = $object;
-				}
 				?>
 				
 				<div type="forum" onclick="location.href = '/forum?forum=<?=$forum["id"]?>'">
