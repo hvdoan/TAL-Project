@@ -29,6 +29,9 @@ if(file_exists("ini.yml"))
     if (!empty($credentials["phpmailer"]["email"]) && !empty($credentials["phpmailer"]["password"]) &&
         !empty($credentials["phpmailer"]["port"]))
     {
+        define("PHPMAILERCLIENTID", $credentials["phpmailer"]["clientId"]);
+        define("PHPMAILERCLIENTSECRET", $credentials["phpmailer"]["clientSecret"]);
+        define("PHPMAILERTOKEN", $credentials["phpmailer"]["refreshToken"]);
         define("PHPMAILEREMAIL", $credentials["phpmailer"]["email"]);
         define("PHPMAILERPASSWORD", $credentials["phpmailer"]["password"]);
         define("PHPMAILERPORT", $credentials["phpmailer"]["port"]);

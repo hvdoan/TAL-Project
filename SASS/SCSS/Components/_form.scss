@@ -56,6 +56,11 @@
 				color: $grey;
 				text-transform: uppercase;
 				font-weight: bold;
+
+				& > .required
+				{
+					color: $red;
+				}
 			}
 
 			& > .input
@@ -69,6 +74,25 @@
 				&:focus
 				{
 					outline: none;
+				}
+			}
+
+			& > #select-ctn
+			{
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+
+				& > select {
+					width: fit-content;
+					padding: 5px 10px;
+
+					background: $light-grey;
+					border: none;
+
+					color: $hard-blue;
+					font-family: $jaldi;
+					text-transform: uppercase;
 				}
 			}
 		}

@@ -1,0 +1,49 @@
+@use "../Abstracts" as *;
+
+#page_creation
+{
+    & > .form .url-ctn
+    {
+        & > .input-ctn
+        {
+            & > span
+            {
+                margin-right: 5px;
+
+                color: $dark-blue;
+            }
+
+            & > .input
+            {
+                padding: 8px;
+
+                background: $light-grey;
+                color: $dark-blue;
+                border: none;
+
+                &:focus
+                {
+                    outline: none;
+                }
+            }
+        }
+    }
+
+    & > .ctn-editorJS
+    {
+        padding: 0;
+
+        & > .ctn-cta
+        {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+
+            padding: 10px 0;
+            overflow: hidden;
+
+            background: $dark-blue;
+        }
+    }
+}

@@ -1,39 +1,58 @@
-<section class="ctn">
-    <h1>Modification de page</h1>
+<div id="page_creation">
+    <section class="ctn form">
+        <div class="field-row">
+            <div class="field">
+                <h1>Paramétrage de la page</h1>
+            </div>
+        </div>
 
-    <div>
-        <label>URL : https://<?=WEBSITENAME?>.fr/</label>
+        <div class="field-row">
+            <hr>
+        </div>
 
-        <?php if($this->data["page"]->getId()) { ?>
-            <input id="input-uri" type="text" name="uri" value="<?=str_replace("/", "", $this->data["page"]->getUri())?>">
-        <?php } else { ?>
-            <input id="input-uri" type="text" name="uri">
-        <?php } ?>
-    </div>
+        <div class="field-row">
+            <div class="field url-ctn">
+                <label>URL : </label>
 
-    <div>
-        <label>Description de la page</label>
+                <div class="input-ctn">
+                    <span>https://<?=WEBSITENAME?>.fr/</span>
+                    <?php if($this->data["page"]->getId()) { ?>
+                        <input id="input-uri" class="input" type="text" name="uri" value="<?=str_replace("/", "", $this->data["page"]->getUri())?>">
+                    <?php } else { ?>
+                        <input id="input-uri" class="input" type="text" name="uri">
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
 
-        <?php if($this->data["page"]->getId()) { ?>
-            <input id="input-description" type="text" name="description" value="<?=$this->data["page"]->getDescription()?>">
-        <?php } else { ?>
-            <input id="input-description" type="text" name="description">
-        <?php } ?>
-    </div>
+        <div class="field-row">
+            <div class="field">
+                <label>Description de la page</label>
 
-    <!--    CSRF-->
-    <input id="tokenForm" type="hidden" name="tokenForm" value="<?=$this->data["tokenForm"]?>">
-</section>
+                <?php if($this->data["page"]->getId()) { ?>
+                    <input id="input-description" class="input" type="text" name="description" value="<?=$this->data["page"]->getDescription()?>">
+                <?php } else { ?>
+                    <input id="input-description" class="input" type="text" name="description">
+                <?php } ?>
+            </div>
+        </div>
 
-<section class="ctn">
-    <div id="editorjs"></div>
-    <?php if($this->data["page"]->getId()) { ?>
-        <button id="save-button" class="btn btn-edit" onclick="save('<?=$this->data["page"]->getId()?>')">Sauvegarder</button>
-        <pre id="output"></pre>
-    <?php } else { ?>
-        <button class="btn btn-validate" onclick="save()">Créer</button>
-    <?php } ?>
-</section>
+        <!--    CSRF-->
+        <input id="tokenForm" type="hidden" name="tokenForm" value="<?=$this->data["tokenForm"]?>">
+    </section>
+
+    <section class="ctn ctn-editorJS">
+        <div id="editorjs" class="editorjs"></div>
+        <div class="ctn-cta">
+            <?php if($this->data["page"]->getId()) { ?>
+                <button id="save-button" class="btn-form btn-form-validate" onclick="save('<?=$this->data["page"]->getId()?>')">Sauvegarder</button>
+                <pre id="output"></pre>
+            <?php } else { ?>
+                <button class="btn-form btn-form-validate" onclick="save()">Créer</button>
+            <?php } ?>
+        </div>
+    </section>
+</div>
 
 <script src="../SASS/JS/crudPage.js"></script>
 <script src="/API/EditorJS/editor.js"></script>
@@ -46,9 +65,10 @@
 <script type="text/javascript">
     let data;
 
-    <?php if(isset($this->data["page"])) { ?>
+    if(<?=isset($this->data["page"])?>)
+    {
         data = JSON.parse(<?=json_encode($this->data["page"]->getContent())?>);
-    <?php } ?>
+    }
 
     let editor = new EditorJS({
         // autofocus: true,

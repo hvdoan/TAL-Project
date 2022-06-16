@@ -20,8 +20,6 @@ class User{
 		/* Reload the login session time if connexion status is true else redirect to login */
 		if($isConnected)
 			header("Location: /home");
-		else
-			Verificator::reloadConnection();
 		
 		if(isset($_SESSION['flash'])){
 			foreach($_SESSION['flash'] as $type => $message){
@@ -29,6 +27,7 @@ class User{
 			}
 			unset($_SESSION['flash']);
 		}
+
 		$user = new UserModel();
 		
 		if(!empty($_POST)){
@@ -211,8 +210,8 @@ class User{
         if($object != false)
             $user = $object;
 
-        if(!empty($_POST)){
-
+        if(!empty($_POST))
+        {
             $user->setFirstname($_POST['firstname']);
             $user->setLastname($_POST['lastname']);
             $_SESSION['firstname']   = $_POST['firstname'];

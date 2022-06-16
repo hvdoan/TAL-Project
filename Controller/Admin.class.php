@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Core\Verificator;
+use App\Core\Notification;
 use App\Core\View;
 use App\Model\Action;
 use App\Model\Forum;
@@ -744,8 +745,14 @@ class Admin
 		if(!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_PAGE"))
 			header("Location: /dashboard");
 
-        $isNew  = true;
-        $page   = new Page();
+        $isNew          = true;
+        $page           = new Page();
+        $notAllowUri    = [
+            "/home",
+            "/presentation",
+            "galerie",
+            "/faq"
+        ];
 
         if((isset($_POST["requestType"]) ? ($_POST["requestType"] == "insert") : false) &&
             (isset($_POST["tokenForm"]) && isset($_SESSION["tokenForm"]) ? $_POST["tokenForm"] == $_SESSION["tokenForm"] : false))
@@ -758,19 +765,36 @@ class Admin
                     (isset($_POST["pageUri"]) ? ($_POST["pageUri"] != "") : false) &&
                     (isset($_POST["pageDescription"]) ? ($_POST["pageDescription"] != "") : false))
                 {
-                    $uri        = str_replace("/", "", $_POST["pageUri"]);
-                    $uri        = "/" . $uri;
-                    $pageList   = $page->select(["id"], ["uri" => $uri]);
+                    $uri    = str_replace("/", "", $_POST["pageUri"]);
+                    $uri    = "/" . $uri;
 
-                    if(count($pageList) <= 0)
+                    if(!in_array($uri, $notAllowUri))
                     {
-                        $page->setIdUser(1);            //===<> TEMPORAIRE
-                        $page->setUri($uri);
-                        $page->setDescription($_POST["pageDescription"]);
-                        $page->setContent($_POST["data"]);
-                        $page->setDateModification(date("Y-m-d H:i:s"));
-                        $page->save();
+                        $pageList   = $page->select(["id"], ["uri" => $uri]);
+
+                        /* If the URI not existe on database, continue the process */
+                        if(count($pageList) <= 0)
+                        {
+                            $page->setIdUser($_SESSION["id"]);
+                            $page->setUri($uri);
+                            $page->setDescription($_POST["pageDescription"]);
+                            $page->setContent($_POST["data"]);
+                            $page->setDateModification(date("Y-m-d H:i:s"));
+                            $page->save();
+
+                            echo "success";
+                        }
                     }
+                    else
+                    {
+                        echo "error";
+                        Notification::CreateNotification("error", "Cet URI n'est pas autorisé !");
+                    }
+                }
+                else
+                {
+                    echo "error";
+                    Notification::CreateNotification("error", "Certain champs sont vide !");
                 }
             }
         }
@@ -795,12 +819,18 @@ class Admin
                         $uri = str_replace("/", "", $_POST["pageUri"]);
                         $uri = "/" . $uri;
 
-                        $page->setIdUser($_SESSION["id"]);
-                        $page->setUri($uri);
-                        $page->setDescription($_POST["pageDescription"]);
-                        $page->setContent($_POST["data"]);
-                        $page->setDateModification(date("Y-m-d H:i:s"));
-                        $page->save();
+                        /* If the URI not existe on database, continue the process */
+                        if(!in_array($uri, $notAllowUri))
+                        {
+                            $page->setIdUser($_SESSION["id"]);
+                            $page->setUri($uri);
+                            $page->setDescription($_POST["pageDescription"]);
+                            $page->setContent($_POST["data"]);
+                            $page->setDateModification(date("Y-m-d H:i:s"));
+                            $page->save();
+
+                            echo "success";
+                        }
                     }
                 }
             }
