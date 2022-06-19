@@ -37,8 +37,6 @@
 /user-setting:
   controller: user
   action: userSetting
-  security:
-       - admin
 
 /dashboard:
     controller: admin

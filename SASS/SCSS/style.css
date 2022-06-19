@@ -919,7 +919,6 @@ form > .field-row > .field {
   flex-direction: column;
   width: 30rem;
   margin-left: 50px;
-  margin-top: 50px;
 }
 .formSetting .field {
   margin: 5px;

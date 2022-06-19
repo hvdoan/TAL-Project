@@ -243,7 +243,7 @@ class User{
             }
         }
 
-        $view = new View("user-setting");
+        $view = new View("userSetting");
         $view->assign("user", $user);
         $view->assign("isConnected", $isConnected);
     }
