@@ -16,6 +16,13 @@ use App\Model\User as UserModel;
 class User{
 	public function login()
 	{
+		$isConnected = Verificator::checkConnection();
+		/* Reload the login session time if connexion status is true else redirect to login */
+		if($isConnected)
+			header("Location: /home");
+		else
+			Verificator::reloadConnection();
+		
 		if(isset($_SESSION['flash'])){
 			foreach($_SESSION['flash'] as $type => $message){
 				echo "<div class='alert alert-$type'>" . $message . "</div>";
@@ -25,21 +32,28 @@ class User{
 		$user = new UserModel();
 		
 		if(!empty($_POST)){
-			$userLoggedIn = $user->select(['id', 'idRole', 'password', 'verifyAccount'], ['email' => $_POST['email']]);
+			$userLoggedIn = $user->select(['id', 'idRole', 'password', 'verifyAccount', 'firstname', 'lastname', 'email', 'avatar'], ['email' => $_POST['email']]);
 			
 			if(!empty($userLoggedIn)){
 				if(password_verify($_POST['password'], $userLoggedIn[0]['password'])){
 					if($userLoggedIn[0]['verifyAccount']){
 						/*   GET USER ROLE   */
-						$role = new Role();
+						$role   = new Role();
 						$object = $role->setId(intval($userLoggedIn[0]['idRole']));
 						
-						if($object != false)
+						if($object)
 							$role = $object;
 						
-						$_SESSION['id'] = $userLoggedIn[0]["id"];
-						$_SESSION['role'] = $role->getName();
-						
+						$_SESSION['id']         = $userLoggedIn[0]["id"];
+						$_SESSION['role']       = $role->getName();
+						$_SESSION['firstname']   = $userLoggedIn[0]["firstname"];
+						$_SESSION['lastname']   = $userLoggedIn[0]["lastname"];
+						$_SESSION['email']      = $userLoggedIn[0]["email"];
+						$_SESSION['avatar']     = $userLoggedIn[0]["avatar"];
+
+
+
+
 						/*   GET USER PERMISSION ACTION   */
 						$_SESSION["permission"] = [];
 						$permission = new Permission();
@@ -49,7 +63,7 @@ class User{
 							$action = new Action();
 							$object = $action->setId(intval($actionList[$i]["idAction"]));
 							
-							if($object != false){
+							if($object){
 								$action = $object;
 								$_SESSION["permission"][] = $action->getCode();
 							}
@@ -77,10 +91,18 @@ class User{
 		
 		$view = new View("login", "front");
 		$view->assign("user", $user);
+		$view->assign("isConnected", $isConnected);
 	}
 	
 	public function register()
 	{
+		$isConnected = Verificator::checkConnection();
+		/* Reload the login session time if connexion status is true else redirect to login */
+		if($isConnected)
+			header("Location: /home");
+		else
+			Verificator::reloadConnection();
+		
 		$user = new UserModel();
 		
 		if(!empty($_POST)){
@@ -136,6 +158,7 @@ class User{
 		
 		$view = new View("register");
 		$view->assign("user", $user);
+		$view->assign("isConnected", $isConnected);
 	}
 	
 	public function logout()
@@ -228,4 +251,59 @@ class User{
 			}
 		}
 	}
+
+    public function userSetting()
+    {
+        /* Get the connexion status */
+        $isConnected = Verificator::checkConnection();
+
+        if(!$isConnected)
+        {
+            Verificator::unsetSession();
+            header("Location: /home");
+        }
+
+        $user = new UserModel();
+
+        $object = $user->setId(intval($_SESSION["id"]));
+
+        if($object)
+            $user = $object;
+
+        if(!empty($_POST)){
+
+            $user->setFirstname($_POST['firstname']);
+            $user->setLastname($_POST['lastname']);
+            $_SESSION['firstname']   = $_POST['firstname'];
+            $_SESSION['lastname']   = $_POST['lastname'];
+
+            if($_POST['password'] == "" && $_POST['newpassword'] == ""){
+                $user->save();
+                Notification::CreateNotification("success", "Modification des parametres sauvegardé");
+            } else {
+                if ($_POST['newpassword'] != "" && $_POST['password'] == "") {
+                    Notification::CreateNotification('error', 'Entrer votre mot de passe actuel pour avoir enregistrer votre nouveau mot de passe ');
+                } else if (password_verify($_POST['password'], $user->getPassword())) {
+                    $result = Verificator::checkForm($user->getUserSettingForm(), $_POST);
+                    if(empty($result)) {
+                        $user->setPassword($_POST['newpassword']);
+                        $user->save();
+                        Notification::CreateNotification("success", "Modification des parametres sauvegardé");
+                    } else {
+                        $msg = "";
+                        foreach($result as $item){
+                            $msg .= "-" . $item . "<br>";
+                        }
+                        Notification::CreateNotification("error", $msg);
+                    }
+                } else {
+                    Notification::CreateNotification('error', 'Mot de passe incorrect');
+                }
+            }
+        }
+
+        $view = new View("userSetting");
+        $view->assign("user", $user);
+        $view->assign("isConnected", $isConnected);
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Core;
 
 use App\Controller\User;
+use function App\Controller\is_in_array;
 
 
 class Verificator
@@ -59,7 +60,7 @@ class Verificator
 	public static function checkConnection(): bool
 	{
 		$isConnected = false;
-
+		
 		if(isset($_SESSION["token"]) && isset($_COOKIE["token"]) && isset($_SESSION["id"]))
         {
             if($_SESSION["token"] == $_COOKIE["token"] && $_SESSION["id"] != "")
@@ -85,16 +86,34 @@ class Verificator
 	
 	public static function unsetSession(): void{
 		if(!self::checkConnection()){
-//			var_dump("bonsoir");
-//			unset($_SESSION['token']);
-//			unset($_SESSION['id']);
-//			unset($_SESSION['permission']);
-//			unset($_SESSION['role']);
+			unset($_SESSION['token']);
+			unset($_SESSION['id']);
+			unset($_SESSION['permission']);
+			unset($_SESSION['role']);
 		}
 	}
 
-	public static function checkPageAccess($userAutorisations, $permissionNeeded)
+	public static function checkPageAccess($userAutorisations, $permissionNeeded): bool
 	{
 		return in_array($permissionNeeded, $userAutorisations);
+	}
+	
+	public static function is_in_array($array, $key, $key_value): bool
+	{
+		$within_array = false;
+		foreach( $array as $k=>$v ){
+			if( is_array($v) ){
+				$within_array = self::is_in_array($v, $key, $key_value);
+				if($within_array){
+					break;
+				}
+			} else {
+				if( $v == $key_value && $k == $key ){
+					$within_array = true;
+					break;
+				}
+			}
+		}
+		return $within_array;
 	}
 }

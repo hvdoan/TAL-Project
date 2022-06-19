@@ -38,6 +38,10 @@
     controller: user
     action: activatedaccount
 
+/user-setting:
+  controller: user
+  action: userSetting
+
 /dashboard:
     controller: admin
     action: dashboard
@@ -90,6 +94,12 @@
   security:
     - admin
 
+/warning-management:
+  controller: admin
+  action: warningManagement
+  security:
+    - admin
+
 /tag:
   controller: admin
   action: tag
@@ -103,3 +113,9 @@
 /api-configuration:
     controller: admin
     action: api
+
+/search:
+    controller: search
+    action: search
+
+/hugo:

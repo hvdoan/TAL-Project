@@ -102,7 +102,7 @@ class Message extends Sql{
 	 * @param string
 	 */
 	public function creationDate(): void {
-		$this->creationDate = date("Y-m-d");
+		$this->creationDate = date("Y-m-d H:i:s");
 	}
 	
 	/**
@@ -117,6 +117,6 @@ class Message extends Sql{
 	 * @param string
 	 */
 	public function updateDate(): void {
-		$this->updateDate = date("Y-m-d");
+		$this->updateDate = date("Y-m-d H:i:s");
 	}
 }

@@ -1,0 +1,10 @@
+@use "../Abstracts/index" as *;
+
+.userAvatar{
+  & > img{
+	width: 2vw;
+	height: 2vw;
+	object-fit: cover;
+	border-radius: 100%;
+  }
+}

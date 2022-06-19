@@ -69,6 +69,121 @@
             color: $white;
         }
     }
+
+    &-form
+    {
+        padding: 10px 25px;
+
+        border: none;
+        border-radius: 25px;
+
+        text-transform: uppercase;
+        font-weight: bold;
+        transition: .3s;
+        cursor: pointer;
+
+        &:hover
+        {
+            transition: .3s;
+        }
+
+        &-validate
+        {
+            margin: 0 30px 0 10px;
+
+            background: $light-green;
+            color: $white;
+            transition: .3s;
+
+            &:hover
+            {
+                background: $dark-green;
+                transition: .3s;
+            }
+        }
+
+        &-cancel
+        {
+            background: none;
+            color: $grey;
+            transition: .3s;
+
+            &:hover
+            {
+                color: $dark-grey;
+                transition: .3s;
+            }
+        }
+    }
+
+    &-switch
+    {
+        position: relative;
+
+        display: block;
+        overflow: hidden;
+
+        width: 55px;
+        height: 30px;
+
+        background: #ccc;
+        border-radius: 15px;
+
+        cursor: pointer;
+
+        & > input
+        {
+            display: none;
+        }
+
+        & > .slider
+        {
+            //display: block;
+            //
+            //width: 20px;
+            //height: 20px;
+            //
+            //background: #fff;
+            //border-radius: 100%;
+            //
+            //transition: .3s;
+            position: absolute;
+            //left: 0;
+            //right: 0;
+            //bottom: 0;
+
+            width: 45px;
+            height: 20px;
+            padding: 5px;
+
+            background-color: #ccc;
+            transition: .3s;
+
+            &:before
+            {
+                content: "";
+
+                position: absolute;
+                top: 5;
+
+                width: 20px;
+                height: 20px;
+                background-color: white;
+                border-radius: 100%;
+                transition: .3s;
+            }
+        }
+
+        & > input:checked ~ .slider
+        {
+            background: $sky !important;
+        }
+
+        & > input:checked ~ .slider:before
+        {
+            margin-left: 25px;
+        }
+    }
 }
 
 .opened {
