@@ -155,10 +155,12 @@ class User{
             $result = Verificator::checkForm($user->getForgotPasswordForm(), $_POST);
 
             if(empty($result)) {
+                $user->generateToken();
+                $user->setEmail($_POST["email"]);
 
                 $content = "
                     <h1>Cliquez sur le lien ci-dessous pour changer votre mot de passe :</h1>
-                    <a href='localhost/activation?email=" . $_POST['email'] ."'>Activation de votre compte.</a>
+                    <a href='localhost/activation?email=" . $user->getEmail() . "&token=" . $user->getToken() . "'>Changer le mot de passe.</a>
                 ";
 
                 $email = new Mail();
@@ -179,6 +181,35 @@ class User{
         $view = new View("forgot-password");
         $view->assign("user", $user);
 	}
+
+    public function pwdReset()
+    {
+        $user = new UserModel();
+
+        if(isset($_GET['email']) && isset($_GET['token'])){
+
+            $userParams = $user->select(['id'], ['email' => $_GET['email']]);
+
+            $user = $user->setId(intval($userParams[0]['id'], 10));
+            print_r($user->getToken());
+
+            if($user->getToken() == $_GET['token']){
+                if(!empty($_POST)){
+                    $result = Verificator::checkForm($user->getResetPassword(), $_POST);
+                    if(empty($result)) {
+                        $user->setPassword($_POST["password"]);
+                        $user->save();
+                        Notification::CreateNotification("success", "Mot de passe modifié avec succès");
+                        header('Location: /login');
+                    }
+                }
+
+                $view = new View("reset-password");
+                $view->assign("user", $user);
+            }
+
+        }
+    }
 	
 	public function activatedaccount()
 	{
