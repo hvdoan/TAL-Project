@@ -36,6 +36,16 @@
         z-index: -1;
     }
 
+    #linkPwdForget {
+        text-align: center;
+        color: white;
+        text-decoration: none;
+        margin-top: 5px;
+    }
+    #linkPwdForget:hover {
+        text-decoration: underline;
+    }
+
 </style>
 
 <?php $this->includePartial("form", $user->getLoginForm()) ?>

@@ -256,6 +256,7 @@ class User extends Sql
                 "classForm"=>"form",
                 "classSubmit"=>"submit",
                 "title"=>"Connexion",
+                "pwdForget"=>true
             ],
             'inputs'=>[
                 "email"=>[
