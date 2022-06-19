@@ -114,7 +114,7 @@ function deleteMessage(){
 	}
 	
 	if(messageNameList.length > 0){
-		if(confirm((`Êtes-vous sûr de vouloir supprimer le(s) message(s) : ${messageNameList.join(", ")} ?`))){
+		if(confirm((`Êtes-vous sûr de vouloir supprimer le(s) message(s) : ${messageNameList.join(", ")} ainsi que toutes ses dépendances ?`))){
 			const request = new XMLHttpRequest();
 			request.open('POST', '/message-management');
 			

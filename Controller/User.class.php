@@ -16,6 +16,13 @@ use App\Model\User as UserModel;
 class User{
 	public function login()
 	{
+		$isConnected = Verificator::checkConnection();
+		/* Reload the login session time if connexion status is true else redirect to login */
+		if($isConnected)
+			header("Location: /home");
+		else
+			Verificator::reloadConnection();
+		
 		if(isset($_SESSION['flash'])){
 			foreach($_SESSION['flash'] as $type => $message){
 				echo "<div class='alert alert-$type'>" . $message . "</div>";
@@ -34,7 +41,7 @@ class User{
 						$role   = new Role();
 						$object = $role->setId(intval($userLoggedIn[0]['idRole']));
 						
-						if($object != false)
+						if($object)
 							$role = $object;
 						
 						$_SESSION['id']         = $userLoggedIn[0]["id"];
@@ -56,7 +63,7 @@ class User{
 							$action = new Action();
 							$object = $action->setId(intval($actionList[$i]["idAction"]));
 							
-							if($object != false){
+							if($object){
 								$action = $object;
 								$_SESSION["permission"][] = $action->getCode();
 							}
@@ -84,10 +91,18 @@ class User{
 		
 		$view = new View("login", "front");
 		$view->assign("user", $user);
+		$view->assign("isConnected", $isConnected);
 	}
 	
 	public function register()
 	{
+		$isConnected = Verificator::checkConnection();
+		/* Reload the login session time if connexion status is true else redirect to login */
+		if($isConnected)
+			header("Location: /home");
+		else
+			Verificator::reloadConnection();
+		
 		$user = new UserModel();
 		
 		if(!empty($_POST)){
@@ -143,6 +158,7 @@ class User{
 		
 		$view = new View("register");
 		$view->assign("user", $user);
+		$view->assign("isConnected", $isConnected);
 	}
 	
 	public function logout()
@@ -182,18 +198,17 @@ class User{
         /* Get the connexion status */
         $isConnected = Verificator::checkConnection();
 
-        /* Reload the login session time if connexion status is true */
-        if($isConnected)
-            Verificator::reloadConnection();
-
         if(!$isConnected)
-            header('Location: /login');
+        {
+            Verificator::unsetSession();
+            header("Location: /home");
+        }
 
         $user = new UserModel();
 
         $object = $user->setId(intval($_SESSION["id"]));
 
-        if($object != false)
+        if($object)
             $user = $object;
 
         if(!empty($_POST)){
@@ -230,5 +245,6 @@ class User{
 
         $view = new View("userSetting");
         $view->assign("user", $user);
+        $view->assign("isConnected", $isConnected);
     }
 }

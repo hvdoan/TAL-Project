@@ -81,7 +81,7 @@ if(empty($routes[$uri]) || empty($routes[$uri]["controller"]) || empty($routes[$
 	else
 		$object = false;
 
-    if ($object != false)
+    if ($object)
     {
         $page = $object;
 
