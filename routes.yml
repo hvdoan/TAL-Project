@@ -30,6 +30,10 @@
     controller: user
     action: pwdforget
 
+/reset-password:
+    controller: user
+    action: pwdReset
+
 /activation:
     controller: user
     action: activatedaccount

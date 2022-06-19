@@ -1148,6 +1148,7 @@ nav > ul > li,
   color: #fff;
   cursor: pointer;
 }
+
 nav > ul > li > .nav-section-link,
 .nav-ctn > ul > li > .nav-section-link {
   width: fit-content;
@@ -1229,6 +1230,7 @@ nav > ul > .bottom,
 }
 
 #searchBarContainer > .searchBar {
+
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -1236,7 +1238,9 @@ nav > ul > .bottom,
   background: #fff;
   border-radius: 7px;
 }
+
 #searchBarContainer > .searchBar > input {
+
   width: 200px;
   height: 18px;
   padding: 0;
@@ -1247,6 +1251,7 @@ nav > ul > .bottom,
   font-weight: bold;
   letter-spacing: 0.8px;
 }
+
 #searchBarContainer > .searchBar > input:focus {
   outline: none;
 }
