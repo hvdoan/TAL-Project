@@ -179,6 +179,16 @@ class User{
 
     public function userSetting()
     {
+        /* Get the connexion status */
+        $isConnected = Verificator::checkConnection();
+
+        /* Reload the login session time if connexion status is true */
+        if($isConnected)
+            Verificator::reloadConnection();
+
+        if(!$isConnected)
+            header('Location: /login');
+
         $user = new UserModel();
 
         $object = $user->setId(intval($_SESSION["id"]));
@@ -218,7 +228,7 @@ class User{
             }
         }
 
-        $view = new View("user-setting");
+        $view = new View("userSetting");
         $view->assign("user", $user);
     }
 }
