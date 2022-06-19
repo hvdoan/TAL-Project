@@ -1840,4 +1840,47 @@ nav > ul > .bottom,
   border-radius: 100%;
 }
 
+.statistics {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  row-gap: 2em;
+  width: 100%;
+  padding: 2%;
+  box-sizing: border-box;
+}
+.statistics > .odd {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  width: 100%;
+}
+.statistics > .even {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 2em;
+  width: 100%;
+}
+.statistics > .even > .medium {
+  height: 100%;
+  flex-grow: 2;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.statistics > .even > .small {
+  height: 100%;
+  flex-grow: 1;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+#userCreationChartDiv {
+  width: 100%;
+  height: 500px;
+}
+
 /*# sourceMappingURL=style.css.map */

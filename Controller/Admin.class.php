@@ -28,9 +28,13 @@ class Admin
 
         /* Display users HTML Structure */
 		if(!Verificator::checkPageAccess($_SESSION["permission"], "ADMIN_ACCESS"))
-			header("Location: /home");
-
-        $view = new View("home", "back");
+			header("Location: /dashboard");
+		
+		$user = new UserModel();
+		$users = $user->select(["id", "creationDate"], []);
+	
+	    $view = new View("dashboard", "back");
+	    $view->assign("users", $users);
     }
 
 	public function configuration()
