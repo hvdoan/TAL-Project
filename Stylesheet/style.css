@@ -69,6 +69,10 @@ flex-ai\:center {
   align-items: center;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 .form-partial {
   display: flex;
   flex-direction: column;
@@ -215,6 +219,17 @@ flex-ai\:center {
   opacity: 0.5;
 }
 
+#api-configuration {
+  padding: 0 20px;
+}
+#api-configuration > .form {
+  margin-bottom: 30px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+#api-configuration > .form .row > .input {
+  width: calc(100% - 50px);
+  margin-right: 10px;
+}
 #api-configuration > .ctn > form > h1 {
   color: #3F445F;
 }
@@ -1043,6 +1058,13 @@ body {
   width: 100%;
   margin: 10px 30px;
 }
+.form > .field-row > .field .row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 0;
+}
 .form > .field-row > .field > h1 {
   margin: 10px 0;
   color: #3F445F;
@@ -1057,13 +1079,13 @@ body {
 .form > .field-row > .field > label > .required {
   color: #ff3838;
 }
-.form > .field-row > .field > .input {
+.form > .field-row > .field .input {
   padding: 8px;
   background: #EDF0F2;
   color: #3F445F;
   border: none;
 }
-.form > .field-row > .field > .input:focus {
+.form > .field-row > .field .input:focus {
   outline: none;
 }
 .form > .field-row > .field > #select-ctn {

@@ -41,6 +41,15 @@
 			width: 100%;
 			margin: 10px 30px;
 
+			.row
+			{
+				display: flex;
+				flex-direction: row;
+				justify-content: flex-start;
+				align-items: center;
+				margin: 0;
+			}
+
 			& > h1
 			{
 				margin: 10px 0;
@@ -63,7 +72,7 @@
 				}
 			}
 
-			& > .input
+			& .input
 			{
 				padding: 8px;
 

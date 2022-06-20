@@ -26,8 +26,9 @@ if(file_exists("ini.yml"))
         define("PAYPALCURRENCY", $credentials["paypal"]["currency"]);
     }
 
-    if (!empty($credentials["phpmailer"]["email"]) && !empty($credentials["phpmailer"]["password"]) &&
-        !empty($credentials["phpmailer"]["port"]))
+    if (!empty($credentials["phpmailer"]["clientId"]) && !empty($credentials["phpmailer"]["clientSecret"]) &&
+        isset($credentials["phpmailer"]["refreshToken"]) && !empty($credentials["phpmailer"]["email"]) &&
+        !empty($credentials["phpmailer"]["password"]) && !empty($credentials["phpmailer"]["port"]))
     {
         define("PHPMAILERCLIENTID", $credentials["phpmailer"]["clientId"]);
         define("PHPMAILERCLIENTSECRET", $credentials["phpmailer"]["clientSecret"]);

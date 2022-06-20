@@ -4,3 +4,10 @@ ini.yml
 Stylesheet/style.css
 Stylesheet/style.css.map
 JS/main.min.js
+API/vendor/league/oauth2-client
+
+API/vendor/league/oauth2-google
+
+API/vendor/paragonie/random_compat
+
+API/vendor/phpmailer/phpmailer

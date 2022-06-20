@@ -1181,18 +1181,42 @@ class Admin
         if(!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_USER"))
             header("Location: /dashboard");
 
-        if((isset($_POST["requestType"]) && $_POST["requestType"] == "updatePaypal") &&
+        if((isset($_POST["requestType"]) && $_POST["requestType"] == "updateDatabase") &&
             (isset($_POST["tokenForm"]) && isset($_SESSION["tokenForm"]) ? $_POST["tokenForm"] == $_SESSION["tokenForm"] : false))
         {
-            if(!empty($_POST["clientKey"]) && !empty($_POST["currency"]))
+            if(!empty($_POST["dbHost"]) && !empty($_POST["dbPort"]) && !empty($_POST["dbUser"]) && !empty($_POST["dbPassword"]))
+            {
+                $config         = yaml_parse_file("ini.yml");
+
+                $dbHost         = addslashes($_POST["dbHost"]);
+                $dbPort         = addslashes($_POST["dbPort"]);
+                $dbUser         = addslashes($_POST["dbUser"]);
+                $dbPassword     = addslashes($_POST["dbPassword"]);
+
+                $config["database"]["dbHost"]       = $dbHost;
+                $config["database"]["dbPort"]       = $dbPort;
+                $config["database"]["dbUser"]       = $dbUser;
+                $config["database"]["dbPassword"]   = $dbPassword;
+
+                $configFile = fopen("ini.yml", "w");
+                yaml_emit_file("ini.yml", $config);
+                fclose($configFile);
+
+                header("Location: /api-configuration");
+            }
+        }
+        else if((isset($_POST["requestType"]) && $_POST["requestType"] == "updatePaypal") &&
+            (isset($_POST["tokenForm"]) && isset($_SESSION["tokenForm"]) ? $_POST["tokenForm"] == $_SESSION["tokenForm"] : false))
+        {
+            if(!empty($_POST["PaypalClientKey"]) && !empty($_POST["currency"]))
             {
                 $config = yaml_parse_file("ini.yml");
 
-                $clientKey  = addslashes($_POST["clientKey"]);
-                $currency   = addslashes($_POST["currency"]);
+                $paypalClientKey  = addslashes($_POST["paypalClientKey"]);
+                $paypalCurrency   = addslashes($_POST["paypalCurrency"]);
 
-                $config["paypal"]["clientKey"]     = $clientKey;
-                $config["paypal"]["currency"]      = $currency;
+                $config["paypal"]["clientKey"]      = $paypalClientKey;
+                $config["paypal"]["currency"]       = $paypalCurrency;
 
                 $configFile = fopen("ini.yml", "w");
                 yaml_emit_file("ini.yml", $config);
@@ -1204,17 +1228,24 @@ class Admin
         else if((isset($_POST["requestType"]) && $_POST["requestType"] == "updateEmail") &&
             (isset($_POST["tokenForm"]) && isset($_SESSION["tokenForm"]) ? $_POST["tokenForm"] == $_SESSION["tokenForm"] : false))
         {
-            if(!empty($_POST["email"]) && !empty($_POST["password"]) && !empty($_POST["port"]))
+            if(!empty($_POST["mailerEmail"]) && !empty($_POST["mailerPassword"]) && !empty($_POST["mailerPort"]) &&
+                !empty($_POST["mailerClientId"]) && !empty($_POST["mailerClientSecret"]) && !empty($_POST["mailerToken"]))
             {
-                $config = yaml_parse_file("ini.yml");
+                $config                 = yaml_parse_file("ini.yml");
 
-                $email      = addslashes($_POST["email"]);
-                $password   = addslashes($_POST["password"]);
-                $port       = addslashes($_POST["port"]);
+                $mailerEmail            = addslashes($_POST["mailerEmail"]);
+                $mailerPassword         = addslashes($_POST["mailerPassword"]);
+                $mailerPort             = addslashes($_POST["mailerPort"]);
+                $mailerClientId         = addslashes($_POST["mailerClientId"]);
+                $mailerClientSecret     = addslashes($_POST["mailerClientSecret"]);
+                $mailerToken            = addslashes($_POST["mailerToken"]);
 
-                $config["phpmailer"]["email"]       = $email;
-                $config["phpmailer"]["password"]    = $password;
-                $config["phpmailer"]["port"]        = $port;
+                $config["phpmailer"]["email"]           = $mailerEmail;
+                $config["phpmailer"]["password"]        = $mailerPassword;
+                $config["phpmailer"]["port"]            = $mailerPort;
+                $config["phpmailer"]["clientId"]        = $mailerClientId;
+                $config["phpmailer"]["clientSecret"]    = $mailerClientSecret;
+                $config["phpmailer"]["refreshToken"]    = $mailerToken;
 
                 $configFile = fopen("ini.yml", "w");
                 yaml_emit_file("ini.yml", $config);
@@ -1384,7 +1415,6 @@ class Admin
 				}
 			}
 		}
-		
 		else if(isset($_POST["requestType"]) && $_POST["requestType"] == "openForm")
 		{
 			if(!$isConnected)
