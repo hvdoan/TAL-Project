@@ -11,6 +11,7 @@ use App\Model\Page;
 use App\Model\Permission;
 use App\Model\Role;
 use App\Model\Tag;
+use App\Model\TotalVisitor;
 use App\Model\User as UserModel;
 use App\Model\Warning;
 use DateTime;
@@ -32,9 +33,34 @@ class Admin
 		
 		$user = new UserModel();
 		$users = $user->select(["id", "creationDate"], []);
-	
-	    $view = new View("dashboard", "back");
+
+        $RecentUsers = [];
+        foreach ($users as $item) {
+            if ($item['creationDate'] > date("Y-m-d", strtotime('-7 days'))) {
+                $RecentUsers[] = $item;
+            }
+        }
+
+        $percent = round(count($RecentUsers) * 100 / count($users),2);
+
+        $totalVisitor = new TotalVisitor();
+        $current_time=time();
+
+        $VisitorParams = $totalVisitor->select(['id'], ['session' => session_id()]);
+        if (count($VisitorParams) != 0) {
+            $totalVisitor = $totalVisitor->setId(intval($VisitorParams[0]['id'], 10));
+        }
+
+        $totalVisitor->setSession(session_id());
+        $totalVisitor->setTime($current_time);
+        $totalVisitor->save();
+
+        $totalVisitor = count($totalVisitor->select(['session'],['session' => session_id()]));
+
+        $view = new View("dashboard", "back");
 	    $view->assign("users", $users);
+	    $view->assign("totalVisitor", $totalVisitor);
+	    $view->assign("percentUsers", $percent);
     }
 
 	public function configuration()
