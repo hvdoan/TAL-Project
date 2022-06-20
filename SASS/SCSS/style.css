@@ -1883,4 +1883,45 @@ nav > ul > .bottom,
   height: 500px;
 }
 
+.keyData {
+  display: flex;
+  padding: 10px;
+  margin: 2%;
+  background-color: #fff;
+  border-radius: 10px;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 120px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0 2px 8px 0;
+  font-family: "Jaldi", sans-serif;
+}
+.keyData .keyDataChild {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 2.5rem;
+}
+.keyData .keyDataChild .label {
+  font-size: 1.4rem;
+}
+.keyData .keyDataChild .keyDataChildPercent {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  padding: 0 10px;
+  border-radius: 5px;
+}
+.keyData .keyDataChild .keyDataChildValue {
+  font-weight: bold;
+}
+.keyData .keyDataChild .positif {
+  background-color: #259736;
+}
+.keyData .keyDataChild .negatif {
+  background-color: #AD4E47;
+}
+.keyData .keyDataChild .neutre {
+  background-color: #272B40;
+}
+
 /*# sourceMappingURL=style.css.map */

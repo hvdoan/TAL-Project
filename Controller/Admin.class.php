@@ -41,7 +41,7 @@ class Admin
             }
         }
 
-        $percent = round(count($RecentUsers) * 100 / count($users),2);
+        $percentUsers = round(count($RecentUsers) * 100 / count($users),2);
 
         $totalVisitor = new TotalVisitor();
         $current_time=time();
@@ -55,12 +55,20 @@ class Admin
         $totalVisitor->setTime($current_time);
         $totalVisitor->save();
 
-        $totalVisitor = count($totalVisitor->select(['session'],['session' => session_id()]));
+        $totalVisitor = $totalVisitor->select(['session, time'], []);
+        $RecentTotalUser = [];
+        foreach ($totalVisitor as $item) {
+            if ($item['time'] > strtotime(date("Y-m-d", strtotime('-7 days')))) {
+                $RecentTotalUser[] = $item;
+            }
+        }
+        $percentTotalUser = round(count($RecentTotalUser) * 100 / count($totalVisitor),2);
 
         $view = new View("dashboard", "back");
 	    $view->assign("users", $users);
-	    $view->assign("totalVisitor", $totalVisitor);
-	    $view->assign("percentUsers", $percent);
+	    $view->assign("totalVisitor", count($totalVisitor));
+	    $view->assign("percentUsers", $percentUsers);
+	    $view->assign("percentTotalUser", $percentTotalUser);
     }
 
 	public function configuration()
