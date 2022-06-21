@@ -214,7 +214,6 @@ class User{
             $userParams = $user->select(['id'], ['email' => $_GET['email']]);
 
             $user = $user->setId(intval($userParams[0]['id'], 10));
-            print_r($user->getToken());
 
             if($user->getToken() == $_GET['token']){
                 if(!empty($_POST)){
@@ -231,6 +230,10 @@ class User{
                 $view->assign("user", $user);
             }
 
+        } else {
+            http_response_code(404);
+            include('View/404.view.php');
+            die();
         }
     }
 	
@@ -249,7 +252,11 @@ class User{
 				$user->setVerifyAccount(true);
 				$user->save();
 			}
-		}
+		} else {
+            http_response_code(404);
+            include('View/404.view.php');
+            die();
+        }
 	}
 
     public function userSetting()
