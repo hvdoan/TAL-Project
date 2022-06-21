@@ -69,6 +69,142 @@ flex-ai\:center {
   align-items: center;
 }
 
+.form-partial {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: fit-content;
+  padding: 40px 60px;
+  background: #3F445F;
+  border-radius: 12px;
+  font-family: "Jaldi", sans-serif;
+}
+.form-partial > h1 {
+  margin-bottom: 40px;
+  font-family: "Jost", sans-serif;
+  text-align: center;
+  font-weight: 400;
+}
+.form-partial > .fieldRow {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 20px 0;
+  width: 25vw;
+}
+.form-partial > .fieldRow > label {
+  color: #fff;
+}
+.form-partial > .fieldRow > label:first-child {
+  width: 100vw;
+  color: #fff;
+}
+.form-partial > .fieldRow > input {
+  width: 100%;
+  margin: 10px 0;
+  background: none;
+  border: none;
+  border-bottom: solid 1px #fff;
+  color: #fff;
+}
+.form-partial > .fieldRow > input:focus {
+  background: rgba(142, 153, 163, 0.19);
+  outline: none;
+}
+.form-partial > .fieldRow > .hide {
+  display: none;
+}
+.form-partial > .fieldHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+}
+.form-partial > .fieldHeader > label:first-child {
+  width: 100%;
+  color: #fff;
+  font-weight: bold;
+}
+.form-partial > .fieldHeader > label:last-child {
+  margin: 0 1.1vw;
+}
+.form-partial > .field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 20px 0;
+  width: 25vw;
+}
+.form-partial > .field > label {
+  color: #fff;
+  font-weight: bold;
+}
+.form-partial > .field > input {
+  width: 100%;
+  padding: 10px 0;
+  background: none;
+  border: none;
+  border-bottom: solid 1px #fff;
+  color: #fff;
+}
+.form-partial > .field > input:focus {
+  background: rgba(142, 153, 163, 0.19);
+  outline: none;
+}
+.form-partial > .field > select {
+  width: 50%;
+  padding: 10px 0;
+  background: none;
+  border: none;
+  border-bottom: solid 1px #fff;
+  color: #fff;
+}
+.form-partial > .field > select > option {
+  background-color: #6d769e;
+  color: #fff;
+}
+.form-partial > .field > select:hover {
+  cursor: pointer;
+  outline: none;
+}
+.form-partial > .field > .right-ico {
+  position: absolute;
+  bottom: 0;
+  left: 100%;
+  padding: 10px;
+  color: #fff;
+  cursor: pointer;
+}
+.form-partial > .field > .hide {
+  display: none;
+}
+.form-partial > .section {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.form-partial > .submit {
+  margin-top: 40px;
+  padding: 10px 0;
+  background: none;
+  border: solid 2px #fff;
+  border-radius: 25px;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: bold;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.form-partial > .submit:hover {
+  background: #fff;
+  color: #3F445F;
+  transition: 0.3s;
+}
+
 .page > div > span {
   margin-top: 4%;
   display: flex;
@@ -155,6 +291,43 @@ flex-ai\:center {
   transform: translate(-50%, -50%);
 }
 
+#ctnForumFrontForm {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+#ctnForumFrontForm > form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 25%;
+}
+#ctnForumFrontForm > form textarea {
+  border: solid 1px #000;
+}
+
+#ctnForumFormFront {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+#ctnForumFormFront > form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 25%;
+}
+
 #ctnMessageForm {
   position: absolute;
   top: 50%;
@@ -171,57 +344,63 @@ flex-ai\:center {
   transform: translate(-50%, -50%);
 }
 
+#ctnWarningForm {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+#ctnWarningForm > form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 25%;
+}
+
 #ctnUserForm > form {
-  display: flex;
-  flex-direction: column;
   width: 750px;
-  padding: 30px 0 0 0 !important;
-  background: #fff;
-  border-radius: 7px;
+}
+#ctnUserForm > form > .field-row > .field > #select-avatar-ctn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+#ctnUserForm > form > .field-row > .field > #select-avatar-ctn > #avatar-preview {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background: #EDF0F2;
+  border-radius: 50%;
   overflow: hidden;
 }
-#ctnUserForm > form > .field-row > hr {
-  width: 100%;
-  height: 1px;
-  margin: 0 30px;
-  box-sizing: border-box;
-  background: #3F445F;
-  border: none;
+#ctnUserForm > form > .field-row > .field > #select-avatar-ctn > #avatar-preview > .icon {
+  max-width: 40px;
+  max-height: 40px;
+  color: #3F445F;
+  font-size: 1.5rem;
 }
-#ctnUserForm > form > .field-row > .field > h1 {
-  margin: 10px 0;
-  color: #272B40;
-  font-size: 1.2rem;
-  text-transform: uppercase;
+#ctnUserForm > form > .field-row > .field > #select-avatar-ctn > label:nth-child(2) {
+  margin: 0 10px;
+  color: #3F445F;
+  transition: 0.3s;
+  cursor: pointer;
 }
-#ctnUserForm > form > .field-row > .field > label {
-  color: #988F8F;
-  text-transform: uppercase;
-  font-weight: bold;
+#ctnUserForm > form > .field-row > .field > #select-avatar-ctn > label:nth-child(2):hover {
+  text-decoration: underline;
+  transition: 0.3s;
 }
-#ctnUserForm > form > .field-row > .field > .input {
-  padding: 8px;
-  background: #EDF0F2;
-  color: #272B40;
-  border: none;
+#ctnUserForm > form > .field-row > .field > #select-ctn > .questionMark {
+  margin: 0 10px;
+  color: #ff3838;
 }
-#ctnUserForm > form > .field-row > .field > .input:focus {
-  outline: none;
-}
-#ctnUserForm > form > .field-row > .field > select {
-  width: fit-content;
-  padding: 5px 10px;
-  background: #988F8F;
-  border: none;
-  color: #fff;
-  font-family: "Jaldi", sans-serif;
-  text-transform: uppercase;
-}
-#ctnUserForm > form > .field-row > .field > .disabled {
-  background: #988F8F;
-  color: #fff;
-}
-#ctnUserForm > form > .field-row > #id-ctn {
+#ctnUserForm > form > .field-row > #role-ctn {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -231,52 +410,53 @@ flex-ai\:center {
   background: #22a6b3;
   border-radius: 7px;
 }
-#ctnUserForm > form > .field-row > #id-ctn > span {
+#ctnUserForm > form > .field-row > #role-ctn > span {
+  width: max-content;
   color: #fff;
   font-size: 0.7rem;
   font-weight: bold;
   text-transform: capitalize;
   letter-spacing: 1px;
 }
-#ctnUserForm > form > .field-cta {
-  display: flex;
+
+#ctnRoleForm > form {
+  width: 700px;
+}
+#ctnRoleForm > form > .permissions > .field {
   flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 20px 0;
-  box-sizing: border-box;
-  background: #EDF0F2;
+  justify-content: space-between;
 }
-#ctnUserForm > form > .field-cta > input {
-  padding: 10px 25px;
-  border: none;
-  border-radius: 25px;
-  text-transform: uppercase;
-  font-weight: bold;
-  transition: 0.3s;
-  cursor: pointer;
+
+#ctnDonationTierForm > form {
+  width: 350px;
 }
-#ctnUserForm > form > .field-cta > input:hover {
-  transition: 0.3s;
+
+#ctnTagForm > form {
+  width: 450px;
 }
-#ctnUserForm > form > .field-cta > .cancel {
-  background: none;
-  color: #988F8F;
-  transition: 0.3s;
+
+::-webkit-scrollbar {
+  width: 10px;
 }
-#ctnUserForm > form > .field-cta > .cancel:hover {
-  color: #716767;
-  transition: 0.3s;
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
 }
-#ctnUserForm > form > .field-cta > .validate {
-  margin: 0 30px 0 10px;
-  background: #35be49;
-  color: #fff;
-  transition: 0.3s;
+
+::-webkit-scrollbar-thumb {
+  background: #3F445F;
+  border-radius: 10px;
 }
-#ctnUserForm > form > .field-cta > .validate:hover {
-  color: #259736;
-  transition: 0.3s;
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6d769e;
+}
+
+body {
+  scrollbar-color: #3F445F #f1f1f1;
+  /* ascensseur bleu sur fond blanc */
+  scrollbar-size: 10px;
+  /* taille de l'ascenseur */
 }
 
 .banner {
@@ -404,6 +584,74 @@ flex-ai\:center {
   background: #d4716a;
   color: #fff;
 }
+.btn-form {
+  padding: 10px 25px;
+  border: none;
+  border-radius: 25px;
+  text-transform: uppercase;
+  font-weight: bold;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.btn-form:hover {
+  transition: 0.3s;
+}
+.btn-form-validate {
+  margin: 0 30px 0 10px;
+  background: #35be49;
+  color: #fff;
+  transition: 0.3s;
+}
+.btn-form-validate:hover {
+  background: #259736;
+  transition: 0.3s;
+}
+.btn-form-cancel {
+  background: none;
+  color: #988F8F;
+  transition: 0.3s;
+}
+.btn-form-cancel:hover {
+  color: #716767;
+  transition: 0.3s;
+}
+.btn-switch {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  width: 55px;
+  height: 30px;
+  background: #ccc;
+  border-radius: 15px;
+  cursor: pointer;
+}
+.btn-switch > input {
+  display: none;
+}
+.btn-switch > .slider {
+  position: absolute;
+  width: 45px;
+  height: 20px;
+  padding: 5px;
+  background-color: #ccc;
+  transition: 0.3s;
+}
+.btn-switch > .slider:before {
+  content: "";
+  position: absolute;
+  top: 5;
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border-radius: 100%;
+  transition: 0.3s;
+}
+.btn-switch > input:checked ~ .slider {
+  background: #22a6b3 !important;
+}
+.btn-switch > input:checked ~ .slider:before {
+  margin-left: 25px;
+}
 
 .opened {
   text-decoration: underline !important;
@@ -415,7 +663,7 @@ flex-ai\:center {
   justify-content: space-around;
   align-items: center;
   width: auto;
-  min-height: 50vh;
+  min-height: 40vh;
 }
 .cards > div.checked {
   background-color: #6d769e !important;
@@ -493,14 +741,18 @@ flex-ai\:center {
   transform: scale(1.05);
 }
 .cards > div[type=forum] h2 {
-  margin: 0 1em 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 .cards > div[type=forum] .forumHeader {
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
+  height: 6vw;
 }
 .cards > div[type=forum] .forumHeader > h1 {
+  padding: 0 0.5em;
   color: #fff;
 }
 .cards > div[type=forum] hr {
@@ -761,180 +1013,103 @@ flex-ai\:center {
 .form {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  width: fit-content;
-  padding: 40px 60px;
-  background: #3F445F;
-  border-radius: 12px;
+  padding: 10px 0 0 0;
+  border-radius: 7px;
+  overflow: hidden;
+  background: #fff;
   font-family: "Jaldi", sans-serif;
 }
-.form > h1 {
-  margin-bottom: 40px;
-  font-family: "Jost", sans-serif;
-  text-align: center;
-  font-weight: 400;
-}
-.form > .fieldRow {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  margin: 20px 0;
-  width: 25vw;
-}
-.form > .fieldRow > label {
-  color: #fff;
-}
-.form > .fieldRow > label:first-child {
-  width: 100vw;
-  color: #fff;
-}
-.form > .fieldRow > input {
-  width: 100%;
-  margin: 10px 0;
-  background: none;
-  border: none;
-  border-bottom: solid 1px #fff;
-  color: #fff;
-}
-.form > .fieldRow > input:focus {
-  background: rgba(142, 153, 163, 0.19);
-  outline: none;
-}
-.form > .fieldRow > .hide {
-  display: none;
-}
-.form > .fieldHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: #fff;
-}
-.form > .fieldHeader > label:first-child {
-  width: 100%;
-  color: #fff;
-  font-weight: bold;
-}
-.form > .fieldHeader > label:last-child {
-  margin: 0 1.1vw;
-}
-.form > .field {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  margin: 20px 0;
-  width: 25vw;
-}
-.form > .field > label {
-  color: #fff;
-  font-weight: bold;
-}
-.form > .field > input {
-  width: 100%;
-  padding: 10px 0;
-  background: none;
-  border: none;
-  border-bottom: solid 1px #fff;
-  color: #fff;
-}
-.form > .field > input:focus {
-  background: rgba(142, 153, 163, 0.19);
-  outline: none;
-}
-.form > .field > select {
-  width: 50%;
-  padding: 10px 0;
-  background: none;
-  border: none;
-  border-bottom: solid 1px #fff;
-  color: #fff;
-}
-.form > .field > select > option {
-  background-color: #6d769e;
-  color: #fff;
-}
-.form > .field > select:hover {
-  cursor: pointer;
-  outline: none;
-}
-.form > .field > .right-ico {
-  position: absolute;
-  bottom: 0;
-  left: 100%;
-  padding: 10px;
-  color: #fff;
-  cursor: pointer;
-}
-.form > .field > .hide {
-  display: none;
-}
-.form > .section {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-.form > .submit {
-  margin-top: 40px;
-  padding: 10px 0;
-  background: none;
-  border: solid 2px #fff;
-  border-radius: 25px;
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: bold;
-  transition: 0.3s;
-  cursor: pointer;
-}
-.form > .submit:hover {
-  background: #fff;
-  color: #3F445F;
-  transition: 0.3s;
-}
-
-/* V2 */
-form {
-  display: flex;
-  flex-direction: column;
-  padding: 30px;
-}
-form > .field-row {
+.form > .field-row {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   width: 100%;
 }
-form > .field-row > .field {
+.form > .field-row > hr {
+  width: 100%;
+  height: 1px;
+  margin: 0 30px;
+  box-sizing: border-box;
+  background: #3F445F;
+  border: none;
+}
+.form > .field-row > .field {
   display: flex;
   flex-direction: column;
   width: 100%;
   margin: 10px 30px;
 }
-
-.formSetting {
+.form > .field-row > .field > h1 {
+  margin: 10px 0;
+  color: #3F445F;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+}
+.form > .field-row > .field > label {
+  color: #988F8F;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.form > .field-row > .field > .input {
+  padding: 8px;
+  background: #EDF0F2;
+  color: #3F445F;
+  border: none;
+}
+.form > .field-row > .field > .input:focus {
+  outline: none;
+}
+.form > .field-row > .field > #select-ctn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.form > .field-row > .field > #select-ctn > select {
+  width: fit-content;
+  padding: 5px 10px;
+  cursor: pointer;
+  background: #EDF0F2;
+  border: none;
+  color: #272B40;
+  font-family: "Jaldi", sans-serif;
+  text-transform: uppercase;
+}
+.form > .field-row .disabled {
+  background: #988F8F !important;
+  color: #fff !important;
+}
+.form > .field-cta {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 20px 0;
+  margin-top: 10px;
+  box-sizing: border-box;
+  background: #EDF0F2;
+}
+.form .formSetting {
   display: flex;
   flex-direction: column;
   width: 30rem;
   margin-left: 50px;
 }
-.formSetting .field {
+.form .formSetting .field {
   margin: 5px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.formSetting .field input {
+.form .formSetting .field input {
   width: 50%;
   padding: 10px;
 }
-.formSetting label {
+.form .formSetting label {
   font-family: "Jaldi", sans-serif;
   font-size: 1.1rem;
 }
-.formSetting .btn {
+.form .formSetting .btn {
   margin-top: 30px;
   width: 240px;
 }
@@ -1100,6 +1275,7 @@ nav-row > .nav > ul,
 }
 nav-row > .nav > ul > a,
 .nav-ctn-row > .nav > ul > a {
+  margin: 0 5px;
   text-transform: uppercase;
 }
 nav > header,
@@ -1148,7 +1324,6 @@ nav > ul > li,
   color: #fff;
   cursor: pointer;
 }
-
 nav > ul > li > .nav-section-link,
 .nav-ctn > ul > li > .nav-section-link {
   width: fit-content;
@@ -1230,7 +1405,6 @@ nav > ul > .bottom,
 }
 
 #searchBarContainer > .searchBar {
-
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -1238,9 +1412,7 @@ nav > ul > .bottom,
   background: #fff;
   border-radius: 7px;
 }
-
 #searchBarContainer > .searchBar > input {
-
   width: 200px;
   height: 18px;
   padding: 0;
@@ -1251,7 +1423,6 @@ nav > ul > .bottom,
   font-weight: bold;
   letter-spacing: 0.8px;
 }
-
 #searchBarContainer > .searchBar > input:focus {
   outline: none;
 }
@@ -1394,24 +1565,29 @@ nav > ul > .bottom,
 }
 
 .border {
-  border-right: solid 1px #fff;
   border-radius: 10px;
-  padding: 2% !important;
+  padding: 0 2% !important;
+}
+
+.boxShadow {
+  box-shadow: rgba(33, 35, 38, 0.25) 10px 0px 10px -10px;
 }
 
 .forum {
-  margin: 4%;
   display: flex;
   justify-content: space-evenly;
-  align-items: flex-start;
+  align-items: center;
   flex-direction: column;
   font-family: "Jaldi", sans-serif;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 2% 4%;
 }
 .forum .forumHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 92.1vw;
+  width: 100%;
 }
 .forum .forumHeader > div {
   display: flex;
@@ -1420,7 +1596,7 @@ nav > ul > .bottom,
 }
 .forum .forumHeader > div > h1 {
   color: #fff;
-  width: 35em;
+  width: 65vw;
 }
 .forum .forumHeader > div > h2 {
   margin: 0 1em 0 0;
@@ -1429,7 +1605,8 @@ nav > ul > .bottom,
   margin: 0 1em 0 1em;
 }
 .forum .forumDescription {
-  width: 90.3vw;
+  width: 100%;
+  box-sizing: border-box;
   border: solid #3F445F;
   border-width: 0 1px 1px 1px;
   border-radius: 0 0 15px 15px;
@@ -1441,7 +1618,9 @@ nav > ul > .bottom,
   justify-content: space-evenly;
   align-items: flex-start;
   flex-direction: column;
-  margin: 4%;
+  padding: 1% 4%;
+  width: 100%;
+  box-sizing: border-box;
   font-family: "Jaldi", sans-serif;
 }
 .allMessage p {
@@ -1451,6 +1630,7 @@ nav > ul > .bottom,
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 .allMessage .containerMessage > svg {
   margin: 0 0 0 2vw;
@@ -1465,30 +1645,114 @@ nav > ul > .bottom,
   margin: 1em 0;
   padding: 1em;
   border-radius: 15px;
-  border: 1px solid #3F445F;
-  width: 90vw;
+  width: 100%;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
-.allMessage .message svg {
+.allMessage .message .messageParent {
+  display: flex;
+  width: 100%;
+}
+.allMessage .message .messageParent svg {
   position: absolute;
   top: 0;
   right: 0;
   color: red;
 }
-.allMessage .message > .headerMessage {
+.allMessage .message .messageParent .warning {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 28px;
+  height: 28px;
+}
+.allMessage .message .messageParent > .headerMessage {
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
-  margin-right: 2vw;
+  padding-right: 2vw;
+  border-right: 1px solid #3F445F;
+}
+.allMessage .message .messageParent > .headerMessage > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.allMessage .message .messageParent > .headerMessage > .userMessage {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 12em;
+}
+.allMessage .message .messageParent > .messageContent {
+  margin-left: 2vw;
 }
 .allMessage .answerMessage {
-  margin: 0 0 1em 3em;
-  width: 83.5vw;
+  margin: 0.5em 0 0.5em 3em;
+  width: 100%;
+}
+.allMessage .divInsertAnswer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+.allMessage .divInsertAnswer > hr {
+  width: 90%;
+  margin: 1em 0;
+}
+.allMessage .divInsertAnswer form {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.allMessage .divInsertAnswer form > input[type=text] {
+  width: 79%;
+  height: 3em;
+}
+.allMessage .divInsertAnswer form > button {
+  width: 20%;
+  height: 3em;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.centerElement {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.centerElement > button {
+  margin: 2em 0;
+}
+
+#containerForumFront > .button {
+  font-family: "Jaldi", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .bold {
   font-weight: bold;
+}
+
+.underlineHover:hover {
+  text-decoration: underline;
+}
+
+.pointer {
+  cursor: pointer;
 }
 
 .avatar {
@@ -1497,6 +1761,7 @@ nav > ul > .bottom,
   justify-content: space-between;
   align-items: center;
   color: #fff;
+  cursor: pointer;
 }
 .avatar > span {
   padding: 0 10px;
@@ -1519,6 +1784,59 @@ nav > ul > .bottom,
   max-height: 40px;
   color: #3F445F;
   font-size: 1.5rem;
+}
+
+#user-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 0;
+  background: #272B40;
+  border-radius: 0 0 0 7px;
+  transition: 0.4s;
+}
+#user-menu > a {
+  width: 100%;
+  height: 50px;
+  padding: 10px 30px;
+  box-sizing: border-box;
+  background: #272B40;
+  color: #fff;
+  font-size: 1.3rem;
+  text-decoration: none;
+  text-align: center;
+  transition: 0.3s;
+}
+#user-menu > a:hover {
+  background: #927bdf;
+  transition: 0.3s;
+}
+#user-menu > .red:hover {
+  background: #ff4757;
+}
+
+#trigger-user-menu {
+  display: none;
+}
+#trigger-user-menu:checked ~ #user-menu {
+  height: 150px;
+  transition: 0.4s;
+}
+
+#editorjs .image-tool__caption {
+  display: none !important;
+}
+#editorjs .ce-header {
+  text-align: center;
+}
+.userAvatar > img {
+  width: 2vw;
+  height: 2vw;
+  object-fit: cover;
+  border-radius: 100%;
 }
 
 /*# sourceMappingURL=style.css.map */
