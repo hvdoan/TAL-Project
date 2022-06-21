@@ -4,6 +4,10 @@
         margin: 20px auto 0;
     }
 
+    .avatarParam {
+        width: 140px;
+    }
+
     .user {
         margin: 20px auto 0;
         display: flex;
@@ -31,7 +35,7 @@
 <h1>Parametres utilisateur</h1>
 <div class="user">
     <?php if ($_SESSION['avatar'] != "") : ?>
-        <img class="" src="data:<?= mime_content_type($_SESSION['avatar']) ?>>;base64, <?= $_SESSION['avatar'] ?>">
+        <img class="avatarParam" src="data:<?= mime_content_type($_SESSION['avatar']) ?>>;base64, <?= $_SESSION['avatar'] ?>">
     <?php else : ?>
         <i class="fa-solid fa-user-astronaut"></i>
     <?php endif; ?>
