@@ -3,142 +3,89 @@
 
 // window.onload = loadStatistics;
 
+function loadTotalUserByCreation(users){
+	am5.ready(function () {
+
+		// Create root and chart
+		let root = am5.Root.new("userCreationChartDiv2");
+
+		root.setThemes([
+			am5themes_Animated.new(root)
+		]);
+
+		let chart = root.container.children.push(
+			am5xy.XYChart.new(root, {
+				panY: false,
+				layout: root.verticalLayout,
+				maxTooltipDistance: 0
+			})
+		);
+
+		let data = [{
+			category: "Research",
+			value1: 1000,
+			value2: 588
+		}, {
+			category: "Marketing",
+			value1: 1200,
+			value2: 1800
+		}, {
+			category: "Sales",
+			value1: 850,
+			value2: 1230
+		}];
+
+		// Craete Y-axis
+		let yAxis = chart.yAxes.push(
+			am5xy.ValueAxis.new(root, {
+				renderer: am5xy.AxisRendererY.new(root, {
+				})
+			})
+		);
+
+		// Create X-Axis
+		var xAxis = chart.xAxes.push(
+			am5xy.CategoryAxis.new(root, {
+				maxDeviation: 0.2,
+				renderer: am5xy.AxisRendererX.new(root, {
+				}),
+				categoryField: "category"
+			})
+		);
+		xAxis.data.setAll(data);
+
+		// Create series
+		var series1 = chart.series.push(
+			am5xy.ColumnSeries.new(root, {
+				name: "Series",
+				xAxis: xAxis,
+				yAxis: yAxis,
+				valueYField: "value1",
+				categoryXField: "category",
+				tooltip: am5.Tooltip.new(root, {})
+			})
+		);
+		series1.data.setAll(data);
+
+		var series2 = chart.series.push(
+			am5xy.ColumnSeries.new(root, {
+				name: "Series",
+				xAxis: xAxis,
+				yAxis: yAxis,
+				valueYField: "value2",
+				categoryXField: "category"
+			})
+		);
+		series2.data.setAll(data);
+
+		// Add legend
+		var legend = chart.children.push(am5.Legend.new(root, {}));
+		legend.data.setAll(chart.series.values);
+
+	});
+}
+
 function loadUserByCreation(users){
-	
-	// am5.ready(function (){
-	//
-	// 	// Create root element
-	// 	// https://www.amcharts.com/docs/v5/getting-started/#Root_element
-	// 	let root = am5.Root.new("userCreationChartDiv");
-	//
-	//
-	// 	// Set themes
-	// 	// https://www.amcharts.com/docs/v5/concepts/themes/
-	// 	root.setThemes([
-	// 		am5themes_Animated.new(root)
-	// 	]);
-	//
-	//
-	// 	// Create chart
-	// 	// https://www.amcharts.com/docs/v5/charts/xy-chart/
-	// 	let chart = root.container.children.push(am5xy.XYChart.new(root, {
-	// 		panX: true,
-	// 		panY: true,
-	// 		wheelX: "panX",
-	// 		wheelY: "zoomX",
-	// 		pinchZoomX: true
-	// 	}));
-	//
-	// 	// Add cursor
-	// 	// https://www.amcharts.com/docs/v5/charts/xy-chart/cursor/
-	// 	let cursor = chart.set("cursor", am5xy.XYCursor.new(root, {
-	// 		behavior: "none"
-	// 	}));
-	// 	cursor.lineY.set("visible", false);
-	//
-	//
-	// 	// Generate random data
-	// 	let date = new Date();
-	// 	date.setHours(0, 0, 0, 0);
-	// 	let value = 100;
-	//
-	//
-	// 	// Create axes
-	// 	// https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
-	// 	let xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
-	// 		maxDeviation: 0.5,
-	// 		baseInterval: {
-	// 			timeUnit: "day",
-	// 			count: 1
-	// 		},
-	// 		renderer: am5xy.AxisRendererX.new(root, {
-	// 			pan: "zoom"
-	// 		}),
-	// 		tooltip: am5.Tooltip.new(root, {})
-	// 	}));
-	//
-	// 	let yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
-	// 		maxDeviation: 1,
-	// 		renderer: am5xy.AxisRendererY.new(root, {
-	// 			pan: "zoom"
-	// 		})
-	// 	}));
-	//
-	//
-	// 	// Add series
-	// 	// https://www.amcharts.com/docs/v5/charts/xy-chart/series/
-	// 	let series = chart.series.push(am5xy.SmoothedXLineSeries.new(root, {
-	// 		name: "Series",
-	// 		xAxis: xAxis,
-	// 		yAxis: yAxis,
-	// 		valueYField: "value",
-	// 		valueXField: "dateCreation",
-	// 		tooltip: am5.Tooltip.new(root, {
-	// 			labelText: "{valueY}"
-	// 		})
-	// 	}));
-	//
-	// 	series.fills.template.setAll({
-	// 		visible: true,
-	// 		fillOpacity: 0.2
-	// 	});
-	//
-	// 	series.bullets.push(function (){
-	// 		return am5.Bullet.new(root, {
-	// 			locationY: 0,
-	// 			sprite: am5.Circle.new(root, {
-	// 				radius: 4,
-	// 				stroke: root.interfaceColors.get("background"),
-	// 				strokeWidth: 2,
-	// 				fill: series.get("fill")
-	// 			})
-	// 		});
-	// 	});
-	//
-	//
-	// 	// Add scrollbar
-	// 	// https://www.amcharts.com/docs/v5/charts/xy-chart/scrollbars/
-	// 	chart.set("scrollbarX", am5.Scrollbar.new(root, {
-	// 		orientation: "horizontal"
-	// 	}));
-	//
-	//
-	// 	let data = [];
-	// 	for(let i = 0; i < users.length; i++){
-	// 		let creationDate = new Date(users[i].creationDate);
-	// 		am5.time.add(creationDate, "day", 1);
-	//
-	// 		data.push({
-	// 			dateCreation: creationDate.getTime(),
-	// 			// value: users[i].id * 10
-	// 			value: users[i].id
-	// 		})
-	// 	}
-	// 	console.log(data);
-	//
-	// 	series.data.setAll(data);
-	//
-	// 	// Make stuff animate on load
-	// 	// https://www.amcharts.com/docs/v5/concepts/animations/
-	// 	series.appear(1000);
-	// 	chart.appear(1000, 100);
-	//
-	// }); // end am5.ready()
-	
-	
-	//NEW TEST
-	
-	/**
-	 * ---------------------------------------
-	 * This demo was created using amCharts 5.
-	 *
-	 * For more information visit:
-	 * https://www.amcharts.com/
-	 *
-	 * Documentation is available at:
-	 * https://www.amcharts.com/docs/v5/
-	 * ---------------------------------------
-	 */
 	
 	am5.ready(function (){
 		
@@ -152,7 +99,6 @@ function loadUserByCreation(users){
 		let chart = root.container.children.push(
 			am5xy.XYChart.new(root, {
 				panY: false,
-				wheelY: "zoomX",
 				layout: root.verticalLayout,
 				maxTooltipDistance: 0
 			})
@@ -166,7 +112,7 @@ function loadUserByCreation(users){
 			data.push({
 				date: creationDate.getTime(),
 				// value: users[i].id * 10
-				value: users[i].id
+				value: i
 			})
 		}
 		console.log(data);
@@ -233,6 +179,10 @@ function loadUserByCreation(users){
 		yAxis.set("tooltip", am5.Tooltip.new(root, {
 			themeTags: ["axis"]
 		}));
+
+		// Add legend
+		var legend = chart.children.push(am5.Legend.new(root, {}));
+		legend.data.setAll(chart.series.values);
 	
 	}); // end am5.ready()
 }

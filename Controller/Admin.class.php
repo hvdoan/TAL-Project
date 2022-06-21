@@ -45,6 +45,7 @@ class Admin
 
         $totalVisitor = new TotalVisitor();
         $current_time=time();
+        $timeout = $current_time - (60);
 
         $VisitorParams = $totalVisitor->select(['id'], ['session' => session_id()]);
         if (count($VisitorParams) != 0) {
@@ -56,6 +57,12 @@ class Admin
         $totalVisitor->save();
 
         $totalVisitor = $totalVisitor->select(['session, time'], []);
+        $totalVisitorActually = [];
+        foreach ($totalVisitor as $item) {
+            if ($item['time'] >= $timeout) {
+                $totalVisitorActually[] = $item;
+            }
+        }
         $RecentTotalUser = [];
         foreach ($totalVisitor as $item) {
             if ($item['time'] > strtotime(date("Y-m-d", strtotime('-7 days')))) {
@@ -67,6 +74,7 @@ class Admin
         $view = new View("dashboard", "back");
 	    $view->assign("users", $users);
 	    $view->assign("totalVisitor", count($totalVisitor));
+	    $view->assign("totalVisitorActually", count($totalVisitorActually));
 	    $view->assign("percentUsers", $percentUsers);
 	    $view->assign("percentTotalUser", $percentTotalUser);
     }

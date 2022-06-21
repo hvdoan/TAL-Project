@@ -10,6 +10,7 @@
 	echo "let javascript_array = ". $js_array . ";\n";
 	?>
 	window.addEventListener("load", loadUserByCreation(javascript_array));
+	window.addEventListener("load", loadTotalUserByCreation(javascript_array));
 </script>
 
 <div class="keyData">
@@ -21,12 +22,12 @@
     <div class="keyDataChild">
         <div class="label">Total visiteurs</div>
         <div class="keyDataChildPercent <?php if ($this->data['totalVisitor'] > 0) echo 'positif'; elseif($this->data['totalVisitor'] == 0) echo 'neutre'; else echo 'negatif'; ?>"><?php if ($this->data['totalVisitor'] >= 0) {echo '+ ';} else { echo '-';} echo $this->data['percentTotalUser'] ?>% en 7 jours</div>
-        <div class="keyDataChildValue"><?php  print_r($this->data['totalVisitor']); ?></div>
+        <div class="keyDataChildValue"><?php  echo $this->data['totalVisitor']; ?></div>
     </div>
     <div class="keyDataChild">
         <div class="label">Total en ligne</div>
-        <div class="keyDataChildPercent neutre"> + 0% en 7 jours</div>
-        <div class="keyDataChildValue">0</div>
+        <div class="keyDataChildPercent neutre">Statique</div>
+        <div class="keyDataChildValue"><?php  echo $this->data['totalVisitorActually']; ?></div>
     </div>
     <div class="keyDataChild">
         <div class="label">Temps moyen de connexion</div>
@@ -45,7 +46,7 @@
 	
 	<div class="even">
 		
-		<div id="userCreationChartDiv2"></div>
+		<div id="userCreationChartDiv2" class="medium" style="height: 300px"></div>
 		<div class="small" style="height: 300px"></div>
 		
 	</div>
