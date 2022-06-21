@@ -1089,27 +1089,28 @@ body {
   box-sizing: border-box;
   background: #EDF0F2;
 }
-.form .formSetting {
+
+.formSetting {
   display: flex;
   flex-direction: column;
   width: 30rem;
   margin-left: 50px;
 }
-.form .formSetting .field {
-  margin: 5px;
+.formSetting .field {
+  margin: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.form .formSetting .field input {
+.formSetting .field input {
   width: 50%;
   padding: 10px;
 }
-.form .formSetting label {
+.formSetting label {
   font-family: "Jaldi", sans-serif;
   font-size: 1.1rem;
 }
-.form .formSetting .btn {
+.formSetting .btn {
   margin-top: 30px;
   width: 240px;
 }
