@@ -172,8 +172,70 @@ class User{
 	
 	public function pwdforget()
 	{
-		echo "Mot de passe oublié";
+        $user = new UserModel();
+
+        if(!empty($_POST)){
+            $result = Verificator::checkForm($user->getForgotPasswordForm(), $_POST);
+
+            if(empty($result)) {
+                $user->generateToken();
+                $user->setEmail($_POST["email"]);
+
+                $content = "
+                    <h1>Cliquez sur le lien ci-dessous pour changer votre mot de passe :</h1>
+                    <a href='localhost/activation?email=" . $user->getEmail() . "&token=" . $user->getToken() . "'>Changer le mot de passe.</a>
+                ";
+
+                $email = new Mail();
+                $email->prepareContent($_POST['email'], "Reinitialisation du mot de passe", $content, "Test");
+                $email->send();
+
+                Notification::CreateNotification("success", "Si le compte existe, un mail vient de vous etre envoyé");
+
+            } else {
+                $msg = "";
+                foreach ($result as $item) {
+                    $msg .= "-" . $item . "<br>";
+                }
+                Notification::CreateNotification("error", $msg);
+            }
+        }
+
+        $view = new View("forgot-password");
+        $view->assign("user", $user);
 	}
+
+    public function pwdReset()
+    {
+        $user = new UserModel();
+
+        if(isset($_GET['email']) && isset($_GET['token'])){
+
+            $userParams = $user->select(['id'], ['email' => $_GET['email']]);
+
+            $user = $user->setId(intval($userParams[0]['id'], 10));
+
+            if($user->getToken() == $_GET['token']){
+                if(!empty($_POST)){
+                    $result = Verificator::checkForm($user->getResetPassword(), $_POST);
+                    if(empty($result)) {
+                        $user->setPassword($_POST["password"]);
+                        $user->save();
+                        Notification::CreateNotification("success", "Mot de passe modifié avec succès");
+                        header('Location: /login');
+                    }
+                }
+
+                $view = new View("reset-password");
+                $view->assign("user", $user);
+            }
+
+        } else {
+            http_response_code(404);
+            include('View/404.view.php');
+            die();
+        }
+    }
 	
 	public function activatedaccount()
 	{
@@ -190,7 +252,11 @@ class User{
 				$user->setVerifyAccount(true);
 				$user->save();
 			}
-		}
+		} else {
+            http_response_code(404);
+            include('View/404.view.php');
+            die();
+        }
 	}
 
     public function userSetting()
@@ -243,7 +309,7 @@ class User{
             }
         }
 
-        $view = new View("user-setting");
+        $view = new View("userSetting");
         $view->assign("user", $user);
         $view->assign("isConnected", $isConnected);
     }

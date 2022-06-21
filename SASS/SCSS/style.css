@@ -652,6 +652,74 @@ body {
 .btn-switch > input:checked ~ .slider:before {
   margin-left: 25px;
 }
+.btn-form {
+  padding: 10px 25px;
+  border: none;
+  border-radius: 25px;
+  text-transform: uppercase;
+  font-weight: bold;
+  transition: 0.3s;
+  cursor: pointer;
+}
+.btn-form:hover {
+  transition: 0.3s;
+}
+.btn-form-validate {
+  margin: 0 30px 0 10px;
+  background: #35be49;
+  color: #fff;
+  transition: 0.3s;
+}
+.btn-form-validate:hover {
+  background: #259736;
+  transition: 0.3s;
+}
+.btn-form-cancel {
+  background: none;
+  color: #988F8F;
+  transition: 0.3s;
+}
+.btn-form-cancel:hover {
+  color: #716767;
+  transition: 0.3s;
+}
+.btn-switch {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  width: 55px;
+  height: 30px;
+  background: #ccc;
+  border-radius: 15px;
+  cursor: pointer;
+}
+.btn-switch > input {
+  display: none;
+}
+.btn-switch > .slider {
+  position: absolute;
+  width: 45px;
+  height: 20px;
+  padding: 5px;
+  background-color: #ccc;
+  transition: 0.3s;
+}
+.btn-switch > .slider:before {
+  content: "";
+  position: absolute;
+  top: 5;
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border-radius: 100%;
+  transition: 0.3s;
+}
+.btn-switch > input:checked ~ .slider {
+  background: #22a6b3 !important;
+}
+.btn-switch > input:checked ~ .slider:before {
+  margin-left: 25px;
+}
 
 .opened {
   text-decoration: underline !important;
@@ -1094,10 +1162,10 @@ body {
   flex-direction: column;
   width: 30rem;
   margin-left: 50px;
-  margin-top: 50px;
 }
-.form .formSetting .field {
-  margin: 5px;
+
+.formSetting .field {
+  margin: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1923,5 +1991,4 @@ nav > ul > .bottom,
 .keyData .keyDataChild .neutre {
   background-color: #272B40;
 }
-
 /*# sourceMappingURL=style.css.map */

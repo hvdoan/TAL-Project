@@ -30,6 +30,10 @@
     controller: user
     action: pwdforget
 
+/reset-password:
+    controller: user
+    action: pwdReset
+
 /activation:
     controller: user
     action: activatedaccount
@@ -37,8 +41,6 @@
 /user-setting:
   controller: user
   action: userSetting
-  security:
-       - admin
 
 /dashboard:
     controller: admin
