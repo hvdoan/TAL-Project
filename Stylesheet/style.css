@@ -1840,4 +1840,88 @@ nav > ul > .bottom,
   border-radius: 100%;
 }
 
+.statistics {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  row-gap: 2em;
+  width: 100%;
+  padding: 2%;
+  box-sizing: border-box;
+}
+.statistics > .odd {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  width: 100%;
+}
+.statistics > .even {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 2em;
+  width: 100%;
+}
+.statistics > .even > .medium {
+  height: 100%;
+  flex-grow: 2;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.statistics > .even > .small {
+  height: 100%;
+  flex-grow: 1;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+#userCreationChartDiv {
+  width: 100%;
+  height: 450px;
+}
+
+.keyData {
+  display: flex;
+  padding: 10px;
+  margin: 2%;
+  background-color: #fff;
+  border-radius: 10px;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 120px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0 2px 8px 0;
+  font-family: "Jaldi", sans-serif;
+}
+.keyData .keyDataChild {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 2.5rem;
+}
+.keyData .keyDataChild .label {
+  font-size: 1.4rem;
+}
+.keyData .keyDataChild .keyDataChildPercent {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  padding: 0 10px;
+  border-radius: 5px;
+}
+.keyData .keyDataChild .keyDataChildValue {
+  font-weight: bold;
+}
+.keyData .keyDataChild .positif {
+  background-color: #259736;
+}
+.keyData .keyDataChild .negatif {
+  background-color: #AD4E47;
+}
+.keyData .keyDataChild .neutre {
+  background-color: #272B40;
+}
+
 /*# sourceMappingURL=style.css.map */

@@ -11,6 +11,7 @@ use App\Model\Page;
 use App\Model\Permission;
 use App\Model\Role;
 use App\Model\Tag;
+use App\Model\TotalVisitor;
 use App\Model\User as UserModel;
 use App\Model\Warning;
 use DateTime;
@@ -28,9 +29,54 @@ class Admin
 
         /* Display users HTML Structure */
 		if(!Verificator::checkPageAccess($_SESSION["permission"], "ADMIN_ACCESS"))
-			header("Location: /home");
+			header("Location: /dashboard");
+		
+		$user = new UserModel();
+		$users = $user->select(["id", "creationDate"], []);
 
-        $view = new View("home", "back");
+        $RecentUsers = [];
+        foreach ($users as $item) {
+            if ($item['creationDate'] > date("Y-m-d", strtotime('-7 days'))) {
+                $RecentUsers[] = $item;
+            }
+        }
+
+        $percentUsers = round(count($RecentUsers) * 100 / count($users),2);
+
+        $totalVisitor = new TotalVisitor();
+        $current_time=time();
+        $timeout = $current_time - (60);
+
+        $VisitorParams = $totalVisitor->select(['id'], ['session' => session_id()]);
+        if (count($VisitorParams) != 0) {
+            $totalVisitor = $totalVisitor->setId(intval($VisitorParams[0]['id'], 10));
+        }
+
+        $totalVisitor->setSession(session_id());
+        $totalVisitor->setTime($current_time);
+        $totalVisitor->save();
+
+        $totalVisitor = $totalVisitor->select(['session, time'], []);
+        $totalVisitorActually = [];
+        foreach ($totalVisitor as $item) {
+            if ($item['time'] >= $timeout) {
+                $totalVisitorActually[] = $item;
+            }
+        }
+        $RecentTotalUser = [];
+        foreach ($totalVisitor as $item) {
+            if ($item['time'] > strtotime(date("Y-m-d", strtotime('-7 days')))) {
+                $RecentTotalUser[] = $item;
+            }
+        }
+        $percentTotalUser = round(count($RecentTotalUser) * 100 / count($totalVisitor),2);
+
+        $view = new View("dashboard", "back");
+	    $view->assign("users", $users);
+	    $view->assign("totalVisitor", count($totalVisitor));
+	    $view->assign("totalVisitorActually", count($totalVisitorActually));
+	    $view->assign("percentUsers", $percentUsers);
+	    $view->assign("percentTotalUser", $percentTotalUser);
     }
 
 	public function configuration()
