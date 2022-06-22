@@ -6,6 +6,7 @@ use App\Core\Verificator;
 use App\Core\View;
 use App\Model\Action;
 use App\Model\Forum;
+use App\Model\Log;
 use App\Model\Message;
 use App\Model\Page;
 use App\Model\Permission;
@@ -76,6 +77,11 @@ class Admin
         $messageList = $message->select([DBPREFIXE."Message.id", DBPREFIXE."User.firstname", DBPREFIXE."User.lastname", "idForum", "idMessage", "content", DBPREFIXE."Message.creationDate", "updateDate"], [],
             ' LEFT JOIN '. DBPREFIXE .'User ON '. DBPREFIXE .'Message.idUser = '. DBPREFIXE .'User.id ORDER BY creationDate DESC LIMIT 5');
 
+        $log = new Log();
+        $logList = $log->select([DBPREFIXE."Log.id", DBPREFIXE."User.lastname", DBPREFIXE."User.firstname", "time"], [],
+            ' LEFT JOIN '. DBPREFIXE .'User ON '. DBPREFIXE .'Log.idUser = '. DBPREFIXE .'User.id ORDER BY time DESC LIMIT 5');
+
+
 
         $view = new View("dashboard", "back");
 	    $view->assign("users", $users);
@@ -84,6 +90,7 @@ class Admin
 	    $view->assign("percentUsers", $percentUsers);
 	    $view->assign("percentTotalUser", $percentTotalUser);
 	    $view->assign("messageList", $messageList);
+	    $view->assign("logList", $logList);
     }
 
 	public function configuration()

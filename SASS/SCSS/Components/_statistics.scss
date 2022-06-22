@@ -47,7 +47,7 @@
 		box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 	}
 
-	#lastMessage {
+	#lastMessage, #logsLogin {
 
 		h3 {
 			margin: 0;
@@ -68,14 +68,6 @@
 
 			td, th {
 				padding: 5px;
-			}
-
-			.suppression {
-				padding: 5px 20px;
-				background-color: darkred;
-				border-radius: 5px;
-				color: $white;
-				cursor: pointer;
 			}
 		}
 	}

@@ -61,13 +61,30 @@
                         <td><?php echo $message['firstname'] . " "; echo $message['lastname'] ?></td>
                         <td><?php echo $message['content'] ?></td>
                         <td><?php echo date('d/m/Y',strtotime($message['creationDate'])) ?></td>
-                        <td><a class="suppression">Supprimer</a></td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
-		<div class="small"></div>
+		<div id="logsLogin" class="small">
+            <h3>Logs connexions</h3>
+            <table>
+                <thead>
+                <tr>
+                    <th>Utilisateur</th>
+                    <th>Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($this->data['logList'] as $log) : ?>
+                    <tr>
+                        <td><?php echo $log['firstname'] . " "; echo $log['lastname'] ?></td>
+                        <td><?php echo date('d/m/Y - h:i',$log['time']) ?></td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
 		
 	</div>
 	

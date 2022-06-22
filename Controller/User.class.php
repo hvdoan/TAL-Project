@@ -9,6 +9,7 @@ use App\Core\Sql;
 use App\Core\Verificator;
 use App\Core\View;
 use App\Model\Action;
+use App\Model\Log;
 use App\Model\Permission;
 use App\Model\Role;
 use App\Model\User as UserModel;
@@ -77,7 +78,14 @@ class User{
                         setcookie("token", $user->getToken(), time() + (60 * 15), "", "", true);
 
 						$user->save();
-						header("Location: /dashboard");
+
+                        $logs = new Log();
+                        $logs->setIdUser($userLoggedIn[0]["id"]);
+                        $logs->setAction('login');
+                        $logs->setTime();
+
+                        $logs->save();
+                        header("Location: /dashboard");
 					}else{
 						Notification::CreateNotification("error", 'Compte non vérifié');
 					}

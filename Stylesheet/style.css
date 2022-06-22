@@ -1878,30 +1878,23 @@ nav > ul > .bottom,
   border-radius: 10px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
-.statistics #lastMessage h3 {
+.statistics #lastMessage h3, .statistics #logsLogin h3 {
   margin: 0;
   padding-left: 20px;
   padding-top: 10px;
   font-size: 1.5rem;
   border-bottom: 1px solid lightgray;
 }
-.statistics #lastMessage > table {
+.statistics #lastMessage > table, .statistics #logsLogin > table {
   width: 100%;
   padding: 10px 20px 20px;
 }
-.statistics #lastMessage > table thead {
+.statistics #lastMessage > table thead, .statistics #logsLogin > table thead {
   text-align: left;
   font-size: 1.3rem;
 }
-.statistics #lastMessage > table td, .statistics #lastMessage > table th {
+.statistics #lastMessage > table td, .statistics #lastMessage > table th, .statistics #logsLogin > table td, .statistics #logsLogin > table th {
   padding: 5px;
-}
-.statistics #lastMessage > table .suppression {
-  padding: 5px 20px;
-  background-color: darkred;
-  border-radius: 5px;
-  color: #fff;
-  cursor: pointer;
 }
 .statistics #userCreationChartDiv {
   width: 100%;
