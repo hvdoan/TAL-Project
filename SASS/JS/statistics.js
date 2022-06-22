@@ -103,6 +103,17 @@ function loadUserByCreation(users){
 				maxTooltipDistance: 0
 			})
 		);
+
+		chart.children.unshift(am5.Label.new(root, {
+			text: "Evolution du nombre d'utilisateurs inscrits",
+			fontSize: 25,
+			fontWeight: "400",
+			textAlign: "center",
+			x: am5.percent(50),
+			centerX: am5.percent(50),
+			paddingTop: 0,
+			paddingBottom: 20
+		}));
 		
 		let data = [];
 		for(let i = 0; i < users.length; i++){

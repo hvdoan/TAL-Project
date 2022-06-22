@@ -1846,6 +1846,7 @@ nav > ul > .bottom,
   justify-content: space-between;
   align-items: center;
   row-gap: 2em;
+  font-family: "Jaldi", sans-serif;
   width: 100%;
   padding: 2%;
   box-sizing: border-box;
@@ -1877,8 +1878,32 @@ nav > ul > .bottom,
   border-radius: 10px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
-
-#userCreationChartDiv {
+.statistics #lastMessage h3 {
+  margin: 0;
+  padding-left: 20px;
+  padding-top: 10px;
+  font-size: 1.5rem;
+  border-bottom: 1px solid lightgray;
+}
+.statistics #lastMessage > table {
+  width: 100%;
+  padding: 10px 20px 20px;
+}
+.statistics #lastMessage > table thead {
+  text-align: left;
+  font-size: 1.3rem;
+}
+.statistics #lastMessage > table td, .statistics #lastMessage > table th {
+  padding: 5px;
+}
+.statistics #lastMessage > table .suppression {
+  padding: 5px 20px;
+  background-color: darkred;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+}
+.statistics #userCreationChartDiv {
   width: 100%;
   height: 450px;
 }

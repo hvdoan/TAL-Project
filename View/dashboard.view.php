@@ -10,7 +10,6 @@
 	echo "let javascript_array = ". $js_array . ";\n";
 	?>
 	window.addEventListener("load", loadUserByCreation(javascript_array));
-	window.addEventListener("load", loadTotalUserByCreation(javascript_array));
 </script>
 
 <div class="keyData">
@@ -46,8 +45,29 @@
 	
 	<div class="even">
 		
-		<div id="userCreationChartDiv2" class="medium" style="height: 300px"></div>
-		<div class="small" style="height: 300px"></div>
+		<div id="lastMessage" class="medium">
+            <h3>Derniers commentaires</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Utilisateur</th>
+                        <th>Message</th>
+                        <th>Date de création</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($this->data['messageList'] as $message) : ?>
+                    <tr>
+                        <td><?php echo $message['firstname'] . " "; echo $message['lastname'] ?></td>
+                        <td><?php echo $message['content'] ?></td>
+                        <td><?php echo date('d/m/Y',strtotime($message['creationDate'])) ?></td>
+                        <td><a class="suppression">Supprimer</a></td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+		<div class="small"></div>
 		
 	</div>
 	

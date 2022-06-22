@@ -45,7 +45,7 @@ class Admin
 
         $totalVisitor = new TotalVisitor();
         $current_time=time();
-        $timeout = $current_time - (60);
+        $timeout = $current_time - (900);
 
         $VisitorParams = $totalVisitor->select(['id'], ['session' => session_id()]);
         if (count($VisitorParams) != 0) {
@@ -71,12 +71,19 @@ class Admin
         }
         $percentTotalUser = round(count($RecentTotalUser) * 100 / count($totalVisitor),2);
 
+        // Gestion derniers messages
+        $message = new Message();
+        $messageList = $message->select([DBPREFIXE."Message.id", DBPREFIXE."User.firstname", DBPREFIXE."User.lastname", "idForum", "idMessage", "content", DBPREFIXE."Message.creationDate", "updateDate"], [],
+            ' LEFT JOIN '. DBPREFIXE .'User ON '. DBPREFIXE .'Message.idUser = '. DBPREFIXE .'User.id ORDER BY creationDate DESC LIMIT 5');
+
+
         $view = new View("dashboard", "back");
 	    $view->assign("users", $users);
 	    $view->assign("totalVisitor", count($totalVisitor));
 	    $view->assign("totalVisitorActually", count($totalVisitorActually));
 	    $view->assign("percentUsers", $percentUsers);
 	    $view->assign("percentTotalUser", $percentTotalUser);
+	    $view->assign("messageList", $messageList);
     }
 
 	public function configuration()
