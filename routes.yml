@@ -118,4 +118,6 @@
     controller: search
     action: search
 
-/hugo:
+/notification:
+    controller: notification
+    action: display
