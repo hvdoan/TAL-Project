@@ -3,6 +3,7 @@
 namespace App\Core;
 
 use App\Controller\User;
+use function App\Controller\is_in_array;
 
 
 class Verificator
@@ -92,8 +93,27 @@ class Verificator
 		}
 	}
 
-	public static function checkPageAccess($userAutorisations, $permissionNeeded)
+	public static function checkPageAccess($userAutorisations, $permissionNeeded): bool
 	{
 		return in_array($permissionNeeded, $userAutorisations);
+	}
+	
+	public static function is_in_array($array, $key, $key_value): bool
+	{
+		$within_array = false;
+		foreach( $array as $k=>$v ){
+			if( is_array($v) ){
+				$within_array = self::is_in_array($v, $key, $key_value);
+				if($within_array){
+					break;
+				}
+			} else {
+				if( $v == $key_value && $k == $key ){
+					$within_array = true;
+					break;
+				}
+			}
+		}
+		return $within_array;
 	}
 }

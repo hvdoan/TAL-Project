@@ -273,6 +273,7 @@ class User extends Sql
                 "classForm"=>"",
                 "classSubmit"=>"submit",
                 "title"=>"Connexion",
+                "pwdForget"=>true
             ],
             'inputs'=>[
                 "email"=>[
@@ -304,6 +305,7 @@ class User extends Sql
                 "action"=>"",
                 "submit"=>"Enregistrer",
                 "classForm"=>"formSetting",
+                "classPartial"=>false,
                 "classSubmit"=>"btn btn-validate",
                 "title"=>"",
             ],
@@ -351,6 +353,66 @@ class User extends Sql
                     "id"=>"pwdConfirmForm",
                     "error"=>"Votre nouveau mot de passe n'est pas valide",
                 ],
+            ]
+        ];
+    }
+  
+    public function getForgotPasswordForm(): array
+    {
+        return [
+            "config"=>[
+                "method"=>"POST",
+                "action"=>"",
+                "submit"=>"M'envoyer un mail",
+                "classForm"=>"form",
+                "classSubmit"=>"submit",
+                "title"=>"Récupération du compte",
+            ],
+            'inputs'=>[
+                "email"=>[
+                    "type"=>"email",
+                    "label"=>"Email",
+                    "placeholder"=>"Votre email ...",
+                    "required"=>true,
+                    "class"=>"inputForm",
+                    "id"=>"emailForm",
+                    "error"=>"Email incorrect"
+                ]
+            ]
+        ];
+    }
+
+    public function getResetPassword(): array
+    {
+        return [
+            "config"=>[
+                "method"=>"POST",
+                "action"=>"",
+                "submit"=>"Changer mon mot de passe",
+                "classForm"=>"form",
+                "classSubmit"=>"submit",
+                "title"=>"Changement mot de passe",
+            ],
+            'inputs'=>[
+                "password"=>[
+                    "type"=>"password",
+                    "label"=>"Mot de passe",
+                    "placeholder"=>"Votre mot de passe ...",
+                    "required"=>true,
+                    "class"=>"inputForm",
+                    "id"=>"pwdForm",
+                    "error"=>"Votre mot de passe doit faire au min 8 caractères avec majuscule, minuscules et des chiffres",
+                ],
+                "passwordConfirm"=>[
+                    "type"=>"password",
+                    "label"=>"Confirmer Mot de passe",
+                    "placeholder"=>"Confirmation ...",
+                    "required"=>true,
+                    "class"=>"inputForm",
+                    "id"=>"pwdConfirmForm",
+                    "confirm"=>"password",
+                    "error"=>"Votre mot de passe de confirmation ne correspond pas",
+                ]
             ]
         ];
     }

@@ -26,6 +26,34 @@ function displayForumFront(idForum)
 }
 
 /**************************************************
+ * AJAX : OPEN FORUM FORM
+ ***************************************************/
+function openForumFormFront(id = "")
+{
+	const requestType = "openFormFront";
+	
+	const request = new XMLHttpRequest();
+	request.open('POST', '/forum-list');
+	
+	request.onreadystatechange = function()
+	{
+		if(request.readyState === 4)
+		{
+			$("#ctnForumFormFront").html(request.responseText);
+			$("#ctnForumFormFront").css("width", "100%");
+			$("#ctnForumFormFront").css("height", "100%");
+			$("#input-title").focus();
+			console.log("AJAX : request open form completed");
+		}
+	};
+	
+	request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	const body = `requestType=${requestType}&forumId=${id}`;
+	
+	request.send(body);
+}
+
+/**************************************************
  * AJAX : INSERT FORUM FRONT
  ***************************************************/
 function insertForumFront(data)
@@ -38,16 +66,13 @@ function insertForumFront(data)
 	const tokenForm    = $('#tokenForm').val();
 	
 	const request = new XMLHttpRequest();
-	request.open('POST', '/forum');
+	request.open('POST', '/forum-list');
 	
 	request.onreadystatechange = function()
 	{
 		if(request.readyState === 4)
 		{
-			if (request.responseText === "login")
-				window.location.href = "/login";
-			else
-				window.location.href = "/forum";
+			window.location.href = "/forum-list";
 		}
 	};
 	
@@ -63,17 +88,11 @@ function insertForumFront(data)
 function insertMessageFront(idForum, idMessage)
 {
 	const requestType      = "insertMessageFront";
-	const messageIdUser    = $('#input-idUser').val();
-	const messageIdForum   = $('#input-idForum').val();
-	const messageIdMessage = $('#input-idMessage').val();
-	const messageContent   = $('#input-content').val();
-	const tokenForm        = $('#tokenForm').val();
-	console.log(messageIdUser);
-	console.log(messageIdForum);
-	console.log(messageIdMessage);
-	console.log(messageContent);
-	console.log(idMessage);
-	
+	const messageIdUser    = $('#input-idUser' + idMessage).val();
+	const messageIdForum   = $('#input-idForum' + idMessage).val();
+	const messageIdMessage = $('#input-idMessage' + idMessage).val();
+	const messageContent   = $('#input-content' + idMessage).val();
+	const tokenForm        = $('#tokenForm' + idMessage).val();
 	
 	const request = new XMLHttpRequest();
 	request.open('POST', '/forum?forum=' + idForum);
@@ -82,23 +101,8 @@ function insertMessageFront(idForum, idMessage)
 	{
 		if(request.readyState === 4)
 		{
-			closeForumForm();
+			closeMessageForm();
 			displayForumFront(idForum);
-			
-			if(document.getElementById(request.responseText) !== undefined){
-				// console.log($('#message' + request.responseText).innerHTML);
-				// $('#message' + request.responseText).scrollIntoView({behavior: "smooth"});
-				// document.querySelector('#message' + request.responseText).scrollIntoView({behavior: "smooth"});
-				let a = $('#' + request.responseText);
-				console.log(a);
-				$('html, body').animate({
-					scroll: a.offset()
-				});
-			}
-			
-			// let divNumber = request.responseText.toString();
-			// console.log('message' + divNumber);
-			// document.getElementById('message' + divNumber).scrollIntoView({behavior: "smooth"});
 		}
 	};
 	
@@ -106,69 +110,17 @@ function insertMessageFront(idForum, idMessage)
 	const body = `requestType=${requestType}&tokenForm=${tokenForm}&messageIdUser=${messageIdUser}&messageIdForum=${messageIdForum}&messageIdMessage=${messageIdMessage}&messageContent=${messageContent}`;
 	
 	request.send(body);
-	return true;
 }
-
 
 /**************************************************
- * AJAX : INSERT MESSAGE FRONT
+ * AJAX : OPEN ANSWER FORM
  ***************************************************/
-function insertAnswerFront(idForum)
-{
-	const requestType      = "insertAnswerFront";
-	const messageIdUser    = $('#input-idUser').val();
-	const messageIdForum   = $('#input-idForum').val();
-	const messageIdMessage = $('#input-idMessage').val();
-	const messageContent   = $('#input-content').val();
-	const tokenForm        = $('#tokenForm').val();
-	console.log(messageIdUser);
-	console.log(messageIdForum);
-	console.log(messageIdMessage);
-	console.log(messageContent);
-	
-	
-	const request = new XMLHttpRequest();
-	request.open('POST', '/forum?forum=' + idForum);
-	
-	request.onreadystatechange = function()
-	{
-		if(request.readyState === 4)
-		{
-			closeForumForm();
-			displayForumFront(idForum);
-			
-			if(document.getElementById(request.responseText) !== undefined){
-				// console.log($('#message' + request.responseText).innerHTML);
-				// $('#message' + request.responseText).scrollIntoView({behavior: "smooth"});
-				// document.querySelector('#message' + request.responseText).scrollIntoView({behavior: "smooth"});
-				let a = $('#' + request.responseText);
-				console.log(a);
-				$('html, body').animate({
-					scroll: a.offset()
-				});
-			}
-			
-			// let divNumber = request.responseText.toString();
-			// console.log('message' + divNumber);
-			// document.getElementById('message' + divNumber).scrollIntoView({behavior: "smooth"});
-		}
-	};
-	
-	request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	const body = `requestType=${requestType}&tokenForm=${tokenForm}&messageIdUser=${messageIdUser}&messageIdForum=${messageIdForum}&messageIdMessage=${messageIdMessage}&messageContent=${messageContent}`;
-	
-	request.send(body);
-	return true;
-}
-
-
-
 function insertAnAnswer(idForum, idMessage){
 	let imgWarning = document.getElementById('imgWarning' + idMessage);
-	console.log(imgWarning);
 	if($('#divInsertAnswer' + idMessage).hasClass('hidden')){
 		$('#divInsertAnswer' + idMessage).removeClass("hidden");
 		imgWarning.style.bottom = "85px";
+		$("#input-content" + idMessage).focus();
 	}else{
 		$('#divInsertAnswer' + idMessage).addClass("hidden");
 		imgWarning.style.bottom = "5px";
@@ -218,6 +170,7 @@ function openForumFrontForm(idForum)
 				$("#ctnForumFrontForm").html(request.responseText);
 				$("#ctnForumFrontForm").css("width", "100%");
 				$("#ctnForumFrontForm").css("height", "100%");
+				$("#input-content0").focus();
 				console.log("AJAX : request open form completed");
 		}
 	};
@@ -230,11 +183,21 @@ function openForumFrontForm(idForum)
 }
 
 /**************************************************
- * CLOSE FORUM FORM
+ * CLOSE MESSAGE FORM
  ***************************************************/
 function closeMessageForm()
 {
 	$("#ctnForumFrontForm").html("");
 	$("#ctnForumFrontForm").css("width", "0");
 	$("#ctnForumFrontForm").css("height", "0");
+}
+
+/**************************************************
+ * CLOSE FORUM FORM
+ ***************************************************/
+function closeForumForm()
+{
+	$("#ctnForumFormFront").html("");
+	$("#ctnForumFormFront").css("width", "0");
+	$("#ctnForumFormFront").css("height", "0");
 }

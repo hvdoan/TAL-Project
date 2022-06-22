@@ -81,15 +81,18 @@ if(empty($routes[$uri]) || empty($routes[$uri]["controller"]) || empty($routes[$
 	else
 		$object = false;
 
-    if ($object != false)
+    if ($object)
     {
         $page = $object;
 
         $controller = new Main();
         $controller->generic($page->getContent());
     }
-    else
-        die("Erreur 404");
+    else {
+        http_response_code(404);
+        include('View/404.view.php');
+        die();
+    }
 }
 else
 {
