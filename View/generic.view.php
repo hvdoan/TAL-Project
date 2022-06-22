@@ -1,5 +1,5 @@
 <section class="page">
-    <div id="editorjs"></div>
+    <div id="editorjs" class="editorjs editorjs-display"></div>
 </section>
 
 <script src="../SASS/JS/crudPage.js"></script>

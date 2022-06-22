@@ -28,7 +28,6 @@ function displayPage()
 
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     const body = `requestType=${requestType}`;
-
     request.send(body);
 }
 
@@ -51,8 +50,10 @@ function insertPage(data)
         {
             if (request.responseText === "login")
                 window.location.href = "/login";
-            else
+            else if(request.responseText === "success")
                 window.location.href = "/page-management";
+            else if(request.responseText === "error")
+                displayNotification();
         }
     };
 
@@ -81,8 +82,10 @@ function updatePage(pageId, data)
         {
             if (request.responseText === "login")
                 window.location.href = "/login";
-            else
+            else if(request.responseText === "success")
                 window.location.href = "/page-management";
+            else if(request.responseText === "error")
+                displayNotification();
         }
     };
 
@@ -99,7 +102,7 @@ function deletePage()
 {
     const requestType   = "delete";
     let pageList        = $(".idPage");
-    let pageUriList    = [];
+    let pageUriList     = [];
     let pageIdList      = [];
 
     for (let i = 0; i < pageList.length; i++)

@@ -1,7 +1,7 @@
 <?php
 
 $response = [
-    "success" => 1,
+    "success" => 0,
     "file" => [
         "url" => ""
     ]

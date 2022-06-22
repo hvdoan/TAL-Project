@@ -105,6 +105,8 @@
                         <?php endif; ?>
                     </div>
                 </div>
+
+                <div id="alert"></div>
 			</header>
 
 			<?php include "View/" . $this->view . ".view.php"; ?>
