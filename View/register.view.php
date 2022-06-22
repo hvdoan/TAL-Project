@@ -1,9 +1,11 @@
 
 <style>
 
-    .form {
-        margin: 50px auto;
+    form {
+        margin: 10vh auto 10vh;
     }
+
+
 
 
 </style>
