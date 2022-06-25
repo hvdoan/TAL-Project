@@ -1,11 +1,40 @@
 @use "../Abstracts" as *;
 
+.keyDataLabel {
+  display: flex;
+  margin: 0 2%;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 50px;
+  font-family: $jaldi;
+
+  & > div {
+    background-color: #dbdbdb;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    box-shadow: rgb(99 99 99 / 20%) 0 2px 8px 0;
+    flex: 1 1;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1rem;
+    cursor: pointer;
+  }
+
+  .activeKeyData {
+    background-color: $white;
+    font-weight: bold;
+  }
+}
+
 .keyData {
   display: flex;
-  padding: 10px;
-  margin: 2%;
+  padding: 20px 10px 10px;
+  margin: 0 2% 2%;
   background-color: $white;
-  border-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
   justify-content: space-evenly;
   align-items: center;
   height: 120px;

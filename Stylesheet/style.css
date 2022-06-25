@@ -468,10 +468,8 @@ flex-ai\:center {
 }
 
 body {
-  scrollbar-color: #3F445F #f1f1f1;
-  /* ascensseur bleu sur fond blanc */
-  scrollbar-size: 10px;
-  /* taille de l'ascenseur */
+  scrollbar-color: #3F445F #f1f1f1; /* ascensseur bleu sur fond blanc */
+  scrollbar-size: 10px; /* taille de l'ascenseur */
 }
 
 #page_creation > .form .url-ctn > .input-ctn > span {
@@ -722,18 +720,12 @@ body {
   color: #000;
   font-family: "Jaldi", sans-serif;
   cursor: pointer;
-  -webkit-touch-callout: none;
-  /* iOS Safari */
-  -webkit-user-select: none;
-  /* Safari */
-  -khtml-user-select: none;
-  /* Konqueror HTML */
-  -moz-user-select: none;
-  /* Old versions of Firefox */
-  -ms-user-select: none;
-  /* Internet Explorer/Edge */
-  user-select: none;
-  /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }
 .cards > div[type=donation]:hover {
   transform: scale(1.05);
@@ -765,18 +757,12 @@ body {
   color: #000;
   font-family: "Jaldi", sans-serif;
   cursor: pointer;
-  -webkit-touch-callout: none;
-  /* iOS Safari */
-  -webkit-user-select: none;
-  /* Safari */
-  -khtml-user-select: none;
-  /* Konqueror HTML */
-  -moz-user-select: none;
-  /* Old versions of Firefox */
-  -ms-user-select: none;
-  /* Internet Explorer/Edge */
-  user-select: none;
-  /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }
 .cards > div[type=forum]:hover {
   transform: scale(1.05);
@@ -1082,7 +1068,7 @@ body {
   width: 100%;
   margin: 10px 30px;
 }
-.form > .field-row > .field .row {
+.form > .field-row > .field > .row {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -1120,6 +1106,20 @@ body {
 .form > .field-row > .field > #select-ctn > select {
   width: fit-content;
   padding: 5px 10px;
+  background: #EDF0F2;
+  border: none;
+  color: #272B40;
+  font-family: "Jaldi", sans-serif;
+  text-transform: uppercase;
+}
+.form > .field-row > #select-ctn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.form > .field-row > #select-ctn > select {
+  width: fit-content;
+  padding: 5px 10px;
   cursor: pointer;
   background: #EDF0F2;
   border: none;
@@ -1127,7 +1127,7 @@ body {
   font-family: "Jaldi", sans-serif;
   text-transform: uppercase;
 }
-.form > .field-row .disabled {
+.form .disabled {
   background: #988F8F !important;
   color: #fff !important;
 }
@@ -1986,10 +1986,8 @@ nav > ul > .bottom,
   border-radius: 10px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
-.statistics #lastMessage h3, .statistics #logsLogin h3 {
-  margin: 0;
-  padding-left: 20px;
-  padding-top: 10px;
+.statistics #lastMessage div, .statistics #logsLogin div {
+  margin: 10px 20px 20px;
   font-size: 1.5rem;
   border-bottom: 1px solid lightgray;
 }
@@ -2009,12 +2007,39 @@ nav > ul > .bottom,
   height: 450px;
 }
 
+.keyDataLabel {
+  display: flex;
+  margin: 0 2%;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 50px;
+  font-family: "Jaldi", sans-serif;
+}
+.keyDataLabel > div {
+  background-color: #dbdbdb;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0 2px 8px 0;
+  flex: 1 1;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+.keyDataLabel .activeKeyData {
+  background-color: #fff;
+  font-weight: bold;
+}
+
 .keyData {
   display: flex;
-  padding: 10px;
-  margin: 2%;
+  padding: 20px 10px 10px;
+  margin: 0 2% 2%;
   background-color: #fff;
-  border-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
   justify-content: space-evenly;
   align-items: center;
   height: 120px;

@@ -3,89 +3,7 @@
 
 // window.onload = loadStatistics;
 
-function loadTotalUserByCreation(users){
-	am5.ready(function () {
-
-		// Create root and chart
-		let root = am5.Root.new("userCreationChartDiv2");
-
-		root.setThemes([
-			am5themes_Animated.new(root)
-		]);
-
-		let chart = root.container.children.push(
-			am5xy.XYChart.new(root, {
-				panY: false,
-				layout: root.verticalLayout,
-				maxTooltipDistance: 0
-			})
-		);
-
-		let data = [{
-			category: "Research",
-			value1: 1000,
-			value2: 588
-		}, {
-			category: "Marketing",
-			value1: 1200,
-			value2: 1800
-		}, {
-			category: "Sales",
-			value1: 850,
-			value2: 1230
-		}];
-
-		// Craete Y-axis
-		let yAxis = chart.yAxes.push(
-			am5xy.ValueAxis.new(root, {
-				renderer: am5xy.AxisRendererY.new(root, {
-				})
-			})
-		);
-
-		// Create X-Axis
-		var xAxis = chart.xAxes.push(
-			am5xy.CategoryAxis.new(root, {
-				maxDeviation: 0.2,
-				renderer: am5xy.AxisRendererX.new(root, {
-				}),
-				categoryField: "category"
-			})
-		);
-		xAxis.data.setAll(data);
-
-		// Create series
-		var series1 = chart.series.push(
-			am5xy.ColumnSeries.new(root, {
-				name: "Series",
-				xAxis: xAxis,
-				yAxis: yAxis,
-				valueYField: "value1",
-				categoryXField: "category",
-				tooltip: am5.Tooltip.new(root, {})
-			})
-		);
-		series1.data.setAll(data);
-
-		var series2 = chart.series.push(
-			am5xy.ColumnSeries.new(root, {
-				name: "Series",
-				xAxis: xAxis,
-				yAxis: yAxis,
-				valueYField: "value2",
-				categoryXField: "category"
-			})
-		);
-		series2.data.setAll(data);
-
-		// Add legend
-		var legend = chart.children.push(am5.Legend.new(root, {}));
-		legend.data.setAll(chart.series.values);
-
-	});
-}
-
-function loadUserByCreation(users){
+function loadUserByCreation(users, totalUsers){
 	
 	am5.ready(function (){
 		
@@ -103,17 +21,6 @@ function loadUserByCreation(users){
 				maxTooltipDistance: 0
 			})
 		);
-
-		chart.children.unshift(am5.Label.new(root, {
-			text: "Evolution du nombre d'utilisateurs inscrits",
-			fontSize: 25,
-			fontWeight: "400",
-			textAlign: "center",
-			x: am5.percent(50),
-			centerX: am5.percent(50),
-			paddingTop: 0,
-			paddingBottom: 20
-		}));
 		
 		let data = [];
 		for(let i = 0; i < users.length; i++){
@@ -123,7 +30,18 @@ function loadUserByCreation(users){
 			data.push({
 				date: creationDate.getTime(),
 				// value: users[i].id * 10
-				value: i
+				value: i,
+			})
+		}
+
+		for(let i = 0; i < totalUsers.length; i++){
+			//let creationDate = new Date(totalUsers[i].time);
+			// am5.time.add(creationDate, "day", 1);
+
+			data.push({
+				date: totalUsers[i].time * 1000,
+				// value: users[i].id * 10
+				value2: i
 			})
 		}
 		console.log(data);
@@ -168,6 +86,11 @@ function loadUserByCreation(users){
 					})
 				});
 			});
+
+			series.fills.template.setAll({
+				fillOpacity: 0.5,
+				visible: true
+			});
 			
 			series.strokes.template.set("strokeWidth", 2);
 			
@@ -175,8 +98,8 @@ function loadUserByCreation(users){
 			series.data.setAll(data);
 		}
 		
-		createSeries("Series", "value");
-		
+		createSeries("Utilisateurs inscrits", "value");
+		createSeries("Visiteurs", "value2");
 		// Add cursor
 		chart.set("cursor", am5xy.XYCursor.new(root, {
 			behavior: "zoomXY",

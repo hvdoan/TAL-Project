@@ -86,7 +86,7 @@ class Admin
 
         $view = new View("dashboard", "back");
 	    $view->assign("users", $users);
-	    $view->assign("totalVisitor", count($totalVisitor));
+	    $view->assign("totalVisitor", $totalVisitor);
 	    $view->assign("totalVisitorActually", count($totalVisitorActually));
 	    $view->assign("percentUsers", $percentUsers);
 	    $view->assign("percentTotalUser", $percentTotalUser);

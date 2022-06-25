@@ -32,7 +32,7 @@
     }
 </style>
 
-<h1>Parametres utilisateur</h1>
+<h1>Paramètres utilisateur</h1>
 <div class="user">
     <?php if ($_SESSION['avatar'] != "") : ?>
         <img class="avatarParam" src="data:<?= mime_content_type($_SESSION['avatar']) ?>>;base64, <?= $_SESSION['avatar'] ?>">
