@@ -70,6 +70,7 @@
 						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/forum-management") ? "opened" : ""; ?>" href="/forum-management">Forums</a>
 						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/tag") ? "opened" : ""; ?>" href="/tag">Catégories</a>
 						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/message-management") ? "opened" : ""; ?>" href="/message-management">Commentaires</a>
+						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/ban-word-management") ? "opened" : ""; ?>" href="/ban-word-management">Restrictions mots</a>
 						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/warning-management") ? "opened" : ""; ?>" href="/warning-management">Signalements</a>
 					</ul>
 				</li>

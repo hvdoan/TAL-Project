@@ -6,6 +6,7 @@ use App\Core\Verificator;
 use App\Core\Notification;
 use App\Core\View;
 use App\Model\Action;
+use App\Model\BanWord;
 use App\Model\Forum;
 use App\Model\Log;
 use App\Model\Message;
@@ -1750,6 +1751,55 @@ class Admin
 			}
 		}
 	}
+
+    public function banWord()
+    {
+        $isConnected = Verificator::checkConnection();
+
+        /* Reload the login session time if connexion status is true */
+        if($isConnected)
+            Verificator::reloadConnection();
+
+        /* Check access permission */
+        if(!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_FORUM"))
+            header("Location: /dashboard");
+
+        $banWord = new BanWord();
+
+        if(isset($_POST["requestType"]) && $_POST["requestType"] == "display")
+        {
+            if(!$isConnected)
+                echo "login";
+            else
+            {
+                $BanWordList = $banWord->select(['id','message', 'creationDate', 'updateDate'], []);
+                print_r($BanWordList);
+                $htmlContent = "";
+
+                foreach($BanWordList as $word)
+                {
+                    $htmlContent .= "<tr>";
+                    $htmlContent .= "<td><input id='" . $word['id'] . "' class='idMessage' type='checkbox' name='" . $word["id"] . "'></td>";
+                    $htmlContent .= "<td>" . $word["id"] . "</td>";
+                    $htmlContent .= "<td>" . $word["message"] . "</td>";
+                    $htmlContent .= "<td>" . $word["creationDate"] . "</td>";
+                    $htmlContent .= "<td>" . $word["updateDate"] . "</td>";
+
+                    $htmlContent .= "<td><button class='btn btn-edit' onclick='openMessageForm(\"" . $word["id"] . "\")'>Editer</button></td>";
+                    $htmlContent .= "</tr>";
+                }
+
+                echo $htmlContent;
+            }
+        } else {
+            if(!$isConnected)
+                header("Location: /login");
+
+            if(!isset($_POST["requestType"])) {
+                $view = new View("banWord", "back");
+            }
+        }
+    }
 	
 	public function warningManagement()
 	{
