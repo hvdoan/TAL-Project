@@ -1779,18 +1779,123 @@ class Admin
                 foreach($BanWordList as $word)
                 {
                     $htmlContent .= "<tr>";
-                    $htmlContent .= "<td><input id='" . $word['id'] . "' class='idMessage' type='checkbox' name='" . $word["id"] . "'></td>";
+                    $htmlContent .= "<td><input id='" . $word['id'] . "' class='idBanWord' type='checkbox' name='" . $word["id"] . "'></td>";
                     $htmlContent .= "<td>" . $word["id"] . "</td>";
                     $htmlContent .= "<td>" . $word["message"] . "</td>";
                     $htmlContent .= "<td>" . $word["creationDate"] . "</td>";
                     $htmlContent .= "<td>" . $word["updateDate"] . "</td>";
 
-                    $htmlContent .= "<td><button class='btn btn-edit' onclick='openMessageForm(\"" . $word["id"] . "\")'>Editer</button></td>";
+                    $htmlContent .= "<td><button class='btn btn-edit' onclick='openBanWordForm(\"" . $word["id"] . "\")'>Editer</button></td>";
                     $htmlContent .= "</tr>";
                 }
 
                 echo $htmlContent;
             }
+        } else if((isset($_POST["requestType"]) ? $_POST["requestType"] == "insert" : false) &&
+            (isset($_POST["tokenForm"]) && isset($_SESSION["tokenForm"]) ? $_POST["tokenForm"] == $_SESSION["tokenForm"] : false))
+        {
+            if(!$isConnected)
+                echo "login";
+            else{
+                if( (isset($_POST["banWord"]) ? $_POST["banWord"] != "" : false)){
+                    $banWord->setMessage($_POST["banWord"]);
+                    $banWord->creationDate();
+                    $banWord->updateDate();
+                    $banWord->save();
+                }
+            }
+        } else if((isset($_POST["requestType"]) ? $_POST["requestType"] == "update" : false) &&
+            (isset($_POST["tokenForm"]) && isset($_SESSION["tokenForm"]) ? $_POST["tokenForm"] == $_SESSION["tokenForm"] : false))
+        {
+            if(!$isConnected)
+                echo "login";
+            else
+            {
+                if( (isset($_POST["banWord"]) ? $_POST["banWord"] != "" : false)){
+                    $object = $banWord->setId(intval($_POST["banWord"]));
+                    if($object)
+                        $banWord = $object;
+
+                    $banWord->setMessage($_POST["banWord"]);
+                    $banWord->updateDate();
+                    $banWord->save();
+                }
+            }
+        } else if((isset($_POST["requestType"]) && $_POST["requestType"] == "delete"))
+        {
+            if(!$isConnected)
+                echo "login";
+            else
+            {
+                if (isset($_POST["banWordIdList"]) && $_POST["banWordIdList"] != "") {
+                    /* Delete messages */
+                    $banWordIdList = explode(",", $_POST["banWordIdList"]);
+
+                    for ($i = 0; $i < count($banWordIdList); $i++) {
+                        /* Deletion of the message */
+                        $object = $banWord->setId($banWordIdList[$i]);
+                        if($object)
+                            $banWord = $object;
+
+                        $banWord->delete();
+                    }
+                }
+            }
+        } else if(isset($_POST["requestType"]) && $_POST["requestType"] == "openForm")
+        {
+            if(!$isConnected)
+                echo "login";
+            else
+            {
+                if(isset($_POST["banWordId"]) && $_POST["banWordId"] != ""){
+                    $object = $banWord->setId(intval($_POST["banWordId"]));
+                    if($object)
+                        $banWord = $object;
+                }
+
+                $htmlContent = "";
+
+                $token = md5(uniqid());
+                $_SESSION["tokenForm"] = $token;
+
+                $htmlContent .= "<form class='form'>";
+
+                // @CSRF
+                $htmlContent .= "<input id='tokenForm' type='hidden' name='tokenForm' value='" . $token . "'>";
+
+                if ($banWord->getId() != null){
+                    $htmlContent .= "<h1>Modification du mot : n°" . $banWord->getId() . "</h1>";
+                    $htmlContent .= "<div class='field'>";
+                    $htmlContent .= "<label>Mot</label>";
+                    $htmlContent .= "<input id='input-message' type='text' name='content' value='" . $banWord->getMessage(). "'>";
+                    $htmlContent .= "</div>";
+                    $htmlContent .= "<div class='section'>";
+                    $htmlContent .= "<input class='btn btn-delete' onclick='closeMessageForm()' type='button' value='Annuler'>";
+                }
+                else
+                {
+                    $htmlContent .= "<h1>Ajout d'un nouveau mot</h1>";
+                    $htmlContent .= "<div class='field'>";
+                    $htmlContent .= "<label>Mot</label>";
+                    $htmlContent .= "<input id='input-message' type='text' name='content'>";
+                    $htmlContent .= "</div>";
+                    $htmlContent .= "<div class='section'>";
+                    $htmlContent .= "<input class='btn btn-delete' onclick='closeMessageForm()' type='button' value='Annuler'>";
+                }
+
+                if($banWord->getId() != null)
+                {
+                    $htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $banWord->getId() . "'>";
+                    $htmlContent .= "<input class='btn btn-validate' onclick='updateBanWord()' type='button' value='Modifier'>";
+                }
+                else
+                    $htmlContent .= "<input class='btn btn-validate' onclick='insertBanWord()' type='button' value='Créer'>";
+
+                $htmlContent .= "</div>";
+            }
+            $htmlContent .= "</form>";
+            echo $htmlContent;
+
         } else {
             if(!$isConnected)
                 header("Location: /login");

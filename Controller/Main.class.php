@@ -412,21 +412,11 @@ class Main {
 					(isset($_POST["messageIdMessage"]) ? $_POST["messageIdMessage"] != "" : false) &&
 					(isset($_POST["messageContent"]) ? $_POST["messageContent"] != "" : false)){
 
-                $banWord = new BanWord();
-                $words = $banWord->select(['message'], []);
-
-                $listWords = [];
-                foreach ($words as $word) {
-                    $listWords[] .= $word['message'];
-                }
-
-                $newMsg = str_ireplace($listWords, "****", $_POST["messageContent"]);
-
 				/* Creation of a message for the front forum */
 				$message->setIdUser($_POST["messageIdUser"]);
 				$message->setIdForum($_POST["messageIdForum"]);
 				$message->setIdMessage($_POST["messageIdMessage"]);
-				$message->setContent($newMsg);
+				$message->setContent($_POST["messageContent"]);
 				$message->creationDate();
 				$message->updateDate();
 				$message->save();

@@ -2,8 +2,8 @@
     <h1>Restriction Mots</h1>
 
     <div class="ctn ctn-add">
-        <button id="add" class="btn btn-add" onclick="openMessageForm()" type="button" name="button">Nouveau</button>
-        <button id="delete" class="btn btn-delete" onclick="deleteMessage()" type="button" name="button">Supprimer</button>
+        <button id="add" class="btn btn-add" onclick="openBanWordForm()" type="button" name="button">Nouveau</button>
+        <button id="delete" class="btn btn-delete" onclick="deleteBanWord()" type="button" name="button">Supprimer</button>
     </div>
 
     <table id="banWordTable" class="stripe hover cell-border">

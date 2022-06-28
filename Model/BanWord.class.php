@@ -24,14 +24,6 @@ class BanWord extends Sql{
     }
 
     /**
-     * @param null $id
-     */
-    public function setId($id): void
-    {
-        $this->id = $id;
-    }
-
-    /**
      * @return null
      */
     public function getMessage()
@@ -56,11 +48,10 @@ class BanWord extends Sql{
     }
 
     /**
-     * @param null $creationDate
+     * @param string
      */
-    public function setCreationDate($creationDate): void
-    {
-        $this->creationDate = $creationDate;
+    public function creationDate(): void {
+        $this->creationDate = date("Y-m-d H:i:s");
     }
 
     /**
@@ -72,11 +63,10 @@ class BanWord extends Sql{
     }
 
     /**
-     * @param null $updateDate
+     * @param string
      */
-    public function setUpdateDate($updateDate): void
-    {
-        $this->updateDate = $updateDate;
+    public function updateDate(): void {
+        $this->updateDate = date("Y-m-d H:i:s");
     }
 
 }
