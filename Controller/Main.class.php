@@ -8,6 +8,8 @@ use App\Model\Donation;
 use App\Model\DonationTier;
 use App\Model\Forum;
 use App\Model\Message;
+use App\Model\Rate;
+use App\Model\Rating;
 use App\Model\Tag;
 use App\Model\User as UserModel;
 use App\Model\Warning;
@@ -504,6 +506,69 @@ class Main {
 				$view->assign("isConnected", $isConnected);
 			}
 		}
+	}
+	
+	public function rating()
+	{
+		/* Get the connexion status */
+		$isConnected = Verificator::checkConnection();
+		
+		if($isConnected){
+			Verificator::unsetSession();
+		}
+		
+		$rating = new Rate();
+		
+		if((isset($_POST["requestType"]) ? $_POST["requestType"] == "insertRating" : false) &&
+			(isset($_POST["tokenForm"]) && isset($_SESSION["tokenForm"]) ? $_POST["tokenForm"] == $_SESSION["tokenForm"] : false)){
+			
+			if( (isset($_POST["ratingIdUser"]) ? $_POST["ratingIdUser"] != "" : false) &&
+				(isset($_POST["ratingRate"]) ? $_POST["ratingRate"] != "" : false) &&
+				(isset($_POST["ratingDescription"]) ? $_POST["ratingDescription"] != "" : false)){
+				
+				/* Creation of a rating for the front forum */
+				$rating->setIdUser($_POST["ratingIdUser"]);
+				$rating->setRate($_POST["ratingRate"]);
+				$rating->setDescription($_POST["ratingDescription"]);
+				$rating->creationDate();
+				$rating->updateDate();
+				$rating->save();
+
+				$object = $rating->setId(intval($rating->getLastInsertId()));
+				if($object)
+					$rating = $object;
+			}
+		}else if(!isset($_POST["requestType"])){
+			
+			/* Reload the login session time if connexion status is true */
+			if($isConnected)
+				Verificator::reloadConnection();
+			
+			$view = new View("rating");
+			
+			$rating = $rating->select(["id", "idUser", "rate", "description", "creationDate", "updateDate"], [], " ORDER BY updateDate DESC LIMIT 3");
+			
+			$view->assign("rating", $rating);
+			$view->assign("isConnected", $isConnected);
+		}
+	}
+	
+	public function ratingList()
+	{
+		$view = new View("rating-list");
+		$rating	= new Rate();
+		
+		$rating = $rating->select(["id", "idUser", "rate", "description", "creationDate", "updateDate"], []);
+		
+		/* Get the connexion status */
+		$isConnected = Verificator::checkConnection();
+		/* Reload the login session time if connexion status is true */
+		if($isConnected)
+			Verificator::reloadConnection();
+		
+		$view->assign("rating", $rating);
+		$view->assign("isConnected", $isConnected);
+		
 	}
 
     public function donation()

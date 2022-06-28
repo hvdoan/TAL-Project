@@ -1,0 +1,21 @@
+@use "../Abstracts" as *;
+
+#addVote {
+
+}
+
+#addVote .pouce {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	gap: 4vw;
+
+	padding: 2%;
+	box-sizing: border-box;
+}
+
+.pouce img {
+	width: 10vw;
+	height: 10vw;
+	transform: rotateY(180deg);
+}
