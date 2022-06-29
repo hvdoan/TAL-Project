@@ -22,7 +22,7 @@
     </table>
 </section>
 
-<div id="ctnMessageForm"></div>
+<div id="ctnBanWordForm"></div>
 
 <script type="text/javascript">
     /**************************************************

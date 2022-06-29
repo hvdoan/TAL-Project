@@ -135,9 +135,9 @@ function openBanWordForm(id = "")
                 window.location.href = "/login";
             else
             {
-                $("#ctnMessageForm").html(request.responseText);
-                $("#ctnMessageForm").css("width", "100%");
-                $("#ctnMessageForm").css("height", "100%");
+                $("#ctnBanWordForm").html(request.responseText);
+                $("#ctnBanWordForm").css("width", "100%");
+                $("#ctnBanWordForm").css("height", "100%");
             }
         }
     };
@@ -146,4 +146,11 @@ function openBanWordForm(id = "")
     const body = `requestType=${requestType}&banWordId=${id}`;
 
     request.send(body);
+}
+
+function closeBanWordForm()
+{
+    $("#ctnBanWordForm").html("");
+    $("#ctnBanWordForm").css("width", "0");
+    $("#ctnBanWordForm").css("height", "0");
 }

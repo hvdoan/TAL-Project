@@ -1865,32 +1865,51 @@ class Admin
                 $htmlContent .= "<input id='tokenForm' type='hidden' name='tokenForm' value='" . $token . "'>";
 
                 if ($banWord->getId() != null){
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<div class='field'>";
                     $htmlContent .= "<h1>Modification du mot : n°" . $banWord->getId() . "</h1>";
-                    $htmlContent .= "<div class='field'>";
-                    $htmlContent .= "<label>Mot</label>";
-                    $htmlContent .= "<input id='input-message' type='text' name='content' value='" . $banWord->getMessage(). "'>";
                     $htmlContent .= "</div>";
-                    $htmlContent .= "<div class='section'>";
-                    $htmlContent .= "<input class='btn btn-delete' onclick='closeMessageForm()' type='button' value='Annuler'>";
-                }
-                else
-                {
-                    $htmlContent .= "<h1>Ajout d'un nouveau mot</h1>";
-                    $htmlContent .= "<div class='field'>";
-                    $htmlContent .= "<label>Mot</label>";
-                    $htmlContent .= "<input id='input-message' type='text' name='content'>";
                     $htmlContent .= "</div>";
-                    $htmlContent .= "<div class='section'>";
-                    $htmlContent .= "<input class='btn btn-delete' onclick='closeMessageForm()' type='button' value='Annuler'>";
-                }
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<hr>";
+                    $htmlContent .= "</div>";
 
-                if($banWord->getId() != null)
-                {
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<div class='field'>";
+                    $htmlContent .= "<label>Mot</label>";
+                    $htmlContent .= "<input id='input-message' class='input' type='text' name='content' value='" . $banWord->getMessage(). "'>";
+                    $htmlContent .= "</div>";
+                    $htmlContent .= "</div>";
+
+                    $htmlContent .= "<div class='field-row field-cta'>";
                     $htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $banWord->getId() . "'>";
-                    $htmlContent .= "<input class='btn btn-validate' onclick='updateBanWord()' type='button' value='Modifier'>";
+                    $htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeBanWordForm()' type='button' value='Annuler'>";
+                    $htmlContent .= "<input class='btn-form btn-form-validate' onclick='updateBanWord()' type='button' value='Modifier'>";
+                    $htmlContent .= "</div>";
                 }
                 else
-                    $htmlContent .= "<input class='btn btn-validate' onclick='insertBanWord()' type='button' value='Créer'>";
+                {
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<div class='field'>";
+                    $htmlContent .= "<h1>Ajout d'un mot</h1>";
+                    $htmlContent .= "</div>";
+                    $htmlContent .= "</div>";
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<hr>";
+                    $htmlContent .= "</div>";
+
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<div class='field'>";
+                    $htmlContent .= "<label>Mot</label>";
+                    $htmlContent .= "<input id='input-message' class='input' type='text' name='content'>";
+                    $htmlContent .= "</div>";
+                    $htmlContent .= "</div>";
+
+                    $htmlContent .= "<div class='field-row field-cta'>";
+                    $htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeBanWordForm()' type='button' value='Annuler'>";
+                    $htmlContent .= "<input class='btn-form btn-form-validate' onclick='insertBanWord()' type='button' value='Créer'>";
+                    $htmlContent .= "</div>";
+                }
 
                 $htmlContent .= "</div>";
             }
