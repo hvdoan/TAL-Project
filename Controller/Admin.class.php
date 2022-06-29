@@ -1811,8 +1811,8 @@ class Admin
                 echo "login";
             else
             {
-                if( (isset($_POST["banWord"]) ? $_POST["banWord"] != "" : false)){
-                    $object = $banWord->setId(intval($_POST["banWord"]));
+                if( (isset($_POST["banWordId"]) ? $_POST["banWordId"] != "" : false)){
+                    $object = $banWord->setId(intval($_POST["banWordId"]));
                     if($object)
                         $banWord = $object;
 
@@ -1838,6 +1838,7 @@ class Admin
                             $banWord = $object;
 
                         $banWord->delete();
+                        echo "good";
                     }
                 }
             }

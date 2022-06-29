@@ -58,7 +58,8 @@ function insertBanWord()
 function updateBanWord()
 {
     const requestType      = "update";
-    const banWordMessage   = $('#input-message').val();
+    const banWordId        = $('#input-id').val();
+    const banWord          = $('#input-message').val();
     const tokenForm        = $('#tokenForm').val();
 
     const request = new XMLHttpRequest();
@@ -71,13 +72,12 @@ function updateBanWord()
                 window.location.href = "/login";
             else
             {
-                displayMessage();
-                closeMessageForm();
+                window.location.href = "/ban-word-management";
             }
         }
     };
 
-    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');const body = `requestType=${requestType}&tokenForm=${tokenForm}&banWord=${banWordMessage}`;
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');const body = `requestType=${requestType}&tokenForm=${tokenForm}&banWordId=${banWordId}&banWord=${banWord}`;
     request.send(body);
 }
 
@@ -106,7 +106,7 @@ function deleteBanWord(){
                     if (request.responseText === "login")
                         window.location.href = "/login";
                     else
-                        displayMessage();
+                        window.location.href = "/ban-word-management";
                 }
             };
 
@@ -135,7 +135,6 @@ function openBanWordForm(id = "")
                 window.location.href = "/login";
             else
             {
-                console.log("AJAX : request open form completed");
                 $("#ctnMessageForm").html(request.responseText);
                 $("#ctnMessageForm").css("width", "100%");
                 $("#ctnMessageForm").css("height", "100%");

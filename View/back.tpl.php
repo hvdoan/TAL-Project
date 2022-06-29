@@ -64,7 +64,7 @@
 					</ul>
 				</li>
 				
-				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/forum-management" || $_SERVER["REQUEST_URI"] == "/tag" || $_SERVER["REQUEST_URI"] == "/message-management" || $_SERVER["REQUEST_URI"] == "/warning-management") ? "" : "close"; ?>">
+				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/forum-management" || $_SERVER["REQUEST_URI"] == "/tag" || $_SERVER["REQUEST_URI"] == "/message-management" || $_SERVER["REQUEST_URI"] == "/ban-word-management" || $_SERVER["REQUEST_URI"] == "/warning-management") ? "" : "close"; ?>">
 					<div class="nav-section-link"><i class="fa-solid fa-comments"></i>Modération<i class="fa-solid fa-angle-down"></i></div>
 					<ul>
 						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/forum-management") ? "opened" : ""; ?>" href="/forum-management">Forums</a>
