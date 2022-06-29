@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Core\Verificator;
 use App\Core\View;
+use App\Model\BanWord;
 use App\Model\Donation;
 use App\Model\DonationTier;
 use App\Model\Forum;
@@ -207,6 +208,13 @@ class Main {
 						if(!Verificator::is_in_array($warnings, "idMessage", $message["id"]))
 						{
 							$userMessage = new UserModel();
+                            $banWord = new BanWord();
+                            $words = $banWord->select(['message'], []);
+
+                            $listWords = [];
+                            foreach ($words as $word) {
+                                $listWords[] .= $word['message'];
+                            }
 						
 							$object = $userMessage->setId(intval($message["idUser"]));
 							if($object)
@@ -259,7 +267,8 @@ class Main {
 											$htmlContent .= "</div>";
 											
 											$htmlContent .= "<div class='messageContent'>";
-												$htmlContent .= "<p>" . $message["content"] . "</p>";
+                                                $newContent = str_ireplace($listWords, "****", $message["content"]);
+												$htmlContent .= "<p>" . $newContent . "</p>";
 											$htmlContent .= "</div>";
 										$htmlContent .= "</div>";
 										
@@ -402,7 +411,7 @@ class Main {
 					(isset($_POST["messageIdForum"]) ? $_POST["messageIdForum"] != "" : false) &&
 					(isset($_POST["messageIdMessage"]) ? $_POST["messageIdMessage"] != "" : false) &&
 					(isset($_POST["messageContent"]) ? $_POST["messageContent"] != "" : false)){
-				
+
 				/* Creation of a message for the front forum */
 				$message->setIdUser($_POST["messageIdUser"]);
 				$message->setIdForum($_POST["messageIdForum"]);

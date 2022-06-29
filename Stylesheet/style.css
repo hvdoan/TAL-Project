@@ -359,6 +359,23 @@ flex-ai\:center {
   transform: translate(-50%, -50%);
 }
 
+#ctnBanWordForm {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+#ctnBanWordForm > form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+}
+
 #ctnWarningForm {
   position: absolute;
   top: 50%;
@@ -468,10 +485,8 @@ flex-ai\:center {
 }
 
 body {
-  scrollbar-color: #3F445F #f1f1f1;
-  /* ascensseur bleu sur fond blanc */
-  scrollbar-size: 10px;
-  /* taille de l'ascenseur */
+  scrollbar-color: #3F445F #f1f1f1; /* ascensseur bleu sur fond blanc */
+  scrollbar-size: 10px; /* taille de l'ascenseur */
 }
 
 #page_creation > .form .url-ctn > .input-ctn > span {
@@ -722,18 +737,12 @@ body {
   color: #000;
   font-family: "Jaldi", sans-serif;
   cursor: pointer;
-  -webkit-touch-callout: none;
-  /* iOS Safari */
-  -webkit-user-select: none;
-  /* Safari */
-  -khtml-user-select: none;
-  /* Konqueror HTML */
-  -moz-user-select: none;
-  /* Old versions of Firefox */
-  -ms-user-select: none;
-  /* Internet Explorer/Edge */
-  user-select: none;
-  /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }
 .cards > div[type=donation]:hover {
   transform: scale(1.05);
@@ -765,18 +774,12 @@ body {
   color: #000;
   font-family: "Jaldi", sans-serif;
   cursor: pointer;
-  -webkit-touch-callout: none;
-  /* iOS Safari */
-  -webkit-user-select: none;
-  /* Safari */
-  -khtml-user-select: none;
-  /* Konqueror HTML */
-  -moz-user-select: none;
-  /* Old versions of Firefox */
-  -ms-user-select: none;
-  /* Internet Explorer/Edge */
-  user-select: none;
-  /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }
 .cards > div[type=forum]:hover {
   transform: scale(1.05);
@@ -1082,7 +1085,7 @@ body {
   width: 100%;
   margin: 10px 30px;
 }
-.form > .field-row > .field .row {
+.form > .field-row > .field > .row {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -1120,6 +1123,20 @@ body {
 .form > .field-row > .field > #select-ctn > select {
   width: fit-content;
   padding: 5px 10px;
+  background: #EDF0F2;
+  border: none;
+  color: #272B40;
+  font-family: "Jaldi", sans-serif;
+  text-transform: uppercase;
+}
+.form > .field-row > #select-ctn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.form > .field-row > #select-ctn > select {
+  width: fit-content;
+  padding: 5px 10px;
   cursor: pointer;
   background: #EDF0F2;
   border: none;
@@ -1127,7 +1144,7 @@ body {
   font-family: "Jaldi", sans-serif;
   text-transform: uppercase;
 }
-.form > .field-row .disabled {
+.form .disabled {
   background: #988F8F !important;
   color: #fff !important;
 }

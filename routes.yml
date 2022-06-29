@@ -88,6 +88,12 @@
   security:
     - admin
 
+/ban-word-management:
+  controller: admin
+  action: banWord
+  security:
+    - admin
+
 /message-management:
   controller: admin
   action: messageManagement
