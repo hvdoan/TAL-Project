@@ -81,7 +81,8 @@ class Mail
 		try
 		{
 			$this->email->send();
-		}
+            Logger::getInstance()->writeLogMailSend($this->email->Subject);
+        }
 		catch(Exception $e)
 		{
 			die("Erreur Mail : ".$e->getMessage());
