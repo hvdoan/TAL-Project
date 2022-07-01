@@ -123,7 +123,7 @@ class Admin
 
 		$user = new UserModel();
 		$role = new Role();
-		
+
 		/* Display users HTML Structure */
 		if(isset($_POST["requestType"]) && $_POST["requestType"] == "display")
         {

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Core\Logger;
 use App\Core\Verificator;
 use App\Core\View;
 use App\Model\Donation;
@@ -411,8 +412,10 @@ class Main {
 				$message->creationDate();
 				$message->updateDate();
 				$message->save();
-				
-				$object = $message->setId(intval($message->getLastInsertId()));
+
+                Logger::getInstance()->writeLogNewMessage($_POST["messageIdUser"], $_POST["messageContent"]);
+
+                $object = $message->setId(intval($message->getLastInsertId()));
 				if($object)
 					$message = $object;
 				echo $message->getUpdateDate();

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Core\CleanWords;
+use App\Core\Logger;
 use App\Core\Mail;
 use App\Core\Notification;
 use App\Core\Sql;
@@ -84,6 +85,7 @@ class User{
                         $logs->setTime();
 
                         $logs->save();
+                        Logger::getInstance()->writeLogLogin($user->getLastname(), $user->getFirstName(), $user->getId());
                         header("Location: /dashboard");
 					}else{
 						Notification::CreateNotification("error", 'Compte non vérifié');
@@ -144,8 +146,9 @@ class User{
 					$email->send();
 					
 					Notification::CreateNotification("success", "Inscription réussie, un email vient de vous etre envoyés");
-					//$_SESSION['flash']['success'] = 'Inscription réussie, un email vient de vous etre envoyés';
-					header('Location: /login');
+                    Logger::getInstance()->writeLogRegister($user->getLastname(), $user->getFirstName(), $user->getId());
+
+                    header('Location: /login');
 					exit();
 				}else{
 					$msg = "";
