@@ -182,6 +182,11 @@ class User{
 	
 	public function pwdforget()
 	{
+        $isConnected = Verificator::checkConnection();
+        /* Reload the login session time if connexion status is true else redirect to login */
+        if($isConnected)
+            header("Location: /home");
+
         $user = new UserModel();
 
         if(!empty($_POST)){
@@ -213,7 +218,8 @@ class User{
 
         $view = new View("forgot-password");
         $view->assign("user", $user);
-	}
+        $view->assign("isConnected", $isConnected);
+    }
 
     public function pwdReset()
     {
