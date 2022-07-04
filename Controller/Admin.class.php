@@ -1698,26 +1698,52 @@ class Admin
 				$htmlContent .= "<input id='tokenForm' type='hidden' name='tokenForm' value='" . $token . "'>";
 				
 				if ($message->getId() != null){
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<div class='field'>";
 					$htmlContent .= "<h1>Modification du message : n°" . $message->getId() . "</h1>";
-					$htmlContent .= "<div class='field'>";
-						$htmlContent .= "<label>Contenu</label>";
-						$htmlContent .= "<input id='input-content' type='text' name='content' value='" . $message->getContent() . "'>";
-						$htmlContent .= "<input id='input-idUser' type='hidden' name='idUser' value='" . $message->getIdUser() . "'>";
-						$htmlContent .= "<input id='input-idForum' type='hidden' name='idForum' value='" . $message->getIdForum() . "'>";
-						$htmlContent .= "<input id='input-idMessage' type='hidden' name='idMessage' value='" . $message->getIdMessage() . "'>";
+                    $htmlContent .= "</div>";
+                    $htmlContent .= "</div>";
+
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<hr>";
+                    $htmlContent .= "</div>";
+
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<div class='field'>";
+                    $htmlContent .= "<label>Contenu</label>";
+                    $htmlContent .= "<input id='input-content' class='input' type='text' name='content' value='" . $message->getContent() . "'>";
+                    $htmlContent .= "</div>";
+
+                    $htmlContent .= "<input id='input-idUser' type='hidden' name='idUser' value='" . $message->getIdUser() . "'>";
+                    $htmlContent .= "<input id='input-idForum' type='hidden' name='idForum' value='" . $message->getIdForum() . "'>";
+                    $htmlContent .= "<input id='input-idMessage' type='hidden' name='idMessage' value='" . $message->getIdMessage() . "'>";
 					$htmlContent .= "</div>";
-					$htmlContent .= "<div class='section'>";
-						$htmlContent .= "<input class='btn btn-delete' onclick='closeMessageForm()' type='button' value='Annuler'>";
+					$htmlContent .= "<div class='field-row field-cta'>";
+						$htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeMessageForm()' type='button' value='Annuler'>";
 				}
 				else
 				{
-					$htmlContent .= "<h1>Création d'un nouveau message</h1>";
-					$htmlContent .= "<div class='field'>";
-						$htmlContent .= "<label>Contenu du message</label>";
-						$htmlContent .= "<input id='input-content' type='text' name='content'>";
-					$htmlContent .= "</div>";
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<div class='field'>";
+                    $htmlContent .= "<h1>Création d'un nouveau message</h1>";
+                    $htmlContent .= "</div>";
+                    $htmlContent .= "</div>";
+
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<hr>";
+                    $htmlContent .= "</div>";
+
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<div class='field'>";
+                    $htmlContent .= "<label>Contenu du message</label>";
+                    $htmlContent .= "<input id='input-content' class='input' type='text' name='content'>";
+                    $htmlContent .= "</div>";
+
 					$htmlContent .= "<input id='input-idUser' type='hidden' name='idUser' value='" . $_SESSION['id'] . "'>";
 					$htmlContent .= "<input id='input-idMessage' type='hidden' name='idUser'>";
+                    $htmlContent .= "</div>";
+
+                    $htmlContent .= "<div class='field-row'>";
 					$htmlContent .= "<div class='field'>";
 						$htmlContent .= "<select name='messageIdForum' id='input-idForum'>";
 						foreach($forumList as $forum){
@@ -1725,17 +1751,18 @@ class Admin
 						}
 						$htmlContent .= "</select>";
 					$htmlContent .= "</div>";
-					$htmlContent .= "<div class='section'>";
-						$htmlContent .= "<input class='btn btn-delete' onclick='closeMessageForm()' type='button' value='Annuler'>";
+                    $htmlContent .= "</div>";
+					$htmlContent .= "<div class='field-row field-cta'>";
+                    $htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeMessageForm()' type='button' value='Annuler'>";
 				}
 				
 				if($message->getId() != null)
 				{
 					$htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $message->getId() . "'>";
-					$htmlContent .= "<input class='btn btn-validate' onclick='updateMessage()' type='button' value='Modifier'>";
+					$htmlContent .= "<input class='btn-form btn-form-validate' onclick='updateMessage()' type='button' value='Modifier'>";
 				}
 				else
-					$htmlContent .= "<input class='btn btn-validate' onclick='insertMessage()' type='button' value='Créer'>";
+					$htmlContent .= "<input class='btn-form btn-form-validate' onclick='insertMessage()' type='button' value='Créer'>";
 				
 				$htmlContent .= "</div>";
 				}
