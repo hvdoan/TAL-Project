@@ -176,6 +176,7 @@ function openMessageForm(id = "")
  ***************************************************/
 function closeMessageForm()
 {
+	console.log('test');
 	$("#ctnMessageForm").html("");
 	$("#ctnMessageForm").css("width", "0");
 	$("#ctnMessageForm").css("height", "0");
