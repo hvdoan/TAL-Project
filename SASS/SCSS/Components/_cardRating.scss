@@ -34,9 +34,13 @@
 				width: 100%;
 			}
 
-			& #halfstarsReview {
+			& .stars {
 				left: 50%;
 				transform: translate(60%, -50%);
+			}
+
+			& .fa-star:hover{
+				cursor: pointer;
 			}
 		}
 
@@ -121,7 +125,13 @@
 				justify-content: center;
 				align-items: center;
 				width: 15vw;
+				font-size: 1.5vw;
 			}
 		}
 	}
+}
+
+.starChecked {
+	//color: #ffc107;
+	color: #6fc7ff;
 }

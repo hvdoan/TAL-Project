@@ -46,23 +46,18 @@ $counter = 0;
 					</div>
 					
 					<div class="cardRate">
-						<div class="row">
-							<div class="col-12 col-md-6" style="font-size: 2em;">
-								<div id="halfstarsReview<?=$counter?>"></div>
-							</div>
-							<script>
-								$("#halfstarsReview" + <?=$counter?>).rating({
-									"half": true,
-									"readonly": true,
-									"value": <?=$rating["rate"]?>,
-									"color": "#6fc7ff",
-									"click": function (e) {
-										console.log(e);
-										$("#halfstarsInput" + <?=$counter?>).val(e.stars);
+						<div id="stars<?=$counter?>"></div>
+						
+						<script>
+							for(let i = 0; i < <?=$rating["rate"]?>; i++){
+								document.getElementById("stars<?=$counter?>").innerHTML += "<span class='fa fa-star starChecked'></span>";
+								if(i < 5 && i === <?=$rating["rate"]?> - 1){
+									for(let j = 0; j < 5 - <?=$rating["rate"]?>; j++){
+										document.getElementById("stars<?=$counter?>").innerHTML += "<span class='fa fa-star'></span>";
 									}
-								});
-							</script>
-						</div>
+								}
+							}
+						</script>
 					</div>
 				</div>
 			<?php endforeach; ?>

@@ -26,29 +26,75 @@ $_SESSION["tokenForm"] = $token;
 				</div>
 				<img src="SASS/asset/img/positive-vote.png" alt="positive vote">
 			</div>
+			<?php if($this->data["isConnected"]):?>
+				<?php if(empty($this->data["alreadyRated"])):?>
+					<div class="rate">
+						<label>
+							Commentaire :
+							<input id="descriptionRating" type="text" name="description" placeholder="Laissez un commentaire avant de donner la note" required>
+							<input id="idUserRating" type="hidden" value="<?=$_SESSION["id"]?>">
+							<input id="tokenRating" type="hidden" value="<?=$token?>">
+						</label>
+						
+						<div class="stars">
+							<span id="star1" class="fa fa-star" onclick="insertRatingStars(1)"></span>
+							<span id="star2" class="fa fa-star" onclick="insertRatingStars(2)"></span>
+							<span id="star3" class="fa fa-star" onclick="insertRatingStars(3)"></span>
+							<span id="star4" class="fa fa-star" onclick="insertRatingStars(4)"></span>
+							<span id="star5" class="fa fa-star" onclick="insertRatingStars(5)"></span>
+						</div>
+					</div>
+				<?php else:?>
+					<div style="padding: 2%;">
+						Merci, vous avez déjà donné un avis sur notre jeu !
+					</div>
+				<?php endif;?>
+			<?php else:?>
+				<div style="padding: 2%;">
+					Veuillez vous connecter pour laisser un avis
+				</div>
+			<?php endif;?>
 			
-			<div class="rate">
-				<label>
-					Commentaire :
-					<input id="descriptionRating" type="text" name="description" placeholder="Laissez un commentaire avant de donner la note" required>
-					<input id="idUserRating" type="hidden" value="<?=$_SESSION["id"]?>">
-					<input id="tokenRating" type="hidden" value="<?=$token?>">
-				</label>
-				
-				<div id="halfstarsReview"></div>
-				<script>
-					$("#halfstarsReview").rating({
-						"half": true,
-						"color": "#6fc7ff",
-						"click": function (e) {
-							console.log(e);
-							$("#halfstarsInput").val(e.stars);
-						}
-					});
-				</script>
-			</div>
+			<script>
+				let star1 = document.getElementById("star1");
+				let star2 = document.getElementById("star2");
+				let star3 = document.getElementById("star3");
+				let star4 = document.getElementById("star4");
+				let star5 = document.getElementById("star5");
+				star1.addEventListener('mousemove', e => {
+					addStar(1);
+				});
+				star1.addEventListener('mouseout', e => {
+					removeStars();
+				});
+				star2.addEventListener('mousemove', e => {
+					addStar(2);
+				});
+				star2.addEventListener('mouseout', e => {
+					removeStars();
+				});
+				star3.addEventListener('mousemove', e => {
+					addStar(3);
+				});
+				star3.addEventListener('mouseout', e => {
+					removeStars();
+				});
+				star4.addEventListener('mousemove', e => {
+					addStar(4);
+				});
+				star4.addEventListener('mouseout', e => {
+					removeStars();
+				});
+				star5.addEventListener('mousemove', e => {
+					addStar(5);
+				});
+				star5.addEventListener('mouseout', e => {
+					removeStars();
+				});
+			</script>
 			
 		</div>
+		
 		<div class="medium">
 			<div>
 				<?php foreach($this->data["rating"] as $rating):
@@ -57,7 +103,7 @@ $_SESSION["tokenForm"] = $token;
 					if($object)
 						$userRate = $object;
 					?>
-				
+					
 					<div class="cardRating">
 						<div class="cardHeader">
 							<div id='avatar-container' class='userAvatar'>
@@ -82,23 +128,20 @@ $_SESSION["tokenForm"] = $token;
 						</div>
 						
 						<div class="cardRate">
-							<div class="row">
-								<div class="col-12 col-md-6" style="font-size: 2em;">
-									<div id="halfstarsReview<?=$counter?>"></div>
-								</div>
-								<script>
-									$("#halfstarsReview" + <?=$counter?>).rating({
-										"half": true,
-										"readonly": true,
-										"value": <?=$rating["rate"]?>,
-										"color": "#6fc7ff",
-										"click": function (e) {
-											console.log(e);
-											$("#halfstarsInput" + <?=$counter?>).val(e.stars);
+							
+							<div id="stars<?=$counter?>"></div>
+							
+							<script>
+								for(let i = 0; i < <?=$rating["rate"]?>; i++){
+									document.getElementById("stars<?=$counter?>").innerHTML += "<span class='fa fa-star starChecked'></span>";
+									if(i < 5 && i === <?=$rating["rate"]?> - 1){
+										for(let j = 0; j < 5 - <?=$rating["rate"]?>; j++){
+											document.getElementById("stars<?=$counter?>").innerHTML += "<span class='fa fa-star'></span>";
 										}
-									});
-								</script>
-							</div>
+									}
+								}
+							</script>
+							
 						</div>
 					</div>
 				<?php endforeach; ?>

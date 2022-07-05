@@ -546,9 +546,11 @@ class Main {
 			
 			$view = new View("rating");
 			
+			$alreadyRated = $rating->select(["id"], ["idUser" => $_SESSION["id"]]);
 			$rating = $rating->select(["id", "idUser", "rate", "description", "creationDate", "updateDate"], [], " ORDER BY updateDate DESC LIMIT 3");
 			
 			$view->assign("rating", $rating);
+			$view->assign("alreadyRated", $alreadyRated);
 			$view->assign("isConnected", $isConnected);
 		}
 	}

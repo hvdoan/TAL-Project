@@ -2109,9 +2109,12 @@ nav > ul > .bottom,
 .vote > .small .rate input {
   width: 100%;
 }
-.vote > .small .rate #halfstarsReview {
+.vote > .small .rate .stars {
   left: 50%;
   transform: translate(60%, -50%);
+}
+.vote > .small .rate .fa-star:hover {
+  cursor: pointer;
 }
 .vote > .medium {
   width: 60%;
@@ -2181,6 +2184,11 @@ nav > ul > .bottom,
   justify-content: center;
   align-items: center;
   width: 15vw;
+  font-size: 1.5vw;
+}
+
+.starChecked {
+  color: #6fc7ff;
 }
 
 /*# sourceMappingURL=style.css.map */
