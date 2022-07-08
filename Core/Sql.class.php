@@ -2,10 +2,11 @@
 
 namespace App\Core;
 
-abstract class Sql
+abstract class Sql extends MySqlBuilder
 {
 	private $pdoInstance;
 	private $table;
+    private $query;
 
 	public function __construct()
 	{
@@ -14,6 +15,7 @@ abstract class Sql
 		//Si l'id n'est pas null alors on fait un update sinon on fait un insert
 		$calledClassExploded = explode("\\",get_called_class());
 		$this->table = DBPREFIXE.ucwords(end($calledClassExploded));
+        $this->query = new MySqlBuilder();
 	}
 
 	/**
@@ -54,11 +56,13 @@ abstract class Sql
 	/**
 	 * @return void
 	 */
-	public function delete()
+	/*public function delete()
 	{
-		$sql = "DELETE FROM " . $this->table . " WHERE id=" . $this->getId();
-		$queryPrepared = $this->pdoInstance->getPDO()->query($sql);
-	}
+        $this->query->delete($this->table)->whereNoPrepare('id', $this->getId());
+
+		//$sql = "DELETE FROM " . $this->table . " WHERE id=" . $this->getId();
+		$queryPrepared = $this->pdoInstance->getPDO()->query($this->query->getQuery());
+	}*/
 
 	/**
 	 * @param array $values
@@ -66,28 +70,42 @@ abstract class Sql
 	 *
 	 * @return bool|array
 	 */
-	public function select(array $values, array $params, string $endQuery = "")
+	/*public function select(array $values, array $params, bool $left = false, $left1 = false )
 	{
-		$sql = "SELECT ".implode(", ", $values)." FROM ".$this->table;
+        $this->query->select($this->table, $values);
 
-        if (count($params) > 0)
-            $sql .= " WHERE ";
+        foreach ($params as $key => $values) {
+            $this->query->wherePrepare($key);
+        }
 
-		foreach ($params as $key => $values) {
-			$sql .= $key." = :".$key." AND ";
-		}
+        if ($left) {
+            $this->query->leftJoin(DBPREFIXE .'User',  DBPREFIXE .'Log', 'id', 'idUser');
+            $this->query->orderBy('time', 'DESC');
+            $this->query->limit(0, 5);
+        }
 
-        if (count($params) > 0)
-    		$sql = substr($sql,0,-5);
+        if ($left1) {
+            $this->query->leftJoin(DBPREFIXE .'User',  DBPREFIXE .'Message', 'id', 'idUser');
+            $this->query->orderBy('creationDate', 'DESC');
+            $this->query->limit(0, 5);
+        }
 
-        $sql .= $endQuery;
+        //echo $mySql->getQuery();
 
-		$queryPrepared = $this->pdoInstance->getPDO()->prepare($sql);
+		$queryPrepared = $this->pdoInstance->getPDO()->prepare($this->query->getQuery());
 		$queryPrepared->execute( $params );
 
 
 		return $queryPrepared->fetchAll(\PDO::FETCH_ASSOC);
-	}
+	}*/
+
+    public function fetchAll() {
+        $queryPrepared = $this->pdoInstance->getPDO()->prepare($this->getQuery());
+        $queryPrepared->execute( $params );
+
+
+        return $queryPrepared->fetchAll(\PDO::FETCH_ASSOC);
+    }
 
     public function selectLikeString(array $values, array $params, $searchString, $searchParam)
     {
