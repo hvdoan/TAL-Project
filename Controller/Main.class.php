@@ -171,7 +171,7 @@ class Main {
 			$token = md5(uniqid());
 			$_SESSION["tokenForm"] = $token;
 			
-			$messages   = $message->select(["id", "idUser", "idForum", "idMessage", "content", "updateDate"], ["idForum" => $forum[0]["id"]], " ORDER BY updateDate DESC");
+			$messages   = $message->select2('Message',["id", "idUser", "idForum", "idMessage", "content", "updateDate"])->where('idForum',$forum[0]["id"])->orderBy('updateDate', 'DESC')->getResult();
 			$answers    = $answer->select(["id", "idUser", "idMessage", "content", "updateDate"], ["idForum" => $forum[0]["id"]]);
 			$warnings   = $warning->select(["idMessage"], ["status" => 2]);
 			

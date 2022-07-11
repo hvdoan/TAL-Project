@@ -74,15 +74,19 @@ class Admin
         }
         $percentTotalUser = round(count($RecentTotalUser) * 100 / count($totalVisitor),2);
 
-        // Gestion derniers messages
         $message = new Message();
-        $messageList = $message->select([DBPREFIXE."Message.id", DBPREFIXE."User.firstname", DBPREFIXE."User.lastname", "idForum", "idMessage", "content", DBPREFIXE."Message.creationDate", "updateDate"], [],
-            ' LEFT JOIN '. DBPREFIXE .'User ON '. DBPREFIXE .'Message.idUser = '. DBPREFIXE .'User.id ORDER BY creationDate DESC LIMIT 5');
+        $messageList = $message->select2('Message',[DBPREFIXE."Message.id", DBPREFIXE."User.firstname", DBPREFIXE."User.lastname", "idForum", "idMessage", "content", DBPREFIXE."Message.creationDate", "updateDate"])
+                ->leftJoin('User', 'Message', 'id', 'idUser')
+                ->orderBy('creationDate', 'DESC')
+                ->limit(0,5)
+                ->getResult();
 
         $log = new Log();
-        $logList = $log->select([DBPREFIXE."Log.id", DBPREFIXE."User.lastname", DBPREFIXE."User.firstname", "time"], [],
-            ' LEFT JOIN '. DBPREFIXE .'User ON '. DBPREFIXE .'Log.idUser = '. DBPREFIXE .'User.id ORDER BY time DESC LIMIT 5');
-
+        $logList = $log->select2('Log',[DBPREFIXE."Log.id", DBPREFIXE."User.lastname", DBPREFIXE."User.firstname", "time"])
+            ->leftJoin('User', 'Log', 'id', 'idUser')
+            ->orderBy('time', 'DESC')
+            ->limit(0,5)
+            ->getResult();
 
 
         $view = new View("dashboard", "back");
