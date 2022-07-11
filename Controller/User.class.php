@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\Core\CleanWords;
+use App\Core\Logger;
 use App\Core\Mail;
 use App\Core\Notification;
 use App\Core\Sql;
 use App\Core\Verificator;
 use App\Core\View;
 use App\Model\Action;
+use App\Model\Log;
 use App\Model\Permission;
 use App\Model\Role;
 use App\Model\User as UserModel;
@@ -20,8 +22,6 @@ class User{
 		/* Reload the login session time if connexion status is true else redirect to login */
 		if($isConnected)
 			header("Location: /home");
-		else
-			Verificator::reloadConnection();
 		
 		if(isset($_SESSION['flash'])){
 			foreach($_SESSION['flash'] as $type => $message){
@@ -29,6 +29,7 @@ class User{
 			}
 			unset($_SESSION['flash']);
 		}
+
 		$user = new UserModel();
 		
 		if(!empty($_POST)){
@@ -41,7 +42,7 @@ class User{
 						$role   = new Role();
 						$object = $role->setId(intval($userLoggedIn[0]['idRole']));
 						
-						if($object != false)
+						if($object)
 							$role = $object;
 						
 						$_SESSION['id']         = $userLoggedIn[0]["id"];
@@ -63,7 +64,7 @@ class User{
 							$action = new Action();
 							$object = $action->setId(intval($actionList[$i]["idAction"]));
 							
-							if($object != false){
+							if($object){
 								$action = $object;
 								$_SESSION["permission"][] = $action->getCode();
 							}
@@ -77,7 +78,15 @@ class User{
                         setcookie("token", $user->getToken(), time() + (60 * 15), "", "", true);
 
 						$user->save();
-						header("Location: /dashboard");
+
+                        $logs = new Log();
+                        $logs->setIdUser($userLoggedIn[0]["id"]);
+                        $logs->setAction('login');
+                        $logs->setTime();
+
+                        $logs->save();
+                        Logger::getInstance()->writeLogLogin($user->getLastname(), $user->getFirstName(), $user->getId());
+                        header("Location: /dashboard");
 					}else{
 						Notification::CreateNotification("error", 'Compte non vérifié');
 					}
@@ -137,8 +146,9 @@ class User{
 					$email->send();
 					
 					Notification::CreateNotification("success", "Inscription réussie, un email vient de vous etre envoyés");
-					//$_SESSION['flash']['success'] = 'Inscription réussie, un email vient de vous etre envoyés';
-					header('Location: /login');
+                    Logger::getInstance()->writeLogRegister($user->getLastname(), $user->getFirstName(), $user->getId());
+
+                    header('Location: /login');
 					exit();
 				}else{
 					$msg = "";
@@ -172,8 +182,76 @@ class User{
 	
 	public function pwdforget()
 	{
-		echo "Mot de passe oublié";
-	}
+        $isConnected = Verificator::checkConnection();
+        /* Reload the login session time if connexion status is true else redirect to login */
+        if($isConnected)
+            header("Location: /home");
+
+        $user = new UserModel();
+
+        if(!empty($_POST)){
+            $result = Verificator::checkForm($user->getForgotPasswordForm(), $_POST);
+
+            if(empty($result)) {
+                $user->generateToken();
+                $user->setEmail($_POST["email"]);
+
+                $content = "
+                    <h1>Cliquez sur le lien ci-dessous pour changer votre mot de passe :</h1>
+                    <a href='localhost/activation?email=" . $user->getEmail() . "&token=" . $user->getToken() . "'>Changer le mot de passe.</a>
+                ";
+
+                $email = new Mail();
+                $email->prepareContent($_POST['email'], "Reinitialisation du mot de passe", $content, "Test");
+                $email->send();
+
+                Notification::CreateNotification("success", "Si le compte existe, un mail vient de vous etre envoyé");
+
+            } else {
+                $msg = "";
+                foreach ($result as $item) {
+                    $msg .= "-" . $item . "<br>";
+                }
+                Notification::CreateNotification("error", $msg);
+            }
+        }
+
+        $view = new View("forgot-password");
+        $view->assign("user", $user);
+        $view->assign("isConnected", $isConnected);
+    }
+
+    public function pwdReset()
+    {
+        $user = new UserModel();
+
+        if(isset($_GET['email']) && isset($_GET['token'])){
+
+            $userParams = $user->select(['id'], ['email' => $_GET['email']]);
+
+            $user = $user->setId(intval($userParams[0]['id'], 10));
+
+            if($user->getToken() == $_GET['token']){
+                if(!empty($_POST)){
+                    $result = Verificator::checkForm($user->getResetPassword(), $_POST);
+                    if(empty($result)) {
+                        $user->setPassword($_POST["password"]);
+                        $user->save();
+                        Notification::CreateNotification("success", "Mot de passe modifié avec succès");
+                        header('Location: /login');
+                    }
+                }
+
+                $view = new View("reset-password");
+                $view->assign("user", $user);
+            }
+
+        } else {
+            http_response_code(404);
+            include('View/404.view.php');
+            die();
+        }
+    }
 	
 	public function activatedaccount()
 	{
@@ -190,7 +268,11 @@ class User{
 				$user->setVerifyAccount(true);
 				$user->save();
 			}
-		}
+		} else {
+            http_response_code(404);
+            include('View/404.view.php');
+            die();
+        }
 	}
 
     public function userSetting()
@@ -208,11 +290,11 @@ class User{
 
         $object = $user->setId(intval($_SESSION["id"]));
 
-        if($object != false)
+        if($object)
             $user = $object;
 
-        if(!empty($_POST)){
-
+        if(!empty($_POST))
+        {
             $user->setFirstname($_POST['firstname']);
             $user->setLastname($_POST['lastname']);
             $_SESSION['firstname']   = $_POST['firstname'];
@@ -243,7 +325,7 @@ class User{
             }
         }
 
-        $view = new View("user-setting");
+        $view = new View("userSetting");
         $view->assign("user", $user);
         $view->assign("isConnected", $isConnected);
     }

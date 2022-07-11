@@ -1,0 +1,79 @@
+@use "../Abstracts" as *;
+
+.statistics {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	row-gap: 2em;
+	font-family: $jaldi;
+
+	width: 100%;
+	padding: 2%;
+	box-sizing: border-box;
+
+	& > .odd {
+		background-color: $white;
+		border-radius: 10px;
+		box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+		width: 100%;
+	}
+
+	& > .even {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		column-gap: 2em;
+
+		width: 100%;
+	}
+
+	& > .even > .medium {
+		height: 100%;
+		flex-grow: 2;
+
+		background-color: $white;
+		border-radius: 10px;
+		box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+	}
+
+	& > .even > .small {
+		height: 100%;
+		flex-grow: 1;
+
+		background-color: $white;
+		border-radius: 10px;
+		box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+	}
+
+	#lastMessage, #logsLogin {
+
+		h3 {
+			margin: 0;
+			padding-left: 20px;
+			padding-top: 10px;
+			font-size: 1.5rem;
+			border-bottom: 1px solid lightgray;
+		}
+
+		& > table {
+			width: 100%;
+			padding: 10px 20px 20px;
+
+			thead {
+				text-align: left;
+				font-size: 1.3rem;
+			}
+
+			td, th {
+				padding: 5px;
+			}
+		}
+	}
+
+	#userCreationChartDiv {
+		width: 100%;
+		height: 450px;
+	}
+}

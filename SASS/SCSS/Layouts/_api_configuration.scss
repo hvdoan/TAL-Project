@@ -2,6 +2,21 @@
 
 #api-configuration
 {
+    padding: 0 20px;
+
+    & > .form
+    {
+        margin-bottom: 30px;
+
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+        & .row > .input
+        {
+            width: calc(100% - 50px);
+            margin-right: 10px;
+        }
+    }
+
     & > .ctn
     {
         & > form

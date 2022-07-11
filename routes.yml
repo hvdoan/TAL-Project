@@ -30,6 +30,10 @@
     controller: user
     action: pwdforget
 
+/reset-password:
+    controller: user
+    action: pwdReset
+
 /activation:
     controller: user
     action: activatedaccount
@@ -37,8 +41,6 @@
 /user-setting:
   controller: user
   action: userSetting
-  security:
-       - admin
 
 /dashboard:
     controller: admin
@@ -86,9 +88,21 @@
   security:
     - admin
 
+/ban-word-management:
+  controller: admin
+  action: banWord
+  security:
+    - admin
+
 /message-management:
   controller: admin
   action: messageManagement
+  security:
+    - admin
+
+/warning-management:
+  controller: admin
+  action: warningManagement
   security:
     - admin
 
@@ -110,4 +124,6 @@
     controller: search
     action: search
 
-/hugo:
+/notification:
+    controller: notification
+    action: display

@@ -1,28 +1,40 @@
 @use "../Abstracts" as *;
 
-.alert {
-    padding: 10px 80px;
-    border-radius: 5px;
-    color: white;
-    margin-top: 8%;
+#alert
+{
     position: absolute;
-    left: 0;
-    right: 0;
-    margin-left: auto;
-    margin-right: auto;
-    width: 40%;
-    text-align: center;
-    font-family: $jaldi;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
 
-    &-success {
-        background-color: #46A150;
-    }
+    & > .alert {
+        padding: 10px 80px;
+        border-radius: 5px;
+        color: white;
+        width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        font-family: $jaldi;
+        transition: .3s;
 
-    &-error {
-        background-color: #AD4E47;
-    }
+        &:hover
+        {
+            transform: scale(1.05);
+            transition: .3s;
+        }
 
-    &-warning {
-        background-color: #e0c335;
+        &-success {
+            background-color: #46A150;
+        }
+
+        &-error {
+            background-color: #AD4E47;
+        }
+
+        &-warning {
+            background-color: #e0c335;
+        }
     }
 }

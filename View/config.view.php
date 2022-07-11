@@ -6,11 +6,8 @@
         left: 50%;
         transform: translate(-50%, -50%);
 
-        width: 500px;
-        height: 300px;
+        width: 520px;
 
-        background: #6d769e;
-        border: solid 1px #000;
         overflow: hidden;
     }
 
@@ -18,8 +15,9 @@
     {
         display: flex;
         flex-direction: row;
+        align-items: center;
 
-        width: 2000px;
+        width: 2080px;
         height: 100%;
 
         transition: .3s;
@@ -31,19 +29,12 @@
         flex-direction: column;
 
         width: 500px;
-        padding: 20px;
+        height: fit-content;
+        margin: 10px;
         box-sizing: border-box;
-    }
 
-    form > #slider > section > h1
-    {
-        margin-bottom: 20px;
-    }
-
-    form > #slider > section > .input > label
-    {
-        display: inline-block;
-        width: 100px;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        overflow: hidden;
     }
 
     form > #slider > section > .input > input,
@@ -51,109 +42,194 @@
     {
         width: 100%;
     }
-
-    form > #slider > section > .nav
-    {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-
-        margin-top: auto;
-    }
-
-    form > #slider > section:nth-child(1) > .nav
-    {
-        justify-content: flex-end;
-    }
 </style>
 
 <form method="post" action="config">
     <div id="slider">
-        <section class="section">
-            <h1>Configuration du site</h1>
-
-            <div class="input">
-                <label>Nom du site</label>
-                <input type="text" name="websiteName" required>
+        <!-- WEBSITE CONFIGURATION -->
+        <section class="section form">
+            <!-- Header -->
+            <div class='field-row'>
+                <div class='field'>
+                    <h1>Configuration du site</h1>
+                </div>
             </div>
 
-            <div class="nav">
-                <button class="btn btn-edit" type="button" onclick="moveToSection('0', '1')">Suivant</button>
-            </div>
-        </section>
-
-        <section class="section">
-            <h1>Configuration de la base de donnée</h1>
-
-            <div class="input">
-                <label>Serveur</label>
-                <input type="text" name="dbHost" required>
+            <!-- Separator -->
+            <div class='field-row'>
+                <hr>
             </div>
 
-            <div class="input">
-                <label>Port</label>
-                <input type="text" name="dbPort" required>
+            <!-- Name field -->
+            <div class='field-row'>
+                <div class="field">
+                    <label>Nom du site <span class="required">*</span></label>
+                    <input class="input" type="text" name="websiteName" required>
+                </div>
             </div>
 
-            <div class="input">
-                <label>Utilisateur</label>
-                <input type="text" name="dbUser" required>
-            </div>
-
-            <div class="input">
-                <label>Mot de passe</label>
-                <input type="text" name="dbPassword" required>
-            </div>
-
-            <div class="nav">
-                <button class="btn btn-edit" type="button" onclick="moveToSection('1', '0')">Précédant</button>
-                <button class="btn btn-edit" type="button" onclick="moveToSection('1', '2')">Suivant</button>
+            <!-- Cta field -->
+            <div class='field-cta'>
+                <button class="btn-form btn-form-validate" type="button" onclick="moveToSection('0', '1')">Suivant</button>
             </div>
         </section>
 
-        <section class="section">
-            <h1>Configuration de Paypal</h1>
-
-            <div class="input">
-                <label>Clé client</label>
-                <input type="text" name="paypalClientKey" required>
+        <!-- DATABASE CONFIGURATION -->
+        <section class="section form">
+            <!-- Header -->
+            <div class='field-row'>
+                <div class='field'>
+                    <h1>Configuration de la base de donnée</h1>
+                </div>
             </div>
 
-            <div class="input">
-                <label>Devise</label>
-                <select name="paypalCurrency">
-                    <option value="EUR">EUR</option>
-                    <option value="USD">USD</option>
-                </select>
+            <!-- Separator -->
+            <div class='field-row'>
+                <hr>
             </div>
 
-            <div class="nav">
-                <button class="btn btn-edit" type="button" onclick="moveToSection('2', '1')">Précédant</button>
-                <button class="btn btn-edit" type="button" onclick="moveToSection('2', '3')">Suivant</button>
+            <!-- Server field -->
+            <div class='field-row'>
+                <div class="field">
+                    <label>Serveur <span class="required">*</span></label>
+                    <input class="input" type="text" name="dbHost" required>
+                </div>
+            </div>
+
+            <!-- Port field -->
+            <div class='field-row'>
+                <div class="field">
+                    <label>Port <span class="required">*</span></label>
+                    <input class="input" type="text" name="dbPort" required>
+                </div>
+            </div>
+
+
+            <!-- User field -->
+            <div class='field-row'>
+                <div class="field">
+                    <label>Utilisateur <span class="required">*</span></label>
+                    <input class="input" type="text" name="dbUser" required>
+                </div>
+            </div>
+
+
+            <!-- Password field -->
+            <div class='field-row'>
+                <div class="field">
+                    <label>Mot de passe <span class="required">*</span></label>
+                    <input class="input" type="text" name="dbPassword" required>
+                </div>
+            </div>
+
+            <!-- Cta field -->
+            <div class='field-cta'>
+                <button class="btn-form btn-form-cancel" type="button" onclick="moveToSection('1', '0')">Précédant</button>
+                <button class="btn-form btn-form-validate" type="button" onclick="moveToSection('1', '2')">Suivant</button>
             </div>
         </section>
 
-        <section class="section">
-            <h1>Configuration de la boite mail</h1>
-
-            <div class="input">
-                <label>Email</label>
-                <input type="text" name="phpmailerEmail" required>
+        <!-- PAYPAL CONFIGURATION -->
+        <section class="section form">
+            <!-- Header -->
+            <div class='field-row'>
+                <div class='field'>
+                    <h1>Configuration de Paypal</h1>
+                </div>
             </div>
 
-            <div class="input">
-                <label>Mot de passe</label>
-                <input type="text" name="phpmailerPassword" required>
+            <!-- Separator -->
+            <div class='field-row'>
+                <hr>
             </div>
 
-            <div class="input">
-                <label>Port</label>
-                <input type="text" name="phpmailerPort" required>
+            <!-- Client key field -->
+            <div class='field-row'>
+                <div class="field">
+                    <label>Clé client <span class="required">*</span></label>
+                    <input class="input" type="text" name="paypalClientKey" required>
+                </div>
             </div>
 
-            <div class="nav">
-                <button class="btn btn-edit" type="button" onclick="moveToSection('3', '2')">Précédant</button>
-                <button class="btn btn-validate" type="submit">Enregistrer</button>
+            <!-- Currency field -->
+            <div class='field-row'>
+                <div class="field">
+                <label>Devise <span class="required">*</span></label>
+                    <div id="select-ctn">
+                        <select name="paypalCurrency">
+                            <option value="EUR">EUR</option>
+                            <option value="USD">USD</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cta field -->
+            <div class='field-cta'>
+                <button class="btn-form btn-form-cancel" type="button" onclick="moveToSection('2', '1')">Précédant</button>
+                <button class="btn-form btn-form-validate" type="button" onclick="moveToSection('2', '3')">Suivant</button>
+            </div>
+        </section>
+
+
+        <!-- PHPMAILER CONFIGURATION -->
+        <section class="section form">
+            <!-- Header -->
+            <div class='field-row'>
+                <div class='field'>
+                    <h1>Configuration de la boite mail</h1>
+                </div>
+            </div>
+
+            <!-- Separator -->
+            <div class='field-row'>
+                <hr>
+            </div>
+
+            <!-- Mail field -->
+            <div class='field-row'>
+                <div class="field">
+                    <label>Email <span class="required">*</span></label>
+                    <input class="input" type="text" name="phpmailerEmail" required>
+                </div>
+            </div>
+
+            <!-- Password field -->
+            <div class='field-row'>
+                <div class="field">
+                    <label>Mot de passe <span class="required">*</span></label>
+                    <input class="input" type="text" name="phpmailerPassword" required>
+                </div>
+            </div>
+
+            <!-- Port field -->
+            <div class='field-row'>
+                <div class="field">
+                    <label>Port <span class="required">*</span></label>
+                    <input class="input" type="text" name="phpmailerPort" required>
+                </div>
+            </div>
+
+            <!-- Client ID field -->
+            <div class='field-row'>
+                <div class="field">
+                    <label>Client ID <span class="required">*</span></label>
+                    <input class="input" type="text" name="phpmailerClientId" required>
+                </div>
+            </div>
+
+            <!-- Client secret field -->
+            <div class='field-row'>
+                <div class="field">
+                    <label>Client secret <span class="required">*</span></label>
+                    <input class="input" type="text" name="phpmailerClientSecret" required>
+                </div>
+            </div>
+
+            <!-- Cta field -->
+            <div class='field-cta'>
+                <button class="btn-form btn-form-cancel" type="button" onclick="moveToSection('3', '2')">Précédant</button>
+                <button class="btn-form btn-form-validate" type="submit">Enregistrer</button>
             </div>
         </section>
     </div>
@@ -172,7 +248,7 @@
                 canMove = false;
 
         if (canMove)
-            $("#slider").css({marginLeft: "-" +(500 * movePosition) + "px"});
+            $("#slider").css({marginLeft: "-" +(520 * movePosition) + "px"});
     }
 
     function checkNotEmpty(position)

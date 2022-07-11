@@ -4,7 +4,6 @@ namespace App\Core;
 
 class Notification
 {
-
     public static function CreateNotification($type, $message): void {
         $_SESSION['flash'][$type] = $message;
     }
@@ -12,7 +11,7 @@ class Notification
     public static function displayNotifications(): void {
         if(isset($_SESSION['flash'])) {
             foreach ($_SESSION['flash'] as $type => $message) {
-                echo "<div class='alert alert-$type'>".$message."</div>";
+                echo "<div class='alert alert-$type' onclick='removeNotification()'>".$message."</div>";
             }
             unset($_SESSION['flash']);
         }
