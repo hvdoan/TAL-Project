@@ -855,7 +855,7 @@ class Admin
                         $uri = "/" . $uri;
 
                         /* If the URI not existe on database, continue the process */
-                        if(!in_array($uri, $notAllowUri))
+                        if((!in_array($uri, $notAllowUri)) || $page->getUri() == $uri)
                         {
                             $page->setIdUser($_SESSION["id"]);
                             $page->setUri($uri);

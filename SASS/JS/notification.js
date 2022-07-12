@@ -22,6 +22,19 @@ function displayNotification()
     request.send(body);
 }
 
+function createNotification(type, message)
+{
+    const requestType       = "createNotification"
+
+    const request = new XMLHttpRequest();
+    request.open('POST', '/notification');
+
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    const body = `requestType=${requestType}&type=${type}&message=${message}`;
+
+    request.send(body);
+}
+
 function removeNotification()
 {
     $("#alert").html("");

@@ -50,9 +50,10 @@ function insertPage(data)
         {
             if (request.responseText === "login")
                 window.location.href = "/login";
-            else if(request.responseText === "success")
+            else if(request.responseText === "success") {
+                createNotification('success', 'Page créer avec succès')
                 window.location.href = "/page-management";
-            else if(request.responseText === "error")
+            } else if(request.responseText === "error")
                 displayNotification();
         }
     };
@@ -82,9 +83,10 @@ function updatePage(pageId, data)
         {
             if (request.responseText === "login")
                 window.location.href = "/login";
-            else if(request.responseText === "success")
+            else if(request.responseText === "success") {
+                createNotification('success', 'Page sauvegarder avec succès')
                 window.location.href = "/page-management";
-            else if(request.responseText === "error")
+            } else if(request.responseText === "error")
                 displayNotification();
         }
     };

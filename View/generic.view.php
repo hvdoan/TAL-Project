@@ -9,6 +9,8 @@
 <script src="/API/EditorJS/List/bundle.js"></script>
 <script src="/API/EditorJS/List/nested-list.js"></script>
 <script src="/API/EditorJS/Image/bundle.js"></script>
+<script src="/API/EditorJS/StyleEditor/index.js"></script>
+<script src="/API/EditorJS/Hyperlink/bundle.js"></script>
 <script type="text/javascript">
     let data;
 
@@ -22,6 +24,7 @@
         // autofocus: true,
         readOnly: true,
         tools: {
+            style: EditorJSStyle.StyleInlineTool,
             paragraph: {
                 class: Paragraph,
                 inlineToolbar: true

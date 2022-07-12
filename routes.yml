@@ -126,4 +126,4 @@
 
 /notification:
     controller: notification
-    action: display
+    action: notification

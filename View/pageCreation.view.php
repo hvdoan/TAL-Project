@@ -23,6 +23,12 @@
                     <?php } ?>
                 </div>
             </div>
+            <div class="field url-ctn">
+                <label for="colorPicker">Couleur de fond : </label>
+                <div class="input-ctn">
+                    <input type="color" value="#1DB8CE" id="colorPicker">
+                </div>
+            </div>
         </div>
 
         <div class="field-row">
@@ -46,7 +52,6 @@
         <div class="ctn-cta">
             <?php if($this->data["page"]->getId()) { ?>
                 <button id="save-button" class="btn-form btn-form-validate" onclick="save('<?=$this->data["page"]->getId()?>')">Sauvegarder</button>
-                <pre id="output"></pre>
             <?php } else { ?>
                 <button class="btn-form btn-form-validate" onclick="save()">Créer</button>
             <?php } ?>
@@ -62,6 +67,8 @@
 <script src="/API/EditorJS/List/nested-list.js"></script>
 <script src="/API/EditorJS/Image/bundle.js"></script>
 <script src="/API/EditorJS/Alignment/bundle.js"></script>
+<script src="/API/EditorJS/StyleEditor/index.js"></script>
+<script src="/API/EditorJS/Hyperlink/bundle.js"></script>
 <script type="text/javascript">
     let data;
 
@@ -73,6 +80,7 @@
     let editor = new EditorJS({
         // autofocus: true,
         tools: {
+            style: EditorJSStyle.StyleInlineTool,
             paragraph: {
                 class: Paragraph,
                 inlineToolbar: true
@@ -124,7 +132,6 @@
     {
         editor.save().then( savedData => {
             let data = JSON.stringify(savedData, null, 4);
-            $('#output').html(data);
 
             if(pageId !== "")
                 updatePage(pageId, data);

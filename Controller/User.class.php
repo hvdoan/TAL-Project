@@ -22,13 +22,6 @@ class User{
 		/* Reload the login session time if connexion status is true else redirect to login */
 		if($isConnected)
 			header("Location: /home");
-		
-		if(isset($_SESSION['flash'])){
-			foreach($_SESSION['flash'] as $type => $message){
-				echo "<div class='alert alert-$type'>" . $message . "</div>";
-			}
-			unset($_SESSION['flash']);
-		}
 
 		$user = new UserModel();
 		
