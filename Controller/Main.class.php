@@ -413,14 +413,6 @@ class Main {
 					(isset($_POST["messageIdMessage"]) ? $_POST["messageIdMessage"] != "" : false) &&
 					(isset($_POST["messageContent"]) ? $_POST["messageContent"] != "" : false)){
 				
-				if($_POST["messageIdUser"] != 0){
-					$userAnswerMail = new UserModel();
-					$object = $userAnswerMail->setId(intval($_POST["messageIdUser"]));
-					if($object)
-						$userAnswerMail = $object;
-					$message->notify($userAnswerMail, "Vous avez reçu une réponse à votre message sur le forum " . $_POST["messageIdForum"]);
-				}
-				
 				/* Creation of a message for the front forum */
 				$message->setIdUser($_POST["messageIdUser"]);
 				$message->setIdForum($_POST["messageIdForum"]);
@@ -429,13 +421,33 @@ class Main {
 				$message->creationDate();
 				$message->updateDate();
 				$message->save();
-
+				
+				
+				if($_POST["messageIdUser"] != 0){
+					//Select all idUsers who have answer to the same message
+					$allUsers = $message->select(["idUser"], ["idMessage" => $_POST["messageIdMessage"]]);
+					$allUsers = array_unique($allUsers, SORT_REGULAR);
+					
+					//Add the user who answer to the list
+					foreach($allUsers as $user){
+						$message->addNotifyUser($user["idUser"]);
+					}
+					
+					//send mail to the list of users
+					$message->notify();
+					
+					//remove the user who answer to the list
+					foreach($allUsers as $user){
+						$message->unsetNotifyUser($user["idUser"]);
+					}
+				}
+				
+				
                 Logger::getInstance()->writeLogNewMessage($_POST["messageIdUser"], $_POST["messageContent"]);
 
                 $object = $message->setId(intval($message->getLastInsertId()));
 				if($object)
 					$message = $object;
-				echo $message->getUpdateDate();
 			}
 		}
 		else if((isset($_POST["requestType"]) && $_POST["requestType"] == "deleteMessageFront")){

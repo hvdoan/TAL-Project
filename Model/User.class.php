@@ -1,6 +1,7 @@
 <?php
 namespace App\Model;
 
+use App\Core\Mail;
 use App\Core\Sql;
 
 class User extends Sql
@@ -191,16 +192,21 @@ class User extends Sql
 
     /**
      * @param bool
+     * @return void
      */
     public function setActiveAccount(bool $flag): void
     {
         $this->activeAccount = (int)$flag;
     }
 	
-	public function sendNotificationMail(Message $message)
+	/**
+	 * @return void
+	 */
+	public function sendNotificationMail(Message $message, User $user): void
 	{
-		//mail send logic
-		
+		$mail = new Mail();
+		$mail->prepareContent($user->getEmail(), $user->getFirstname() . " vous avez une nouvelle réponse dans le forum", "Le contenu de cette réponse est : " . $message->getContent(), "Datant de : " . $message->getUpdateDate());
+		$mail->send();
 	}
 
     public function getRegisterForm(): array
