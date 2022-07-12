@@ -422,7 +422,6 @@ class Main {
 				$message->updateDate();
 				$message->save();
 				
-				
 				if($_POST["messageIdUser"] != 0){
 					//Select all idUsers who have answer to the same message
 					$allUsers = $message->select(["idUser"], ["idMessage" => $_POST["messageIdMessage"]]);
@@ -430,7 +429,9 @@ class Main {
 					
 					//Add the user who answer to the list
 					foreach($allUsers as $user){
-						$message->addNotifyUser($user["idUser"]);
+						if($user["idUser"] != $_SESSION["id"]){
+							$message->addNotifyUser($user["idUser"]);
+						}
 					}
 					
 					//send mail to the list of users
@@ -438,10 +439,11 @@ class Main {
 					
 					//remove the user who answer to the list
 					foreach($allUsers as $user){
-						$message->unsetNotifyUser($user["idUser"]);
+						if($user["idUser"] != $_SESSION["id"]){
+							$message->unsetNotifyUser($user["idUser"]);
+						}
 					}
 				}
-				
 				
                 Logger::getInstance()->writeLogNewMessage($_POST["messageIdUser"], $_POST["messageContent"]);
 
@@ -578,7 +580,11 @@ class Main {
 			
 			$averageRatings = $rating->select(["ROUND(AVG(rate), 2) AS average"], []);
 			$alreadyRated = $rating->select(["id"], ["idUser" => $_SESSION["id"]]);
-			$rating = $rating->select(["id", "idUser", "rate", "description", "creationDate", "updateDate"], [], " ORDER BY updateDate DESC LIMIT 3");
+			
+			$rating = $rating->select2("Rate", ["id", "idUser", "rate", "description", "creationDate", "updateDate"], [])
+			->orderBy("updateDate", "DESC")
+			->limit(0, 3)
+			->getResult();
 			
 			$view->assign("rating", $rating);
 			$view->assign("averageRatings", $averageRatings);

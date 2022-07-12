@@ -95,8 +95,9 @@ class Admin
       $ratings[2] = $rate->select(["COUNT(id) AS rating"], ["rate" => "3"]);
       $ratings[3] = $rate->select(["COUNT(id) AS rating"], ["rate" => "4"]);
       $ratings[4] = $rate->select(["COUNT(id) AS rating"], ["rate" => "5"]);
-
-      $view = new View("dashboard", "back");
+	  $averageRatings = $rate->select(["ROUND(AVG(rate), 2) AS average"], []);
+   
+	  $view = new View("dashboard", "back");
 	    $view->assign("users", $users);
 	    $view->assign("totalVisitor", count($totalVisitor));
 	    $view->assign("totalVisitorActually", count($totalVisitorActually));

@@ -204,8 +204,9 @@ class User extends Sql
 	 */
 	public function sendNotificationMail(Message $message, User $user): void
 	{
+		$actualURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 		$mail = new Mail();
-		$mail->prepareContent($user->getEmail(), $user->getFirstname() . " vous avez une nouvelle réponse dans le forum", "Le contenu de cette réponse est : " . $message->getContent(), "Datant de : " . $message->getUpdateDate());
+		$mail->prepareContent($user->getEmail(), $user->getFirstname() . " vous avez une nouvelle réponse dans le forum", "Le contenu de cette réponse est : " . $message->getContent() . "<br>Vous pouvez vous rendre sur la page du forum avec ce <a href='" . $actualURL . "'> lien</a>", "Datant de : " . $message->getUpdateDate());
 		$mail->send();
 	}
 
