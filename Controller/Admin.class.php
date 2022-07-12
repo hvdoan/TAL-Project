@@ -2156,4 +2156,52 @@ class Admin
 				$view = new View("warningManagement", "back");
 		}
 	}
+
+    public function templateManagement()
+    {
+        /* Get the connexion status */
+        $isConnected = Verificator::checkConnection();
+
+        /* Reload the login session time if connexion status is true */
+        if ($isConnected)
+            Verificator::reloadConnection();
+
+        /* Check access permission */
+        if (!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_FORUM"))
+            header("Location: /dashboard");
+
+        $results = [];
+        $countTemplate = scandir('Template');
+        $files = array_diff($countTemplate, array('.', '..'));
+
+        foreach ($files as $file) {
+            if (is_dir( 'Template/' .$file))
+                $results[] = $file;
+        }
+        $data = [];
+        $root = opendir('Template/'.$results[1]);
+        while (false !== ($entry = readdir($root))) {
+            $data[] = $entry;
+        }
+
+        $view = new View("templateManagement", "back");
+        $view->assign('names', $results);
+        $view->assign('dat', $data);
+    }
+
+    public function templateEdition()
+    {
+        /* Get the connexion status */
+        $isConnected = Verificator::checkConnection();
+
+        /* Reload the login session time if connexion status is true */
+        if ($isConnected)
+            Verificator::reloadConnection();
+
+        /* Check access permission */
+        if (!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_FORUM"))
+            header("Location: /dashboard");
+
+        $view = new View("templateEdition", "back");
+    }
 }

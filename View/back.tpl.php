@@ -53,12 +53,11 @@
 					</ul>
 				</li>
 				
-				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/images" || $_SERVER["REQUEST_URI"] == "/videos" || $_SERVER["REQUEST_URI"] == "/sounds") ? "" : "close"; ?>">
-                    <div class="nav-section-link"><i class="fa-solid fa-film"></i>Médias<i class="fa-solid fa-angle-down"></i></div>
+				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/template-management" || $_SERVER["REQUEST_URI"] == "/videos") ? "" : "close"; ?>">
+                    <div class="nav-section-link"><i class="fa-solid fa-film"></i>Templates<i class="fa-solid fa-angle-down"></i></div>
 					<ul>
-						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/images") ? "opened" : ""; ?>" href="/images">Images</a>
-						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/videos") ? "opened" : ""; ?>" href="/videos">Vidéos</a>
-						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/sounds") ? "opened" : ""; ?>" href="/sounds">Sons</a>
+						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/template-management") ? "opened" : ""; ?>" href="/template-management">Gestion template</a>
+						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/videos") ? "opened" : ""; ?>" href="/template-edit">Edition template</a>
 					</ul>
 				</li>
 				

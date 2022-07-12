@@ -11,7 +11,7 @@ nav,
     width: fit-content;
     max-width: calc($dashboard-nav-width-column + 40px);
     height: 100vh;
-    background: $hard-blue;
+    background: $hard-blueFront;
     font-family: $jokeyOne;
 
     &-row {
@@ -63,12 +63,12 @@ nav,
         }
 
         & > a > h1 {
-            color: $white;
+            color: $whiteFront;
         }
 
         & > i {
             font-size: rem(24);
-            color: $white;
+            color: $whiteFront;
             cursor: pointer;
         }
     }
@@ -91,18 +91,18 @@ nav,
 
         & > li {
             list-style: none;
-            color: $white;
+            color: $whiteFront;
             cursor: pointer;
 
             & > .nav-section-link
             {
                 width: fit-content;
-                border-bottom: solid 2px $hard-blue;
+                border-bottom: solid 2px $hard-blueFront;
                 transition: .2s;
 
                 &:hover
                 {
-                    border-bottom: solid 2px $white;
+                    border-bottom: solid 2px $whiteFront;
                     transition: .2s;
                 }
 
@@ -117,13 +117,13 @@ nav,
                 max-height: 15rem;
                 margin: 10px 0 10px 16px;
                 padding-left: 20px;
-                border-left: solid 2px $white;
+                border-left: solid 2px $whiteFront;
                 transition: max-height .5s;
 
                 & > a
                 {
                     text-decoration: none !important;
-                    color: $white;
+                    color: $whiteFront;
                 }
             }
         }

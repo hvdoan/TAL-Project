@@ -72,6 +72,18 @@
     security:
         - admin
 
+/template-management:
+  controller: admin
+  action: templateManagement
+  security:
+    - admin
+
+/template-edit:
+  controller: admin
+  action: templateEdition
+  security:
+    - admin
+
 /donation:
     controller: main
     action: donation

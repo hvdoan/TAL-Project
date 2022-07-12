@@ -1,0 +1,36 @@
+$whiteFront:         #fff;
+$blackFront:         #000;
+$greyFront:          #988F8F;
+$yellowFront:        #ffd32a;
+$redFront:           #ff3838;
+$orangeFront:        #f0932b;
+$purpleFront:        #6747cd;
+$blueFront:          #3d91b5;
+$skyFront:           #22a6b3;
+$blue-greyFront:     rgba(142, 153, 163, 0.19);
+
+$light-greyFront:    #EDF0F2;
+$light-blueFront:    #6d769e;
+$light-redFront:     #ff4757;
+$light-orangeFront:  #d4716a;
+$light-greenFront:   #35be49;
+$light-purpleFront:  #927bdf;
+$light-skyFront:     #38aacf;
+
+$dark-blueFront:     #3F445F;
+$dark-orangeFront:   #AD4E47;
+$dark-greenFront:    #259736;
+$dark-greyFront:     #716767;
+
+$hard-blueFront:     #272B40;
+$deep-oceanFront:    #404661;
+
+.bg\:dark-blue
+{
+  background-color: $hard-blueFront !important;
+}
+
+.dark-blue
+{
+  color: $dark-blueFront;
+}
