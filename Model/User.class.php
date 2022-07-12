@@ -369,7 +369,7 @@ class User extends Sql
                 "method"=>"POST",
                 "action"=>"",
                 "submit"=>"M'envoyer un mail",
-                "classForm"=>"form",
+                "classForm"=>"formPwdForget",
                 "classSubmit"=>"submit",
                 "title"=>"Récupération du compte",
             ],

@@ -357,6 +357,24 @@ flex-ai\:center {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: 750px;
+}
+
+#ctnBanWordForm {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+#ctnBanWordForm > form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
 }
 
 #ctnWarningForm {
@@ -468,10 +486,8 @@ flex-ai\:center {
 }
 
 body {
-  scrollbar-color: #3F445F #f1f1f1;
-  /* ascensseur bleu sur fond blanc */
-  scrollbar-size: 10px;
-  /* taille de l'ascenseur */
+  scrollbar-color: #3F445F #f1f1f1; /* ascensseur bleu sur fond blanc */
+  scrollbar-size: 10px; /* taille de l'ascenseur */
 }
 
 #page_creation > .form .url-ctn > .input-ctn > span {
@@ -498,6 +514,83 @@ body {
   padding: 10px 0;
   overflow: hidden;
   background: #3F445F;
+}
+
+.userSetting {
+  margin: 30px;
+  padding: 20px;
+  background-color: #c6cbd5;
+  border-radius: 10px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.userSetting h1 {
+  color: #2a2a2a;
+  text-align: left;
+  font-family: "Jaldi", sans-serif;
+  font-weight: bold;
+  margin-left: 15px;
+}
+.userSetting .content {
+  display: flex;
+  justify-content: space-evenly;
+}
+.userSetting .avatarParam {
+  width: 250px;
+}
+.userSetting .user {
+  margin: auto 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+  height: 250px;
+  background: #dcdcdc;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid #a7a7a7;
+}
+.userSetting .user:hover {
+  background-color: #2f2d2d;
+  cursor: pointer;
+}
+.userSetting i {
+  font-size: 5rem;
+}
+.userSetting .formSetting {
+  display: flex;
+  flex-direction: column;
+  width: 30rem;
+  margin-left: 50px;
+  justify-content: left;
+  padding: 0;
+  background: none;
+  border-radius: 0;
+}
+.userSetting .formSetting .field {
+  margin: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  flex-direction: row;
+}
+.userSetting .formSetting .field label {
+  font-family: "Jaldi", sans-serif;
+  font-size: 1.1rem;
+  color: #0c0c0c;
+  font-weight: normal;
+}
+.userSetting .formSetting .field input {
+  width: 50%;
+  padding: 10px;
+  color: #0c0c0c;
+  background: #fff;
+  border: 1px solid black;
+}
+.userSetting .formSetting .btn {
+  margin-top: 80px;
+  width: 240px;
 }
 
 .banner {
@@ -722,18 +815,12 @@ body {
   color: #000;
   font-family: "Jaldi", sans-serif;
   cursor: pointer;
-  -webkit-touch-callout: none;
-  /* iOS Safari */
-  -webkit-user-select: none;
-  /* Safari */
-  -khtml-user-select: none;
-  /* Konqueror HTML */
-  -moz-user-select: none;
-  /* Old versions of Firefox */
-  -ms-user-select: none;
-  /* Internet Explorer/Edge */
-  user-select: none;
-  /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }
 .cards > div[type=donation]:hover {
   transform: scale(1.05);
@@ -765,18 +852,12 @@ body {
   color: #000;
   font-family: "Jaldi", sans-serif;
   cursor: pointer;
-  -webkit-touch-callout: none;
-  /* iOS Safari */
-  -webkit-user-select: none;
-  /* Safari */
-  -khtml-user-select: none;
-  /* Konqueror HTML */
-  -moz-user-select: none;
-  /* Old versions of Firefox */
-  -ms-user-select: none;
-  /* Internet Explorer/Edge */
-  user-select: none;
-  /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }
 .cards > div[type=forum]:hover {
   transform: scale(1.05);
@@ -1156,29 +1237,10 @@ body {
   background: #EDF0F2;
 }
 
-.formSetting {
-  display: flex;
-  flex-direction: column;
-  width: 30rem;
-  margin-left: 50px;
-}
-.formSetting .field {
-  margin: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.formSetting .field input {
-  width: 50%;
-  padding: 10px;
-}
-.formSetting label {
-  font-family: "Jaldi", sans-serif;
-  font-size: 1.1rem;
-}
-.formSetting .btn {
-  margin-top: 30px;
-  width: 240px;
+.formPwdForget {
+  height: 60vh;
+  margin: 50vh auto 0;
+  transform: translateY(-50%);
 }
 
 @media screen and (min-width: 540px) {

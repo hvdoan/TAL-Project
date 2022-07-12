@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Core\Logger;
 use App\Core\Verificator;
 use App\Core\View;
+use App\Model\BanWord;
 use App\Model\Donation;
 use App\Model\DonationTier;
 use App\Model\Forum;
@@ -171,7 +173,7 @@ class Main {
 			$token = md5(uniqid());
 			$_SESSION["tokenForm"] = $token;
 			
-			$messages   = $message->select(["id", "idUser", "idForum", "idMessage", "content", "updateDate"], ["idForum" => $forum[0]["id"]], " ORDER BY updateDate DESC");
+			$messages   = $message->select2('Message',["id", "idUser", "idForum", "idMessage", "content", "updateDate"])->where('idForum',$forum[0]["id"])->orderBy('updateDate', 'DESC')->getResult();
 			$answers    = $answer->select(["id", "idUser", "idMessage", "content", "updateDate"], ["idForum" => $forum[0]["id"]]);
 			$warnings   = $warning->select(["idMessage"], ["status" => 2]);
 			
@@ -209,6 +211,13 @@ class Main {
 						if(!Verificator::is_in_array($warnings, "idMessage", $message["id"]))
 						{
 							$userMessage = new UserModel();
+                            $banWord = new BanWord();
+                            $words = $banWord->select(['message'], []);
+
+                            $listWords = [];
+                            foreach ($words as $word) {
+                                $listWords[] .= $word['message'];
+                            }
 						
 							$object = $userMessage->setId(intval($message["idUser"]));
 							if($object)
@@ -261,7 +270,8 @@ class Main {
 											$htmlContent .= "</div>";
 											
 											$htmlContent .= "<div class='messageContent'>";
-												$htmlContent .= "<p>" . $message["content"] . "</p>";
+                                                $newContent = str_ireplace($listWords, "****", $message["content"]);
+												$htmlContent .= "<p>" . $newContent . "</p>";
 											$htmlContent .= "</div>";
 										$htmlContent .= "</div>";
 										
@@ -419,8 +429,10 @@ class Main {
 				$message->creationDate();
 				$message->updateDate();
 				$message->save();
-				
-				$object = $message->setId(intval($message->getLastInsertId()));
+
+                Logger::getInstance()->writeLogNewMessage($_POST["messageIdUser"], $_POST["messageContent"]);
+
+                $object = $message->setId(intval($message->getLastInsertId()));
 				if($object)
 					$message = $object;
 				echo $message->getUpdateDate();

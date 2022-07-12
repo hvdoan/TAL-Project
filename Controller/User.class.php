@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Core\CleanWords;
+use App\Core\Logger;
 use App\Core\Mail;
 use App\Core\Notification;
 use App\Core\Sql;
@@ -84,6 +85,7 @@ class User{
                         $logs->setTime();
 
                         $logs->save();
+                        Logger::getInstance()->writeLogLogin($user->getLastname(), $user->getFirstName(), $user->getId());
                         header("Location: /dashboard");
 					}else{
 						Notification::CreateNotification("error", 'Compte non vérifié');
@@ -144,8 +146,9 @@ class User{
 					$email->send();
 					
 					Notification::CreateNotification("success", "Inscription réussie, un email vient de vous etre envoyés");
-					//$_SESSION['flash']['success'] = 'Inscription réussie, un email vient de vous etre envoyés';
-					header('Location: /login');
+                    Logger::getInstance()->writeLogRegister($user->getLastname(), $user->getFirstName(), $user->getId());
+
+                    header('Location: /login');
 					exit();
 				}else{
 					$msg = "";
@@ -179,6 +182,11 @@ class User{
 	
 	public function pwdforget()
 	{
+        $isConnected = Verificator::checkConnection();
+        /* Reload the login session time if connexion status is true else redirect to login */
+        if($isConnected)
+            header("Location: /home");
+
         $user = new UserModel();
 
         if(!empty($_POST)){
@@ -210,7 +218,8 @@ class User{
 
         $view = new View("forgot-password");
         $view->assign("user", $user);
-	}
+        $view->assign("isConnected", $isConnected);
+    }
 
     public function pwdReset()
     {

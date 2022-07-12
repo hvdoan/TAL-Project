@@ -6,6 +6,7 @@ use App\Core\Verificator;
 use App\Core\Notification;
 use App\Core\View;
 use App\Model\Action;
+use App\Model\BanWord;
 use App\Model\Forum;
 use App\Model\Log;
 use App\Model\Message;
@@ -74,25 +75,28 @@ class Admin
         }
         $percentTotalUser = round(count($RecentTotalUser) * 100 / count($totalVisitor),2);
 
-        // Gestion derniers messages
         $message = new Message();
-        $messageList = $message->select([DBPREFIXE."Message.id", DBPREFIXE."User.firstname", DBPREFIXE."User.lastname", "idForum", "idMessage", "content", DBPREFIXE."Message.creationDate", "updateDate"], [],
-            ' LEFT JOIN '. DBPREFIXE .'User ON '. DBPREFIXE .'Message.idUser = '. DBPREFIXE .'User.id ORDER BY creationDate DESC LIMIT 5');
+        $messageList = $message->select2('Message',[DBPREFIXE."Message.id", DBPREFIXE."User.firstname", DBPREFIXE."User.lastname", "idForum", "idMessage", "content", DBPREFIXE."Message.creationDate", "updateDate"])
+                ->leftJoin('User', 'Message', 'id', 'idUser')
+                ->orderBy('creationDate', 'DESC')
+                ->limit(0,5)
+                ->getResult();
 
         $log = new Log();
-        $logList = $log->select([DBPREFIXE."Log.id", DBPREFIXE."User.lastname", DBPREFIXE."User.firstname", "time"], [],
-            ' LEFT JOIN '. DBPREFIXE .'User ON '. DBPREFIXE .'Log.idUser = '. DBPREFIXE .'User.id ORDER BY time DESC LIMIT 5');
+        $logList = $log->select2('Log',[DBPREFIXE."Log.id", DBPREFIXE."User.lastname", DBPREFIXE."User.firstname", "time"])
+            ->leftJoin('User', 'Log', 'id', 'idUser')
+            ->orderBy('time', 'DESC')
+            ->limit(0,5)
+            ->getResult();
 
-		$rate = new Rate();
-		$ratings[0] = $rate->select(["COUNT(id) AS rating"], ["rate" => "1"]);
-		$ratings[1] = $rate->select(["COUNT(id) AS rating"], ["rate" => "2"]);
-		$ratings[2] = $rate->select(["COUNT(id) AS rating"], ["rate" => "3"]);
-		$ratings[3] = $rate->select(["COUNT(id) AS rating"], ["rate" => "4"]);
-		$ratings[4] = $rate->select(["COUNT(id) AS rating"], ["rate" => "5"]);
-	
-	    $averageRatings = $rate->select(["ROUND(AVG(rate), 2) AS average"], []);
-		
-        $view = new View("dashboard", "back");
+      $rate = new Rate();
+      $ratings[0] = $rate->select(["COUNT(id) AS rating"], ["rate" => "1"]);
+      $ratings[1] = $rate->select(["COUNT(id) AS rating"], ["rate" => "2"]);
+      $ratings[2] = $rate->select(["COUNT(id) AS rating"], ["rate" => "3"]);
+      $ratings[3] = $rate->select(["COUNT(id) AS rating"], ["rate" => "4"]);
+      $ratings[4] = $rate->select(["COUNT(id) AS rating"], ["rate" => "5"]);
+
+      $view = new View("dashboard", "back");
 	    $view->assign("users", $users);
 	    $view->assign("totalVisitor", count($totalVisitor));
 	    $view->assign("totalVisitorActually", count($totalVisitorActually));
@@ -133,7 +137,7 @@ class Admin
 
 		$user = new UserModel();
 		$role = new Role();
-		
+
 		/* Display users HTML Structure */
 		if(isset($_POST["requestType"]) && $_POST["requestType"] == "display")
         {
@@ -1707,26 +1711,52 @@ class Admin
 				$htmlContent .= "<input id='tokenForm' type='hidden' name='tokenForm' value='" . $token . "'>";
 				
 				if ($message->getId() != null){
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<div class='field'>";
 					$htmlContent .= "<h1>Modification du message : n°" . $message->getId() . "</h1>";
-					$htmlContent .= "<div class='field'>";
-						$htmlContent .= "<label>Contenu</label>";
-						$htmlContent .= "<input id='input-content' type='text' name='content' value='" . $message->getContent() . "'>";
-						$htmlContent .= "<input id='input-idUser' type='hidden' name='idUser' value='" . $message->getIdUser() . "'>";
-						$htmlContent .= "<input id='input-idForum' type='hidden' name='idForum' value='" . $message->getIdForum() . "'>";
-						$htmlContent .= "<input id='input-idMessage' type='hidden' name='idMessage' value='" . $message->getIdMessage() . "'>";
+                    $htmlContent .= "</div>";
+                    $htmlContent .= "</div>";
+
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<hr>";
+                    $htmlContent .= "</div>";
+
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<div class='field'>";
+                    $htmlContent .= "<label>Contenu</label>";
+                    $htmlContent .= "<input id='input-content' class='input' type='text' name='content' value='" . $message->getContent() . "'>";
+                    $htmlContent .= "</div>";
+
+                    $htmlContent .= "<input id='input-idUser' type='hidden' name='idUser' value='" . $message->getIdUser() . "'>";
+                    $htmlContent .= "<input id='input-idForum' type='hidden' name='idForum' value='" . $message->getIdForum() . "'>";
+                    $htmlContent .= "<input id='input-idMessage' type='hidden' name='idMessage' value='" . $message->getIdMessage() . "'>";
 					$htmlContent .= "</div>";
-					$htmlContent .= "<div class='section'>";
-						$htmlContent .= "<input class='btn btn-delete' onclick='closeMessageForm()' type='button' value='Annuler'>";
+					$htmlContent .= "<div class='field-row field-cta'>";
+						$htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeMessageForm()' type='button' value='Annuler'>";
 				}
 				else
 				{
-					$htmlContent .= "<h1>Création d'un nouveau message</h1>";
-					$htmlContent .= "<div class='field'>";
-						$htmlContent .= "<label>Contenu du message</label>";
-						$htmlContent .= "<input id='input-content' type='text' name='content'>";
-					$htmlContent .= "</div>";
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<div class='field'>";
+                    $htmlContent .= "<h1>Création d'un nouveau message</h1>";
+                    $htmlContent .= "</div>";
+                    $htmlContent .= "</div>";
+
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<hr>";
+                    $htmlContent .= "</div>";
+
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<div class='field'>";
+                    $htmlContent .= "<label>Contenu du message</label>";
+                    $htmlContent .= "<input id='input-content' class='input' type='text' name='content'>";
+                    $htmlContent .= "</div>";
+
 					$htmlContent .= "<input id='input-idUser' type='hidden' name='idUser' value='" . $_SESSION['id'] . "'>";
 					$htmlContent .= "<input id='input-idMessage' type='hidden' name='idUser'>";
+                    $htmlContent .= "</div>";
+
+                    $htmlContent .= "<div class='field-row'>";
 					$htmlContent .= "<div class='field'>";
 						$htmlContent .= "<select name='messageIdForum' id='input-idForum'>";
 						foreach($forumList as $forum){
@@ -1734,17 +1764,18 @@ class Admin
 						}
 						$htmlContent .= "</select>";
 					$htmlContent .= "</div>";
-					$htmlContent .= "<div class='section'>";
-						$htmlContent .= "<input class='btn btn-delete' onclick='closeMessageForm()' type='button' value='Annuler'>";
+                    $htmlContent .= "</div>";
+					$htmlContent .= "<div class='field-row field-cta'>";
+                    $htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeMessageForm()' type='button' value='Annuler'>";
 				}
 				
 				if($message->getId() != null)
 				{
 					$htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $message->getId() . "'>";
-					$htmlContent .= "<input class='btn btn-validate' onclick='updateMessage()' type='button' value='Modifier'>";
+					$htmlContent .= "<input class='btn-form btn-form-validate' onclick='updateMessage()' type='button' value='Modifier'>";
 				}
 				else
-					$htmlContent .= "<input class='btn btn-validate' onclick='insertMessage()' type='button' value='Créer'>";
+					$htmlContent .= "<input class='btn-form btn-form-validate' onclick='insertMessage()' type='button' value='Créer'>";
 				
 				$htmlContent .= "</div>";
 				}
@@ -1760,6 +1791,180 @@ class Admin
 			}
 		}
 	}
+
+    public function banWord()
+    {
+        $isConnected = Verificator::checkConnection();
+
+        /* Reload the login session time if connexion status is true */
+        if($isConnected)
+            Verificator::reloadConnection();
+
+        /* Check access permission */
+        if(!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_FORUM"))
+            header("Location: /dashboard");
+
+        $banWord = new BanWord();
+
+        if(isset($_POST["requestType"]) && $_POST["requestType"] == "display")
+        {
+            if(!$isConnected)
+                echo "login";
+            else
+            {
+                $BanWordList = $banWord->select(['id','message', 'creationDate', 'updateDate'], []);
+                print_r($BanWordList);
+                $htmlContent = "";
+
+                foreach($BanWordList as $word)
+                {
+                    $htmlContent .= "<tr>";
+                    $htmlContent .= "<td><input id='" . $word['id'] . "' class='idBanWord' type='checkbox' name='" . $word["id"] . "'></td>";
+                    $htmlContent .= "<td>" . $word["id"] . "</td>";
+                    $htmlContent .= "<td>" . $word["message"] . "</td>";
+                    $htmlContent .= "<td>" . $word["creationDate"] . "</td>";
+                    $htmlContent .= "<td>" . $word["updateDate"] . "</td>";
+
+                    $htmlContent .= "<td><button class='btn btn-edit' onclick='openBanWordForm(\"" . $word["id"] . "\")'>Editer</button></td>";
+                    $htmlContent .= "</tr>";
+                }
+
+                echo $htmlContent;
+            }
+        } else if((isset($_POST["requestType"]) ? $_POST["requestType"] == "insert" : false) &&
+            (isset($_POST["tokenForm"]) && isset($_SESSION["tokenForm"]) ? $_POST["tokenForm"] == $_SESSION["tokenForm"] : false))
+        {
+            if(!$isConnected)
+                echo "login";
+            else{
+                if( (isset($_POST["banWord"]) ? $_POST["banWord"] != "" : false)){
+                    $banWord->setMessage($_POST["banWord"]);
+                    $banWord->creationDate();
+                    $banWord->updateDate();
+                    $banWord->save();
+                }
+            }
+        } else if((isset($_POST["requestType"]) ? $_POST["requestType"] == "update" : false) &&
+            (isset($_POST["tokenForm"]) && isset($_SESSION["tokenForm"]) ? $_POST["tokenForm"] == $_SESSION["tokenForm"] : false))
+        {
+            if(!$isConnected)
+                echo "login";
+            else
+            {
+                if( (isset($_POST["banWordId"]) ? $_POST["banWordId"] != "" : false)){
+                    $object = $banWord->setId(intval($_POST["banWordId"]));
+                    if($object)
+                        $banWord = $object;
+
+                    $banWord->setMessage($_POST["banWord"]);
+                    $banWord->updateDate();
+                    $banWord->save();
+                }
+            }
+        } else if((isset($_POST["requestType"]) && $_POST["requestType"] == "delete"))
+        {
+            if(!$isConnected)
+                echo "login";
+            else
+            {
+                if (isset($_POST["banWordIdList"]) && $_POST["banWordIdList"] != "") {
+                    /* Delete messages */
+                    $banWordIdList = explode(",", $_POST["banWordIdList"]);
+
+                    for ($i = 0; $i < count($banWordIdList); $i++) {
+                        /* Deletion of the message */
+                        $object = $banWord->setId($banWordIdList[$i]);
+                        if($object)
+                            $banWord = $object;
+
+                        $banWord->delete();
+                        echo "good";
+                    }
+                }
+            }
+        } else if(isset($_POST["requestType"]) && $_POST["requestType"] == "openForm")
+        {
+            if(!$isConnected)
+                echo "login";
+            else
+            {
+                if(isset($_POST["banWordId"]) && $_POST["banWordId"] != ""){
+                    $object = $banWord->setId(intval($_POST["banWordId"]));
+                    if($object)
+                        $banWord = $object;
+                }
+
+                $htmlContent = "";
+
+                $token = md5(uniqid());
+                $_SESSION["tokenForm"] = $token;
+
+                $htmlContent .= "<form class='form'>";
+
+                // @CSRF
+                $htmlContent .= "<input id='tokenForm' type='hidden' name='tokenForm' value='" . $token . "'>";
+
+                if ($banWord->getId() != null){
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<div class='field'>";
+                    $htmlContent .= "<h1>Modification du mot : n°" . $banWord->getId() . "</h1>";
+                    $htmlContent .= "</div>";
+                    $htmlContent .= "</div>";
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<hr>";
+                    $htmlContent .= "</div>";
+
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<div class='field'>";
+                    $htmlContent .= "<label>Mot</label>";
+                    $htmlContent .= "<input id='input-message' class='input' type='text' name='content' value='" . $banWord->getMessage(). "'>";
+                    $htmlContent .= "</div>";
+                    $htmlContent .= "</div>";
+
+                    $htmlContent .= "<div class='field-row field-cta'>";
+                    $htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $banWord->getId() . "'>";
+                    $htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeBanWordForm()' type='button' value='Annuler'>";
+                    $htmlContent .= "<input class='btn-form btn-form-validate' onclick='updateBanWord()' type='button' value='Modifier'>";
+                    $htmlContent .= "</div>";
+                }
+                else
+                {
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<div class='field'>";
+                    $htmlContent .= "<h1>Ajout d'un mot</h1>";
+                    $htmlContent .= "</div>";
+                    $htmlContent .= "</div>";
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<hr>";
+                    $htmlContent .= "</div>";
+
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<div class='field'>";
+                    $htmlContent .= "<label>Mot</label>";
+                    $htmlContent .= "<input id='input-message' class='input' type='text' name='content'>";
+                    $htmlContent .= "</div>";
+                    $htmlContent .= "</div>";
+
+                    $htmlContent .= "<div class='field-row field-cta'>";
+                    $htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeBanWordForm()' type='button' value='Annuler'>";
+                    $htmlContent .= "<input class='btn-form btn-form-validate' onclick='insertBanWord()' type='button' value='Créer'>";
+                    $htmlContent .= "</div>";
+                }
+
+                $htmlContent .= "</div>";
+            }
+            $htmlContent .= "</form>";
+            echo $htmlContent;
+
+        } else {
+            if(!$isConnected)
+                header("Location: /login");
+
+            if(!isset($_POST["requestType"])) {
+                $view = new View("banWord", "back");
+            }
+        }
+    }
 	
 	public function warningManagement()
 	{

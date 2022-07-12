@@ -1,5 +1,6 @@
 .DS_Store
 .idea
+log/logFile.log
 ini.yml
 Stylesheet/style.css
 Stylesheet/style.css.map
