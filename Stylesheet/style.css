@@ -2037,6 +2037,10 @@ nav > ul > .bottom,
   width: 100%;
   height: 450px;
 }
+.statistics #avisChartdiv {
+  width: 100%;
+  height: 450px;
+}
 
 .keyData {
   display: flex;
@@ -2189,6 +2193,14 @@ nav > ul > .bottom,
 
 .starChecked {
   color: #6fc7ff;
+}
+
+.averageRate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5vw;
+  gap: 1vw;
 }
 
 /*# sourceMappingURL=style.css.map */

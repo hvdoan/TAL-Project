@@ -61,41 +61,56 @@ $_SESSION["tokenForm"] = $token;
 				let star3 = document.getElementById("star3");
 				let star4 = document.getElementById("star4");
 				let star5 = document.getElementById("star5");
-				star1.addEventListener('mousemove', e => {
-					addStar(1);
-				});
-				star1.addEventListener('mouseout', e => {
-					removeStars();
-				});
-				star2.addEventListener('mousemove', e => {
-					addStar(2);
-				});
-				star2.addEventListener('mouseout', e => {
-					removeStars();
-				});
-				star3.addEventListener('mousemove', e => {
-					addStar(3);
-				});
-				star3.addEventListener('mouseout', e => {
-					removeStars();
-				});
-				star4.addEventListener('mousemove', e => {
-					addStar(4);
-				});
-				star4.addEventListener('mouseout', e => {
-					removeStars();
-				});
-				star5.addEventListener('mousemove', e => {
-					addStar(5);
-				});
-				star5.addEventListener('mouseout', e => {
-					removeStars();
-				});
+				if(star1 != null){
+					star1.addEventListener('mousemove', e => {
+						addStar(1);
+					});
+					star1.addEventListener('mouseout', e => {
+						removeStars();
+					});
+				}
+				if(star2 != null){
+					star2.addEventListener('mousemove', e => {
+						addStar(2);
+					});
+					star2.addEventListener('mouseout', e => {
+						removeStars();
+					});
+				}
+				if(star3 != null){
+					star3.addEventListener('mousemove', e => {
+						addStar(3);
+					});
+					star3.addEventListener('mouseout', e => {
+						removeStars();
+					});
+				}
+				if(star4 != null){
+					star4.addEventListener('mousemove', e => {
+						addStar(4);
+					});
+					star4.addEventListener('mouseout', e => {
+						removeStars();
+					});
+				}
+				if(star5 != null){
+					star5.addEventListener('mousemove', e => {
+						addStar(5);
+					});
+					star5.addEventListener('mouseout', e => {
+						removeStars();
+					});
+				}
 			</script>
 			
 		</div>
 		
 		<div class="medium">
+			<div>
+				<div class="averageRate">
+					Note : <?=$this->data["averageRatings"][0]["average"]?> <span class='fa fa-star starChecked'></span>
+				</div>
+			</div>
 			<div>
 				<?php foreach($this->data["rating"] as $rating):
 					$counter++;

@@ -196,6 +196,11 @@ class User extends Sql
     {
         $this->activeAccount = (int)$flag;
     }
+	
+	public function update(Message $message)
+	{
+		//mail send logic
+	}
 
     public function getRegisterForm(): array
     {

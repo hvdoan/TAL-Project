@@ -373,7 +373,6 @@ class Main {
 		
 		else if((isset($_POST["requestType"]) ? $_POST["requestType"] == "insertWarning" : false) &&
 			(isset($_POST["tokenForm"]) && isset($_SESSION["tokenForm"]) ? $_POST["tokenForm"] == $_SESSION["tokenForm"] : false)){
-			echo "insert";
 			if(!$isConnected)
 				header("Location: /login");
 			else
@@ -382,7 +381,6 @@ class Main {
 					&& (isset($_POST["warningIdUser"]) ? $_POST["warningIdUser"] != "" : false)
 					&& (isset($_POST["warningStatus"]) ? $_POST["warningStatus"] != "" : false))
 				{
-					echo "insert2";
 					
 					$warning = new Warning();
 					
@@ -404,6 +402,14 @@ class Main {
 					(isset($_POST["messageIdForum"]) ? $_POST["messageIdForum"] != "" : false) &&
 					(isset($_POST["messageIdMessage"]) ? $_POST["messageIdMessage"] != "" : false) &&
 					(isset($_POST["messageContent"]) ? $_POST["messageContent"] != "" : false)){
+				
+				if($_POST["messageIdUser"] != 0){
+					$userAnswerMail = new UserModel();
+					$object = $userAnswerMail->setId(intval($_POST["messageIdUser"]));
+					if($object)
+						$userAnswerMail = $object;
+					$message->notify($userAnswerMail, "Vous avez reçu une réponse à votre message sur le forum " . $_POST["messageIdForum"]);
+				}
 				
 				/* Creation of a message for the front forum */
 				$message->setIdUser($_POST["messageIdUser"]);
@@ -546,10 +552,12 @@ class Main {
 			
 			$view = new View("rating");
 			
+			$averageRatings = $rating->select(["ROUND(AVG(rate), 2) AS average"], []);
 			$alreadyRated = $rating->select(["id"], ["idUser" => $_SESSION["id"]]);
 			$rating = $rating->select(["id", "idUser", "rate", "description", "creationDate", "updateDate"], [], " ORDER BY updateDate DESC LIMIT 3");
 			
 			$view->assign("rating", $rating);
+			$view->assign("averageRatings", $averageRatings);
 			$view->assign("alreadyRated", $alreadyRated);
 			$view->assign("isConnected", $isConnected);
 		}

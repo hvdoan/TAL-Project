@@ -119,4 +119,9 @@ class Message extends Sql{
 	public function updateDate(): void {
 		$this->updateDate = date("Y-m-d H:i:s");
 	}
+	
+	public function notify($idUser, $content)
+	{
+		$this->idUser->update($this->content);
+	}
 }

@@ -11,6 +11,7 @@ use App\Model\Log;
 use App\Model\Message;
 use App\Model\Page;
 use App\Model\Permission;
+use App\Model\Rate;
 use App\Model\Role;
 use App\Model\Tag;
 use App\Model\TotalVisitor;
@@ -82,16 +83,25 @@ class Admin
         $logList = $log->select([DBPREFIXE."Log.id", DBPREFIXE."User.lastname", DBPREFIXE."User.firstname", "time"], [],
             ' LEFT JOIN '. DBPREFIXE .'User ON '. DBPREFIXE .'Log.idUser = '. DBPREFIXE .'User.id ORDER BY time DESC LIMIT 5');
 
-
-
+		$rate = new Rate();
+		$ratings[0] = $rate->select(["COUNT(id) AS rating"], ["rate" => "1"]);
+		$ratings[1] = $rate->select(["COUNT(id) AS rating"], ["rate" => "2"]);
+		$ratings[2] = $rate->select(["COUNT(id) AS rating"], ["rate" => "3"]);
+		$ratings[3] = $rate->select(["COUNT(id) AS rating"], ["rate" => "4"]);
+		$ratings[4] = $rate->select(["COUNT(id) AS rating"], ["rate" => "5"]);
+	
+	    $averageRatings = $rate->select(["ROUND(AVG(rate), 2) AS average"], []);
+		
         $view = new View("dashboard", "back");
 	    $view->assign("users", $users);
 	    $view->assign("totalVisitor", count($totalVisitor));
 	    $view->assign("totalVisitorActually", count($totalVisitorActually));
+	    $view->assign("averageRatings", $averageRatings);
 	    $view->assign("percentUsers", $percentUsers);
 	    $view->assign("percentTotalUser", $percentTotalUser);
 	    $view->assign("messageList", $messageList);
 	    $view->assign("logList", $logList);
+	    $view->assign("ratings", $ratings);
     }
 
 	public function configuration()

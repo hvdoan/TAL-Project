@@ -1,90 +1,4 @@
-// import * as am5 from "/API/amCharts/index.js";
-// import * as am5xy from "/API/amCharts/xy.js";
-
-// window.onload = loadStatistics;
-
-function loadTotalUserByCreation(users){
-	am5.ready(function () {
-
-		// Create root and chart
-		let root = am5.Root.new("userCreationChartDiv2");
-
-		root.setThemes([
-			am5themes_Animated.new(root)
-		]);
-
-		let chart = root.container.children.push(
-			am5xy.XYChart.new(root, {
-				panY: false,
-				layout: root.verticalLayout,
-				maxTooltipDistance: 0
-			})
-		);
-
-		let data = [{
-			category: "Research",
-			value1: 1000,
-			value2: 588
-		}, {
-			category: "Marketing",
-			value1: 1200,
-			value2: 1800
-		}, {
-			category: "Sales",
-			value1: 850,
-			value2: 1230
-		}];
-
-		// Craete Y-axis
-		let yAxis = chart.yAxes.push(
-			am5xy.ValueAxis.new(root, {
-				renderer: am5xy.AxisRendererY.new(root, {
-				})
-			})
-		);
-
-		// Create X-Axis
-		var xAxis = chart.xAxes.push(
-			am5xy.CategoryAxis.new(root, {
-				maxDeviation: 0.2,
-				renderer: am5xy.AxisRendererX.new(root, {
-				}),
-				categoryField: "category"
-			})
-		);
-		xAxis.data.setAll(data);
-
-		// Create series
-		var series1 = chart.series.push(
-			am5xy.ColumnSeries.new(root, {
-				name: "Series",
-				xAxis: xAxis,
-				yAxis: yAxis,
-				valueYField: "value1",
-				categoryXField: "category",
-				tooltip: am5.Tooltip.new(root, {})
-			})
-		);
-		series1.data.setAll(data);
-
-		var series2 = chart.series.push(
-			am5xy.ColumnSeries.new(root, {
-				name: "Series",
-				xAxis: xAxis,
-				yAxis: yAxis,
-				valueYField: "value2",
-				categoryXField: "category"
-			})
-		);
-		series2.data.setAll(data);
-
-		// Add legend
-		var legend = chart.children.push(am5.Legend.new(root, {}));
-		legend.data.setAll(chart.series.values);
-
-	});
-}
-
+//userCreationChartDiv
 function loadUserByCreation(users){
 	
 	am5.ready(function (){
@@ -118,15 +32,12 @@ function loadUserByCreation(users){
 		let data = [];
 		for(let i = 0; i < users.length; i++){
 			let creationDate = new Date(users[i].creationDate);
-			// am5.time.add(creationDate, "day", 1);
 			
 			data.push({
 				date: creationDate.getTime(),
-				// value: users[i].id * 10
 				value: i
 			})
 		}
-		console.log(data);
 		
 		// Create Y-axis
 		let yAxis = chart.yAxes.push(
@@ -192,132 +103,141 @@ function loadUserByCreation(users){
 		}));
 
 		// Add legend
-		var legend = chart.children.push(am5.Legend.new(root, {}));
+		let legend = chart.children.push(am5.Legend.new(root, {}));
 		legend.data.setAll(chart.series.values);
 	
 	}); // end am5.ready()
 }
 
-function loadStatistics(){
-	
+//avisChartDiv
+function loadAvis(ratings, averageRatings){
 	am5.ready(function (){
 		
 		// Create root element
 		// https://www.amcharts.com/docs/v5/getting-started/#Root_element
-		let root = am5.Root.new("userCreationChartDiv");
-		
+		let avisChart = am5.Root.new("avisChartdiv");
 		
 		// Set themes
 		// https://www.amcharts.com/docs/v5/concepts/themes/
-		root.setThemes([
-			am5themes_Animated.new(root)
+		avisChart.setThemes([
+			am5themes_Animated.new(avisChart)
 		]);
-		
 		
 		// Create chart
 		// https://www.amcharts.com/docs/v5/charts/xy-chart/
-		let chart = root.container.children.push(am5xy.XYChart.new(root, {
+		let chart = avisChart.container.children.push(am5xy.XYChart.new(avisChart, {
 			panX: true,
 			panY: true,
-			wheelX: "panX",
-			wheelY: "zoomX",
-			pinchZoomX: true
+			wheelX: "none",
+			wheelY: "none"
 		}));
 		
-		// Add cursor
-		// https://www.amcharts.com/docs/v5/charts/xy-chart/cursor/
-		let cursor = chart.set("cursor", am5xy.XYCursor.new(root, {
-			behavior: "none"
+		chart.children.unshift(am5.Label.new(avisChart, {
+			text: "Moyenne des avis : " + averageRatings[0].average,
+			fontSize: 25,
+			fontWeight: "400",
+			textAlign: "center",
+			x: am5.percent(50),
+			centerX: am5.percent(50),
+			paddingTop: 0,
+			paddingBottom: 20
 		}));
+		
+		var cursor = chart.set("cursor", am5xy.XYCursor.new(avisChart, {}));
 		cursor.lineY.set("visible", false);
 		
-		
-		// Generate random data
-		let date = new Date();
-		date.setHours(0, 0, 0, 0);
-		let value = 100;
-		
-		function generateData(){
-			value = Math.round((Math.random() * 10 - 5) + value);
-			am5.time.add(date, "day", 1);
-			return {
-				date: date.getTime(),
-				value: value
-			};
-		}
-		
-		function generateDatas(count){
-			let data = [];
-			for(let i = 0; i < count; ++i){
-				data.push(generateData());
-			}
-			return data;
-		}
-		
+		// We don't want zoom-out button to appear while animating, so we hide it
+		chart.zoomOutButton.set("forceHidden", true);
 		
 		// Create axes
 		// https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
-		let xAxis = chart.xAxes.push(am5xy.DateAxis.new(root, {
-			maxDeviation: 0.5,
-			baseInterval: {
-				timeUnit: "day",
-				count: 1
-			},
-			renderer: am5xy.AxisRendererX.new(root, {
-				pan: "zoom"
-			}),
-			tooltip: am5.Tooltip.new(root, {})
+		let xRenderer = am5xy.AxisRendererX.new(avisChart, {
+			maxGridDistance: 20,
+		});
+		xRenderer.labels.template.setAll({
+			centerY: am5.p50,
+			centerX: am5.p50,
+			paddingRight: 15
+		});
+		// xRenderer.grid.template.set("visible", false);
+		
+		let xAxis = chart.xAxes.push(am5xy.CategoryAxis.new(avisChart, {
+			maxDeviation: 0.3,
+			categoryField: "rate",
+			renderer: xRenderer,
+			tooltip: am5.Tooltip.new(avisChart, {})
 		}));
 		
-		let yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
-			maxDeviation: 1,
-			renderer: am5xy.AxisRendererY.new(root, {
-				pan: "zoom"
-			})
+		let yAxis = chart.yAxes.push(am5xy.ValueAxis.new(avisChart, {
+			maxDeviation: 0.3,
+			categoryField: "value",
+			min: 0,
+			renderer: am5xy.AxisRendererY.new(avisChart, {})
 		}));
-		
 		
 		// Add series
 		// https://www.amcharts.com/docs/v5/charts/xy-chart/series/
-		let series = chart.series.push(am5xy.SmoothedXLineSeries.new(root, {
-			name: "Series",
+		let series = chart.series.push(am5xy.ColumnSeries.new(avisChart, {
+			name: "Series 1",
 			xAxis: xAxis,
 			yAxis: yAxis,
 			valueYField: "value",
-			valueXField: "date",
-			tooltip: am5.Tooltip.new(root, {
-				labelText: "{valueY}"
+			sequencedInterpolation: true,
+			categoryXField: "rate",
+			tooltip: am5.Tooltip.new(avisChart, {
+				labelText:"{valueY} avis"
 			})
 		}));
 		
-		series.fills.template.setAll({
-			visible: true,
-			fillOpacity: 0.2
+		// Rounded corners for columns
+		series.columns.template.setAll({
+			cornerRadiusTL: 5,
+			cornerRadiusTR: 5
 		});
 		
+		// Make each column to be of a different color
+		series.columns.template.adapters.add("fill", function (fill, target){
+			return chart.get("colors").getIndex(series.columns.indexOf(target));
+		});
+		
+		series.columns.template.adapters.add("stroke", function (stroke, target){
+			return chart.get("colors").getIndex(series.columns.indexOf(target));
+		});
+		
+		// Add Label bullet
 		series.bullets.push(function (){
-			return am5.Bullet.new(root, {
-				locationY: 0,
-				sprite: am5.Circle.new(root, {
-					radius: 4,
-					stroke: root.interfaceColors.get("background"),
-					strokeWidth: 2,
-					fill: series.get("fill")
+			return am5.Bullet.new(avisChart, {
+				locationY: 1,
+				sprite: am5.Label.new(avisChart, {
+					text: "{valueYWorking.formatNumber('#.')}",
+					fill: avisChart.interfaceColors.get("alternativeText"),
+					centerY: 0,
+					centerX: am5.p50,
+					populateText: true
 				})
 			});
 		});
 		
+		// Set data
+		let data = [{
+			"rate": "1 étoile",
+			"value": parseInt(ratings[0][0].rating)
+		}, {
+			"rate": "2 étoiles",
+			"value": parseInt(ratings[1][0].rating)
+		}, {
+			"rate": "3 étoiles",
+			"value": parseInt(ratings[2][0].rating)
+		}, {
+			"rate": "4 étoiles",
+			"value": parseInt(ratings[3][0].rating)
+		}, {
+			"rate": "5 étoiles",
+			"value": parseInt(ratings[4][0].rating)
+		}];
 		
-		// Add scrollbar
-		// https://www.amcharts.com/docs/v5/charts/xy-chart/scrollbars/
-		chart.set("scrollbarX", am5.Scrollbar.new(root, {
-			orientation: "horizontal"
-		}));
-		
-		
-		let data = generateDatas(50);
+		xAxis.data.setAll(data);
 		series.data.setAll(data);
-		
 		
 		// Make stuff animate on load
 		// https://www.amcharts.com/docs/v5/concepts/animations/
@@ -325,5 +245,4 @@ function loadStatistics(){
 		chart.appear(1000, 100);
 		
 	}); // end am5.ready()
-	
 }
