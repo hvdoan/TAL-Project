@@ -14,6 +14,14 @@
   controller: main
   action: forum
 
+/rating:
+  controller: main
+  action: rating
+
+/rating-list:
+  controller: main
+  action: ratingList
+
 /login:
     controller: user
     action: login

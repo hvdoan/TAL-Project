@@ -10,6 +10,8 @@ use App\Model\Donation;
 use App\Model\DonationTier;
 use App\Model\Forum;
 use App\Model\Message;
+use App\Model\Rate;
+use App\Model\Rating;
 use App\Model\Tag;
 use App\Model\User as UserModel;
 use App\Model\Warning;
@@ -381,7 +383,6 @@ class Main {
 		
 		else if((isset($_POST["requestType"]) ? $_POST["requestType"] == "insertWarning" : false) &&
 			(isset($_POST["tokenForm"]) && isset($_SESSION["tokenForm"]) ? $_POST["tokenForm"] == $_SESSION["tokenForm"] : false)){
-			echo "insert";
 			if(!$isConnected)
 				header("Location: /login");
 			else
@@ -390,7 +391,6 @@ class Main {
 					&& (isset($_POST["warningIdUser"]) ? $_POST["warningIdUser"] != "" : false)
 					&& (isset($_POST["warningStatus"]) ? $_POST["warningStatus"] != "" : false))
 				{
-					echo "insert2";
 					
 					$warning = new Warning();
 					
@@ -412,7 +412,15 @@ class Main {
 					(isset($_POST["messageIdForum"]) ? $_POST["messageIdForum"] != "" : false) &&
 					(isset($_POST["messageIdMessage"]) ? $_POST["messageIdMessage"] != "" : false) &&
 					(isset($_POST["messageContent"]) ? $_POST["messageContent"] != "" : false)){
-
+				
+				if($_POST["messageIdUser"] != 0){
+					$userAnswerMail = new UserModel();
+					$object = $userAnswerMail->setId(intval($_POST["messageIdUser"]));
+					if($object)
+						$userAnswerMail = $object;
+					$message->notify($userAnswerMail, "Vous avez reçu une réponse à votre message sur le forum " . $_POST["messageIdForum"]);
+				}
+				
 				/* Creation of a message for the front forum */
 				$message->setIdUser($_POST["messageIdUser"]);
 				$message->setIdForum($_POST["messageIdForum"]);
@@ -516,6 +524,73 @@ class Main {
 				$view->assign("isConnected", $isConnected);
 			}
 		}
+	}
+	
+	public function rating()
+	{
+		/* Get the connexion status */
+		$isConnected = Verificator::checkConnection();
+		
+		if($isConnected){
+			Verificator::unsetSession();
+		}
+		
+		$rating = new Rate();
+		
+		if((isset($_POST["requestType"]) ? $_POST["requestType"] == "insertRating" : false) &&
+			(isset($_POST["tokenForm"]) && isset($_SESSION["tokenForm"]) ? $_POST["tokenForm"] == $_SESSION["tokenForm"] : false)){
+			
+			if( (isset($_POST["ratingIdUser"]) ? $_POST["ratingIdUser"] != "" : false) &&
+				(isset($_POST["ratingRate"]) ? $_POST["ratingRate"] != "" : false) &&
+				(isset($_POST["ratingDescription"]) ? $_POST["ratingDescription"] != "" : false)){
+				
+				/* Creation of a rating for the front forum */
+				$rating->setIdUser($_POST["ratingIdUser"]);
+				$rating->setRate($_POST["ratingRate"]);
+				$rating->setDescription($_POST["ratingDescription"]);
+				$rating->creationDate();
+				$rating->updateDate();
+				$rating->save();
+
+				$object = $rating->setId(intval($rating->getLastInsertId()));
+				if($object)
+					$rating = $object;
+			}
+		}else if(!isset($_POST["requestType"])){
+			
+			/* Reload the login session time if connexion status is true */
+			if($isConnected)
+				Verificator::reloadConnection();
+			
+			$view = new View("rating");
+			
+			$averageRatings = $rating->select(["ROUND(AVG(rate), 2) AS average"], []);
+			$alreadyRated = $rating->select(["id"], ["idUser" => $_SESSION["id"]]);
+			$rating = $rating->select(["id", "idUser", "rate", "description", "creationDate", "updateDate"], [], " ORDER BY updateDate DESC LIMIT 3");
+			
+			$view->assign("rating", $rating);
+			$view->assign("averageRatings", $averageRatings);
+			$view->assign("alreadyRated", $alreadyRated);
+			$view->assign("isConnected", $isConnected);
+		}
+	}
+	
+	public function ratingList()
+	{
+		$view = new View("rating-list");
+		$rating	= new Rate();
+		
+		$rating = $rating->select(["id", "idUser", "rate", "description", "creationDate", "updateDate"], []);
+		
+		/* Get the connexion status */
+		$isConnected = Verificator::checkConnection();
+		/* Reload the login session time if connexion status is true */
+		if($isConnected)
+			Verificator::reloadConnection();
+		
+		$view->assign("rating", $rating);
+		$view->assign("isConnected", $isConnected);
+		
 	}
 
     public function donation()

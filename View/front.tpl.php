@@ -12,6 +12,8 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <!-- JS -->
         <script src="../JS/main.min.js"></script>
+        <!-- Add icon library -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	</head>
 	
 	<body>
@@ -31,6 +33,7 @@
 				<ul>
 					<a class="btn" href="#">Game</a>
 					<a class="btn" href="#">News</a>
+					<a class="btn" href="/rating">Avis</a>
 					<a class="btn" href="#">About</a>
 					<a class="btn" href="/forum-list">Forums</a>
 					<a class="btn" href="#">Wiki</a>
@@ -42,7 +45,7 @@
                 <label class="avatar" for="trigger-user-menu">
                     <div id="avatar-container">
                         <?php if($_SESSION['avatar'] != "") : ?>
-                            <img class="icon" src="data:<?=mime_content_type($_SESSION['avatar'])?>>;base64, <?=$_SESSION['avatar']?>">
+                            <img class="icon" src="data:<?=mime_content_type($_SESSION['avatar'])?>>;base64, <?=$_SESSION['avatar']?>" alt="avatar">
                         <?php else : ?>
                             <i class="icon fa-solid fa-user-astronaut"></i>
                         <?php endif; ?>
