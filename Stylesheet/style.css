@@ -610,6 +610,12 @@ body {
   width: 240px;
 }
 
+#validate-account {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .banner {
   display: block;
   width: 100%;

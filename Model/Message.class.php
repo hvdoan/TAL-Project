@@ -121,20 +121,24 @@ class Message extends Sql{
 		$this->updateDate = date("Y-m-d H:i:s");
 	}
 	
-	public function addNotifyUser(User $user)
+	public function addNotifyUser($userId)
 	{
-		$this->subscribedUsers[ $user->id ] = $user;
+		$this->subscribedUsers[$userId] = $userId;
 	}
 	
-	public function unsetNotifyUser(User $user)
+	public function unsetNotifyUser($userId)
 	{
-		unset( $this->subscribedUsers[ $user->id ] );
+		unset($this->subscribedUsers[$userId]);
 	}
 	
 	public function notify()
 	{
-		foreach ($this->subscribedUsers as $user) {
-			$user->sendNotificationMail($this);
+		$newUser = new User();
+		foreach ($this->subscribedUsers as $userId) {
+			$object = $newUser->setId($userId);
+			if($object)
+				$newUser = $object;
+			$newUser->sendNotificationMail($this, $newUser);
 		}
 	}
 }
