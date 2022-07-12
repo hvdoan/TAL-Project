@@ -11,7 +11,7 @@ class Notification
     public static function displayNotifications(): void {
         if(isset($_SESSION['flash'])) {
             foreach ($_SESSION['flash'] as $type => $message) {
-                echo "<div class='alert alert-$type' onclick='removeNotification()'>".$message."</div>";
+                echo "<div id='alert' class='alert alert-$type' onclick='removeNotification()'>".$message."</div>";
             }
             unset($_SESSION['flash']);
         }

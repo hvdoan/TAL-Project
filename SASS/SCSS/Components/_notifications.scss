@@ -1,40 +1,79 @@
 @use "../Abstracts" as *;
 
-#alert
-{
+.alert {
     position: absolute;
-    top: 70px;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 80px;
+    right: 30px;
     cursor: pointer;
+    padding: 10px 80px;
+    border-radius: 5px;
+    width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-family: $jaldi;
+    animation: fadein 0.7s, delete 1s ease-in 5s forwards;
 
-    & > .alert {
-        padding: 10px 80px;
-        border-radius: 5px;
-        color: white;
-        width: 500px;
-        margin-left: auto;
-        margin-right: auto;
-        text-align: center;
-        font-family: $jaldi;
-        transition: .3s;
-
-        &:hover
-        {
-            transform: scale(1.05);
-            transition: .3s;
+    @keyframes fadein {
+        0% {
+            opacity: 0;
+            top: 40px;
         }
-
-        &-success {
-            background-color: #46A150;
+        100% {
+            opacity: 1;
+            top: 80px;
         }
+    }
 
-        &-error {
-            background-color: #AD4E47;
+    @keyframes delete {
+        0% {
+            opacity: 1;
+            top: 80px;
         }
+        100% {
+            opacity: 0;
+            top: 40px;
+        }
+    }
 
-        &-warning {
-            background-color: #e0c335;
-        }
+    &:before {
+        content: '';
+        position: absolute;
+        width: 0;
+        border-left: 1px solid;
+        border-right: 2px solid;
+        border-bottom-right-radius: 3px;
+        border-top-right-radius: 3px;
+        left: 0;
+        top: 50%;
+        transform: translate(0,-50%);
+        height: 20px;
+    }
+
+    &-success {
+        border: 1px solid rgba(7, 169, 16, 0.8);
+        background-color: rgba(16, 220, 1, 0.3);
+        box-shadow: 0 0 2px #009d07;
+        color: #0a7f00;
+        transition:0.5s;
+        cursor:pointer;
+    }
+
+    &-error {
+        border: 1px solid rgba(241, 6, 6, 0.80);
+        background-color: rgba(220, 17, 1, 0.3);
+        box-shadow: 0 0 2px #ff0303;
+        color: #ff0303;
+        transition:0.5s;
+        cursor:pointer;
+    }
+
+    &-warning {
+        border: 1px solid rgba(183, 168, 7, 0.8);
+        background-color: rgba(213, 220, 1, 0.3);
+        box-shadow: 0 0 2px #a79104;
+        color: #b0940b;
+        transition:0.5s;
+        cursor:pointer;
     }
 }
