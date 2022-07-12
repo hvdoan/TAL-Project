@@ -87,8 +87,7 @@ function updateMessage()
 			else
 			{
 				displayMessage();
-				closeMessageForm();
-				console.log(request.responseText);
+				closeMessageFormBack();
 			}
 		}
 	};
@@ -174,9 +173,9 @@ function openMessageForm(id = "")
 /**************************************************
  * CLOSE MESSAGE FORM
  ***************************************************/
-function closeMessageForm()
+function closeMessageFormBack()
 {
-	console.log('test');
+	console.log("AJAX : request close form completed");
 	$("#ctnMessageForm").html("");
 	$("#ctnMessageForm").css("width", "0");
 	$("#ctnMessageForm").css("height", "0");

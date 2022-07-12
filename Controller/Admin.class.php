@@ -1733,7 +1733,7 @@ class Admin
                     $htmlContent .= "<input id='input-idMessage' type='hidden' name='idMessage' value='" . $message->getIdMessage() . "'>";
 					$htmlContent .= "</div>";
 					$htmlContent .= "<div class='field-row field-cta'>";
-						$htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeMessageForm()' type='button' value='Annuler'>";
+						$htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeMessageFormBack()' type='button' value='Annuler'>";
 				}
 				else
 				{
@@ -1767,7 +1767,7 @@ class Admin
 					$htmlContent .= "</div>";
                     $htmlContent .= "</div>";
 					$htmlContent .= "<div class='field-row field-cta'>";
-                    $htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeMessageForm()' type='button' value='Annuler'>";
+                    $htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeMessageFormBack()' type='button' value='Annuler'>";
 				}
 				
 				if($message->getId() != null)
