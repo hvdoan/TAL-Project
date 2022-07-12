@@ -46,7 +46,6 @@
         <div class="ctn-cta">
             <?php if($this->data["page"]->getId()) { ?>
                 <button id="save-button" class="btn-form btn-form-validate" onclick="save('<?=$this->data["page"]->getId()?>')">Sauvegarder</button>
-                <pre id="output"></pre>
             <?php } else { ?>
                 <button class="btn-form btn-form-validate" onclick="save()">Créer</button>
             <?php } ?>
@@ -124,7 +123,6 @@
     {
         editor.save().then( savedData => {
             let data = JSON.stringify(savedData, null, 4);
-            $('#output').html(data);
 
             if(pageId !== "")
                 updatePage(pageId, data);

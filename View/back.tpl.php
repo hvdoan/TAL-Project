@@ -17,6 +17,11 @@
 	</head>
 	
 	<body class="body-row">
+    <?php
+        use App\Core\Notification;
+
+        Notification::displayNotifications();
+    ?>
 		<nav id="nav">
 			<header>
 				<a href="/home"><h1><?=WEBSITENAME?></h1></a>
@@ -106,8 +111,6 @@
                         <?php endif; ?>
                     </div>
                 </div>
-
-                <div id="alert"></div>
 			</header>
 
 			<?php include "View/" . $this->view . ".view.php"; ?>
