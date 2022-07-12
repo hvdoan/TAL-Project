@@ -255,20 +255,37 @@ class User{
 	
 	public function activatedaccount()
 	{
-		if(isset($_GET['email']) && isset($_GET['token'])){
+        $activation = false;
+
+		if(isset($_GET['email']) && isset($_GET['token']))
+        {
+            $email = addslashes($_GET["email"]);
+            $token = addslashes($_GET["token"]);
+
 			$view = new View("validateAccount");
+            $view->assign("isConnected", false);
 			
 			$user = new UserModel();
-			$userParams = $user->select(['id', 'idRole'], ['email' => $_GET['email']]);
-			
-			$user = $user->setId(intval($userParams[0]['id'], 10));
-			$user->setIdRole($userParams[0]['idRole']);
-			
-			if($user->getToken() == $_GET['token']){
-				$user->setVerifyAccount(true);
-				$user->save();
-			}
-		} else {
+			$userParams = $user->select(['id', 'idRole'], ['email' => $email]);
+
+            if ($userParams)
+            {
+                $user = $user->setId(intval($userParams[0]['id'], 10));
+                $user->setIdRole($userParams[0]['idRole']);
+
+                if($user->getToken() == $token)
+                {
+                    $user->setVerifyAccount(true);
+                    $user->save();
+
+                    $activation = true;
+                }
+            }
+
+            $view->assign("activation", $activation);
+		}
+        else
+        {
             http_response_code(404);
             include('View/404.view.php');
             die();
