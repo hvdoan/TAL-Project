@@ -5,7 +5,7 @@ use App\Core\Sql;
 
 class User extends Sql
 {
-    protected $id = null;
+    public $id = null;
     protected $idRole = null;
     protected $avatar = null;
     protected $firstname = null;
@@ -197,9 +197,10 @@ class User extends Sql
         $this->activeAccount = (int)$flag;
     }
 	
-	public function update(Message $message)
+	public function sendNotificationMail(Message $message)
 	{
 		//mail send logic
+		
 	}
 
     public function getRegisterForm(): array
