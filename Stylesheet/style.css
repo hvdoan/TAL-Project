@@ -486,8 +486,10 @@ flex-ai\:center {
 }
 
 body {
-  scrollbar-color: #3F445F #f1f1f1; /* ascensseur bleu sur fond blanc */
-  scrollbar-size: 10px; /* taille de l'ascenseur */
+  scrollbar-color: #3F445F #f1f1f1;
+  /* ascensseur bleu sur fond blanc */
+  scrollbar-size: 10px;
+  /* taille de l'ascenseur */
 }
 
 #page_creation > .form .url-ctn > .input-ctn > span {
@@ -529,7 +531,8 @@ body {
   width: 10vw;
   height: 10vw;
   transform: rotateY(180deg);
-  
+}
+
 .userSetting {
   margin: 30px;
   padding: 20px;
@@ -829,12 +832,18 @@ body {
   color: #000;
   font-family: "Jaldi", sans-serif;
   cursor: pointer;
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-  -khtml-user-select: none; /* Konqueror HTML */
-  -moz-user-select: none; /* Old versions of Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Old versions of Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }
 .cards > div[type=donation]:hover {
   transform: scale(1.05);
@@ -866,12 +875,18 @@ body {
   color: #000;
   font-family: "Jaldi", sans-serif;
   cursor: pointer;
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-  -khtml-user-select: none; /* Konqueror HTML */
-  -moz-user-select: none; /* Old versions of Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Old versions of Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }
 .cards > div[type=forum]:hover {
   transform: scale(1.05);
