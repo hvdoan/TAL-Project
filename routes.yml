@@ -135,3 +135,15 @@
 /notification:
     controller: notification
     action: notification
+
+/template-edit:
+  controller: admin
+  action: templateEdition
+  security:
+    - admin
+
+/template-save:
+  controller: admin
+  action: saveStyle
+  security:
+    - admin

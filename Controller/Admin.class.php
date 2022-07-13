@@ -20,6 +20,7 @@ use App\Model\User as UserModel;
 use App\Model\Warning;
 use DateTime;
 use App\Model\DonationTier;
+use PHPMailer\PHPMailer\Exception;
 
 class Admin
 {
@@ -2166,4 +2167,56 @@ class Admin
 				$view = new View("warningManagement", "back");
 		}
 	}
+
+    public function templateEdition()
+    {
+        /* Get the connexion status */
+        $isConnected = Verificator::checkConnection();
+
+        /* Reload the login session time if connexion status is true */
+        if ($isConnected)
+            Verificator::reloadConnection();
+
+        /* Check access permission */
+        if (!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_FORUM"))
+            header("Location: /dashboard");
+
+        $file = 'Stylesheet/style.json';
+        $style = null;
+        if (file_exists($file)) {
+            $style = json_decode(file_get_contents($file), true);
+        }
+
+        $view = new View("templateEdition", "back");
+        $view->assign('style', $style);
+    }
+
+    public function saveStyle()
+    {
+        /* Get the connexion status */
+        $isConnected = Verificator::checkConnection();
+
+        /* Reload the login session time if connexion status is true */
+        if ($isConnected)
+            Verificator::reloadConnection();
+
+        /* Check access permission */
+        if (!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_FORUM"))
+            header("Location: /dashboard");
+
+        if((isset($_POST["requestType"]) && $_POST["requestType"] == "saveStyle")) {
+            if (!$isConnected)
+                echo 'login';
+            else {
+                try {
+                    file_put_contents('Stylesheet/style.json', $_POST['data']);
+                    echo 'success';
+                } catch (Exception $e) {
+                    echo 'error';
+                }
+            }
+        } else {
+            header("Location: /dashboard");
+        }
+    }
 }

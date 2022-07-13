@@ -6,6 +6,7 @@
 		<meta name="description" content="Description de ma page">
         <!-- CSS -->
         <link rel="stylesheet" href="../Stylesheet/style.css">
+        <link rel="stylesheet" type="text/css" href="../Stylesheet/styleFront.php">
         <!-- FONT AWESOME -->
 		<script src="https://kit.fontawesome.com/62e5467ba7.js" crossorigin="anonymous"></script>
         <!-- JQUERY -->

@@ -1,0 +1,19 @@
+@use "../Abstracts" as *;
+
+#templateEdition {
+
+  h1 {
+    margin: 0 20px;
+  }
+
+  #StyleForm {
+    display: flex;
+    margin: 25px 0;
+  }
+
+  fieldset {
+    border: 1px solid gray;
+    border-radius: 5px;
+    margin: 20px;
+  }
+}

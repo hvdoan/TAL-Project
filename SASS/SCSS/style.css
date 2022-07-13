@@ -614,6 +614,19 @@ body {
   justify-content: center;
   align-items: center;
 }
+#templateEdition h1 {
+  margin: 0 20px;
+}
+#templateEdition #StyleForm {
+  display: flex;
+  margin: 25px 0;
+}
+#templateEdition fieldset {
+  border: 1px solid gray;
+  border-radius: 5px;
+  margin: 20px;
+}
+
 .banner {
   display: block;
   width: 100%;
@@ -2057,7 +2070,6 @@ nav > ul > .bottom,
   width: 100%;
   padding: 20px 0;
   margin: 10px 0;
-  background: #ffd32a;
   text-align: center;
   text-transform: uppercase;
   border-bottom: solid 5px #3F445F;
@@ -2067,8 +2079,6 @@ nav > ul > .bottom,
   padding: 20px;
   margin: auto;
   box-sizing: border-box;
-  background: #3d91b5;
-  color: #fff;
 }
 .editorjs .codex-editor__redactor > .ce-block > .ce-block__content .image-tool {
   max-width: 1050px;
