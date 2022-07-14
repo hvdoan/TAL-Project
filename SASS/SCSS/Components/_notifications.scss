@@ -52,7 +52,7 @@
 
     &-success {
         border: 1px solid rgba(7, 169, 16, 0.8);
-        background-color: rgba(16, 220, 1, 0.3);
+        background-color: rgb(111, 209, 104);
         box-shadow: 0 0 2px #009d07;
         color: #0a7f00;
         transition:0.5s;
@@ -61,7 +61,7 @@
 
     &-error {
         border: 1px solid rgba(241, 6, 6, 0.80);
-        background-color: rgba(220, 17, 1, 0.3);
+        background-color: rgb(197, 106, 98);
         box-shadow: 0 0 2px #ff0303;
         color: #ff0303;
         transition:0.5s;
@@ -70,7 +70,7 @@
 
     &-warning {
         border: 1px solid rgba(183, 168, 7, 0.8);
-        background-color: rgba(213, 220, 1, 0.3);
+        background-color: rgb(204, 208, 110);
         box-shadow: 0 0 2px #a79104;
         color: #b0940b;
         transition:0.5s;

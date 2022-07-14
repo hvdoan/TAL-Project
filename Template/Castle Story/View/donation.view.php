@@ -1,4 +1,4 @@
-<script src="../SASS/JS/donationView.js"></script>
+<script src="../../../SASS/JS/donationView.js"></script>
 <div class="page">
 	
 	<div class="imgBanner"><h1>DONATION</h1></div>

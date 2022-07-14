@@ -2,7 +2,7 @@
     <div id="editorjs" class="editorjs editorjs-display"></div>
 </section>
 
-<script src="../SASS/JS/crudPage.js"></script>
+<script src="../../../SASS/JS/crudPage.js"></script>
 <script src="/API/EditorJS/editor.js"></script>
 <script src="/API/EditorJS/Paragraph/bundle.js"></script>
 <script src="/API/EditorJS/Header/bundle.js"></script>

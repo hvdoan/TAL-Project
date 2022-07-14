@@ -1,15 +1,13 @@
-function saveStyle() {
-    let style = {};
-    let form = document.getElementById('StyleForm');
-    let values = form.getElementsByTagName('input');
-    for (var i = 0; i < values.length; i++) {
-        style[values[i].id] = values[i].value;
+function saveTemplate(param) {
+
+    let template = {
+        template: param.textContent
     }
 
-    const requestType = "saveStyle";
+    const requestType = "saveTemplate";
 
     const request = new XMLHttpRequest();
-    request.open('POST', '/template-save');
+    request.open('POST', '/template-gestion');
 
     request.onreadystatechange = function()
     {
@@ -28,6 +26,6 @@ function saveStyle() {
     };
 
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    const body = `requestType=${requestType}&data=${JSON.stringify(style)}`;
+    const body = `requestType=${requestType}&template=${JSON.stringify(template)}`;
     request.send(body);
 }

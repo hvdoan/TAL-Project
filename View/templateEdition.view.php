@@ -1,5 +1,6 @@
 <div id="templateEdition" class="ctn">
     <h1>Edition de ma template</h1>
+    <h3>Template actuel : <?= $this->data['templateSelected'] ?></h3>
     <div class="edition">
         <form id="StyleForm">
             <fieldset>

@@ -5,8 +5,8 @@
 		<title><?=WEBSITENAME?></title>
 		<meta name="description" content="Description de ma page">
         <!-- CSS -->
-        <link rel="stylesheet" href="../Stylesheet/style.css">
-        <link rel="stylesheet" type="text/css" href="../Stylesheet/styleFront.php">
+        <!--<link rel="stylesheet" href="../Stylesheet/style.css">
+        <link rel="stylesheet" type="text/css" href="../Stylesheet/styleFront.php">-->
         <!-- FONT AWESOME -->
 		<script src="https://kit.fontawesome.com/62e5467ba7.js" crossorigin="anonymous"></script>
         <!-- JQUERY -->
@@ -72,7 +72,7 @@
 			</div>
 		</nav>
 		
-		<?php include "View/" . $this->view . ".view.php"; ?>
+		<?php include "Template/Basic/View/" . $this->view . ".view.php"; ?>
 	
 	</body>
 </html>

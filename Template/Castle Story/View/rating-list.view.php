@@ -35,7 +35,7 @@ $counter = 0;
 						
 						<div>
 							<div class="username">
-								<?=$userRate->getFirstname() . " " . $userRate->getLastname()?>
+								<?= $userRate->getFirstname() . " " . $userRate->getLastname()?>
 							</div>
 							<small><?=date("d/m/Y", strtotime($rating["updateDate"])); ?></small>
 						</div>

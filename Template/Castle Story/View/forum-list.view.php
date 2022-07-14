@@ -56,7 +56,7 @@
 						</div>
 						<div>
 							<label>Auteur :</label>
-							<p><?=$user->getFirstname() . " " . $user->getLastname()?></p>
+							<p><?= $user->getFirstname() . " forum-list.view.php" . $user->getLastname()?></p>
 						</div>
 					</div>
 					<hr>
