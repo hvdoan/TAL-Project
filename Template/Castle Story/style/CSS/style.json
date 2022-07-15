@@ -1,0 +1,26 @@
+{
+  "colors": {
+    "pickerMain": {
+      "label": "Couleur principale : ",
+      "value": "#30375a"
+    },
+    "pickerBackground": {
+      "label": "Couleur Background : ",
+      "value": "#078fe4"
+    },
+    "pickerTitle": {
+      "label": "Couleur Title : ",
+      "value": "#00ff6e"
+    },
+    "pickerText": {
+      "label": "Couleur Texte : ",
+      "value": "#000000"
+    }
+  },
+  "fonts": {
+    "pickerFont": {
+      "label": "Police du texte : ",
+      "value": ""
+    }
+  }
+}

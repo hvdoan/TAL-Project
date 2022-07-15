@@ -42,7 +42,16 @@
     </section>
 
     <section class="ctn ctn-editorJS">
-        <div id="editorjs" class="editorjs"></div>
+        <div id="editorjs" class="editorjs">
+            <?php  $file = 'Template/template.json';
+            if (file_exists($file)) {
+                $template = json_decode(file_get_contents($file), true);
+            } else {
+                die('Fichier template introuvable');
+            } ?>
+            <link rel="stylesheet" href="Template/Castle Story/style/CSS/style.css">
+            <link rel="stylesheet" type="text/css" href="Template/Castle Story/style/CSS/styleFront.php">
+        </div>
         <div class="ctn-cta">
             <?php if($this->data["page"]->getId()) { ?>
                 <button id="save-button" class="btn-form btn-form-validate" onclick="save('<?=$this->data["page"]->getId()?>')">Sauvegarder</button>

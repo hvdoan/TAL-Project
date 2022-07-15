@@ -2190,8 +2190,16 @@ class Admin
                 $results[] = $file;
         }
 
+        $file = 'Template/template.json';
+        if (file_exists($file)) {
+            $template = json_decode(file_get_contents($file), true);
+        } else {
+            die('Fichier template introuvable');
+        }
+
         $view = new View("templateManagement", "back");
         $view->assign('names', $results);
+        $view->assign('template', $template['template']);
     }
 
     public function templateEdition()
@@ -2207,13 +2215,6 @@ class Admin
         if (!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_FORUM"))
             header("Location: /dashboard");
 
-        $file = 'Stylesheet/style.json';
-        $style = null;
-        if (file_exists($file)) {
-            $style = json_decode(file_get_contents($file), true);
-        }
-
-        $template = null;
         $file = 'Template/template.json';
         if (file_exists($file)) {
             $template = json_decode(file_get_contents($file), true);
@@ -2221,8 +2222,15 @@ class Admin
             die('Fichier template introuvable');
         }
 
+        $file = 'Template/'.$template['template'].'/style/CSS/style.json';
+        $style = null;
+        if (file_exists($file)) {
+            $style = json_decode(file_get_contents($file), true);
+        }
+
         $view = new View("templateEdition", "back");
         $view->assign('style', $style);
+        $view->assign('styleHidden', json_encode($style));
         $view->assign('templateSelected', $template['template']);
     }
 
@@ -2239,12 +2247,19 @@ class Admin
         if (!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_FORUM"))
             header("Location: /dashboard");
 
+        $file = 'Template/template.json';
+        if (file_exists($file)) {
+            $template = json_decode(file_get_contents($file), true);
+        } else {
+            die('Fichier template introuvable');
+        }
+
         if((isset($_POST["requestType"]) && $_POST["requestType"] == "saveStyle")) {
             if (!$isConnected)
                 echo 'login';
             else {
                 try {
-                    file_put_contents('Stylesheet/style.json', $_POST['data']);
+                    file_put_contents('Template/'.$template['template'].'/style/CSS/style.json', $_POST['data']);
                     echo 'success';
                 } catch (Exception $e) {
                     echo 'error';

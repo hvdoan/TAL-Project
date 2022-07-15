@@ -1,10 +1,19 @@
 function saveStyle() {
-    let style = {};
+
     let form = document.getElementById('StyleForm');
     let values = form.getElementsByTagName('input');
-    for (var i = 0; i < values.length; i++) {
-        style[values[i].id] = values[i].value;
+    let dataDecode = JSON.parse(document.getElementById('jsonHidden').textContent);
+
+    for (const property in dataDecode) {
+        for (const property2 in dataDecode[property]) {
+            for (let i = 0; i < values.length; i++) {
+                if (values[i].id === property2) {
+                    dataDecode[property][property2]['value'] = values[i].value;
+                }
+            }
+        }
     }
+
 
     const requestType = "saveStyle";
 
@@ -28,6 +37,6 @@ function saveStyle() {
     };
 
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    const body = `requestType=${requestType}&data=${JSON.stringify(style)}`;
+    const body = `requestType=${requestType}&data=${JSON.stringify(dataDecode)}`;
     request.send(body);
 }

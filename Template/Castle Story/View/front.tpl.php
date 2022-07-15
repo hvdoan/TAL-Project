@@ -5,8 +5,8 @@
 		<title><?=WEBSITENAME?></title>
 		<meta name="description" content="Description de ma page">
         <!-- CSS -->
-        <link rel="stylesheet" href="../../../Stylesheet/style.css">
-        <link rel="stylesheet" type="text/css" href="../../../Stylesheet/styleFront.php">
+        <link rel="stylesheet" href="Template/Castle Story/style/CSS/style.css">
+        <link rel="stylesheet" type="text/css" href="Template/Castle Story/style/CSS/styleFront.php">
         <!-- FONT AWESOME -->
 		<script src="https://kit.fontawesome.com/62e5467ba7.js" crossorigin="anonymous"></script>
         <!-- JQUERY -->
@@ -27,17 +27,16 @@
 		
 		<nav class="nav-ctn-row">
 			<header>
-				<a href="/home"><img src="../../../SASS/asset/img/logo.png" alt="logo"></a>
+				<a href="/home"><img src="Template/Castle Story/asset/img/logo.png" alt="logo"></a>
 			</header>
 			
 			<div class="nav">
 				<ul>
-					<a class="btn" href="#">Game</a>
-					<a class="btn" href="#">News</a>
+					<a class="btn" href="/presentation">Game</a>
 					<a class="btn" href="/rating">Avis</a>
-					<a class="btn" href="#">About</a>
+					<a class="btn" href="/galerie">Galerie</a>
 					<a class="btn" href="/forum-list">Forums</a>
-					<a class="btn" href="#">Wiki</a>
+					<a class="btn" href="/faq">FAQ</a>
 					<a class="btn" href="/donation">Donation</a>
 					
 					

@@ -1,9 +1,6 @@
 @forward "form_partial";
-@forward "donation";
 @forward "api_configuration";
 @forward "forum_management";
-@forward "forum_front";
-@forward "forum-list_front";
 @forward "message_management";
 @forward "ban-word_management";
 @forward "warning_management";
@@ -15,8 +12,5 @@
 @forward "user_management";
 @forward "scrollbar";
 @forward "page_creation";
-@forward "rating";
-@forward "user-setting_front";
-@forward "validate_account";
 @forward "template_edition";
 @forward "template_management";
