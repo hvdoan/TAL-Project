@@ -136,6 +136,30 @@
     controller: notification
     action: notification
 
+/template-edit:
+  controller: admin
+  action: templateEdition
+  security:
+    - admin
+
+/template-management:
+  controller: admin
+  action: templateManagement
+  security:
+    - admin
+
+/template-save:
+  controller: admin
+  action: saveStyle
+  security:
+    - admin
+
+/template-gestion:
+  controller: admin
+  action: saveTemplate
+  security:
+    - admin
+
 /sitemap:
     controller: config
     action: sitemapGeneration

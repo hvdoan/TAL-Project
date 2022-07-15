@@ -1,0 +1,120 @@
+@use "../Abstracts" as *;
+
+#searchBarContainer
+{
+    & > .searchBar
+    {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 2px 10px;
+        background: $white;
+        border-radius: 7px;
+
+        & > input
+        {
+            width: 200px;
+            height: 18px;
+            padding: 0;
+            background: none;
+            border: none;
+            font-family: $jaldi;
+            font-size: rem(12);
+            font-weight: bold;
+            letter-spacing: .8px;
+        }
+
+        & > input:focus
+        {
+            outline: none;
+        }
+
+        & > i
+        {
+            font-size: rem(14);
+        }
+    }
+
+    & > #searchResultContainer
+    {
+        display: none;
+        position: absolute;
+        transform: translateY(5px);
+
+        background: $hard-blue;
+        border-radius: 7px;
+        overflow: hidden;
+
+        & > #searchResult
+        {
+              display: flex;
+            flex-direction: column;
+
+            & > .field
+            {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                min-width: 500px;
+                padding: 8px 20px;
+                background: $light-blue;
+                color: $white;
+                text-decoration: none;
+                cursor: pointer;
+
+                &:hover
+                {
+                    background: $hard-blue;
+                }
+
+                & > .label-container
+                {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-end;
+                    width: 150px;
+
+                    & > .label
+                    {
+                        padding: 0 15px;
+                        border-radius: 10px;
+                        font-size: .8rem;
+                        color: $white;
+                        text-transform: uppercase;
+                    }
+
+                    & > .label-user
+                    {
+                        background: $light-green;
+                    }
+
+                    & > .label-role
+                    {
+                        background: $light-orange;
+                    }
+
+                    & > .label-page
+                    {
+                        background: $sky;
+                    }
+
+                    & > .label-configurationPage
+                    {
+                        background: $yellow;
+                    }
+                }
+
+                & > *
+                {
+                    font-family: $jaldi;
+                }
+            }
+        }
+    }
+
+    &:focus-within > #searchResultContainer
+    {
+        display: block;
+    }
+}

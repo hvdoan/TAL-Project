@@ -1,0 +1,73 @@
+@use "../Abstracts" as *;
+
+.editorjs
+{
+    &-display
+    {
+        min-height: calc(100vh - $nav-max-height);
+
+        /* Redactor container */
+        & .codex-editor__redactor
+        {
+            padding: 0 !important;
+        }
+    }
+
+    background: $light-sky;
+
+    /* Redactor container */
+    & .codex-editor__redactor
+    {
+        /* All plugin parent element block content */
+        & > .ce-block
+        {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+
+            /* All plugin element block content */
+            & > .ce-block__content
+            {
+                max-width: none;
+                width: 100%;
+                margin: 0;
+
+                /* Header plugin */
+                & .ce-header
+                {
+                    display: block;
+
+                    width: 100%;
+                    padding: 20px 0;
+                    margin: 10px 0;
+
+                    text-align: center;
+                    text-transform: uppercase;
+
+                    border-bottom: solid 5px $dark-blue;
+                }
+
+                /* Paragraph plugin */
+                & .ce-paragraph
+                {
+                    max-width: 1050px;
+                    padding: 20px;
+                    margin: auto;
+                    box-sizing: border-box;
+                }
+
+                & .image-tool
+                {
+                    max-width: 1050px;
+                    margin: auto;
+                }
+
+                /* Image plugin */
+                & .image-tool__caption
+                {
+                    display: none !important;
+                }
+            }
+        }
+    }
+}

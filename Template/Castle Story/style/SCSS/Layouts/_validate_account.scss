@@ -1,0 +1,33 @@
+@use "../Abstracts" as *;
+
+#validate-account
+{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    & > section
+    {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        padding: 20px;
+
+        background: $dark-blue;
+        border-radius: 7px;
+
+        & > *
+        {
+            font-family: $jaldi;
+            color: $white;
+        }
+
+        & > p
+        {
+            text-decoration: underline;
+        }
+    }
+}

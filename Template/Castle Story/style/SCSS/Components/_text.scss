@@ -1,0 +1,13 @@
+@use "../Abstracts" as *;
+
+.bold{
+  font-weight: bold;
+}
+
+.underlineHover:hover{
+  text-decoration: underline;
+}
+
+.pointer {
+  cursor: pointer;
+}

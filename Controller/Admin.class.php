@@ -20,6 +20,7 @@ use App\Model\User as UserModel;
 use App\Model\Warning;
 use DateTime;
 use App\Model\DonationTier;
+use PHPMailer\PHPMailer\Exception;
 
 class Admin
 {
@@ -2166,4 +2167,131 @@ class Admin
 				$view = new View("warningManagement", "back");
 		}
 	}
+
+    public function templateManagement()
+    {
+        /* Get the connexion status */
+        $isConnected = Verificator::checkConnection();
+
+        /* Reload the login session time if connexion status is true */
+        if ($isConnected)
+            Verificator::reloadConnection();
+
+        /* Check access permission */
+        if (!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_FORUM"))
+            header("Location: /dashboard");
+
+        $results = [];
+        $countTemplate = scandir('Template');
+        $files = array_diff($countTemplate, array('.', '..'));
+
+        foreach ($files as $file) {
+            if (is_dir( 'Template/' .$file))
+                $results[] = $file;
+        }
+
+        $file = 'Template/template.json';
+        if (file_exists($file)) {
+            $template = json_decode(file_get_contents($file), true);
+        } else {
+            die('Fichier template introuvable');
+        }
+
+        $view = new View("templateManagement", "back");
+        $view->assign('names', $results);
+        $view->assign('template', $template['template']);
+    }
+
+    public function templateEdition()
+    {
+        /* Get the connexion status */
+        $isConnected = Verificator::checkConnection();
+
+        /* Reload the login session time if connexion status is true */
+        if ($isConnected)
+            Verificator::reloadConnection();
+
+        /* Check access permission */
+        if (!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_FORUM"))
+            header("Location: /dashboard");
+
+        $file = 'Template/template.json';
+        if (file_exists($file)) {
+            $template = json_decode(file_get_contents($file), true);
+        } else {
+            die('Fichier template introuvable');
+        }
+
+        $file = 'Template/'.$template['template'].'/style/CSS/style.json';
+        $style = null;
+        if (file_exists($file)) {
+            $style = json_decode(file_get_contents($file), true);
+        }
+
+        $view = new View("templateEdition", "back");
+        $view->assign('style', $style);
+        $view->assign('styleHidden', json_encode($style));
+        $view->assign('templateSelected', $template['template']);
+    }
+
+    public function saveStyle()
+    {
+        /* Get the connexion status */
+        $isConnected = Verificator::checkConnection();
+
+        /* Reload the login session time if connexion status is true */
+        if ($isConnected)
+            Verificator::reloadConnection();
+
+        /* Check access permission */
+        if (!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_FORUM"))
+            header("Location: /dashboard");
+
+        $file = 'Template/template.json';
+        if (file_exists($file)) {
+            $template = json_decode(file_get_contents($file), true);
+        } else {
+            die('Fichier template introuvable');
+        }
+
+        if((isset($_POST["requestType"]) && $_POST["requestType"] == "saveStyle")) {
+            if (!$isConnected)
+                echo 'login';
+            else {
+                try {
+                    file_put_contents('Template/'.$template['template'].'/style/CSS/style.json', $_POST['data']);
+                    echo 'success';
+                } catch (Exception $e) {
+                    echo 'error';
+                }
+            }
+        } else {
+            header("Location: /dashboard");
+        }
+    }
+
+    public function saveTemplate()
+    {
+        /* Get the connexion status */
+        $isConnected = Verificator::checkConnection();
+
+        /* Reload the login session time if connexion status is true */
+        if ($isConnected)
+            Verificator::reloadConnection();
+
+        /* Check access permission */
+        if (!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_FORUM"))
+            header("Location: /dashboard");
+
+        if((isset($_POST["requestType"]) && $_POST["requestType"] == "saveTemplate")) {
+            if (!$isConnected)
+                echo 'login';
+            else {
+               echo 'success';
+               file_put_contents('Template/template.json',$_POST['template']);
+            }
+        } else {
+            header("Location: /dashboard");
+        }
+    }
 }
