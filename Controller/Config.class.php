@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Core\Notification;
 use App\Core\PDO;
 use App\Core\View;
+use App\Model\Page;
 
 class Config
 {
@@ -89,5 +90,35 @@ class Config
 
         $view = new View("config", "config");
 //        $view->assign("token", $token);
+    }
+
+    public function sitemapGeneration()
+    {
+        $pageModel = new Page();
+        $pages = $pageModel->select2("Page", ["uri", "dateModification"])
+            ->getResult();
+
+        $sitemap = fopen("sitemap.xml", "w+");
+
+        fwrite($sitemap, "<?xml version=\"1.0\"  encoding=\"UTF-8\"?>\n");
+        fwrite($sitemap, "<urlset xmlns=\"".$_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"].".xml\">\n");
+        foreach ($pages as $page)
+        {
+            $date = explode(" ", $page["dateModification"])[0];
+
+            fwrite($sitemap, "\t<url>\n");
+            fwrite($sitemap, "\t\t<loc>".$_SERVER["HTTP_HOST"].$page["uri"]."</loc>\n");
+            fwrite($sitemap, "\t\t<lastmod>".$date."</lastmod>\n");
+            fwrite($sitemap, "\t</url>\n");
+        }
+        fwrite($sitemap, "</urlset>\n");
+
+        fclose($sitemap);
+
+        $xml = file_get_contents("sitemap.xml");
+
+        echo "<pre>";
+        echo $xml;
+        echo "</pre>";
     }
 }
