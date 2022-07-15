@@ -1,0 +1,31 @@
+<?xml version="1.0"  encoding="UTF-8"?>
+<urlset xmlns="localhost:81/sitemap.xml">
+	<url>
+		<loc>localhost:81/home</loc>
+		<lastmod>2022-07-12</lastmod>
+	</url>
+	<url>
+		<loc>localhost:81/presentation</loc>
+		<lastmod>2022-04-05</lastmod>
+	</url>
+	<url>
+		<loc>localhost:81/galerie</loc>
+		<lastmod>2022-04-21</lastmod>
+	</url>
+	<url>
+		<loc>localhost:81/faq</loc>
+		<lastmod>2022-04-05</lastmod>
+	</url>
+	<url>
+		<loc>localhost:81/hello</loc>
+		<lastmod>2022-06-23</lastmod>
+	</url>
+	<url>
+		<loc>localhost:81/lala</loc>
+		<lastmod>2022-06-23</lastmod>
+	</url>
+	<url>
+		<loc>localhost:81/test</loc>
+		<lastmod>2022-07-12</lastmod>
+	</url>
+</urlset>
