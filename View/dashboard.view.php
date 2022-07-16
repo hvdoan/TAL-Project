@@ -30,11 +30,6 @@
         <div class="keyDataChildPercent neutre">Statique</div>
         <div class="keyDataChildValue"><?php  echo $this->data['totalVisitorActually']; ?></div>
     </div>
-    <div class="keyDataChild">
-        <div class="label">Temps moyen de connexion</div>
-        <div class="keyDataChildPercent neutre"> + 0% en 7 jours</div>
-        <div class="keyDataChildValue">0</div>
-    </div>
 </div>
 <!--<div class="keyData">
     <pre><?php print_r($this->data['users']) ?></pre>
@@ -48,7 +43,7 @@
 	<div class="even">
 		
 		<div id="lastMessage" class="medium">
-            <h3>Derniers commentaires</h3>
+            <div>Derniers commentaires</div>
             <table>
                 <thead>
                     <tr>
@@ -69,7 +64,7 @@
             </table>
         </div>
 		<div id="logsLogin" class="small">
-            <h3>Logs connexions</h3>
+            <div>Logs connexions</div>
             <table>
                 <thead>
                 <tr>
@@ -81,7 +76,7 @@
                 <?php foreach ($this->data['logList'] as $log) : ?>
                     <tr>
                         <td><?php echo $log['firstname'] . " "; echo $log['lastname'] ?></td>
-                        <td><?php echo date('d/m/Y - h:i',$log['time']) ?></td>
+                        <td><?php echo date('d/m/Y - H:i',$log['time']) ?></td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>

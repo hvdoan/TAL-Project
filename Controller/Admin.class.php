@@ -52,15 +52,6 @@ class Admin
         $current_time=time();
         $timeout = $current_time - (900);
 
-        $VisitorParams = $totalVisitor->select(['id'], ['session' => session_id()]);
-        if (count($VisitorParams) != 0) {
-            $totalVisitor = $totalVisitor->setId(intval($VisitorParams[0]['id'], 10));
-        }
-
-        $totalVisitor->setSession(session_id());
-        $totalVisitor->setTime($current_time);
-        $totalVisitor->save();
-
         $totalVisitor = $totalVisitor->select(['session, time'], []);
         $totalVisitorActually = [];
         foreach ($totalVisitor as $item) {
@@ -163,7 +154,7 @@ class Admin
                         $role = $object;
 					
                     $htmlContent .= "<td>" . $role->getName() . "</td>";
-                    $htmlContent .= "<td><button class='btn btn-edit' onclick='openUserForm(\"" . $user["id"] . "\")'>Editer</button></td>";
+                    $htmlContent .= "<td><button class='btnBack btnBack-edit' onclick='openUserForm(\"" . $user["id"] . "\")'>Editer</button></td>";
                     $htmlContent .= "</tr>";
                 }
 
@@ -396,8 +387,8 @@ class Admin
                     /* cta */
 					$htmlContent .= "<div class='field-row field-cta'>";
 					$htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $user->getId() . "'>";
-					$htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeUserForm()' type='button' value='Annuler'>";
-					$htmlContent .= "<input class='btn-form btn-form-validate' onclick='updateUser()' type='button' value='Modifier'>";
+					$htmlContent .= "<input class='btnBack-form btnBack-form-cancel' onclick='closeUserForm()' type='button' value='Annuler'>";
+					$htmlContent .= "<input class='btnBack-form btnBack-form-validate' onclick='updateUser()' type='button' value='Modifier'>";
 					$htmlContent .= "</div>";
 
 					$htmlContent .= "</form>";
@@ -481,7 +472,7 @@ class Admin
                     if ($role["name"] == "Utilisateur" || $role["name"] == "Administrateur")
                         $htmlContent .= "<td></td>";
                     else
-                        $htmlContent .= "<td><button class='btn btn-edit' onclick='openRoleForm(\"" . $role["id"] . "\")'>Editer</button></td>";
+                        $htmlContent .= "<td><button class='btnBack btnBack-edit' onclick='openRoleForm(\"" . $role["id"] . "\")'>Editer</button></td>";
 
                     $htmlContent .= "</tr>";
                 }
@@ -594,7 +585,9 @@ class Admin
                     $role = $role->setId(intval($_POST["roleId"]));
 
                 $permission = new Permission();
-                $permissionList = $permission->select(["idAction"], ["idRole" => $role->getId()]);
+
+                if ( $role->getId() !== null)
+                    $permissionList = $permission->select(["idAction"], ["idRole" => $role->getId()]);
 
                 $token = md5(uniqid());
                 $_SESSION["tokenForm"] = $token;
@@ -644,7 +637,7 @@ class Admin
                             $isFind = true;
                     }
 
-                    $htmlContent .= "<label for='switch-" . $actionList[$i]["id"] . "' class='btn-switch'>";
+                    $htmlContent .= "<label for='switch-" . $actionList[$i]["id"] . "' class='btnBack-switch'>";
 
                     if ($isFind)
                     {
@@ -668,13 +661,13 @@ class Admin
 
                 /* cta */
                 $htmlContent .= "<div class='field-cta'>";
-                $htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeRoleForm()' type='button' value='Annuler'>";
+                $htmlContent .= "<input class='btnBack-form btnBack-form-cancel' onclick='closeRoleForm()' type='button' value='Annuler'>";
 
                 if ($role->getId() != null) {
                     $htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $role->getId() . "'>";
-                    $htmlContent .= "<input class='btn-form btn-form-validate' onclick='updateRole()' type='button' value='Modifier'>";
+                    $htmlContent .= "<input class='btnBack-form btnBack-form-validate' onclick='updateRole()' type='button' value='Modifier'>";
                 } else
-                    $htmlContent .= "<input class='btn-form btn-form-validate' onclick='insertRole()' type='button' value='Créer'>";
+                    $htmlContent .= "<input class='btnBack-form btnBack-form-validate' onclick='insertRole()' type='button' value='Créer'>";
                 $htmlContent .= "</div>";
                 $htmlContent .= "</form>";
 
@@ -727,8 +720,8 @@ class Admin
                 foreach ($pageList as $page) {
                     $user = new UserModel();
                     $user = $user->setId(intval($page["idUser"]));
-
                     $date = new DateTime($page["dateModification"]);
+                    $date->setTimezone(timezone_open('Europe/Paris'));
 
                     $htmlContent .= "<tr>";
 
@@ -945,7 +938,7 @@ class Admin
                     $htmlContent .= "<td>" . $donationTier["description"] . "</td>";
                     $htmlContent .= "<td>" . intval(($donationTier['price'] / 100)) . "," . ($donationTier['price'] % 100) . "</td>";
 
-                    $htmlContent .= "<td><button class='btn btn-edit' onclick='openDonationForm(\"" . $donationTier["id"] . "\")'>Editer</button></td>";
+                    $htmlContent .= "<td><button class='btnBack btnBack-edit' onclick='openDonationForm(\"" . $donationTier["id"] . "\")'>Editer</button></td>";
                     $htmlContent .= "</tr>";
                 }
 
@@ -1077,15 +1070,15 @@ class Admin
 
                 /* cta */
                 $htmlContent .= "<div class='field-cta'>";
-                $htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeDonationForm()' type='button' value='Annuler'>";
+                $htmlContent .= "<input class='btnBack-form btnBack-form-cancel' onclick='closeDonationForm()' type='button' value='Annuler'>";
 
                 if($donationTier->getId() != null)
                 {
                     $htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $donationTier->getId() . "'>";
-                    $htmlContent .= "<input class='btn-form btn-form-validate' onclick='updateDonationTier()' type='button' value='Modifier'>";
+                    $htmlContent .= "<input class='btnBack-form btnBack-form-validate' onclick='updateDonationTier()' type='button' value='Modifier'>";
                 }
                 else
-                    $htmlContent .= "<input class='btn-form btn-form-validate' onclick='insertDonationTier()' type='button' value='Créer'>";
+                    $htmlContent .= "<input class='btnBack-form btnBack-form-validate' onclick='insertDonationTier()' type='button' value='Créer'>";
 
                 $htmlContent .= "</div>";
                 $htmlContent .= "</form>";
@@ -1125,7 +1118,7 @@ class Admin
 					$htmlContent .= "<td id='" . $tag["id"] . "'>" . $tag["name"] . "</td>";
 					$htmlContent .= "<td>" . $tag["description"] . "</td>";
 					
-					$htmlContent .= "<td><button class='btn btn-edit' onclick='openForm(\"" . $tag["id"] . "\")'>Editer</button></td>";
+					$htmlContent .= "<td><button class='btnBack btnBack-edit' onclick='openForm(\"" . $tag["id"] . "\")'>Editer</button></td>";
 				$htmlContent .= "</tr>";
 			}
 			
@@ -1206,13 +1199,13 @@ class Admin
 
             /* cta */
             $htmlContent .= "<div class='field-cta'>";
-            $htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeForm()' type='button' value='Annuler'>";
+            $htmlContent .= "<input class='btnBack-form btnBack-form-cancel' onclick='closeForm()' type='button' value='Annuler'>";
 			
 			if($tag->getId() != null){
 				$htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $tag->getId() . "'>";
-				$htmlContent .= "<input class='btn-form btn-form-validate' onclick='updateTag()' type='button' value='Modifier'>";
+				$htmlContent .= "<input class='btnBack-form btnBack-form-validate' onclick='updateTag()' type='button' value='Modifier'>";
 			}else
-				$htmlContent .= "<input class='btn-form btn-form-validate' onclick='insertTag()' type='button' value='Créer'>";
+				$htmlContent .= "<input class='btnBack-form btnBack-form-validate' onclick='insertTag()' type='button' value='Créer'>";
 			$htmlContent .= "</div>";
 			$htmlContent .= "</form>";
 			
@@ -1363,7 +1356,7 @@ class Admin
 					$htmlContent .= "<td>" . $forum["creationDate"] . "</td>";
 					$htmlContent .= "<td>" . $forum["updateDate"] . "</td>";
 					
-					$htmlContent .= "<td><button class='btn btn-edit' onclick='openForumForm(\"" . $forum["id"] . "\")'>Editer</button></td>";
+					$htmlContent .= "<td><button class='btnBack btnBack-edit' onclick='openForumForm(\"" . $forum["id"] . "\")'>Editer</button></td>";
 					$htmlContent .= "</tr>";
 				}
 				
@@ -1513,7 +1506,7 @@ class Admin
 						$htmlContent .= "</select>";
 					$htmlContent .= "</div>";
 					$htmlContent .= "<div class='section'>";
-						$htmlContent .= "<input class='btn btn-delete' onclick='closeForumForm()' type='button' value='Annuler'>";
+						$htmlContent .= "<input class='btnBack btnBack-delete' onclick='closeForumForm()' type='button' value='Annuler'>";
 				}
                 else
 				{
@@ -1535,16 +1528,16 @@ class Admin
 					$htmlContent .= "</div>";
 					$htmlContent .= "<input id='input-idUser' type='hidden' name='idUser' value='" . $_SESSION['id'] . "'>";
 					$htmlContent .= "<div class='section'>";
-						$htmlContent .= "<input class='btn btn-delete' onclick='closeForumForm()' type='button' value='Annuler'>";
+						$htmlContent .= "<input class='btnBack btnBack-delete' onclick='closeForumForm()' type='button' value='Annuler'>";
 				}
 				
 				if($forum->getId() != null)
 				{
 					$htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $forum->getId() . "'>";
-					$htmlContent .= "<input class='btn btn-validate' onclick='updateForum()' type='button' value='Modifier'>";
+					$htmlContent .= "<input class='btnBack btnBack-validate' onclick='updateForum()' type='button' value='Modifier'>";
 				}
 				else
-					$htmlContent .= "<input class='btn btn-validate' onclick='insertForum()' type='button' value='Créer'>";
+					$htmlContent .= "<input class='btnBack btnBack-validate' onclick='insertForum()' type='button' value='Créer'>";
 				
 				$htmlContent .= "</div>";
 				}
@@ -1605,7 +1598,7 @@ class Admin
 						$htmlContent .= "<td>" . $message["creationDate"] . "</td>";
 						$htmlContent .= "<td>" . $message["updateDate"] . "</td>";
 						
-						$htmlContent .= "<td><button class='btn btn-edit' onclick='openMessageForm(\"" . $message["id"] . "\")'>Editer</button></td>";
+						$htmlContent .= "<td><button class='btnBack btnBack-edit' onclick='openMessageForm(\"" . $message["id"] . "\")'>Editer</button></td>";
 					$htmlContent .= "</tr>";
 				}
 				
@@ -1742,7 +1735,7 @@ class Admin
                     $htmlContent .= "<input id='input-idMessage' type='hidden' name='idMessage' value='" . $message->getIdMessage() . "'>";
 					$htmlContent .= "</div>";
 					$htmlContent .= "<div class='field-row field-cta'>";
-						$htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeMessageFormBack()' type='button' value='Annuler'>";
+						$htmlContent .= "<input class='btnBack-form btnBack-form-cancel' onclick='closeMessageFormBack()' type='button' value='Annuler'>";
 				}
 				else
 				{
@@ -1776,16 +1769,16 @@ class Admin
 					$htmlContent .= "</div>";
                     $htmlContent .= "</div>";
 					$htmlContent .= "<div class='field-row field-cta'>";
-                    $htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeMessageFormBack()' type='button' value='Annuler'>";
+                    $htmlContent .= "<input class='btnBack-form btnBack-form-cancel' onclick='closeMessageFormBack()' type='button' value='Annuler'>";
 				}
 				
 				if($message->getId() != null)
 				{
 					$htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $message->getId() . "'>";
-					$htmlContent .= "<input class='btn-form btn-form-validate' onclick='updateMessage()' type='button' value='Modifier'>";
+					$htmlContent .= "<input class='btnBack-form btnBack-form-validate' onclick='updateMessage()' type='button' value='Modifier'>";
 				}
 				else
-					$htmlContent .= "<input class='btn-form btn-form-validate' onclick='insertMessage()' type='button' value='Créer'>";
+					$htmlContent .= "<input class='btnBack-form btnBack-form-validate' onclick='insertMessage()' type='button' value='Créer'>";
 				
 				$htmlContent .= "</div>";
 				}
@@ -1835,7 +1828,7 @@ class Admin
                     $htmlContent .= "<td>" . $word["creationDate"] . "</td>";
                     $htmlContent .= "<td>" . $word["updateDate"] . "</td>";
 
-                    $htmlContent .= "<td><button class='btn btn-edit' onclick='openBanWordForm(\"" . $word["id"] . "\")'>Editer</button></td>";
+                    $htmlContent .= "<td><button class='btnBack btnBack-edit' onclick='openBanWordForm(\"" . $word["id"] . "\")'>Editer</button></td>";
                     $htmlContent .= "</tr>";
                 }
 
@@ -1933,8 +1926,8 @@ class Admin
 
                     $htmlContent .= "<div class='field-row field-cta'>";
                     $htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $banWord->getId() . "'>";
-                    $htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeBanWordForm()' type='button' value='Annuler'>";
-                    $htmlContent .= "<input class='btn-form btn-form-validate' onclick='updateBanWord()' type='button' value='Modifier'>";
+                    $htmlContent .= "<input class='btnBack-form btnBack-form-cancel' onclick='closeBanWordForm()' type='button' value='Annuler'>";
+                    $htmlContent .= "<input class='btnBack-form btnBack-form-validate' onclick='updateBanWord()' type='button' value='Modifier'>";
                     $htmlContent .= "</div>";
                 }
                 else
@@ -1956,8 +1949,8 @@ class Admin
                     $htmlContent .= "</div>";
 
                     $htmlContent .= "<div class='field-row field-cta'>";
-                    $htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeBanWordForm()' type='button' value='Annuler'>";
-                    $htmlContent .= "<input class='btn-form btn-form-validate' onclick='insertBanWord()' type='button' value='Créer'>";
+                    $htmlContent .= "<input class='btnBack-form btnBack-form-cancel' onclick='closeBanWordForm()' type='button' value='Annuler'>";
+                    $htmlContent .= "<input class='btnBack-form btnBack-form-validate' onclick='insertBanWord()' type='button' value='Créer'>";
                     $htmlContent .= "</div>";
                 }
 
@@ -2030,7 +2023,7 @@ class Admin
 						$htmlContent .= "<td>" . $warning["creationDate"] . "</td>";
 						$htmlContent .= "<td>" . $warning["updateDate"] . "</td>";
 						
-						$htmlContent .= "<td><button class='btn btn-edit' onclick='openWarningForm(\"" . $warning["id"] . "\")'>Editer</button></td>";
+						$htmlContent .= "<td><button class='btnBack btnBack-edit' onclick='openWarningForm(\"" . $warning["id"] . "\")'>Editer</button></td>";
 					$htmlContent .= "</tr>";
 				}
 				
@@ -2150,9 +2143,9 @@ class Admin
 					
 					/* Field cta */
 					$htmlContent .= "<div class='field-cta'>";
-						$htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeWarningForm()' type='button' value='Annuler'>";
+						$htmlContent .= "<input class='btnBack-form btnBack-form-cancel' onclick='closeWarningForm()' type='button' value='Annuler'>";
 						$htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $warning->getId() . "'>";
-						$htmlContent .= "<input class='btn-form btn-form-validate' onclick='updateWarning()' type='button' value='Modifier'>";
+						$htmlContent .= "<input class='btnBack-form btnBack-form-validate' onclick='updateWarning()' type='button' value='Modifier'>";
 					$htmlContent .= "</div>";
 				}
 				else
@@ -2186,8 +2179,11 @@ class Admin
             Verificator::reloadConnection();
 
         /* Check access permission */
-        if (!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_FORUM"))
+        if (!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_TEMPLATE"))
             header("Location: /dashboard");
+
+        $token = md5(uniqid());
+        $_SESSION["tokenForm"] = $token;
 
         $results = [];
         $countTemplate = scandir('Template');
@@ -2208,6 +2204,7 @@ class Admin
         $view = new View("templateManagement", "back");
         $view->assign('names', $results);
         $view->assign('template', $template['template']);
+        $view->assign('tokenCSRF', $_SESSION["tokenForm"]);
     }
 
     public function templateEdition()
@@ -2220,8 +2217,11 @@ class Admin
             Verificator::reloadConnection();
 
         /* Check access permission */
-        if (!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_FORUM"))
+        if (!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_TEMPLATE"))
             header("Location: /dashboard");
+
+        $token = md5(uniqid());
+        $_SESSION["tokenForm"] = $token;
 
         $file = 'Template/template.json';
         if (file_exists($file)) {
@@ -2240,6 +2240,7 @@ class Admin
         $view->assign('style', $style);
         $view->assign('styleHidden', json_encode($style));
         $view->assign('templateSelected', $template['template']);
+        $view->assign('tokenCSRF', $_SESSION["tokenForm"]);
     }
 
     public function saveStyle()
@@ -2252,7 +2253,7 @@ class Admin
             Verificator::reloadConnection();
 
         /* Check access permission */
-        if (!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_FORUM"))
+        if (!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_TEMPLATE"))
             header("Location: /dashboard");
 
         $file = 'Template/template.json';
@@ -2262,7 +2263,8 @@ class Admin
             die('Fichier template introuvable');
         }
 
-        if((isset($_POST["requestType"]) && $_POST["requestType"] == "saveStyle")) {
+        if((isset($_POST["requestType"]) && $_POST["requestType"] == "saveStyle") &&
+            (isset($_POST["tokenForm"]) && isset($_SESSION["tokenForm"]) && $_POST["tokenForm"] == $_SESSION["tokenForm"])) {
             if (!$isConnected)
                 echo 'login';
             else {
@@ -2288,10 +2290,11 @@ class Admin
             Verificator::reloadConnection();
 
         /* Check access permission */
-        if (!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_FORUM"))
+        if (!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_TEMPLATE"))
             header("Location: /dashboard");
 
-        if((isset($_POST["requestType"]) && $_POST["requestType"] == "saveTemplate")) {
+        if((isset($_POST["requestType"]) && $_POST["requestType"] == "saveTemplate") &&
+            (isset($_POST["tokenForm"]) && isset($_SESSION["tokenForm"]) && $_POST["tokenForm"] == $_SESSION["tokenForm"])) {
             if (!$isConnected)
                 echo 'login';
             else {

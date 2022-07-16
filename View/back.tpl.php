@@ -21,6 +21,8 @@
         use App\Core\Notification;
 
         Notification::displayNotifications();
+        date_default_timezone_set('Europe/Paris');
+
     ?>
 		<nav id="nav">
 			<header>
@@ -33,7 +35,6 @@
 					<div class="nav-section-link"><i class="fa-solid fa-table-columns"></i>Tableau de bord<i class="fa-solid fa-angle-down"></i></div>
 					<ul>
 						<a class="btnBack <?php echo ($_SERVER["REQUEST_URI"] == "/dashboard") ? "opened" : ""; ?>" href="/dashboard">Statistiques</a>
-						<a class="btnBack <?php echo ($_SERVER["REQUEST_URI"] == "/edit") ? "opened" : ""; ?>" href="#">Edition</a>
 					</ul>
 				</li>
 				
@@ -54,7 +55,7 @@
 				</li>
 				
 				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/template-management" || $_SERVER["REQUEST_URI"] == "/template-edit") ? "" : "close"; ?>">
-                    <div class="nav-section-link"><i class="fa-solid fa-film"></i>Template<i class="fa-solid fa-angle-down"></i></div>
+                    <div class="nav-section-link"><i class="fa-solid fa-object-group"></i>Template<i class="fa-solid fa-angle-down"></i></div>
 					<ul>
                         <a class="btnBack <?php echo ($_SERVER["REQUEST_URI"] == "/template-management") ? "opened" : ""; ?>" href="/template-management">Gestions des templates</a>
 						<a class="btnBack <?php echo ($_SERVER["REQUEST_URI"] == "/template-edit") ? "opened" : ""; ?>" href="/template-edit">Edition template</a>

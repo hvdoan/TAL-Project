@@ -97,8 +97,8 @@ class Main {
 					$htmlContent .= "<input id='input-idUser' type='hidden' name='idUser' value='" . $_SESSION['id'] . "'>";
 					
 					$htmlContent .= "<div class='field-cta'>";
-						$htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeForumForm()' type='button' value='Annuler'>";
-						$htmlContent .= "<input class='btn-form btn-form-validate' onclick='insertForumFront()' type='button' value='Créer'>";
+						$htmlContent .= "<input class='btnBack-form btnBack-form-cancel' onclick='closeForumForm()' type='button' value='Annuler'>";
+						$htmlContent .= "<input class='btnBack-form btnBack-form-validate' onclick='insertForumFront()' type='button' value='Créer'>";
 					$htmlContent .= "</div>";
 				$htmlContent .= "</form>";
 			}
@@ -190,7 +190,7 @@ class Main {
 			
 			if($isConnected){
 				$htmlContent .= "<div class='button'>";
-					$htmlContent .= "<button id='add' class='btn btn-add' onclick='openForumFrontForm(" . $forum[0]["id"] . ")' type='button' name='button'>Nouveau</button>";
+					$htmlContent .= "<button id='add' class='btnBack btnBack-add' onclick='openForumFrontForm(" . $forum[0]["id"] . ")' type='button' name='button'>Nouveau</button>";
 				$htmlContent .= "</div>";
 			}else
 				$htmlContent .= "<div class='button'>Vous devez vous connecter pour poster un message.</div>";
@@ -286,7 +286,7 @@ class Main {
 												$htmlContent .= "<input type='hidden' id='input-idUser" . $message["id"] . "' name='idUser' value='" . $_SESSION["id"] . "'>";
 												$htmlContent .= "<input type='hidden' id='input-idMessage" . $message["id"] . "' name='idMessage' value='" . $message["id"] . "'>";
 												$htmlContent .= "<input type='text' id='input-content" . $message["id"] . "' name='messageContent' placeholder='Réponse...'>";
-												$htmlContent .= "<button class='btn btn-primary' type='button' onclick='insertMessageFront(" . $forumId . ", " . $message["id"] . ")'>Répondre</button>";
+												$htmlContent .= "<button class='btnBack btnBack-primary' type='button' onclick='insertMessageFront(" . $forumId . ", " . $message["id"] . ")'>Répondre</button>";
 											$htmlContent .= "</form>";
 										$htmlContent .= "</div>";
 									}
@@ -363,7 +363,7 @@ class Main {
 															$htmlContent .= "<input type='hidden' id='input-idUser" . $answer["id"] . "' name='idUser' value='" . $_SESSION["id"] . "'>";
 															$htmlContent .= "<input type='hidden' id='input-idMessage" . $answer["id"] . "' name='idMessage' value='" . $message["id"] . "'>";
 															$htmlContent .= "<input type='text' id='input-content" . $answer["id"] . "' name='messageContent' placeholder='Réponse...'>";
-															$htmlContent .= "<button class='btn btn-primary' type='button' onclick='insertMessageFront(" . $forumId . ", " . $answer["id"] . ")'>Répondre</button>";
+															$htmlContent .= "<button class='btnBack btnBack-primary' type='button' onclick='insertMessageFront(" . $forumId . ", " . $answer["id"] . ")'>Répondre</button>";
 														$htmlContent .= "</form>";
 													$htmlContent .= "</div>";
 												}
@@ -512,8 +512,8 @@ class Main {
 				
 					/* Field cta */
 					$htmlContent .= "<div class='field-cta'>";
-						$htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeMessageForm()' type='button' value='Annuler'>";
-						$htmlContent .= "<input class='btn-form btn-form-validate' onclick='insertMessageFront(" . $forumId . ", 0)' type='button' value='Créer'>";
+						$htmlContent .= "<input class='btnBack-form btnBack-form-cancel' onclick='closeMessageForm()' type='button' value='Annuler'>";
+						$htmlContent .= "<input class='btnBack-form btnBack-form-validate' onclick='insertMessageFront(" . $forumId . ", 0)' type='button' value='Créer'>";
 					$htmlContent .= "</div>";
 					
 				$htmlContent .= "</form>";

@@ -3,6 +3,7 @@ function saveTemplate(param) {
     let template = {
         template: param.textContent
     }
+    let token = document.getElementById('tokenForm').value;
 
     const requestType = "saveTemplate";
 
@@ -26,6 +27,6 @@ function saveTemplate(param) {
     };
 
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    const body = `requestType=${requestType}&template=${JSON.stringify(template)}`;
+    const body = `requestType=${requestType}&tokenForm=${token}&template=${JSON.stringify(template)}`;
     request.send(body);
 }
