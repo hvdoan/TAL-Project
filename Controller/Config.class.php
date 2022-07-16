@@ -62,7 +62,8 @@ class Config
                         ]
                     ];
 
-                    $result = true;
+                    $pdo = null;
+
                     try
                     {
                         $pdo = new \PDO( $config["database"]["driver"].":host=".$config["database"]["host"].";port=".$config["database"]["port"].";charset=".$config["database"]["charset"],
@@ -70,15 +71,19 @@ class Config
                     }
                     catch (\Exception $e)
                     {
-                        $result = false;
                         Notification::CreateNotification("error", "Impossible de se connecter à la Base de donnée.");
                     }
 
-                    if($result)
+                    if($pdo)
                     {
                         $configFile = fopen("ini.yml", "w");
                         yaml_emit_file("ini.yml", $config);
                         fclose($configFile);
+
+                        $mysqlStatements = require_once "mysqlInitStatements.php";
+
+                        foreach($mysqlStatements as $statement)
+							$pdo->exec($statement);
 
                         header("Location: login");
                     }
