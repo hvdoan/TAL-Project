@@ -3,6 +3,7 @@ function saveStyle() {
     let form = document.getElementById('StyleForm');
     let values = form.getElementsByTagName('input');
     let dataDecode = JSON.parse(document.getElementById('jsonHidden').textContent);
+    let token = document.getElementById('tokenForm').value;
 
     for (const property in dataDecode) {
         for (const property2 in dataDecode[property]) {
@@ -37,6 +38,6 @@ function saveStyle() {
     };
 
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    const body = `requestType=${requestType}&data=${JSON.stringify(dataDecode)}`;
+    const body = `requestType=${requestType}&tokenForm=${token}&data=${JSON.stringify(dataDecode)}`;
     request.send(body);
 }

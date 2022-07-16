@@ -70,6 +70,7 @@
 <script src="/API/EditorJS/List/nested-list.js"></script>
 <script src="/API/EditorJS/Image/bundle.js"></script>
 <script src="/API/EditorJS/Alignment/bundle.js"></script>
+<script src="/API/EditorJS/StyleEditor/index.js"></script>
 <script type="text/javascript">
     let data;
 
@@ -81,6 +82,7 @@
     let editor = new EditorJS({
         // autofocus: true,
         tools: {
+            style: EditorJSStyle.StyleInlineTool,
             paragraph: {
                 class: Paragraph,
                 inlineToolbar: true

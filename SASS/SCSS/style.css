@@ -1757,10 +1757,8 @@ body {
   border-radius: 10px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
-.statistics #lastMessage h3, .statistics #logsLogin h3 {
-  margin: 0;
-  padding-left: 20px;
-  padding-top: 10px;
+.statistics #lastMessage div, .statistics #logsLogin div {
+  margin: 10px 20px 20px;
   font-size: 1.5rem;
   border-bottom: 1px solid lightgray;
 }

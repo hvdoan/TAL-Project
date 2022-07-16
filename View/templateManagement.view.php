@@ -8,4 +8,5 @@
         </div>
 
     <?php endforeach; ?>
+    <input id='tokenForm' type='hidden' name='tokenForm' value='<?= $this->data['tokenCSRF'] ?>'>
 </div>

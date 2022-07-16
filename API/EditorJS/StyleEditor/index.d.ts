@@ -1,0 +1,1 @@
+export { StyleInlineTool } from './StyleInlineTool';
