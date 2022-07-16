@@ -1,6 +1,6 @@
 @use "../Abstracts" as *;
 
-.btn {
+.btnBack {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -11,7 +11,7 @@
     padding: 5px 10px;
 
     background: $hard-blue;
-    border-radius: 7px;
+    border-radius: 10px;
     text-decoration: none;
     color: $white;
 
@@ -20,14 +20,13 @@
 
     &:hover {
         background: $white;
-        color: $hard-blue;
+        color: $hard-blue !important;
     }
 
     &-add, &-edit {
         padding: 10px;
         background: $dark-blue;
         border: none;
-        border-radius: 5px;
         font-weight: bold;
         letter-spacing: 1px;
 
@@ -43,7 +42,6 @@
         background: $dark-green;
         color: $white;
         border: none;
-        border-radius: 5px;
         font-weight: bold;
         letter-spacing: 1px;
         transition: .3s;
@@ -60,7 +58,6 @@
         padding: 10px;
         background: $dark-orange;
         border: none;
-        border-radius: 5px;
         font-weight: bold;
         letter-spacing: 1px;
 

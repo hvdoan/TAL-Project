@@ -2,8 +2,8 @@
     <h1>Forums</h1>
 
     <div class="ctn ctn-add">
-        <button id="add" class="btn btn-add" onclick="openForumForm()" type="button" name="button">Nouveau</button>
-        <button id="delete" class="btn btn-delete" onclick="deleteForum()" type="button" name="button">Supprimer</button>
+        <button id="add" class="btnBack btnBack-add" onclick="openForumForm()" type="button" name="button">Nouveau</button>
+        <button id="delete" class="btnBack btnBack-delete" onclick="deleteForum()" type="button" name="button">Supprimer</button>
     </div>
 
     <table id="forumManagementTable" class="stripe hover cell-border">

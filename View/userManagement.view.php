@@ -9,7 +9,7 @@
 	
 	<h1>Utilisateurs</h1>
 	<div class="ctn ctn-delete">
-		<button id="delete" class="btn btn-delete" onclick="deleteUser()" type="button" name="button">Supprimer</button>
+		<button id="delete" class="btnBack btnBack-delete" onclick="deleteUser()" type="button" name="button">Supprimer</button>
 	</div>
 	
 	<table id="userManagementTable" class="stripe hover cell-border">

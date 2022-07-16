@@ -55,7 +55,7 @@
 
         <!-- Cta field -->
         <div class='field-cta'>
-            <button class="btn-form btn-form-validate" type="submit">Enregistrer</button>
+            <button class="btnBack-form btnBack-form-validate" type="submit">Enregistrer</button>
         </div>
     </form>
 
@@ -97,7 +97,7 @@
         <input type="hidden" name="tokenForm" value="<?=$this->data["tokenForm"]?>">
 
         <div class="field-cta">
-            <button class="btn-form btn-form-validate">Enregistrer</button>
+            <button class="btnBack-form btnBack-form-validate">Enregistrer</button>
         </div>
     </form>
 
@@ -174,7 +174,7 @@
         <input type="hidden" name="tokenForm" value="<?=$this->data["tokenForm"]?>">
 
         <div class="field-cta">
-            <button class="btn-form btn-form-validate">Enregistrer</button>
+            <button class="btnBack-form btnBack-form-validate">Enregistrer</button>
         </div>
     </form>
 </div>

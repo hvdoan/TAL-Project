@@ -2,8 +2,8 @@
     <h1>Role</h1>
 
     <div class="ctn ctn-add">
-        <button id="add" class="btn btn-add" onclick="openRoleForm()" type="button" name="button">Nouveau</button>
-        <button id="delete" class="btn btn-delete" onclick="deleteRole()" type="button" name="button">Supprimer</button>
+        <button id="add" class="btnBack btnBack-add" onclick="openRoleForm()" type="button" name="button">Nouveau</button>
+        <button id="delete" class="btnBack btnBack-delete" onclick="deleteRole()" type="button" name="button">Supprimer</button>
     </div>
 
     <table id="roleTable" class="stripe hover cell-border">

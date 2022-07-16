@@ -1,7 +1,6 @@
 $white:         #fff;
 $black:         #000;
 $grey:          #988F8F;
-$yellow:        #ffd32a;
 $red:           #ff3838;
 $orange:        #f0932b;
 $purple:        #6747cd;
@@ -15,15 +14,16 @@ $light-red:     #ff4757;
 $light-orange:  #d4716a;
 $light-green:   #35be49;
 $light-purple:  #927bdf;
-$light-sky:     #38aacf;
 
 $dark-blue:     #3F445F;
 $dark-orange:   #AD4E47;
 $dark-green:    #259736;
 $dark-grey:     #716767;
-
-$hard-blue:     #272B40;
 $deep-ocean:    #404661;
+
+$hard-blue:     var(--main-color);
+$background:    var(--bg-color);
+$title:         var(--title-color);
 
 .bg\:dark-blue
 {

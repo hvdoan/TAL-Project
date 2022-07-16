@@ -21,13 +21,13 @@ $dark-green:    #259736;
 $dark-grey:     #716767;
 $deep-ocean:    #404661;
 
-$hard-blue:     var(--main-color);
+$mainColor:     var(--main-color);
 $background:    var(--bg-color);
 $title:         var(--title-color);
 
 .bg\:dark-blue
 {
-    background-color: $hard-blue !important;
+    background-color: $mainColor !important;
 }
 
 .dark-blue
