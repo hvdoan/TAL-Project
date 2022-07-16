@@ -1,5 +1,5 @@
 <div id="api-configuration">
-    <form class="form">
+    <form class="form" action="/api-configuration" method="post">
         <!-- Header -->
         <div class='field-row'>
             <div class='field'>
