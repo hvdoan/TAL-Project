@@ -2,7 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Jaldi&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,400;0,700;1,400&display=swap");
 .bg\:dark-blue {
-  background-color: #272B40 !important;
+  background-color: var(--main-color) !important;
 }
 
 .dark-blue {
@@ -16,7 +16,7 @@ body,
   min-height: 100vh;
   padding: 0;
   margin: 0;
-  background-color: #EDF0F2;
+  background-color: var(--bg-color);
 }
 body-row,
 .body-row {
@@ -26,7 +26,6 @@ body-row,
 .page {
   width: 100%;
   min-height: calc(100vh - 60px);
-  background-color: #fff;
 }
 
 h1 {
@@ -219,93 +218,6 @@ flex-ai\:center {
   opacity: 0.5;
 }
 
-#api-configuration {
-  padding: 0 20px;
-}
-#api-configuration > .form {
-  margin-bottom: 30px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-}
-#api-configuration > .form .row > .input {
-  width: calc(100% - 50px);
-  margin-right: 10px;
-}
-#api-configuration > .ctn > form > h1 {
-  color: #3F445F;
-}
-#api-configuration > .ctn > form > hr {
-  margin-bottom: 20px;
-  color: #3F445F;
-}
-#api-configuration > .ctn > form > .field {
-  display: flex;
-  flex-direction: column;
-  margin: 20px 0;
-}
-#api-configuration > .ctn > form > .field > label {
-  color: #272B40;
-  font-weight: bold;
-}
-#api-configuration > .ctn > form > .field > input {
-  width: 100%;
-  padding-bottom: 2px;
-  box-sizing: border-box;
-  border: none;
-  border-bottom: solid 1px;
-  color: #3F445F;
-}
-#api-configuration > .ctn > form > .field > input:focus {
-  outline: none;
-}
-#api-configuration > .ctn > form > .field > .row {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0;
-}
-#api-configuration > .ctn > form > .field > .row > input {
-  width: calc(100% - 40px);
-  padding-bottom: 2px;
-  box-sizing: border-box;
-  border: none;
-  border-bottom: solid 1px;
-  color: #3F445F;
-}
-#api-configuration > .ctn > form > .field > .row > input:focus {
-  outline: none;
-}
-#api-configuration > .ctn > form > .field > i {
-  width: min-content;
-}
-#api-configuration > .ctn > form > .field > select {
-  width: min-content;
-}
-#api-configuration > .ctn > form > .field-submit {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-}
-#api-configuration > .ctn > form > .field-submit > button {
-  margin-top: 40px;
-}
-
-#ctnForumForm {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1001;
-  background: rgba(0, 0, 0, 0.6);
-}
-
-#ctnForumForm > form {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
 #ctnForumFrontForm {
   position: absolute;
   top: 50%;
@@ -343,40 +255,6 @@ flex-ai\:center {
   width: 25%;
 }
 
-#ctnMessageForm {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1001;
-  background: rgba(0, 0, 0, 0.6);
-}
-
-#ctnMessageForm > form {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 750px;
-}
-
-#ctnBanWordForm {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1001;
-  background: rgba(0, 0, 0, 0.6);
-}
-
-#ctnBanWordForm > form {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 600px;
-}
-
 #ctnWarningForm {
   position: absolute;
   top: 50%;
@@ -392,72 +270,6 @@ flex-ai\:center {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 25%;
-}
-
-#ctnUserForm > form {
-  width: 750px;
-}
-#ctnUserForm > form > .field-row > .field > #select-avatar-ctn {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-#ctnUserForm > form > .field-row > .field > #select-avatar-ctn > #avatar-preview {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  width: 40px;
-  height: 40px;
-  background: #EDF0F2;
-  border-radius: 50%;
-  overflow: hidden;
-}
-#ctnUserForm > form > .field-row > .field > #select-avatar-ctn > #avatar-preview > .icon {
-  max-width: 40px;
-  max-height: 40px;
-  color: #3F445F;
-  font-size: 1.5rem;
-}
-#ctnUserForm > form > .field-row > .field > #select-avatar-ctn > label:nth-child(2) {
-  margin: 0 10px;
-  color: #3F445F;
-  transition: 0.3s;
-  cursor: pointer;
-}
-#ctnUserForm > form > .field-row > .field > #select-avatar-ctn > label:nth-child(2):hover {
-  text-decoration: underline;
-  transition: 0.3s;
-}
-#ctnUserForm > form > .field-row > .field > #select-ctn > .questionMark {
-  margin: 0 10px;
-  color: #ff3838;
-}
-#ctnUserForm > form > .field-row > #role-ctn {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  width: fit-content;
-  padding: 2px 7px;
-  background: #22a6b3;
-  border-radius: 7px;
-}
-#ctnUserForm > form > .field-row > #role-ctn > span {
-  width: max-content;
-  color: #fff;
-  font-size: 0.7rem;
-  font-weight: bold;
-  text-transform: capitalize;
-  letter-spacing: 1px;
-}
-
-#ctnRoleForm > form {
-  width: 700px;
-}
-#ctnRoleForm > form > .permissions > .field {
-  flex-direction: row;
-  justify-content: space-between;
 }
 
 #ctnDonationTierForm > form {
@@ -488,32 +300,6 @@ flex-ai\:center {
 body {
   scrollbar-color: #3F445F #f1f1f1; /* ascensseur bleu sur fond blanc */
   scrollbar-size: 10px; /* taille de l'ascenseur */
-}
-
-#page_creation > .form .url-ctn > .input-ctn > span {
-  margin-right: 5px;
-  color: #3F445F;
-}
-#page_creation > .form .url-ctn > .input-ctn > .input {
-  padding: 8px;
-  background: #EDF0F2;
-  color: #3F445F;
-  border: none;
-}
-#page_creation > .form .url-ctn > .input-ctn > .input:focus {
-  outline: none;
-}
-#page_creation > .ctn-editorJS {
-  padding: 0;
-}
-#page_creation > .ctn-editorJS > .ctn-cta {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 10px 0;
-  overflow: hidden;
-  background: #3F445F;
 }
 
 #addVote .pouce {
@@ -631,60 +417,6 @@ body {
   text-decoration: underline;
 }
 
-#templateEdition h1, #templateEdition h3 {
-  margin: 0 20px;
-}
-#templateEdition #StyleForm {
-  display: flex;
-  margin: 25px 0;
-}
-#templateEdition fieldset {
-  border: 1px solid gray;
-  border-radius: 5px;
-  margin: 20px;
-}
-
-#templateManagement {
-  display: flex;
-  flex-wrap: wrap;
-  font-family: "Jaldi", sans-serif;
-}
-#templateManagement > .template {
-  height: 180px;
-  margin: 30px 2%;
-  cursor: pointer;
-}
-#templateManagement > .template > .preview {
-  height: 80%;
-  background-color: lightgray;
-  border: 1px solid grey;
-  border-top-right-radius: 10px;
-  border-top-left-radius: 10px;
-  overflow: hidden;
-}
-#templateManagement > .template > .preview img {
-  width: 100%;
-  height: 100%;
-}
-#templateManagement > .template > .preview img:hover {
-  opacity: 0.5;
-}
-#templateManagement > .template > .title {
-  height: 20%;
-  background-color: #3F445F;
-  border: 1px solid grey;
-  border-bottom-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  padding-left: 10%;
-  font-size: 1.3rem;
-  color: white;
-}
-#templateManagement > .template > .title > span {
-  margin-left: 20px;
-  font-style: italic;
-  font-size: 0.9rem;
-}
-
 .banner {
   display: block;
   width: 100%;
@@ -732,7 +464,7 @@ body {
   width: 100%;
   height: 300px;
   overflow: hidden;
-  background-image: url("/SASS/asset/img/imgBanner.png");
+  background-image: url("/Template/Basic/asset/img/imgBanner.png");
   position: relative;
   z-index: 1;
   background-size: cover;
@@ -759,7 +491,7 @@ body {
   width: fit-content;
   height: fit-content;
   padding: 5px 10px;
-  background: #272B40;
+  background: var(--main-color);
   border-radius: 7px;
   text-decoration: none;
   color: #fff;
@@ -768,7 +500,7 @@ body {
 }
 .btn:hover {
   background: #fff;
-  color: #272B40;
+  color: var(--main-color);
 }
 .btn-add, .btn-edit {
   padding: 10px;
@@ -988,7 +720,7 @@ body {
 }
 .cards > div[type=forum] .informationContainer > div > label {
   display: flex;
-  color: #272B40;
+  color: var(--main-color);
   font-weight: bold;
 }
 .cards > div[type=forum] .informationContainer > div > p {
@@ -1001,7 +733,7 @@ body {
 }
 .cards > div[type=forum] .descriptionContainer > label {
   display: flex;
-  color: #272B40;
+  color: var(--main-color);
   font-weight: bold;
 }
 .cards > div[type=forum] .descriptionContainer > p {
@@ -1295,7 +1027,7 @@ body {
   padding: 5px 10px;
   background: #EDF0F2;
   border: none;
-  color: #272B40;
+  color: var(--main-color);
   font-family: "Jaldi", sans-serif;
   text-transform: uppercase;
 }
@@ -1310,7 +1042,7 @@ body {
   cursor: pointer;
   background: #EDF0F2;
   border: none;
-  color: #272B40;
+  color: var(--main-color);
   font-family: "Jaldi", sans-serif;
   text-transform: uppercase;
 }
@@ -1462,7 +1194,7 @@ nav,
   width: fit-content;
   max-width: 250px;
   height: 100vh;
-  background: #272B40;
+  background: var(--main-color);
   font-family: "Jockey One", sans-serif;
 }
 nav-row,
@@ -1548,7 +1280,7 @@ nav > ul > li,
 nav > ul > li > .nav-section-link,
 .nav-ctn > ul > li > .nav-section-link {
   width: fit-content;
-  border-bottom: solid 2px #272B40;
+  border-bottom: solid 2px var(--main-color);
   transition: 0.2s;
 }
 nav > ul > li > .nav-section-link:hover,
@@ -1671,166 +1403,6 @@ nav > ul > .bottom,
   color: #b0940b;
   transition: 0.5s;
   cursor: pointer;
-}
-
-#searchBarContainer > .searchBar {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 2px 10px;
-  background: #fff;
-  border-radius: 7px;
-}
-#searchBarContainer > .searchBar > input {
-  width: 200px;
-  height: 18px;
-  padding: 0;
-  background: none;
-  border: none;
-  font-family: "Jaldi", sans-serif;
-  font-size: rem(12);
-  font-weight: bold;
-  letter-spacing: 0.8px;
-}
-#searchBarContainer > .searchBar > input:focus {
-  outline: none;
-}
-#searchBarContainer > .searchBar > i {
-  font-size: rem(14);
-}
-#searchBarContainer > #searchResultContainer {
-  display: none;
-  position: absolute;
-  transform: translateY(5px);
-  background: #272B40;
-  border-radius: 7px;
-  overflow: hidden;
-}
-#searchBarContainer > #searchResultContainer > #searchResult {
-  display: flex;
-  flex-direction: column;
-}
-#searchBarContainer > #searchResultContainer > #searchResult > .field {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  min-width: 500px;
-  padding: 8px 20px;
-  background: #6d769e;
-  color: #fff;
-  text-decoration: none;
-  cursor: pointer;
-}
-#searchBarContainer > #searchResultContainer > #searchResult > .field:hover {
-  background: #272B40;
-}
-#searchBarContainer > #searchResultContainer > #searchResult > .field > .label-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  width: 150px;
-}
-#searchBarContainer > #searchResultContainer > #searchResult > .field > .label-container > .label {
-  padding: 0 15px;
-  border-radius: 10px;
-  font-size: 0.8rem;
-  color: #fff;
-  text-transform: uppercase;
-}
-#searchBarContainer > #searchResultContainer > #searchResult > .field > .label-container > .label-user {
-  background: #35be49;
-}
-#searchBarContainer > #searchResultContainer > #searchResult > .field > .label-container > .label-role {
-  background: #d4716a;
-}
-#searchBarContainer > #searchResultContainer > #searchResult > .field > .label-container > .label-page {
-  background: #22a6b3;
-}
-#searchBarContainer > #searchResultContainer > #searchResult > .field > .label-container > .label-configurationPage {
-  background: #ffd32a;
-}
-#searchBarContainer > #searchResultContainer > #searchResult > .field > * {
-  font-family: "Jaldi", sans-serif;
-}
-#searchBarContainer:focus-within > #searchResultContainer {
-  display: block;
-}
-
-.table {
-  width: 100%;
-  background: white;
-}
-.table > .thead {
-  width: 100%;
-}
-.table > .thead > .tr {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 20px;
-  border-bottom: solid 1px #000;
-}
-.table > .thead > .tr > .th {
-  text-align: left;
-  font-family: "Jaldi", sans-serif;
-  font-weight: bold;
-}
-.table > .thead > .tr > .th:nth-child(1) {
-  width: 5%;
-}
-.table > .thead > .tr > .th:nth-child(2) {
-  width: 10%;
-}
-.table > .thead > .tr > .th:nth-child(3) {
-  width: 30%;
-}
-.table > .thead > .tr > .th:nth-child(4) {
-  width: 30%;
-}
-.table > .thead > .tr > .th:nth-child(5) {
-  width: 25%;
-}
-.table > .tbody {
-  width: 100%;
-}
-.table > .tbody > .even {
-  background: #fff;
-}
-.table > .tbody > .uneven {
-  background: #EDF0F2;
-}
-.table > .tbody > .tr {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 20px;
-}
-.table > .tbody > .tr > .td {
-  text-align: left;
-  font-family: "Jaldi", sans-serif;
-  font-weight: bold;
-}
-.table > .tbody > .tr > .td:nth-child(1) {
-  width: 5%;
-}
-.table > .tbody > .tr > .td:nth-child(2) {
-  width: 10%;
-}
-.table > .tbody > .tr > .td:nth-child(3) {
-  width: 30%;
-}
-.table > .tbody > .tr > .td:nth-child(4) {
-  width: 30%;
-}
-.table > .tbody > .tr > .td:nth-child(5) {
-  width: 25%;
-}
-
-.paginate_button.current {
-  border-radius: 10px !important;
 }
 
 .border {
@@ -2063,7 +1635,7 @@ nav > ul > .bottom,
   display: flex;
   flex-direction: column;
   height: 0;
-  background: #272B40;
+  background: var(--main-color);
   border-radius: 0 0 0 7px;
   transition: 0.4s;
 }
@@ -2072,7 +1644,7 @@ nav > ul > .bottom,
   height: 50px;
   padding: 10px 30px;
   box-sizing: border-box;
-  background: #272B40;
+  background: var(--main-color);
   color: #fff;
   font-size: 1.3rem;
   text-decoration: none;
@@ -2096,7 +1668,7 @@ nav > ul > .bottom,
 }
 
 .editorjs {
-  background: #38aacf;
+  background: var(--bg-color);
   /* Redactor container */
 }
 .editorjs-display {
@@ -2128,6 +1700,7 @@ nav > ul > .bottom,
   width: 100%;
   padding: 20px 0;
   margin: 10px 0;
+  background: var(--title-color);
   text-align: center;
   text-transform: uppercase;
   border-bottom: solid 5px #3F445F;
@@ -2137,6 +1710,7 @@ nav > ul > .bottom,
   padding: 20px;
   margin: auto;
   box-sizing: border-box;
+  color: #fff;
 }
 .editorjs .codex-editor__redactor > .ce-block > .ce-block__content .image-tool {
   max-width: 1050px;
@@ -2151,112 +1725,6 @@ nav > ul > .bottom,
   height: 2vw;
   object-fit: cover;
   border-radius: 100%;
-}
-
-.statistics {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  row-gap: 2em;
-  font-family: "Jaldi", sans-serif;
-  width: 100%;
-  padding: 2%;
-  box-sizing: border-box;
-}
-.statistics > .odd {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  width: 100%;
-}
-.statistics > .even {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  column-gap: 2em;
-  width: 100%;
-}
-.statistics > .even > .medium {
-  height: 100%;
-  flex-grow: 2;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-}
-.statistics > .even > .small {
-  height: 100%;
-  flex-grow: 1;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-}
-.statistics #lastMessage h3, .statistics #logsLogin h3 {
-  margin: 0;
-  padding-left: 20px;
-  padding-top: 10px;
-  font-size: 1.5rem;
-  border-bottom: 1px solid lightgray;
-}
-.statistics #lastMessage > table, .statistics #logsLogin > table {
-  width: 100%;
-  padding: 10px 20px 20px;
-}
-.statistics #lastMessage > table thead, .statistics #logsLogin > table thead {
-  text-align: left;
-  font-size: 1.3rem;
-}
-.statistics #lastMessage > table td, .statistics #lastMessage > table th, .statistics #logsLogin > table td, .statistics #logsLogin > table th {
-  padding: 5px;
-}
-.statistics #userCreationChartDiv {
-  width: 100%;
-  height: 450px;
-}
-.statistics #avisChartdiv {
-  width: 100%;
-  height: 450px;
-}
-
-.keyData {
-  display: flex;
-  padding: 10px;
-  margin: 2%;
-  background-color: #fff;
-  border-radius: 10px;
-  justify-content: space-evenly;
-  align-items: center;
-  height: 120px;
-  box-shadow: rgba(99, 99, 99, 0.2) 0 2px 8px 0;
-  font-family: "Jaldi", sans-serif;
-}
-.keyData .keyDataChild {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 2.5rem;
-}
-.keyData .keyDataChild .label {
-  font-size: 1.4rem;
-}
-.keyData .keyDataChild .keyDataChildPercent {
-  font-size: 1rem;
-  font-weight: bold;
-  color: #fff;
-  padding: 0 10px;
-  border-radius: 5px;
-}
-.keyData .keyDataChild .keyDataChildValue {
-  font-weight: bold;
-}
-.keyData .keyDataChild .positif {
-  background-color: #259736;
-}
-.keyData .keyDataChild .negatif {
-  background-color: #AD4E47;
-}
-.keyData .keyDataChild .neutre {
-  background-color: #272B40;
 }
 
 .vote {

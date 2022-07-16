@@ -32,61 +32,61 @@
 				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/dashboard" || $_SERVER["REQUEST_URI"] == "/edit") ? "" : "close"; ?>">
 					<div class="nav-section-link"><i class="fa-solid fa-table-columns"></i>Tableau de bord<i class="fa-solid fa-angle-down"></i></div>
 					<ul>
-						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/dashboard") ? "opened" : ""; ?>" href="/dashboard">Statistiques</a>
-						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/edit") ? "opened" : ""; ?>" href="#">Edition</a>
+						<a class="btnBack <?php echo ($_SERVER["REQUEST_URI"] == "/dashboard") ? "opened" : ""; ?>" href="/dashboard">Statistiques</a>
+						<a class="btnBack <?php echo ($_SERVER["REQUEST_URI"] == "/edit") ? "opened" : ""; ?>" href="#">Edition</a>
 					</ul>
 				</li>
 				
 				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/user-management" || $_SERVER["REQUEST_URI"] == "/role-management") ? "" : "close"; ?>">
                     <div class="nav-section-link"><i class="fa-solid fa-user"></i>Gestion des utilisateurs<i class="fa-solid fa-angle-down"></i></div>
 					<ul>
-						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/user-management") ? "opened" : ""; ?>" href="/user-management">Tous les utilisateurs</a>
-						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/role-management") ? "opened" : ""; ?>" href="/role-management">Tous les rôles</a>
+						<a class="btnBack <?php echo ($_SERVER["REQUEST_URI"] == "/user-management") ? "opened" : ""; ?>" href="/user-management">Tous les utilisateurs</a>
+						<a class="btnBack <?php echo ($_SERVER["REQUEST_URI"] == "/role-management") ? "opened" : ""; ?>" href="/role-management">Tous les rôles</a>
 					</ul>
 				</li>
 				
 				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/page-management" || $_SERVER["REQUEST_URI"] == "/page-creation") ? "" : "close"; ?>">
                     <div class="nav-section-link"><i class="fa-solid fa-images"></i>Pages<i class="fa-solid fa-angle-down"></i></div>
 					<ul>
-						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/page-management") ? "opened" : ""; ?>" href="/page-management">Gestions des pages</a>
-						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/page-creation") ? "opened" : ""; ?>" href="/page-creation">Ajout de page</a>
+						<a class="btnBack <?php echo ($_SERVER["REQUEST_URI"] == "/page-management") ? "opened" : ""; ?>" href="/page-management">Gestions des pages</a>
+						<a class="btnBack <?php echo ($_SERVER["REQUEST_URI"] == "/page-creation") ? "opened" : ""; ?>" href="/page-creation">Ajout de page</a>
 					</ul>
 				</li>
 				
 				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/template-management" || $_SERVER["REQUEST_URI"] == "/template-edit") ? "" : "close"; ?>">
                     <div class="nav-section-link"><i class="fa-solid fa-film"></i>Template<i class="fa-solid fa-angle-down"></i></div>
 					<ul>
-                        <a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/template-management") ? "opened" : ""; ?>" href="/template-management">Gestions des templates</a>
-						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/template-edit") ? "opened" : ""; ?>" href="/template-edit">Edition template</a>
+                        <a class="btnBack <?php echo ($_SERVER["REQUEST_URI"] == "/template-management") ? "opened" : ""; ?>" href="/template-management">Gestions des templates</a>
+						<a class="btnBack <?php echo ($_SERVER["REQUEST_URI"] == "/template-edit") ? "opened" : ""; ?>" href="/template-edit">Edition template</a>
 					</ul>
 				</li>
 				
 				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/palier-donation") ? "" : "close"; ?>">
                     <div class="nav-section-link"><i class="fa-solid fa-circle-dollar-to-slot"></i></i>Donation<i class="fa-solid fa-angle-down"></i></div>
 					<ul>
-						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/palier-donation") ? "opened" : ""; ?>" href="/palier-donation">Paliers de donation</a>
+						<a class="btnBack <?php echo ($_SERVER["REQUEST_URI"] == "/palier-donation") ? "opened" : ""; ?>" href="/palier-donation">Paliers de donation</a>
 					</ul>
 				</li>
 				
 				<li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/forum-management" || $_SERVER["REQUEST_URI"] == "/tag" || $_SERVER["REQUEST_URI"] == "/message-management" || $_SERVER["REQUEST_URI"] == "/ban-word-management" || $_SERVER["REQUEST_URI"] == "/warning-management") ? "" : "close"; ?>">
 					<div class="nav-section-link"><i class="fa-solid fa-comments"></i>Modération<i class="fa-solid fa-angle-down"></i></div>
 					<ul>
-						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/forum-management") ? "opened" : ""; ?>" href="/forum-management">Forums</a>
-						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/tag") ? "opened" : ""; ?>" href="/tag">Catégories</a>
-						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/message-management") ? "opened" : ""; ?>" href="/message-management">Commentaires</a>
-						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/ban-word-management") ? "opened" : ""; ?>" href="/ban-word-management">Restrictions mots</a>
-						<a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/warning-management") ? "opened" : ""; ?>" href="/warning-management">Signalements</a>
+						<a class="btnBack <?php echo ($_SERVER["REQUEST_URI"] == "/forum-management") ? "opened" : ""; ?>" href="/forum-management">Forums</a>
+						<a class="btnBack <?php echo ($_SERVER["REQUEST_URI"] == "/tag") ? "opened" : ""; ?>" href="/tag">Catégories</a>
+						<a class="btnBack <?php echo ($_SERVER["REQUEST_URI"] == "/message-management") ? "opened" : ""; ?>" href="/message-management">Commentaires</a>
+						<a class="btnBack <?php echo ($_SERVER["REQUEST_URI"] == "/ban-word-management") ? "opened" : ""; ?>" href="/ban-word-management">Restrictions mots</a>
+						<a class="btnBack <?php echo ($_SERVER["REQUEST_URI"] == "/warning-management") ? "opened" : ""; ?>" href="/warning-management">Signalements</a>
 					</ul>
 				</li>
 
                 <li class="nav-section <?php echo ($_SERVER["REQUEST_URI"] == "/api-configuration") ? "" : "close"; ?>">
                     <div class="nav-section-link"><i class="fa-solid fa-gear"></i>API<i class="fa-solid fa-angle-down"></i></div>
                     <ul>
-                        <a class="btn <?php echo ($_SERVER["REQUEST_URI"] == "/api-configuration") ? "opened" : ""; ?>" href="/api-configuration">Configuration</a>
+                        <a class="btnBack <?php echo ($_SERVER["REQUEST_URI"] == "/api-configuration") ? "opened" : ""; ?>" href="/api-configuration">Configuration</a>
                     </ul>
                 </li>
 				
-				<a class="btn bottom" href="/logout" "><span>Déconnexion</span><i class="fa-solid fa-power-off"></i></a>
+				<a class="btnBack bottom" href="/logout" "><span>Déconnexion</span><i class="fa-solid fa-power-off"></i></a>
 			</ul>
 		</nav>
 		

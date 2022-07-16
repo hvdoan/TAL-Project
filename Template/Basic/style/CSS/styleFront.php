@@ -1,8 +1,5 @@
 <?php header("Content-type: text/css");
 
-$color = "#FFFFFF";
-$color2 = "#ff00dc";
-
 $file = 'style.json';
 $style = null;
 if (file_exists($file)) {
@@ -14,20 +11,11 @@ if (file_exists($file)) {
 
     body {}
 
-    body {
-        color: <?= $style['pickerText'] ?> !important;
-    }
-
-    nav, .nav-ctn {
-        background: <?= $style['pickerHeader'] ?> !important;
-    }
-
-    .ce-header {
-        background: <?= $style['pickerTitle'] ?> !important;
-    }
-
-    .editorjs {
-        background: <?= $style['pickerBackground'] ?> !important;
+    :root {
+        --main-color: <?= $style['colors']['pickerMain']['value'] ?>;
+        --bg-color: <?= $style['colors']['pickerBackground']['value'] ?>;
+        --title-color: <?= $style['colors']['pickerTitle']['value'] ?>;
+        --four-bg-color: <?= $style['colors']['pickerText']['value'] ?>;
     }
 </style>
 

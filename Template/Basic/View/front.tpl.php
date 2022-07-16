@@ -26,6 +26,9 @@
 		?>
 		
 		<nav class="nav-ctn-row">
+            <header>
+                <a href="/home"><?= WEBSITENAME ?></a>
+            </header>
 			<div class="nav">
 				<ul>
                     <a class="btn" href="/presentation">Game</a>

@@ -741,7 +741,7 @@ class Admin
                     $htmlContent .= "<td id='" . $page["id"] . "'>" . $page["uri"] . "</td>";
                     $htmlContent .= "<td>" . $page["description"] . "</td>";
                     $htmlContent .= "<td>Le " . $date->format("d/m/Y à H\hi") . "</td>";
-                    $htmlContent .= "<td><a class='btn' href='/page-creation?page=" . $page["id"] . "'>Editer</a></td>";
+                    $htmlContent .= "<td><a class='btnBack'  href='/page-creation?page=" . $page["id"] . "'>Editer</a></td>";
                     $htmlContent .= "</tr>";
                 }
 
@@ -800,6 +800,13 @@ class Admin
             "galerie",
             "/faq"
         ];
+
+        $file = 'Template/template.json';
+        if (file_exists($file)) {
+            $template = json_decode(file_get_contents($file), true);
+        } else {
+            die('Fichier template introuvable');
+        }
 
         if((isset($_POST["requestType"]) ? ($_POST["requestType"] == "insert") : false) &&
             (isset($_POST["tokenForm"]) && isset($_SESSION["tokenForm"]) ? $_POST["tokenForm"] == $_SESSION["tokenForm"] : false))
@@ -901,6 +908,7 @@ class Admin
 
             $view->assign("tokenForm", $token);
             $view->assign("page", $page);
+            $view->assign("template", $template['template']);
         }
     }
 	

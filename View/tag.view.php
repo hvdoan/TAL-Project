@@ -2,8 +2,8 @@
 	<h1>Catégories</h1>
 	
 	<div class="ctn ctn-add">
-		<button id="add" class="btn btn-add" onclick="openForm()" type="button" name="button">Nouveau</button>
-		<button id="delete" class="btn btn-delete" onclick="deleteTag()" type="button" name="button">Supprimer</button>
+		<button id="add" class="btnBack btnBack-add" onclick="openForm()" type="button" name="button">Nouveau</button>
+		<button id="delete" class="btnBack btnBack-delete" onclick="deleteTag()" type="button" name="button">Supprimer</button>
 	</div>
 	
 	<table id="tagTable" class="stripe hover cell-border">

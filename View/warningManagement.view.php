@@ -2,7 +2,7 @@
 	<h1>Signalements</h1>
 	
 	<div class="ctn ctn-delete">
-		<button id="delete" class="btn btn-delete" onclick="deleteWarning()" type="button" name="button">Supprimer</button>
+		<button id="delete" class="btnBack btnBack-delete" onclick="deleteWarning()" type="button" name="button">Supprimer</button>
 	</div>
 	
 	<table id="warningManagementTable" class="stripe hover cell-border">

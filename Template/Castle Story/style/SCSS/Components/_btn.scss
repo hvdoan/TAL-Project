@@ -10,7 +10,7 @@
     height: fit-content;
     padding: 5px 10px;
 
-    background: $hard-blue;
+    background: $mainColor;
     border-radius: 7px;
     text-decoration: none;
     color: $white;
@@ -20,7 +20,7 @@
 
     &:hover {
         background: $white;
-        color: $hard-blue;
+        color: $mainColor;
     }
 
     &-add, &-edit {

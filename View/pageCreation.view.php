@@ -49,14 +49,14 @@
             } else {
                 die('Fichier template introuvable');
             } ?>
-            <link rel="stylesheet" href="Template/Castle Story/style/CSS/style.css">
-            <link rel="stylesheet" type="text/css" href="Template/Castle Story/style/CSS/styleFront.php">
+            <link rel="stylesheet" href="Template/<?= $this->data['template'] ?>/style/CSS/style.css">
+            <link rel="stylesheet" type="text/css" href="Template/<?= $this->data['template'] ?>/style/CSS/styleFront.php">
         </div>
         <div class="ctn-cta">
             <?php if($this->data["page"]->getId()) { ?>
-                <button id="save-button" class="btn-form btn-form-validate" onclick="save('<?=$this->data["page"]->getId()?>')">Sauvegarder</button>
+                <button id="save-button" class="btnBack-form btnBack-form-validate" onclick="save('<?=$this->data["page"]->getId()?>')">Sauvegarder</button>
             <?php } else { ?>
-                <button class="btn-form btn-form-validate" onclick="save()">Créer</button>
+                <button class="btnBack-form btnBack-form-validate" onclick="save()">Créer</button>
             <?php } ?>
         </div>
     </section>

@@ -34,6 +34,6 @@
             <?php endif; ?>
         </form>
     </div>
-    <button class="btn-form btn-form-validate" onclick="saveStyle()">Sauvegarder</button>
+    <button class="btnBack-form btnBack-form-validate" onclick="saveStyle()">Sauvegarder</button>
 </div>
 <div id="jsonHidden" style="visibility: hidden"><?php print_r($this->data['styleHidden'])?></div>
