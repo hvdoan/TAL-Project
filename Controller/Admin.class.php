@@ -1239,18 +1239,24 @@ class Admin
                 $dbUser         = addslashes($_POST["dbUser"]);
                 $dbPassword     = addslashes($_POST["dbPassword"]);
 
-                $config["database"]["dbHost"]       = $dbHost;
-                $config["database"]["dbPort"]       = $dbPort;
-                $config["database"]["dbUser"]       = $dbUser;
-                $config["database"]["dbPassword"]   = $dbPassword;
+                $config["database"]["host"]       = $dbHost;
+                $config["database"]["port"]       = $dbPort;
+                $config["database"]["user"]       = $dbUser;
+                $config["database"]["password"]   = $dbPassword;
 
                 $configFile = fopen("ini.yml", "w");
-                yaml_emit_file("ini.yml", $config);
-                fclose($configFile);
+				fclose($configFile);
 
-                header("Location: /api-configuration");
-            }
-        }
+				var_dump(file_get_contents("ini.yml"));
+
+				yaml_emit_file("ini.yml", $config);
+
+				echo "<pre>";
+				var_dump($config);
+				echo "</pre>";
+			}
+//			header("Location: /api-configuration");
+		}
         else if((isset($_POST["requestType"]) && $_POST["requestType"] == "updatePaypal") &&
             (isset($_POST["tokenForm"]) && isset($_SESSION["tokenForm"]) ? $_POST["tokenForm"] == $_SESSION["tokenForm"] : false))
         {

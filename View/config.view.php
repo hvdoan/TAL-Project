@@ -68,6 +68,38 @@
                 </div>
             </div>
 
+            <!-- Name field -->
+            <div class='field-row'>
+                <div class="field">
+                    <label>Votre prénom <span class="required">*</span></label>
+                    <input class="input" type="text" name="websiteAdminFirstname" required>
+                </div>
+            </div>
+
+            <!-- Name field -->
+            <div class='field-row'>
+                <div class="field">
+                    <label>Votre nom <span class="required">*</span></label>
+                    <input class="input" type="text" name="websiteAdminLastname" required>
+                </div>
+            </div>
+
+            <!-- Name field -->
+            <div class='field-row'>
+                <div class="field">
+                    <label>Mail admin <span class="required">*</span></label>
+                    <input class="input" type="email" name="websiteAdminMail" required>
+                </div>
+            </div>
+
+            <!-- Name field -->
+            <div class='field-row'>
+                <div class="field">
+                    <label>Mot de passe admin <span class="required">*</span></label>
+                    <input class="input" type="text" name="websiteAdminPassword" required>
+                </div>
+            </div>
+
             <!-- Cta field -->
             <div class='field-cta'>
                 <button class="btnBack-form btnBack-form-validate" type="button" onclick="moveToSection('0', '1')">Suivant</button>
