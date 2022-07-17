@@ -1,3 +1,11 @@
+<?php
+$file = 'Template/Castle Story/style/CSS/style.json';
+$style = null;
+if (file_exists($file)) {
+    $style = json_decode(file_get_contents($file), true);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 	<head>
@@ -7,6 +15,7 @@
         <!-- CSS -->
         <link rel="stylesheet" href="Template/Castle Story/style/CSS/style.css">
         <link rel="stylesheet" type="text/css" href="Template/Castle Story/style/CSS/styleFront.php">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=<?=  $style['fonts']['pickerFont']['value'] ?>">
         <!-- FONT AWESOME -->
 		<script src="https://kit.fontawesome.com/62e5467ba7.js" crossorigin="anonymous"></script>
         <!-- JQUERY -->

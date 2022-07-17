@@ -11,7 +11,7 @@
 
   height: 0;
 
-  background: $hard-blue;
+  background: $mainColor;
   border-radius: 0 0 0 7px;
   transition: .4s;
 
@@ -21,15 +21,15 @@
 	padding: 10px 30px;
 	box-sizing: border-box;
 
-	background: $hard-blue;
-	color: $white;
+	background: $mainColor;
+	color: $text;
 	font-size: 1.3rem;
 	text-decoration: none;
     text-align: center;
 	transition: .3s;
 
 	&:hover {
-	  background: $light-purple;
+	  background: $grey;
 	  transition: .3s;
 	}
   }

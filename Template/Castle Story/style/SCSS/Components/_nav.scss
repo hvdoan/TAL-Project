@@ -12,7 +12,7 @@ nav,
     max-width: calc($dashboard-nav-width-column + 40px);
     height: 100vh;
     background: $mainColor;
-    font-family: $jokeyOne;
+    font-family: $mainFont;
 
     &-row {
         display: flex;
@@ -63,12 +63,12 @@ nav,
         }
 
         & > a > h1 {
-            color: $white;
+            color: $text;
         }
 
         & > i {
             font-size: rem(24);
-            color: $white;
+            color: $text;
             cursor: pointer;
         }
     }
@@ -91,7 +91,7 @@ nav,
 
         & > li {
             list-style: none;
-            color: $white;
+            color: $text;
             cursor: pointer;
 
             & > .nav-section-link
@@ -102,7 +102,7 @@ nav,
 
                 &:hover
                 {
-                    border-bottom: solid 2px $white;
+                    border-bottom: solid 2px $text;
                     transition: .2s;
                 }
 
@@ -117,13 +117,13 @@ nav,
                 max-height: 15rem;
                 margin: 10px 0 10px 16px;
                 padding-left: 20px;
-                border-left: solid 2px $white;
+                border-left: solid 2px $text;
                 transition: max-height .5s;
 
                 & > a
                 {
                     text-decoration: none !important;
-                    color: $white;
+                    color: $text;
                 }
             }
         }

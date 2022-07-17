@@ -1,6 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Jockey+One&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Jaldi&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,400;0,700;1,400&display=swap");
 .bg\:dark-blue {
   background-color: var(--main-color) !important;
 }
@@ -33,7 +30,7 @@ h1 {
   margin: 0;
   color: white;
   font-weight: normal;
-  font-family: "Jockey One", sans-serif;
+  font-family: var(--main-fonts), sans-serif;
 }
 
 h2 {
@@ -80,11 +77,11 @@ flex-ai\:center {
   padding: 40px 60px;
   background: #3F445F;
   border-radius: 12px;
-  font-family: "Jaldi", sans-serif;
+  font-family: var(--main-fonts), sans-serif;
 }
 .form-partial > h1 {
   margin-bottom: 40px;
-  font-family: "Jost", sans-serif;
+  font-family: var(--main-fonts), sans-serif;
   text-align: center;
   font-weight: 400;
 }
@@ -410,7 +407,7 @@ body {
   border-radius: 7px;
 }
 #validate-account > section > * {
-  font-family: "Jaldi", sans-serif;
+  font-family: var(--main-fonts), sans-serif;
   color: #fff;
 }
 #validate-account > section > p {
@@ -494,17 +491,17 @@ body {
   background: var(--main-color);
   border-radius: 7px;
   text-decoration: none;
-  color: #fff;
+  color: var(--text-color);
   cursor: pointer;
   transition: 0.3s;
 }
 .btn:hover {
-  background: #fff;
+  background: var(--text-color);
   color: var(--main-color);
 }
 .btn-add, .btn-edit {
   padding: 10px;
-  background: #3F445F;
+  background: var(--main-color);
   border: none;
   border-radius: 5px;
   font-weight: bold;
@@ -512,7 +509,7 @@ body {
 }
 .btn-add:hover, .btn-edit:hover {
   background: #6d769e;
-  color: #fff;
+  color: var(--text-color);
 }
 .btn-validate {
   padding: 10px;
@@ -778,7 +775,7 @@ body {
   font-family: "Jaldi", sans-serif;
 }
 .ctn > h1 {
-  font-family: "Jaldi", sans-serif;
+  font-family: var(--main-fonts), sans-serif;
   color: #000;
   font-weight: bold;
 }
@@ -844,7 +841,7 @@ body {
   height: auto;
 }
 .ctn-article > p {
-  font-family: "Jaldi", sans-serif;
+  font-family: var(--main-fonts), sans-serif;
   padding: 0 10px;
 }
 .ctn-article-hover {
@@ -860,7 +857,7 @@ body {
 }
 .ctn-article-hover > .content {
   color: #fff;
-  font-family: "Jaldi", sans-serif;
+  font-family: var(--main-fonts), sans-serif;
 }
 .ctn-article-hover > .content > img {
   float: left;
@@ -964,7 +961,7 @@ body {
   border-radius: 7px;
   overflow: hidden;
   background: #fff;
-  font-family: "Jaldi", sans-serif;
+  font-family: var(--main-fonts), sans-serif;
 }
 .form > .field-row {
   display: flex;
@@ -1028,7 +1025,7 @@ body {
   background: #EDF0F2;
   border: none;
   color: var(--main-color);
-  font-family: "Jaldi", sans-serif;
+  font-family: var(--main-fonts), sans-serif;
   text-transform: uppercase;
 }
 .form > .field-row > #select-ctn {
@@ -1043,7 +1040,7 @@ body {
   background: #EDF0F2;
   border: none;
   color: var(--main-color);
-  font-family: "Jaldi", sans-serif;
+  font-family: var(--main-fonts), sans-serif;
   text-transform: uppercase;
 }
 .form .disabled {
@@ -1195,7 +1192,7 @@ nav,
   max-width: 250px;
   height: 100vh;
   background: var(--main-color);
-  font-family: "Jockey One", sans-serif;
+  font-family: var(--main-fonts), sans-serif;
 }
 nav-row,
 .nav-ctn-row {
@@ -1246,12 +1243,12 @@ nav > header > a,
 }
 nav > header > a > h1,
 .nav-ctn > header > a > h1 {
-  color: #fff;
+  color: var(--text-color);
 }
 nav > header > i,
 .nav-ctn > header > i {
   font-size: rem(24);
-  color: #fff;
+  color: var(--text-color);
   cursor: pointer;
 }
 nav > .nav,
@@ -1274,7 +1271,7 @@ nav > ul,
 nav > ul > li,
 .nav-ctn > ul > li {
   list-style: none;
-  color: #fff;
+  color: var(--text-color);
   cursor: pointer;
 }
 nav > ul > li > .nav-section-link,
@@ -1285,7 +1282,7 @@ nav > ul > li > .nav-section-link,
 }
 nav > ul > li > .nav-section-link:hover,
 .nav-ctn > ul > li > .nav-section-link:hover {
-  border-bottom: solid 2px #fff;
+  border-bottom: solid 2px var(--text-color);
   transition: 0.2s;
 }
 nav > ul > li > .nav-section-link > i,
@@ -1298,13 +1295,13 @@ nav > ul > li > ul,
   max-height: 15rem;
   margin: 10px 0 10px 16px;
   padding-left: 20px;
-  border-left: solid 2px #fff;
+  border-left: solid 2px var(--text-color);
   transition: max-height 0.5s;
 }
 nav > ul > li > ul > a,
 .nav-ctn > ul > li > ul > a {
   text-decoration: none !important;
-  color: #fff;
+  color: var(--text-color);
 }
 nav > ul > .close > i:nth-child(2),
 .nav-ctn > ul > .close > i:nth-child(2) {
@@ -1344,7 +1341,7 @@ nav > ul > .bottom,
   margin-left: auto;
   margin-right: auto;
   text-align: center;
-  font-family: "Jaldi", sans-serif;
+  font-family: var(--main-fonts), sans-serif;
   animation: fadein 0.7s, delete 1s ease-in 5s forwards;
 }
 @keyframes fadein {
@@ -1607,7 +1604,7 @@ nav > ul > .bottom,
 .avatar > span {
   padding: 0 10px;
   font-size: 1.2rem;
-  font-family: "Jaldi", sans-serif;
+  font-family: var(--main-fonts), sans-serif;
 }
 .avatar > #avatar-container {
   display: flex;
@@ -1645,14 +1642,14 @@ nav > ul > .bottom,
   padding: 10px 30px;
   box-sizing: border-box;
   background: var(--main-color);
-  color: #fff;
+  color: var(--text-color);
   font-size: 1.3rem;
   text-decoration: none;
   text-align: center;
   transition: 0.3s;
 }
 #user-menu > a:hover {
-  background: #927bdf;
+  background: #988F8F;
   transition: 0.3s;
 }
 #user-menu > .red:hover {
@@ -1710,7 +1707,7 @@ nav > ul > .bottom,
   padding: 20px;
   margin: auto;
   box-sizing: border-box;
-  color: #fff;
+  color: var(--text-color);
 }
 .editorjs .codex-editor__redactor > .ce-block > .ce-block__content .image-tool {
   max-width: 1050px;

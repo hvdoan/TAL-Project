@@ -11,7 +11,7 @@
     font-family: "Jaldi", sans-serif;
 
     & > h1 {
-        font-family: $jaldi;
+        font-family: $mainFont;
         color: $black;
         font-weight: bold;
     }
@@ -87,7 +87,7 @@
         }
 
         & > p {
-            font-family: $jaldi;
+            font-family: $mainFont;
             padding: 0 10px;
         }
 
@@ -105,7 +105,7 @@
 
             & > .content {
                 color: $white;
-                font-family: $jaldi;
+                font-family: $mainFont;
 
                 & > img {
                     float: left;

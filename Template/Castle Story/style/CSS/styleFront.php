@@ -15,7 +15,8 @@ if (file_exists($file)) {
         --main-color: <?= $style['colors']['pickerMain']['value'] ?>;
         --bg-color: <?= $style['colors']['pickerBackground']['value'] ?>;
         --title-color: <?= $style['colors']['pickerTitle']['value'] ?>;
-        --four-bg-color: <?= $style['colors']['pickerText']['value'] ?>;
+        --text-color: <?= $style['colors']['pickerText']['value'] ?>;
+        --main-fonts: <?= $style['fonts']['pickerFont']['value'] ?>;
     }
 </style>
 
