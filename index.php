@@ -6,6 +6,7 @@ use App\Controller\Main;
 use App\Controller\User;
 use App\Core\View;
 use App\Model\Page;
+use App\Model\TotalVisitor;
 
 session_start();
 
@@ -23,6 +24,20 @@ function myAutoloader($class)
 }
 
 spl_autoload_register("App\myAutoloader");
+
+function saveConnexion() {
+    $totalVisitor = new TotalVisitor();
+    $current_time=time();
+
+    $VisitorParams = $totalVisitor->select(['id'], ['session' => session_id()]);
+    if (count($VisitorParams) != 0) {
+        $totalVisitor = $totalVisitor->setId(intval($VisitorParams[0]['id'], 10));
+    }
+
+    $totalVisitor->setSession(session_id());
+    $totalVisitor->setTime($current_time);
+    $totalVisitor->save();
+}
 
 /*
  * CHECK WEBSITE CONFIG FILE
@@ -129,5 +144,7 @@ else
         die("L'action " . $action . " n'existe pas");
     }
     // $action = login ou logout ou register ou home
+    if ($uri != "/config")
+        saveConnexion();
     $objectController->$action();
 }

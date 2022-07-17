@@ -12,6 +12,7 @@ use App\Model\Log;
 use App\Model\Message;
 use App\Model\Page;
 use App\Model\Permission;
+use App\Model\Rate;
 use App\Model\Role;
 use App\Model\Tag;
 use App\Model\TotalVisitor;
@@ -19,6 +20,7 @@ use App\Model\User as UserModel;
 use App\Model\Warning;
 use DateTime;
 use App\Model\DonationTier;
+use PHPMailer\PHPMailer\Exception;
 
 class Admin
 {
@@ -50,15 +52,6 @@ class Admin
         $current_time=time();
         $timeout = $current_time - (900);
 
-        $VisitorParams = $totalVisitor->select(['id'], ['session' => session_id()]);
-        if (count($VisitorParams) != 0) {
-            $totalVisitor = $totalVisitor->setId(intval($VisitorParams[0]['id'], 10));
-        }
-
-        $totalVisitor->setSession(session_id());
-        $totalVisitor->setTime($current_time);
-        $totalVisitor->save();
-
         $totalVisitor = $totalVisitor->select(['session, time'], []);
         $totalVisitorActually = [];
         foreach ($totalVisitor as $item) {
@@ -74,25 +67,38 @@ class Admin
         }
         $percentTotalUser = round(count($RecentTotalUser) * 100 / count($totalVisitor),2);
 
-        // Gestion derniers messages
         $message = new Message();
-        $messageList = $message->select([DBPREFIXE."Message.id", DBPREFIXE."User.firstname", DBPREFIXE."User.lastname", "idForum", "idMessage", "content", DBPREFIXE."Message.creationDate", "updateDate"], [],
-            ' LEFT JOIN '. DBPREFIXE .'User ON '. DBPREFIXE .'Message.idUser = '. DBPREFIXE .'User.id ORDER BY creationDate DESC LIMIT 5');
+        $messageList = $message->select2('Message',[DBPREFIXE."Message.id", DBPREFIXE."User.firstname", DBPREFIXE."User.lastname", "idForum", "idMessage", "content", DBPREFIXE."Message.creationDate", "updateDate"])
+                ->leftJoin('User', 'Message', 'id', 'idUser')
+                ->orderBy('creationDate', 'DESC')
+                ->limit(0,5)
+                ->getResult();
 
         $log = new Log();
-        $logList = $log->select([DBPREFIXE."Log.id", DBPREFIXE."User.lastname", DBPREFIXE."User.firstname", "time"], [],
-            ' LEFT JOIN '. DBPREFIXE .'User ON '. DBPREFIXE .'Log.idUser = '. DBPREFIXE .'User.id ORDER BY time DESC LIMIT 5');
+        $logList = $log->select2('Log',[DBPREFIXE."Log.id", DBPREFIXE."User.lastname", DBPREFIXE."User.firstname", "time"])
+            ->leftJoin('User', 'Log', 'id', 'idUser')
+            ->orderBy('time', 'DESC')
+            ->limit(0,5)
+            ->getResult();
 
-
-
-        $view = new View("dashboard", "back");
+      $rate = new Rate();
+      $ratings[0] = $rate->select(["COUNT(id) AS rating"], ["rate" => "1"]);
+      $ratings[1] = $rate->select(["COUNT(id) AS rating"], ["rate" => "2"]);
+      $ratings[2] = $rate->select(["COUNT(id) AS rating"], ["rate" => "3"]);
+      $ratings[3] = $rate->select(["COUNT(id) AS rating"], ["rate" => "4"]);
+      $ratings[4] = $rate->select(["COUNT(id) AS rating"], ["rate" => "5"]);
+	  $averageRatings = $rate->select(["ROUND(AVG(rate), 2) AS average"], []);
+   
+	  $view = new View("dashboard", "back");
 	    $view->assign("users", $users);
 	    $view->assign("totalVisitor", count($totalVisitor));
 	    $view->assign("totalVisitorActually", count($totalVisitorActually));
+	    $view->assign("averageRatings", $averageRatings);
 	    $view->assign("percentUsers", $percentUsers);
 	    $view->assign("percentTotalUser", $percentTotalUser);
 	    $view->assign("messageList", $messageList);
 	    $view->assign("logList", $logList);
+	    $view->assign("ratings", $ratings);
     }
 
 	public function configuration()
@@ -579,7 +585,9 @@ class Admin
                     $role = $role->setId(intval($_POST["roleId"]));
 
                 $permission = new Permission();
-                $permissionList = $permission->select(["idAction"], ["idRole" => $role->getId()]);
+
+                if ( $role->getId() !== null)
+                    $permissionList = $permission->select(["idAction"], ["idRole" => $role->getId()]);
 
                 $token = md5(uniqid());
                 $_SESSION["tokenForm"] = $token;
@@ -712,8 +720,8 @@ class Admin
                 foreach ($pageList as $page) {
                     $user = new UserModel();
                     $user = $user->setId(intval($page["idUser"]));
-
                     $date = new DateTime($page["dateModification"]);
+                    $date->setTimezone(timezone_open('Europe/Paris'));
 
                     $htmlContent .= "<tr>";
 
@@ -726,7 +734,7 @@ class Admin
                     $htmlContent .= "<td id='" . $page["id"] . "'>" . $page["uri"] . "</td>";
                     $htmlContent .= "<td>" . $page["description"] . "</td>";
                     $htmlContent .= "<td>Le " . $date->format("d/m/Y à H\hi") . "</td>";
-                    $htmlContent .= "<td><a class='btn' href='/page-creation?page=" . $page["id"] . "'>Editer</a></td>";
+                    $htmlContent .= "<td><a class='btn'  href='/page-creation?page=" . $page["id"] . "'>Editer</a></td>";
                     $htmlContent .= "</tr>";
                 }
 
@@ -785,6 +793,13 @@ class Admin
             "galerie",
             "/faq"
         ];
+
+        $file = 'Template/template.json';
+        if (file_exists($file)) {
+            $template = json_decode(file_get_contents($file), true);
+        } else {
+            die('Fichier template introuvable');
+        }
 
         if((isset($_POST["requestType"]) ? ($_POST["requestType"] == "insert") : false) &&
             (isset($_POST["tokenForm"]) && isset($_SESSION["tokenForm"]) ? $_POST["tokenForm"] == $_SESSION["tokenForm"] : false))
@@ -851,7 +866,7 @@ class Admin
                         $uri = "/" . $uri;
 
                         /* If the URI not existe on database, continue the process */
-                        if(!in_array($uri, $notAllowUri))
+                        if(!in_array($uri, $notAllowUri) || $page->getUri() == $uri)
                         {
                             $page->setIdUser($_SESSION["id"]);
                             $page->setUri($uri);
@@ -886,6 +901,7 @@ class Admin
 
             $view->assign("tokenForm", $token);
             $view->assign("page", $page);
+            $view->assign("template", $template['template']);
         }
     }
 	
@@ -1223,18 +1239,24 @@ class Admin
                 $dbUser         = addslashes($_POST["dbUser"]);
                 $dbPassword     = addslashes($_POST["dbPassword"]);
 
-                $config["database"]["dbHost"]       = $dbHost;
-                $config["database"]["dbPort"]       = $dbPort;
-                $config["database"]["dbUser"]       = $dbUser;
-                $config["database"]["dbPassword"]   = $dbPassword;
+                $config["database"]["host"]       = $dbHost;
+                $config["database"]["port"]       = $dbPort;
+                $config["database"]["user"]       = $dbUser;
+                $config["database"]["password"]   = $dbPassword;
 
                 $configFile = fopen("ini.yml", "w");
-                yaml_emit_file("ini.yml", $config);
-                fclose($configFile);
+				fclose($configFile);
 
-                header("Location: /api-configuration");
-            }
-        }
+				var_dump(file_get_contents("ini.yml"));
+
+				yaml_emit_file("ini.yml", $config);
+
+				echo "<pre>";
+				var_dump($config);
+				echo "</pre>";
+			}
+//			header("Location: /api-configuration");
+		}
         else if((isset($_POST["requestType"]) && $_POST["requestType"] == "updatePaypal") &&
             (isset($_POST["tokenForm"]) && isset($_SESSION["tokenForm"]) ? $_POST["tokenForm"] == $_SESSION["tokenForm"] : false))
         {
@@ -1719,7 +1741,7 @@ class Admin
                     $htmlContent .= "<input id='input-idMessage' type='hidden' name='idMessage' value='" . $message->getIdMessage() . "'>";
 					$htmlContent .= "</div>";
 					$htmlContent .= "<div class='field-row field-cta'>";
-						$htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeMessageForm()' type='button' value='Annuler'>";
+						$htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeMessageFormBack()' type='button' value='Annuler'>";
 				}
 				else
 				{
@@ -1753,9 +1775,9 @@ class Admin
 					$htmlContent .= "</div>";
                     $htmlContent .= "</div>";
 					$htmlContent .= "<div class='field-row field-cta'>";
-                    $htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeMessageForm()' type='button' value='Annuler'>";
+                    $htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeMessageFormBack()' type='button' value='Annuler'>";
 				}
-				
+                
 				if($message->getId() != null)
 				{
 					$htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $message->getId() . "'>";
@@ -2152,4 +2174,141 @@ class Admin
 				$view = new View("warningManagement", "back");
 		}
 	}
+
+    public function templateManagement()
+    {
+        /* Get the connexion status */
+        $isConnected = Verificator::checkConnection();
+
+        /* Reload the login session time if connexion status is true */
+        if ($isConnected)
+            Verificator::reloadConnection();
+
+        /* Check access permission */
+        if (!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_TEMPLATE"))
+            header("Location: /dashboard");
+
+        $token = md5(uniqid());
+        $_SESSION["tokenForm"] = $token;
+
+        $results = [];
+        $countTemplate = scandir('Template');
+        $files = array_diff($countTemplate, array('.', '..'));
+
+        foreach ($files as $file) {
+            if (is_dir( 'Template/' .$file))
+                $results[] = $file;
+        }
+
+        $file = 'Template/template.json';
+        if (file_exists($file)) {
+            $template = json_decode(file_get_contents($file), true);
+        } else {
+            die('Fichier template introuvable');
+        }
+
+        $view = new View("templateManagement", "back");
+        $view->assign('names', $results);
+        $view->assign('template', $template['template']);
+        $view->assign('tokenCSRF', $_SESSION["tokenForm"]);
+    }
+
+    public function templateEdition()
+    {
+        /* Get the connexion status */
+        $isConnected = Verificator::checkConnection();
+
+        /* Reload the login session time if connexion status is true */
+        if ($isConnected)
+            Verificator::reloadConnection();
+
+        /* Check access permission */
+        if (!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_TEMPLATE"))
+            header("Location: /dashboard");
+
+        $token = md5(uniqid());
+        $_SESSION["tokenForm"] = $token;
+
+        $file = 'Template/template.json';
+        if (file_exists($file)) {
+            $template = json_decode(file_get_contents($file), true);
+        } else {
+            die('Fichier template introuvable');
+        }
+
+        $file = 'Template/'.$template['template'].'/style/CSS/style.json';
+        $style = null;
+        if (file_exists($file)) {
+            $style = json_decode(file_get_contents($file), true);
+        }
+
+        $view = new View("templateEdition", "back");
+        $view->assign('style', $style);
+        $view->assign('styleHidden', json_encode($style));
+        $view->assign('templateSelected', $template['template']);
+        $view->assign('tokenCSRF', $_SESSION["tokenForm"]);
+    }
+
+    public function saveStyle()
+    {
+        /* Get the connexion status */
+        $isConnected = Verificator::checkConnection();
+
+        /* Reload the login session time if connexion status is true */
+        if ($isConnected)
+            Verificator::reloadConnection();
+
+        /* Check access permission */
+        if (!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_TEMPLATE"))
+            header("Location: /dashboard");
+
+        $file = 'Template/template.json';
+        if (file_exists($file)) {
+            $template = json_decode(file_get_contents($file), true);
+        } else {
+            die('Fichier template introuvable');
+        }
+
+        if((isset($_POST["requestType"]) && $_POST["requestType"] == "saveStyle") &&
+            (isset($_POST["tokenForm"]) && isset($_SESSION["tokenForm"]) && $_POST["tokenForm"] == $_SESSION["tokenForm"])) {
+            if (!$isConnected)
+                echo 'login';
+            else {
+                try {
+                    file_put_contents('Template/'.$template['template'].'/style/CSS/style.json', $_POST['data']);
+                    echo 'success';
+                } catch (Exception $e) {
+                    echo 'error';
+                }
+            }
+        } else {
+            header("Location: /dashboard");
+        }
+    }
+
+    public function saveTemplate()
+    {
+        /* Get the connexion status */
+        $isConnected = Verificator::checkConnection();
+
+        /* Reload the login session time if connexion status is true */
+        if ($isConnected)
+            Verificator::reloadConnection();
+
+        /* Check access permission */
+        if (!Verificator::checkPageAccess($_SESSION["permission"], "MANAGE_TEMPLATE"))
+            header("Location: /dashboard");
+
+        if((isset($_POST["requestType"]) && $_POST["requestType"] == "saveTemplate") &&
+            (isset($_POST["tokenForm"]) && isset($_SESSION["tokenForm"]) && $_POST["tokenForm"] == $_SESSION["tokenForm"])) {
+            if (!$isConnected)
+                echo 'login';
+            else {
+               echo 'success';
+               file_put_contents('Template/template.json',$_POST['template']);
+            }
+        } else {
+            header("Location: /dashboard");
+        }
+    }
 }

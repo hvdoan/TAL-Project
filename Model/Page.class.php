@@ -18,6 +18,16 @@ class Page extends Sql
         parent::__construct();
     }
 
+    public function assign($idUser, $uri, $description, $content, $dateModification, $id = null)
+	{
+		$this->id 					= $id;
+		$this->idUser				= $idUser;
+		$this->uri 					= $uri;
+		$this->content 				= $content;
+		$this->description 			= $description;
+		$this->dateModification 	= $dateModification;
+	}
+
     /**
      * @return null|int
      */

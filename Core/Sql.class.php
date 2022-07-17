@@ -2,10 +2,11 @@
 
 namespace App\Core;
 
-abstract class Sql
+abstract class Sql extends MySqlBuilder
 {
 	private $pdoInstance;
 	private $table;
+	private $table2;
 
 	public function __construct()
 	{
@@ -14,6 +15,7 @@ abstract class Sql
 		//Si l'id n'est pas null alors on fait un update sinon on fait un insert
 		$calledClassExploded = explode("\\",get_called_class());
 		$this->table = DBPREFIXE.ucwords(end($calledClassExploded));
+		$this->table2 = ucwords(end($calledClassExploded));
 	}
 
 	/**
@@ -23,10 +25,12 @@ abstract class Sql
 	 */
 	public function setId(?int $id)
 	{
-		$sql = "SELECT * FROM ".$this->table." WHERE id = ".$id;
-		$query = $this->pdoInstance->getPDO()->query($sql);
+        $this->resetParams();
+        $this->select2($this->table2, ['*'])->where('id', $id);
+        $queryPrepared = $this->pdoInstance->getPDO()->prepare($this->getQuery());
+        $queryPrepared->execute( $this->getParams() );
 
-        return $query->fetchObject(get_called_class());
+        return $queryPrepared->fetchObject(get_called_class());
 	}
 
 	/**
@@ -34,21 +38,19 @@ abstract class Sql
 	 */
 	public function save()
 	{
+        $this->resetParams();
+
 		$columns = get_object_vars($this);
 		$columns = array_diff_key($columns, get_class_vars(get_class()));
 
 		if($this->getId() == null){
-			$sql = "INSERT INTO ".$this->table." (".implode(", ",array_keys($columns)).") VALUES ( :".implode(", :",array_keys($columns)).")";
+            $this->insert($this->table2, array_keys($columns), array_values($columns));
 		}else{
-			$update = [];
-			foreach ($columns as $column=>$value)
-				$update[] = $column." = :".$column;
+            $this->update($this->table2, array_keys($columns), array_values($columns))->where('id',$this->getId());
+        }
 
-			$sql = "UPDATE ".$this->table." SET ".implode(", ",$update)." WHERE id = ".$this->getId();
-		}
-
-		$queryPrepared = $this->pdoInstance->getPDO()->prepare($sql);
-		$queryPrepared->execute( $columns );
+		$queryPrepared = $this->pdoInstance->getPDO()->prepare($this->getQuery());
+		$queryPrepared->execute( $this->getParams() );
 	}
 
 	/**
@@ -56,8 +58,11 @@ abstract class Sql
 	 */
 	public function delete()
 	{
-		$sql = "DELETE FROM " . $this->table . " WHERE id=" . $this->getId();
-		$queryPrepared = $this->pdoInstance->getPDO()->query($sql);
+        $this->resetParams();
+
+        $this->delete2($this->table2)->where('id',$this->getId());
+		$queryPrepared = $this->pdoInstance->getPDO()->prepare($this->getQuery());
+        $queryPrepared->execute( $this->getParams() );
 	}
 
 	/**
@@ -66,24 +71,17 @@ abstract class Sql
 	 *
 	 * @return bool|array
 	 */
-	public function select(array $values, array $params, string $endQuery = "")
+	public function select(array $values, array $params)
 	{
-		$sql = "SELECT ".implode(", ", $values)." FROM ".$this->table;
+        $this->resetParams();
 
-        if (count($params) > 0)
-            $sql .= " WHERE ";
+        $this->select2($this->table2, $values);
+        foreach ($params as $key => $value) {
+           $this->where($key, $value);
+        }
 
-		foreach ($params as $key => $values) {
-			$sql .= $key." = :".$key." AND ";
-		}
-
-        if (count($params) > 0)
-    		$sql = substr($sql,0,-5);
-
-        $sql .= $endQuery;
-
-		$queryPrepared = $this->pdoInstance->getPDO()->prepare($sql);
-		$queryPrepared->execute( $params );
+		$queryPrepared = $this->pdoInstance->getPDO()->prepare($this->getQuery());
+		$queryPrepared->execute( $this->getParams() );
 
 
 		return $queryPrepared->fetchAll(\PDO::FETCH_ASSOC);
@@ -91,19 +89,26 @@ abstract class Sql
 
     public function selectLikeString(array $values, array $params, $searchString, $searchParam)
     {
-        $query = "";
+        $this->resetParams();
 
-        if (count($params) == 0)
-            $query .= " WHERE ";
+        $this->select2($this->table2, $values);
+        foreach ($searchParam as $param) {
+            $this->where($param, '%'.$searchString.'%', 'LIKE', 'OR');
+        }
 
-        /* Build query */
-        foreach ($searchParam as $param)
-            $query .= $param . " LIKE '%" . $searchString . "%' OR ";
+        $queryPrepared = $this->pdoInstance->getPDO()->prepare($this->getQuery());
+        $queryPrepared->execute( $this->getParams() );
 
-        /* Remove the last "AND" */
-        $query = substr($query,0,-4);
 
-        return $this->select($values, $params, $query);
+        return $queryPrepared->fetchAll(\PDO::FETCH_ASSOC);
+
+    }
+
+    public function getResult() {
+        $queryPrepared = $this->pdoInstance->getPDO()->prepare($this->getQuery());
+        $queryPrepared->execute( $this->getParams() );
+
+        return $queryPrepared->fetchAll(\PDO::FETCH_ASSOC);
     }
 
 	/**

@@ -1,18 +1,26 @@
 /:
-  controller: main
-  action: home
+    controller: main
+    action: home
 
 /contact:
-  controller: main
-  action: contact
+    controller: main
+    action: contact
 
 /forum-list:
-  controller: main
-  action: forumList
+    controller: main
+    action: forumList
 
 /forum:
-  controller: main
-  action: forum
+    controller: main
+    action: forum
+
+/rating:
+    controller: main
+    action: rating
+
+/rating-list:
+    controller: main
+    action: ratingList
 
 /login:
     controller: user
@@ -39,8 +47,8 @@
     action: activatedaccount
 
 /user-setting:
-  controller: user
-  action: userSetting
+    controller: user
+    action: userSetting
 
 /dashboard:
     controller: admin
@@ -83,35 +91,35 @@
         - admin
 
 /forum-management:
-  controller: admin
-  action: forumManagement
-  security:
-    - admin
+    controller: admin
+    action: forumManagement
+    security:
+        - admin
 
 /ban-word-management:
-  controller: admin
-  action: banWord
-  security:
-    - admin
+    controller: admin
+    action: banWord
+    security:
+        - admin
 
 /message-management:
-  controller: admin
-  action: messageManagement
-  security:
-    - admin
+    controller: admin
+    action: messageManagement
+    security:
+        - admin
 
 /warning-management:
-  controller: admin
-  action: warningManagement
-  security:
-    - admin
+    controller: admin
+    action: warningManagement
+    security:
+        - admin
 
 /tag:
-  controller: admin
-  action: tag
-  security:
-    - admin
-    
+    controller: admin
+    action: tag
+    security:
+        - admin
+
 /config:
     controller: config
     action: config
@@ -126,4 +134,32 @@
 
 /notification:
     controller: notification
-    action: display
+    action: notification
+
+/template-edit:
+  controller: admin
+  action: templateEdition
+  security:
+    - admin
+
+/template-management:
+  controller: admin
+  action: templateManagement
+  security:
+    - admin
+
+/template-save:
+  controller: admin
+  action: saveStyle
+  security:
+    - admin
+
+/template-gestion:
+  controller: admin
+  action: saveTemplate
+  security:
+    - admin
+
+/sitemap:
+    controller: config
+    action: sitemapGeneration

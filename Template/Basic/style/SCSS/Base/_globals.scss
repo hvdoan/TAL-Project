@@ -1,0 +1,78 @@
+@use "../Abstracts" as *;
+
+body,
+.body
+{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+    background-color: $background;
+
+    &-row
+    {
+        flex-direction: row;
+    }
+}
+
+.page
+{
+    width: 100%;
+    min-height: calc(100vh - $nav-max-height);
+}
+
+h1
+{
+    font-size: rem(24);
+    margin: 0;
+    color: white;
+    font-weight: normal;
+    font-family: $mainFont;
+}
+
+h2
+{
+    // font-family: $font2;
+    font-size: rem(16);
+}
+
+#hide-icon,
+#show-icon
+{
+    cursor: pointer;
+}
+
+.hide
+{
+    display: none !important;
+}
+
+//*** FLEX ***//
+.flex,
+.flex-row
+{
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-col
+{
+    display: flex;
+    flex-direction: column;
+}
+
+flex-jc\:center
+{
+    justify-content: center;
+}
+
+flex-ai\:center
+{
+    align-items: center;
+}
+
+.pointer
+{
+    cursor: pointer;
+}

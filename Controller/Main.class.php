@@ -10,6 +10,8 @@ use App\Model\Donation;
 use App\Model\DonationTier;
 use App\Model\Forum;
 use App\Model\Message;
+use App\Model\Rate;
+use App\Model\Rating;
 use App\Model\Tag;
 use App\Model\User as UserModel;
 use App\Model\Warning;
@@ -171,7 +173,7 @@ class Main {
 			$token = md5(uniqid());
 			$_SESSION["tokenForm"] = $token;
 			
-			$messages   = $message->select(["id", "idUser", "idForum", "idMessage", "content", "updateDate"], ["idForum" => $forum[0]["id"]], " ORDER BY updateDate DESC");
+			$messages   = $message->select2('Message',["id", "idUser", "idForum", "idMessage", "content", "updateDate"])->where('idForum',$forum[0]["id"])->orderBy('updateDate', 'DESC')->getResult();
 			$answers    = $answer->select(["id", "idUser", "idMessage", "content", "updateDate"], ["idForum" => $forum[0]["id"]]);
 			$warnings   = $warning->select(["idMessage"], ["status" => 2]);
 			
@@ -381,7 +383,6 @@ class Main {
 		
 		else if((isset($_POST["requestType"]) ? $_POST["requestType"] == "insertWarning" : false) &&
 			(isset($_POST["tokenForm"]) && isset($_SESSION["tokenForm"]) ? $_POST["tokenForm"] == $_SESSION["tokenForm"] : false)){
-			echo "insert";
 			if(!$isConnected)
 				header("Location: /login");
 			else
@@ -390,7 +391,6 @@ class Main {
 					&& (isset($_POST["warningIdUser"]) ? $_POST["warningIdUser"] != "" : false)
 					&& (isset($_POST["warningStatus"]) ? $_POST["warningStatus"] != "" : false))
 				{
-					echo "insert2";
 					
 					$warning = new Warning();
 					
@@ -412,7 +412,7 @@ class Main {
 					(isset($_POST["messageIdForum"]) ? $_POST["messageIdForum"] != "" : false) &&
 					(isset($_POST["messageIdMessage"]) ? $_POST["messageIdMessage"] != "" : false) &&
 					(isset($_POST["messageContent"]) ? $_POST["messageContent"] != "" : false)){
-
+				
 				/* Creation of a message for the front forum */
 				$message->setIdUser($_POST["messageIdUser"]);
 				$message->setIdForum($_POST["messageIdForum"]);
@@ -421,13 +421,35 @@ class Main {
 				$message->creationDate();
 				$message->updateDate();
 				$message->save();
-
+				
+				if($_POST["messageIdUser"] != 0){
+					//Select all idUsers who have answer to the same message
+					$allUsers = $message->select(["idUser"], ["idMessage" => $_POST["messageIdMessage"]]);
+					$allUsers = array_unique($allUsers, SORT_REGULAR);
+					
+					//Add the user who answer to the list
+					foreach($allUsers as $user){
+						if($user["idUser"] != $_SESSION["id"]){
+							$message->addNotifyUser($user["idUser"]);
+						}
+					}
+					
+					//send mail to the list of users
+					$message->notify();
+					
+					//remove the user who answer to the list
+					foreach($allUsers as $user){
+						if($user["idUser"] != $_SESSION["id"]){
+							$message->unsetNotifyUser($user["idUser"]);
+						}
+					}
+				}
+				
                 Logger::getInstance()->writeLogNewMessage($_POST["messageIdUser"], $_POST["messageContent"]);
 
                 $object = $message->setId(intval($message->getLastInsertId()));
 				if($object)
 					$message = $object;
-				echo $message->getUpdateDate();
 			}
 		}
 		else if((isset($_POST["requestType"]) && $_POST["requestType"] == "deleteMessageFront")){
@@ -516,6 +538,77 @@ class Main {
 				$view->assign("isConnected", $isConnected);
 			}
 		}
+	}
+	
+	public function rating()
+	{
+		/* Get the connexion status */
+		$isConnected = Verificator::checkConnection();
+		
+		if($isConnected){
+			Verificator::unsetSession();
+		}
+		
+		$rating = new Rate();
+		
+		if((isset($_POST["requestType"]) ? $_POST["requestType"] == "insertRating" : false) &&
+			(isset($_POST["tokenForm"]) && isset($_SESSION["tokenForm"]) ? $_POST["tokenForm"] == $_SESSION["tokenForm"] : false)){
+			
+			if( (isset($_POST["ratingIdUser"]) ? $_POST["ratingIdUser"] != "" : false) &&
+				(isset($_POST["ratingRate"]) ? $_POST["ratingRate"] != "" : false) &&
+				(isset($_POST["ratingDescription"]) ? $_POST["ratingDescription"] != "" : false)){
+				
+				/* Creation of a rating for the front forum */
+				$rating->setIdUser($_POST["ratingIdUser"]);
+				$rating->setRate($_POST["ratingRate"]);
+				$rating->setDescription($_POST["ratingDescription"]);
+				$rating->creationDate();
+				$rating->updateDate();
+				$rating->save();
+
+				$object = $rating->setId(intval($rating->getLastInsertId()));
+				if($object)
+					$rating = $object;
+			}
+		}else if(!isset($_POST["requestType"])){
+			
+			/* Reload the login session time if connexion status is true */
+			if($isConnected)
+				Verificator::reloadConnection();
+			
+			$view = new View("rating");
+			
+			$averageRatings = $rating->select(["ROUND(AVG(rate), 2) AS average"], []);
+			$alreadyRated = $rating->select(["id"], ["idUser" => $_SESSION["id"]]);
+			
+			$rating = $rating->select2("Rate", ["id", "idUser", "rate", "description", "creationDate", "updateDate"], [])
+			->orderBy("updateDate", "DESC")
+			->limit(0, 3)
+			->getResult();
+			
+			$view->assign("rating", $rating);
+			$view->assign("averageRatings", $averageRatings);
+			$view->assign("alreadyRated", $alreadyRated);
+			$view->assign("isConnected", $isConnected);
+		}
+	}
+	
+	public function ratingList()
+	{
+		$view = new View("rating-list");
+		$rating	= new Rate();
+		
+		$rating = $rating->select(["id", "idUser", "rate", "description", "creationDate", "updateDate"], []);
+		
+		/* Get the connexion status */
+		$isConnected = Verificator::checkConnection();
+		/* Reload the login session time if connexion status is true */
+		if($isConnected)
+			Verificator::reloadConnection();
+		
+		$view->assign("rating", $rating);
+		$view->assign("isConnected", $isConnected);
+		
 	}
 
     public function donation()

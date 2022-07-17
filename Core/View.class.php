@@ -6,11 +6,18 @@ class View{
 	private $view;
 	private $template;
 	private $data = [];
+	private $theme;
 
 	public function __construct($view, $template = "front")
 	{
 		$this->setView($view);
 		$this->setTemplate($template);
+        $file = 'Template/template.json';
+        if (file_exists($file)) {
+            $this->theme = json_decode(file_get_contents($file), true);
+        } else {
+            die('Fichier template introuvable');
+        }
 	}
 
 	public function setView($view): void
@@ -48,7 +55,10 @@ class View{
 	public function __destruct()
 	{
 		extract($this->data);
-		include "View/" . $this->template . ".tpl.php";
-	}
+        if ($this->template === "front") {
+            include "Template/" . $this->theme['template'] . "/View/" . $this->template . ".tpl.php";
+        } else include "View/" . $this->template . ".tpl.php";
+
+    }
 
 }

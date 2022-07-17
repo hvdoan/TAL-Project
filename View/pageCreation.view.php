@@ -42,13 +42,21 @@
     </section>
 
     <section class="ctn ctn-editorJS">
-        <div id="editorjs" class="editorjs"></div>
+        <div id="editorjs" class="editorjs">
+            <?php  $file = 'Template/template.json';
+            if (file_exists($file)) {
+                $template = json_decode(file_get_contents($file), true);
+            } else {
+                die('Fichier template introuvable');
+            } ?>
+            <link rel="stylesheet" href="Template/<?= $this->data['template'] ?>/style/CSS/style.css">
+            <link rel="stylesheet" type="text/css" href="Template/<?= $this->data['template'] ?>/style/CSS/styleFront.php">
+        </div>
         <div class="ctn-cta">
             <?php if($this->data["page"]->getId()) { ?>
-                <button id="save-button" class="btn-form btn-form-validate" onclick="save('<?=$this->data["page"]->getId()?>')">Sauvegarder</button>
-                <pre id="output"></pre>
+                <button id="save-button" class="btnBack-form btnBack-form-validate" onclick="save('<?=$this->data["page"]->getId()?>')">Sauvegarder</button>
             <?php } else { ?>
-                <button class="btn-form btn-form-validate" onclick="save()">Créer</button>
+                <button class="btnBack-form btnBack-form-validate" onclick="save()">Créer</button>
             <?php } ?>
         </div>
     </section>
@@ -62,6 +70,7 @@
 <script src="/API/EditorJS/List/nested-list.js"></script>
 <script src="/API/EditorJS/Image/bundle.js"></script>
 <script src="/API/EditorJS/Alignment/bundle.js"></script>
+<script src="/API/EditorJS/StyleEditor/index.js"></script>
 <script type="text/javascript">
     let data;
 
@@ -73,6 +82,7 @@
     let editor = new EditorJS({
         // autofocus: true,
         tools: {
+            style: EditorJSStyle.StyleInlineTool,
             paragraph: {
                 class: Paragraph,
                 inlineToolbar: true
@@ -124,7 +134,6 @@
     {
         editor.save().then( savedData => {
             let data = JSON.stringify(savedData, null, 4);
-            $('#output').html(data);
 
             if(pageId !== "")
                 updatePage(pageId, data);

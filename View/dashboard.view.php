@@ -5,18 +5,20 @@
 
 <script type='text/javascript'>
 	<?php
-	$php_array = $this->data['users'];
-	$js_array = json_encode($php_array);
-	echo "let javascript_array = ". $js_array . ";\n";
+	echo "let users = ". json_encode($this->data['users']) . ";\n";
+	echo "let ratings = ". json_encode($this->data['ratings']) . ";\n";
+	echo "let averageRatings = ". json_encode($this->data['averageRatings']) . ";\n";
 	?>
-	window.addEventListener("load", loadUserByCreation(javascript_array));
+	// console.log(ratings);
+	window.addEventListener("load", loadUserByCreation(users));
+	window.addEventListener("load", loadAvis(ratings, averageRatings));
 </script>
 
 <div class="keyData">
     <div class="keyDataChild">
         <div class="label">Utilisateurs inscrits</div>
         <div class="keyDataChildPercent <?php if ($this->data['percentUsers'] > 0) echo 'positif'; else echo 'neutre'; ?>"> + <?php echo $this->data['percentUsers'] ?>% en 7 jours</div>
-        <div class="keyDataChildValue"><?php echo count($php_array) ?></div>
+        <div class="keyDataChildValue"><?php echo count($this->data['users']) ?></div>
     </div>
     <div class="keyDataChild">
         <div class="label">Total visiteurs</div>
@@ -28,14 +30,9 @@
         <div class="keyDataChildPercent neutre">Statique</div>
         <div class="keyDataChildValue"><?php  echo $this->data['totalVisitorActually']; ?></div>
     </div>
-    <div class="keyDataChild">
-        <div class="label">Temps moyen de connexion</div>
-        <div class="keyDataChildPercent neutre"> + 0% en 7 jours</div>
-        <div class="keyDataChildValue">0</div>
-    </div>
 </div>
 <!--<div class="keyData">
-    <pre><?php print_r($php_array) ?></pre>
+    <pre><?php print_r($this->data['users']) ?></pre>
 </div>-->
 <div class="statistics">
 	
@@ -46,7 +43,7 @@
 	<div class="even">
 		
 		<div id="lastMessage" class="medium">
-            <h3>Derniers commentaires</h3>
+            <div>Derniers commentaires</div>
             <table>
                 <thead>
                     <tr>
@@ -67,7 +64,7 @@
             </table>
         </div>
 		<div id="logsLogin" class="small">
-            <h3>Logs connexions</h3>
+            <div>Logs connexions</div>
             <table>
                 <thead>
                 <tr>
@@ -79,13 +76,17 @@
                 <?php foreach ($this->data['logList'] as $log) : ?>
                     <tr>
                         <td><?php echo $log['firstname'] . " "; echo $log['lastname'] ?></td>
-                        <td><?php echo date('d/m/Y - h:i',$log['time']) ?></td>
+                        <td><?php echo date('d/m/Y - H:i',$log['time']) ?></td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
 		
+	</div>
+	
+	<div class="odd">
+		<div id="avisChartdiv"></div>
 	</div>
 	
 </div>

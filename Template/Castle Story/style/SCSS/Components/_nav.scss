@@ -1,0 +1,164 @@
+@use "../Abstracts" as *;
+
+nav,
+.nav-ctn {
+    position: sticky;
+    z-index: 1000;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    max-width: calc($dashboard-nav-width-column + 40px);
+    height: 100vh;
+    background: $mainColor;
+    font-family: $mainFont;
+
+    &-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        max-width: 100vw;
+        height: $nav-max-height;
+        padding: 0 10px;
+        box-sizing: border-box;
+
+        & > header {
+            margin: 0;
+
+            & > a > img {
+                max-height: 50px;
+                width: auto;
+                max-width: 200px;
+            }
+        }
+
+        & > .nav {
+            & > ul {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                min-width: 50vw;
+                font-size: 1.3em;
+
+                & > a {
+                    margin: 0 5px;
+                    text-transform: uppercase;
+                }
+            }
+        }
+    }
+
+    & > header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 50px;
+        padding: 20px;
+
+        & > a {
+            text-decoration: none;
+        }
+
+        & > a > h1 {
+            color: $text;
+        }
+
+        & > i {
+            font-size: rem(24);
+            color: $text;
+            cursor: pointer;
+        }
+    }
+
+    & > .nav {
+        display: flex;
+        flex-direction: row;
+        font-size: 1.1em;
+
+        &--column {
+            flex-direction: column;
+            width: $dashboard-nav-width-column;
+        }
+    }
+
+    & > ul {
+        margin: 0;
+        padding: 0 20px;
+        list-style: none;
+
+        & > li {
+            list-style: none;
+            color: $text;
+            cursor: pointer;
+
+            & > .nav-section-link
+            {
+                width: fit-content;
+                border-bottom: solid 2px $mainColor;
+                transition: .2s;
+
+                &:hover
+                {
+                    border-bottom: solid 2px $text;
+                    transition: .2s;
+                }
+
+                & > i {
+                    margin: 0 8px;
+                }
+            }
+
+            & > ul
+            {
+                overflow: hidden;
+                max-height: 15rem;
+                margin: 10px 0 10px 16px;
+                padding-left: 20px;
+                border-left: solid 2px $text;
+                transition: max-height .5s;
+
+                & > a
+                {
+                    text-decoration: none !important;
+                    color: $text;
+                }
+            }
+        }
+
+        & > .close {
+            & > i:nth-child(2) {
+                transform: rotate(-90deg);
+            }
+
+            & > ul {
+                overflow: hidden;
+                max-height: 0;
+            }
+        }
+
+        & > .bottom {
+            position: absolute;
+            left: 10px;
+            bottom: 10px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: $dashboard-nav-width-column;
+        }
+    }
+}
+
+.nav-close {
+    & > header > h1,
+    & > ul,
+    & > ul > .bottom {
+        position: absolute;
+        overflow: hidden;
+        max-width: 0;
+        padding: 0;
+    }
+}

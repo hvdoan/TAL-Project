@@ -5,13 +5,14 @@ namespace App\Model;
 use App\Core\Sql;
 
 class Message extends Sql{
-	protected $id = null;
-	protected $idUser = null;
-	protected $idForum = null;
-	protected $idMessage = null;
-	protected $content = null;
-	protected $creationDate = null;
-	protected $updateDate = null;
+	protected   $id = null;
+	protected   $idUser = null;
+	protected   $idForum = null;
+	protected   $idMessage = null;
+	protected   $content = null;
+	protected   $creationDate = null;
+	protected   $updateDate = null;
+	private     $userAnswer;
 	
 	public function __construct()
 	{
@@ -118,5 +119,26 @@ class Message extends Sql{
 	 */
 	public function updateDate(): void {
 		$this->updateDate = date("Y-m-d H:i:s");
+	}
+	
+	public function addNotifyUser($userId)
+	{
+		$this->subscribedUsers[$userId] = $userId;
+	}
+	
+	public function unsetNotifyUser($userId)
+	{
+		unset($this->subscribedUsers[$userId]);
+	}
+	
+	public function notify()
+	{
+		$newUser = new User();
+		foreach ($this->subscribedUsers as $userId) {
+			$object = $newUser->setId($userId);
+			if($object)
+				$newUser = $object;
+			$newUser->sendNotificationMail($this, $newUser);
+		}
 	}
 }

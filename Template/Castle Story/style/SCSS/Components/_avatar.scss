@@ -1,0 +1,39 @@
+@use "../Abstracts" as *;
+
+.avatar
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    color: $white;
+    cursor: pointer;
+
+    & > span
+    {
+        padding: 0 10px;
+        font-size: 1.2rem;
+        font-family: $mainFont;
+    }
+
+    & > #avatar-container
+    {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        background: $light-grey;
+        border-radius: 50%;
+        overflow: hidden;
+
+        & > .icon
+        {
+            max-width: 40px;
+            max-height: 40px;
+            color: $dark-blue;
+            font-size: 1.5rem;
+        }
+    }
+}

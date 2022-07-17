@@ -1,1 +1,0 @@
-<h1>Validation de mail</h1>

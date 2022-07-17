@@ -68,9 +68,41 @@
                 </div>
             </div>
 
+            <!-- Name field -->
+            <div class='field-row'>
+                <div class="field">
+                    <label>Votre prénom <span class="required">*</span></label>
+                    <input class="input" type="text" name="websiteAdminFirstname" required>
+                </div>
+            </div>
+
+            <!-- Name field -->
+            <div class='field-row'>
+                <div class="field">
+                    <label>Votre nom <span class="required">*</span></label>
+                    <input class="input" type="text" name="websiteAdminLastname" required>
+                </div>
+            </div>
+
+            <!-- Name field -->
+            <div class='field-row'>
+                <div class="field">
+                    <label>Mail admin <span class="required">*</span></label>
+                    <input class="input" type="email" name="websiteAdminMail" required>
+                </div>
+            </div>
+
+            <!-- Name field -->
+            <div class='field-row'>
+                <div class="field">
+                    <label>Mot de passe admin <span class="required">*</span></label>
+                    <input class="input" type="text" name="websiteAdminPassword" required>
+                </div>
+            </div>
+
             <!-- Cta field -->
             <div class='field-cta'>
-                <button class="btn-form btn-form-validate" type="button" onclick="moveToSection('0', '1')">Suivant</button>
+                <button class="btnBack-form btnBack-form-validate" type="button" onclick="moveToSection('0', '1')">Suivant</button>
             </div>
         </section>
 
@@ -124,8 +156,8 @@
 
             <!-- Cta field -->
             <div class='field-cta'>
-                <button class="btn-form btn-form-cancel" type="button" onclick="moveToSection('1', '0')">Précédant</button>
-                <button class="btn-form btn-form-validate" type="button" onclick="moveToSection('1', '2')">Suivant</button>
+                <button class="btnBack-form btnBack-form-cancel" type="button" onclick="moveToSection('1', '0')">Précédant</button>
+                <button class="btnBack-form btnBack-form-validate" type="button" onclick="moveToSection('1', '2')">Suivant</button>
             </div>
         </section>
 
@@ -166,8 +198,8 @@
 
             <!-- Cta field -->
             <div class='field-cta'>
-                <button class="btn-form btn-form-cancel" type="button" onclick="moveToSection('2', '1')">Précédant</button>
-                <button class="btn-form btn-form-validate" type="button" onclick="moveToSection('2', '3')">Suivant</button>
+                <button class="btnBack-form btnBack-form-cancel" type="button" onclick="moveToSection('2', '1')">Précédant</button>
+                <button class="btnBack-form btnBack-form-validate" type="button" onclick="moveToSection('2', '3')">Suivant</button>
             </div>
         </section>
 
@@ -228,8 +260,8 @@
 
             <!-- Cta field -->
             <div class='field-cta'>
-                <button class="btn-form btn-form-cancel" type="button" onclick="moveToSection('3', '2')">Précédant</button>
-                <button class="btn-form btn-form-validate" type="submit">Enregistrer</button>
+                <button class="btnBack-form btnBack-form-cancel" type="button" onclick="moveToSection('3', '2')">Précédant</button>
+                <button class="btnBack-form btnBack-form-validate" type="submit">Enregistrer</button>
             </div>
         </section>
     </div>

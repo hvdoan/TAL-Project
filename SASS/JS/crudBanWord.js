@@ -1,6 +1,5 @@
 function displayBanWord()
 {
-    console.log('test');
     const requestType = "display";
 
     const request = new XMLHttpRequest();
