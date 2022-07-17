@@ -10,7 +10,7 @@
   overflow: hidden;
 
   background: $white;
-  font-family: $jaldi;
+  font-family: $mainFont;
 
   & > .field-row {
 	display: flex;
@@ -94,8 +94,8 @@
 					background: $light-grey;
 					border: none;
 
-					color: $hard-blue;
-					font-family: $jaldi;
+					color: $mainColor;
+					font-family: $mainFont;
 					text-transform: uppercase;
 				}
 			}
@@ -114,8 +114,8 @@
 		    background: $light-grey;
 		    border: none;
 
-		    color: $hard-blue;
-		    font-family: $jaldi;
+		    color: $mainColor;
+		    font-family: $mainFont;
 		    text-transform: uppercase;
 		  }
 	  }

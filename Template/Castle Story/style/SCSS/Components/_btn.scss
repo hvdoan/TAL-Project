@@ -13,19 +13,19 @@
     background: $mainColor;
     border-radius: 7px;
     text-decoration: none;
-    color: $white;
+    color: $text;
 
     cursor: pointer;
     transition: .3s;
 
     &:hover {
-        background: $white;
+        background: $text;
         color: $mainColor;
     }
 
     &-add, &-edit {
         padding: 10px;
-        background: $dark-blue;
+        background: $mainColor;
         border: none;
         border-radius: 5px;
         font-weight: bold;
@@ -33,7 +33,7 @@
 
         &:hover {
             background: $light-blue;
-            color: $white;
+            color: $text;
         }
     }
 

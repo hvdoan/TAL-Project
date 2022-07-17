@@ -23,8 +23,9 @@
                 <div class="field url-ctn">
                     <label for="pickerFont"><?= $font['label'] ?></label>
                     <div class="input-ctn">
-                        <input class="input" type="text" value="<?= $font['value'] ?>" placeholder="https://fonts..." id="<?= $key ?>">
+                        <input class="input fontPicker" type="text" value="<?= $font['value'] ?>" placeholder="Roboto" id="<?= $key ?>">
                     </div>
+                    <span class="advise">Entrer le nom d'une police google fonts</span>
                 </div>
                 <?php endforeach; ?>
             </fieldset>

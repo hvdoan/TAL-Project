@@ -1,7 +1,2 @@
-@import url('https://fonts.googleapis.com/css2?family=Jockey+One&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Jaldi&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,400;0,700;1,400&display=swap');
 
-$jokeyOne: 'Jockey One', sans-serif;
-$jaldi: 'Jaldi', sans-serif;
-$jost: 'Jost', sans-serif;
+$mainFont: var(--main-fonts), sans-serif;
