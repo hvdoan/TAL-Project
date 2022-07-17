@@ -402,7 +402,7 @@ class User extends Sql
                 "method"=>"POST",
                 "action"=>"",
                 "submit"=>"Changer mon mot de passe",
-                "classForm"=>"form",
+                "classForm"=>"formPwdForget",
                 "classSubmit"=>"submit",
                 "title"=>"Changement mot de passe",
             ],

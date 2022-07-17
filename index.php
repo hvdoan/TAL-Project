@@ -144,6 +144,7 @@ else
         die("L'action " . $action . " n'existe pas");
     }
     // $action = login ou logout ou register ou home
-    saveConnexion();
+    if ($uri != "/config")
+        saveConnexion();
     $objectController->$action();
 }

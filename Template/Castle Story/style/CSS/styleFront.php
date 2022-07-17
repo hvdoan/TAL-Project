@@ -16,7 +16,10 @@ if (file_exists($file)) {
         --bg-color: <?= $style['colors']['pickerBackground']['value'] ?>;
         --title-color: <?= $style['colors']['pickerTitle']['value'] ?>;
         --text-color: <?= $style['colors']['pickerText']['value'] ?>;
+        --forum-color: <?= $style['colors']['pickerForum']['value'] ?>;
         --main-fonts: <?= $style['fonts']['pickerFont']['value'] ?>;
+        --second-fonts: <?= $style['fonts']['pickerSecondFont']['value'] ?>;
+        --url-banner-image: url('/Template/Castle Story/asset/img/<?= $style['images']['pickerBanner']['value'] ?>');
     }
 </style>
 

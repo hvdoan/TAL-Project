@@ -36,7 +36,7 @@ if (file_exists($file)) {
 		
 		<nav class="nav-ctn-row">
 			<header>
-				<a href="/home"><img src="Template/Castle Story/asset/img/logo.png" alt="logo"></a>
+				<a href="/home"><img src="Template/Castle Story/asset/img/<?= $style['images']['pickerImage']['value'] ?>" alt="logo"></a>
 			</header>
 			
 			<div class="nav">

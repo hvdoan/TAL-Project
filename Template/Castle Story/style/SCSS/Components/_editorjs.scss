@@ -2,6 +2,8 @@
 
 .editorjs
 {
+  font-family: var( --second-fonts);
+
   &-display
   {
     min-height: calc(100vh - $nav-max-height);

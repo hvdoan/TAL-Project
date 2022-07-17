@@ -30,6 +30,20 @@
                 <?php endforeach; ?>
             </fieldset>
             <?php endif; ?>
+            <?php if (isset($this->data['style']['images'])): ?>
+                <fieldset>
+                    <legend> Images </legend>
+                    <?php foreach ($this->data['style']['images'] as $key => $font): ?>
+                        <div class="field url-ctn">
+                            <label for="pickerFont"><?= $font['label'] ?></label>
+                            <div class="input-ctn">
+                                <input class="input fontPicker" type="text" value="<?= $font['value'] ?>" placeholder="header.png" id="<?= $key ?>">
+                            </div>
+                            <span class="advise">Entrer le nom de l'image</span>
+                        </div>
+                    <?php endforeach; ?>
+                </fieldset>
+            <?php endif; ?>
             <?php if ((!isset($this->data['style']['colors'])) && (!isset($this->data['style']['fonts']))): ?>
                 <div>Aucune modification n'est disponible</div>
             <?php endif; ?>

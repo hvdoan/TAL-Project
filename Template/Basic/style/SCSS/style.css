@@ -1666,6 +1666,7 @@ nav > ul > .bottom,
 }
 
 .editorjs {
+  font-family: var(--main-fonts);
   background: var(--bg-color);
   /* Redactor container */
 }

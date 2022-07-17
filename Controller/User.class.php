@@ -186,18 +186,22 @@ class User{
             $result = Verificator::checkForm($user->getForgotPasswordForm(), $_POST);
 
             if(empty($result)) {
+                $userParams = $user->select(['id'], ['email' => $_POST['email']]);
+                $user = $user->setId(intval($userParams[0]['id'], 10));
+
                 $user->generateToken();
                 $user->setEmail($_POST["email"]);
 
                 $content = "
                     <h1>Cliquez sur le lien ci-dessous pour changer votre mot de passe :</h1>
-                    <a href='localhost/activation?email=" . $user->getEmail() . "&token=" . $user->getToken() . "'>Changer le mot de passe.</a>
+                    <a href='".$_SERVER['HTTP_HOST']."/reset-password?email=" . $user->getEmail() . '&token=' . $user->getToken() . "'>Changer le mot de passe.</a>
                 ";
 
                 $email = new Mail();
                 $email->prepareContent($_POST['email'], "Reinitialisation du mot de passe", $content, "Test");
                 $email->send();
 
+                $user->save();
                 Notification::CreateNotification("success", "Si le compte existe, un mail vient de vous etre envoyé");
 
             } else {
@@ -216,6 +220,11 @@ class User{
 
     public function pwdReset()
     {
+        $isConnected = Verificator::checkConnection();
+        /* Reload the login session time if connexion status is true else redirect to login */
+        if($isConnected)
+            header("Location: /home");
+
         $user = new UserModel();
 
         if(isset($_GET['email']) && isset($_GET['token'])){
@@ -237,6 +246,7 @@ class User{
 
                 $view = new View("reset-password");
                 $view->assign("user", $user);
+                $view->assign("isConnected", $isConnected);
             }
 
         } else {

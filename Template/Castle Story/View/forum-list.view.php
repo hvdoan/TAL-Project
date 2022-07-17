@@ -52,7 +52,7 @@
 						</div>
 						<div>
 							<label>Dernière activité :</label>
-							<p><?=$recentActivity?></p>
+							<p><?= date('d/m/Y - H:i',strtotime($recentActivity))?></p>
 						</div>
 						<div>
 							<label>Auteur :</label>
