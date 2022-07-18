@@ -22,25 +22,25 @@ class Logger {
 
     public function writeLogLogin($userLastName, $userFirstName, $userId): void
     {
-        fwrite($this->handle, "[". date("Y-m-d g:i:s") ."] Login user : " . $userLastName . " " . $userFirstName . " // id : " . $userId);
+        fwrite($this->handle, "[". date("Y-m-d H:i:s") ."] Login user : " . $userLastName . " " . $userFirstName . " // id : " . $userId);
         fwrite($this->handle, PHP_EOL);
     }
 
     public function writeLogRegister($userLastName, $userFirstName, $userId): void
     {
-        fwrite($this->handle, "[". date("Y-m-d g:i:s") ."] Register user : " . $userLastName . " " . $userFirstName . " // id : " . $userId);
+        fwrite($this->handle, "[". date("Y-m-d H:i:s") ."] Register user : " . $userLastName . " " . $userFirstName . " // id : " . $userId);
         fwrite($this->handle, PHP_EOL);
     }
 
     public function writeLogMailSend($about): void
     {
-        fwrite($this->handle, "[". date("Y-m-d g:i:s") ."] Email send / subject : " . $about);
+        fwrite($this->handle, "[". date("Y-m-d H:i:s") ."] Email send / subject : " . $about);
         fwrite($this->handle, PHP_EOL);
     }
 
     public function writeLogNewMessage($userId, $content): void
     {
-        fwrite($this->handle, "[". date("Y-m-d g:i:s") ."] New message from user id : " . $userId . " // content : " . $content);
+        fwrite($this->handle, "[". date("Y-m-d H:i:s") ."] New message from user id : " . $userId . " // content : " . $content);
         fwrite($this->handle, PHP_EOL);
     }
 }
