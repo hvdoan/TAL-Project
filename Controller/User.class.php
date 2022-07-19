@@ -24,9 +24,9 @@ class User{
 			header("Location: /home");
 
 		$user = new UserModel();
-		
-		if(!empty($_POST)){
-			$userLoggedIn = $user->select(['id', 'idRole', 'password', 'verifyAccount', 'firstname', 'lastname', 'email', 'avatar'], ['email' => $_POST['email']]);
+
+        if((!empty($_POST)) && $_POST['tokenForm'] === $_SESSION["tokenForm"]){
+            $userLoggedIn = $user->select(['id', 'idRole', 'password', 'verifyAccount', 'firstname', 'lastname', 'email', 'avatar'], ['email' => $_POST['email']]);
 			
 			if(!empty($userLoggedIn)){
 				if(password_verify($_POST['password'], $userLoggedIn[0]['password'])){
@@ -79,7 +79,7 @@ class User{
 
                         $logs->save();
                         Logger::getInstance()->writeLogLogin($user->getLastname(), $user->getFirstName(), $user->getId());
-                        header("Location: /dashboard");
+                        header("Location: /home");
 					}else{
 						Notification::CreateNotification("error", 'Compte non vérifié');
 					}
@@ -90,7 +90,10 @@ class User{
 				Notification::CreateNotification("error", 'Identifiant incorrect');
 			}
 		}
-		
+
+        $token = md5(uniqid());
+        $_SESSION["tokenForm"] = $token;
+
 		$view = new View("login", "front");
 		$view->assign("user", $user);
 		$view->assign("isConnected", $isConnected);
@@ -107,7 +110,7 @@ class User{
 		
 		$user = new UserModel();
 		
-		if(!empty($_POST)){
+		if((!empty($_POST)) && $_POST['tokenForm'] === $_SESSION["tokenForm"]){
 			$role = new Role();
 			$userRole = $role->select(["id"], ["name" => "Utilisateur"]);
 			
@@ -158,11 +161,14 @@ class User{
 				Notification::CreateNotification("error", $msg);
 			}
 		}
-		
+
+        $token = md5(uniqid());
+        $_SESSION["tokenForm"] = $token;
+
 		$view = new View("register");
 		$view->assign("user", $user);
 		$view->assign("isConnected", $isConnected);
-	}
+    }
 	
 	public function logout()
 	{
@@ -182,7 +188,7 @@ class User{
 
         $user = new UserModel();
 
-        if(!empty($_POST)){
+        if((!empty($_POST)) && $_POST['tokenForm'] === $_SESSION["tokenForm"]){
             $result = Verificator::checkForm($user->getForgotPasswordForm(), $_POST);
 
             if(empty($result)) {
@@ -212,6 +218,9 @@ class User{
                 Notification::CreateNotification("error", $msg);
             }
         }
+
+        $token = md5(uniqid());
+        $_SESSION["tokenForm"] = $token;
 
         $view = new View("forgot-password");
         $view->assign("user", $user);

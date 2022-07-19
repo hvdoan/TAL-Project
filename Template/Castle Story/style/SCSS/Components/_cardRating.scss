@@ -32,11 +32,13 @@
 
 			& input {
 				width: 100%;
+				padding: 5px;
+				border-radius: 3px;
+				border: none;
 			}
 
 			& .stars {
 				left: 50%;
-				transform: translate(60%, -50%);
 			}
 
 			& .fa-star:hover{
@@ -63,6 +65,7 @@
 			justify-content: space-around;
 			align-items: center;
 			flex-direction: column;
+			background-color: var(--forum-color);
 
 			width: 15vw;
 			padding: 2%;
@@ -99,6 +102,7 @@
 			justify-content: space-around;
 			align-items: center;
 			flex-direction: column;
+			background-color: var(--forum-color);
 
 			width: 15vw;
 			padding: 2%;
@@ -132,8 +136,7 @@
 }
 
 .starChecked {
-	//color: #ffc107;
-	color: #6fc7ff;
+	color: var(--title-color);
 }
 
 .averageRate{

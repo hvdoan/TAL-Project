@@ -1491,17 +1491,38 @@ class Admin
 				$htmlContent .= "<input id='tokenForm' type='hidden' name='tokenForm' value='" . $token . "'>";
 				
 				if ($forum->getId() != null){
-					$htmlContent .= "<h1>Modification du forum : n°" . $forum->getId() . "</h1>";
-					$htmlContent .= "<div class='field'>";
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<div class='field'>";
+                    $htmlContent .= "<h1>Modification du forum : n°" . $forum->getId() . "</h1>";
+                    $htmlContent .= "</div>";
+                    $htmlContent .= "</div>";
+
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<hr>";
+                    $htmlContent .= "</div>";
+
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<div class='field'>";
 						$htmlContent .= "<label>Titre</label>";
-						$htmlContent .= "<input id='input-title' type='text' name='title' value='" . $forum->getTitle() . "'>";
+						$htmlContent .= "<input id='input-title' class='input' type='text' name='title' value='" . $forum->getTitle() . "'>";
+                    $htmlContent .= "</div>";
+                    $htmlContent .= "</div>";
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<div class='field'>";
 						$htmlContent .= "<label>Contenu</label>";
-						$htmlContent .= "<input id='input-content' type='text' name='content' value='" . $forum->getContent() . "'>";
+						$htmlContent .= "<input id='input-content' class='input' type='text' name='content' value='" . $forum->getContent() . "'>";
+                    $htmlContent .= "</div>";
+                    $htmlContent .= "</div>";
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<div class='field'>";
 						$htmlContent .= "<label>Auteur</label>";
 						$htmlContent .= "<input type='text' value='" . $user->getFirstname() . " " . $user->getLastname() . "' disabled>";
-						$htmlContent .= "<input id='input-idUser' type='hidden' name='idUser' value='" . $user->getId() . "'>";
-					$htmlContent .= "</div>";
-					$htmlContent .= "<div class='field'>";
+						$htmlContent .= "<input id='input-idUser' class='input' type='hidden' name='idUser' value='" . $user->getId() . "'>";
+                    $htmlContent .= "</div>";
+                    $htmlContent .= "</div>";
+
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<div class='field'>";
 						$htmlContent .= "<label for='input-idTag'>Catégorie</label>";
 						$htmlContent .= "<select name='forumIdTag' id='input-idTag'>";
 							foreach($tagList as $tag){
@@ -1510,40 +1531,56 @@ class Admin
 								$htmlContent .= $tag["name"] . "</option>";
 							}
 						$htmlContent .= "</select>";
-					$htmlContent .= "</div>";
-					$htmlContent .= "<div class='section'>";
-						$htmlContent .= "<input class='btnBack btnBack-delete' onclick='closeForumForm()' type='button' value='Annuler'>";
+                    $htmlContent .= "</div>";
+                    $htmlContent .= "</div>";
+					$htmlContent .= "<div class='field-row field-cta'>";
+						$htmlContent .= "<input class='btnBack-form btnBack-form-cancel' onclick='closeForumFormBack()' type='button' value='Annuler'>";
 				}
                 else
 				{
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<div class='field'>";
 					$htmlContent .= "<h1>Création d'un nouveau forum</h1>";
-					$htmlContent .= "<div class='field'>";
+                    $htmlContent .= "</div>";
+                    $htmlContent .= "</div>";
+
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<hr>";
+                    $htmlContent .= "</div>";
+
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<div class='field'>";
 						$htmlContent .= "<label>Titre du forum</label>";
-						$htmlContent .= "<input id='input-title' type='text' name='title'>";
-					$htmlContent .= "</div>";
-					$htmlContent .= "<div class='field'>";
+						$htmlContent .= "<input id='input-title' class='input' type='text' name='title'>";
+                    $htmlContent .= "</div>";
+                    $htmlContent .= "</div>";
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<div class='field'>";
 						$htmlContent .= "<label>Contenu du forum</label>";
-						$htmlContent .= "<input id='input-content' type='text' name='content'>";
-					$htmlContent .= "</div>";
-					$htmlContent .= "<div class='field'>";
+						$htmlContent .= "<input id='input-content' class='input' type='text' name='content'>";
+                    $htmlContent .= "</div>";
+                    $htmlContent .= "</div>";
+                    $htmlContent .= "<div class='field-row'>";
+                    $htmlContent .= "<div class='field'>";
 						$htmlContent .= "<select name='forumIdTag' id='input-idTag'>";
 						foreach($tagList as $tag){
 							$htmlContent .= "<option value='" . $tag["id"] . "'>" . $tag["name"] . "</option>";
 						}
 						$htmlContent .= "</select>";
-					$htmlContent .= "</div>";
+                    $htmlContent .= "</div>";
+                    $htmlContent .= "</div>";
 					$htmlContent .= "<input id='input-idUser' type='hidden' name='idUser' value='" . $_SESSION['id'] . "'>";
-					$htmlContent .= "<div class='section'>";
-						$htmlContent .= "<input class='btnBack btnBack-delete' onclick='closeForumForm()' type='button' value='Annuler'>";
+                    $htmlContent .= "<div class='field-row field-cta'>";
+						$htmlContent .= "<input class='btnBack-form btnBack-form-cancel' onclick='closeForumFormBack()' type='button' value='Annuler'>";
 				}
 				
 				if($forum->getId() != null)
 				{
 					$htmlContent .= "<input id='input-id' type='hidden' name='id' value='" . $forum->getId() . "'>";
-					$htmlContent .= "<input class='btnBack btnBack-validate' onclick='updateForum()' type='button' value='Modifier'>";
+					$htmlContent .= "<input class='btnBack-form btnBack-form-validate' onclick='updateForum()' type='button' value='Modifier'>";
 				}
 				else
-					$htmlContent .= "<input class='btnBack btnBack-validate' onclick='insertForum()' type='button' value='Créer'>";
+					$htmlContent .= "<input class='btnBack-form btnBack-form-validate' onclick='insertForum()' type='button' value='Créer'>";
 				
 				$htmlContent .= "</div>";
 				}

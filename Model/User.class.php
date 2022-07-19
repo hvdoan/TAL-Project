@@ -272,6 +272,11 @@ class User extends Sql
                     "max"=>100,
                     "error"=>"Nom incorrect"
                 ],
+                "tokenForm"=>[
+                    "type"=>"hidden",
+                    "class"=>"hiddenToken",
+                    "value"=>$_SESSION["tokenForm"]
+                ]
             ]
         ];
     }
@@ -305,6 +310,11 @@ class User extends Sql
                     "required"=>true,
                     "class"=>"inputForm",
                     "id"=>"pwdForm"
+                ],
+                "tokenForm"=>[
+                    "type"=>"hidden",
+                    "class"=>"hiddenToken",
+                    "value"=>$_SESSION["tokenForm"]
                 ]
             ]
         ];
@@ -390,8 +400,13 @@ class User extends Sql
                     "class"=>"inputForm",
                     "id"=>"emailForm",
                     "error"=>"Email incorrect"
+                ],
+                "tokenForm"=>[
+                    "type"=>"hidden",
+                    "class"=>"hiddenToken",
+                    "value"=>$_SESSION["tokenForm"]
                 ]
-            ]
+            ],
         ];
     }
 

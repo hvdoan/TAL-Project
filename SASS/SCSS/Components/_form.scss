@@ -81,6 +81,15 @@
 				}
 			}
 
+			& > select
+			{
+				padding: 8px;
+
+				background: $light-grey;
+				color: $dark-blue;
+				border: none;
+			}
+
 			& > #select-ctn
 			{
 				display: flex;

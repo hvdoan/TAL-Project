@@ -110,6 +110,10 @@
             color: $white;
         }
 
+        .hiddenToken {
+            position: absolute !important;
+        }
+
         & > input:focus
         {
             background: $blue-grey;

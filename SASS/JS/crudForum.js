@@ -86,7 +86,7 @@ function updateForum()
 			else
 			{
 				displayForum();
-				closeForumForm();
+				closeForumFormBack();
 				console.log(request.responseText);
 			}
 		}
@@ -156,7 +156,6 @@ function openForumForm(id = "")
 				window.location.href = "/login";
 			else
 			{
-				console.log("AJAX : request open form completed");
 				$("#ctnForumForm").html(request.responseText);
 				$("#ctnForumForm").css("width", "100%");
 				$("#ctnForumForm").css("height", "100%");
@@ -173,7 +172,7 @@ function openForumForm(id = "")
 /**************************************************
  * CLOSE FORUM FORM
  ***************************************************/
-function closeForumForm()
+function closeForumFormBack()
 {
 	$("#ctnForumForm").html("");
 	$("#ctnForumForm").css("width", "0");

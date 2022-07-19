@@ -154,6 +154,9 @@ flex-ai\:center {
   border-bottom: solid 1px #fff;
   color: #fff;
 }
+.form-partial > .field .hiddenToken {
+  position: absolute !important;
+}
 .form-partial > .field > input:focus {
   background: rgba(142, 153, 163, 0.19);
   outline: none;
@@ -294,6 +297,7 @@ flex-ai\:center {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: 600px;
 }
 
 #ctnMessageForm {
@@ -344,7 +348,7 @@ flex-ai\:center {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 25%;
+  width: 600px;
 }
 
 #ctnUserForm > form {
@@ -513,9 +517,6 @@ body {
 #templateManagement > .template > .preview img {
   width: 100%;
   height: 100%;
-}
-#templateManagement > .template > .preview img:hover {
-  opacity: 0.5;
 }
 #templateManagement > .template > .title {
   height: 20%;
@@ -912,6 +913,12 @@ body {
 .form > .field-row > .field .input:focus {
   outline: none;
 }
+.form > .field-row > .field > select {
+  padding: 8px;
+  background: #EDF0F2;
+  color: #3F445F;
+  border: none;
+}
 .form > .field-row > .field > #select-ctn {
   display: flex;
   flex-direction: row;
@@ -1198,7 +1205,6 @@ body {
 }
 #nav > ul > li > ul > a,
 .nav-ctn > ul > li > ul > a {
-  text-decoration: none !important;
   color: #fff;
 }
 #nav > ul > .close > i:nth-child(2),
@@ -1221,11 +1227,11 @@ body {
   width: 210px;
 }
 
-.nav-close > header > h1, .nav-close > ul, .nav-close > ul > .bottom {
-  position: absolute;
-  overflow: hidden;
-  max-width: 0;
-  padding: 0;
+.nav-close > header > a, .nav-close > ul {
+  position: absolute !important;
+  overflow: hidden !important;
+  max-width: 0 !important;
+  padding: 0 !important;
 }
 
 .alert {

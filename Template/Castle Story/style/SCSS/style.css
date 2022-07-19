@@ -1489,6 +1489,7 @@ nav > ul > .bottom,
   border-radius: 15px;
   width: 100%;
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  background-color: var(--forum-color);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -1758,10 +1759,12 @@ nav > ul > .bottom,
 }
 .vote > .small .rate input {
   width: 100%;
+  padding: 5px;
+  border-radius: 3px;
+  border: none;
 }
 .vote > .small .rate .stars {
   left: 50%;
-  transform: translate(60%, -50%);
 }
 .vote > .small .rate .fa-star:hover {
   cursor: pointer;
@@ -1782,6 +1785,7 @@ nav > ul > .bottom,
   justify-content: space-around;
   align-items: center;
   flex-direction: column;
+  background-color: var(--forum-color);
   width: 15vw;
   padding: 2%;
   box-sizing: border-box;
@@ -1812,6 +1816,7 @@ nav > ul > .bottom,
   justify-content: space-around;
   align-items: center;
   flex-direction: column;
+  background-color: var(--forum-color);
   width: 15vw;
   padding: 2%;
   box-sizing: border-box;
@@ -1838,7 +1843,7 @@ nav > ul > .bottom,
 }
 
 .starChecked {
-  color: #6fc7ff;
+  color: var(--title-color);
 }
 
 .averageRate {

@@ -122,7 +122,6 @@
 
                 & > a
                 {
-                    text-decoration: none !important;
                     color: $white;
                 }
             }
@@ -152,12 +151,10 @@
 }
 
 .nav-close {
-    & > header > h1,
-    & > ul,
-    & > ul > .bottom {
-        position: absolute;
-        overflow: hidden;
-        max-width: 0;
-        padding: 0;
+    & > header > a, & > ul {
+        position: absolute !important;
+        overflow: hidden !important;
+        max-width: 0 !important;
+        padding: 0 !important;
     }
 }

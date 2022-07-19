@@ -190,7 +190,7 @@ class Main {
 			
 			if($isConnected){
 				$htmlContent .= "<div class='button'>";
-					$htmlContent .= "<button id='add' class='btnBack btnBack-add' onclick='openForumFrontForm(" . $forum[0]["id"] . ")' type='button' name='button'>Nouveau</button>";
+					$htmlContent .= "<button id='add' class='btn btn-add' onclick='openForumFrontForm(" . $forum[0]["id"] . ")' type='button' name='button'>Nouveau</button>";
 				$htmlContent .= "</div>";
 			}else
 				$htmlContent .= "<div class='button'>Vous devez vous connecter pour poster un message.</div>";
@@ -512,8 +512,8 @@ class Main {
 				
 					/* Field cta */
 					$htmlContent .= "<div class='field-cta'>";
-						$htmlContent .= "<input class='btnBack-form btnBack-form-cancel' onclick='closeMessageForm()' type='button' value='Annuler'>";
-						$htmlContent .= "<input class='btnBack-form btnBack-form-validate' onclick='insertMessageFront(" . $forumId . ", 0)' type='button' value='Créer'>";
+						$htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeMessageForm()' type='button' value='Annuler'>";
+						$htmlContent .= "<input class='btn-form btn-form-validate' onclick='insertMessageFront(" . $forumId . ", 0)' type='button' value='Créer'>";
 					$htmlContent .= "</div>";
 					
 				$htmlContent .= "</form>";
