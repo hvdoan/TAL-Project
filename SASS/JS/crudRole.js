@@ -186,6 +186,7 @@ function openRoleForm(id = "")
                 ctnRoleForm.html(request.responseText);
                 ctnRoleForm.css("width", "100%");
                 ctnRoleForm.css("height", "100%");
+                $("body").addClass("overflowHidden");
             }
         }
     };
@@ -206,6 +207,7 @@ function closeRoleForm()
     ctnRoleForm.html("");
     ctnRoleForm.css("width", "0");
     ctnRoleForm.css("height", "0");
+    $("body").removeClass("overflowHidden");
 }
 
 function checkAll(self)

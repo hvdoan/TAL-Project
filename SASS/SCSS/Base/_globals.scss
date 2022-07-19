@@ -1,79 +1,71 @@
 @use "../Abstracts" as *;
 
 body,
-.body
-{
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    padding: 0;
-    margin: 0;
-    background-color: $light-grey;
+.body {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	padding: 0;
+	margin: 0;
+	background-color: $light-grey;
 
-    &-row
-    {
-        flex-direction: row;
-    }
+	&-row {
+		flex-direction: row;
+	}
 }
 
-.page
-{
-    width: 100%;
-    min-height: calc(100vh - $nav-max-height);
-    background-color: $white;
+.page {
+	width: 100%;
+	min-height: calc(100vh - $nav-max-height);
+	background-color: $white;
 }
 
-h1
-{
-    font-size: rem(24);
-    margin: 0;
-    color: white;
-    font-weight: normal;
-    font-family: $jokeyOne;
+h1 {
+	font-size: rem(24);
+	margin: 0;
+	color: white;
+	font-weight: normal;
+	font-family: $jokeyOne;
 }
 
-h2
-{
-    // font-family: $font2;
-    font-size: rem(16);
+h2 {
+	// font-family: $font2;
+	font-size: rem(16);
 }
 
 #hide-icon,
-#show-icon
-{
-    cursor: pointer;
+#show-icon {
+	cursor: pointer;
 }
 
-.hide
-{
-    display: none !important;
+.hide {
+	display: none !important;
 }
 
 //*** FLEX ***//
 .flex,
-.flex-row
-{
-    display: flex;
-    flex-direction: row;
+.flex-row {
+	display: flex;
+	flex-direction: row;
 }
 
-.flex-col
-{
-    display: flex;
-    flex-direction: column;
+.flex-col {
+	display: flex;
+	flex-direction: column;
 }
 
-flex-jc\:center
-{
-    justify-content: center;
+flex-jc\:center {
+	justify-content: center;
 }
 
-flex-ai\:center
-{
-    align-items: center;
+flex-ai\:center {
+	align-items: center;
 }
 
-.pointer
-{
-    cursor: pointer;
+.pointer {
+	cursor: pointer;
+}
+
+.overflowHidden {
+    overflow: hidden;
 }

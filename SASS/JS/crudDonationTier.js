@@ -162,6 +162,7 @@ function openDonationForm(id = "")
 				$("#ctnDonationTierForm").html(request.responseText);
 				$("#ctnDonationTierForm").css("width", "100%");
 				$("#ctnDonationTierForm").css("height", "100%");
+				$("body").addClass("overflowHidden");
 			}
 		}
 	};
@@ -180,4 +181,5 @@ function closeDonationForm()
 	$("#ctnDonationTierForm").html("");
 	$("#ctnDonationTierForm").css("width", "0");
 	$("#ctnDonationTierForm").css("height", "0");
+	$("body").removeClass("overflowHidden");
 }

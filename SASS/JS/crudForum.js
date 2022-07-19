@@ -160,6 +160,7 @@ function openForumForm(id = "")
 				$("#ctnForumForm").html(request.responseText);
 				$("#ctnForumForm").css("width", "100%");
 				$("#ctnForumForm").css("height", "100%");
+				$("body").addClass("overflowHidden");
 			}
 		}
 	};
@@ -178,4 +179,5 @@ function closeForumForm()
 	$("#ctnForumForm").html("");
 	$("#ctnForumForm").css("width", "0");
 	$("#ctnForumForm").css("height", "0");
+	$("body").removeClass("overflowHidden");
 }

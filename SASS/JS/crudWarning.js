@@ -137,6 +137,7 @@ function openWarningForm(id = "")
 			$("#ctnWarningForm").html(request.responseText);
 			$("#ctnWarningForm").css("width", "100%");
 			$("#ctnWarningForm").css("height", "100%");
+			$("body").addClass("overflowHidden");
 		}
 	};
 	
@@ -154,4 +155,5 @@ function closeWarningForm()
 	$("#ctnWarningForm").html("");
 	$("#ctnWarningForm").css("width", "0");
 	$("#ctnWarningForm").css("height", "0");
+	$("body").removeClass("overflowHidden");
 }

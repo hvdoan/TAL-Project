@@ -171,6 +171,7 @@ function openForumFrontForm(idForum)
 				$("#ctnForumFrontForm").css("width", "100%");
 				$("#ctnForumFrontForm").css("height", "100%");
 				$("#input-content0").focus();
+				$("body").addClass("overflowHidden");
 				console.log("AJAX : request open form completed");
 		}
 	};
@@ -190,6 +191,7 @@ function closeMessageForm()
 	$("#ctnForumFrontForm").html("");
 	$("#ctnForumFrontForm").css("width", "0");
 	$("#ctnForumFrontForm").css("height", "0");
+	$("body").removeClass("overflowHidden");
 }
 
 /**************************************************
@@ -200,4 +202,5 @@ function closeForumForm()
 	$("#ctnForumFormFront").html("");
 	$("#ctnForumFormFront").css("width", "0");
 	$("#ctnForumFormFront").css("height", "0");
+	$("body").removeClass("overflowHidden");
 }

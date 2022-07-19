@@ -161,6 +161,7 @@ function openMessageForm(id = "")
 				$("#ctnMessageForm").html(request.responseText);
 				$("#ctnMessageForm").css("width", "100%");
 				$("#ctnMessageForm").css("height", "100%");
+				$("body").removeClass("overflowHidden");
 			}
 		}
 	};
@@ -180,4 +181,5 @@ function closeMessageForm()
 	$("#ctnMessageForm").html("");
 	$("#ctnMessageForm").css("width", "0");
 	$("#ctnMessageForm").css("height", "0");
+	$("body").addClass("overflowHidden");
 }
