@@ -4,9 +4,13 @@ use App\Model\User;
 
 $user = new User();
 $userRate = new User();
-$object = $user->setId(intval($_SESSION["id"]));
-if($object)
-	$user = $object;
+
+if ($this->data["isConnected"]){
+    $object = $user->setId(intval($_SESSION["id"]));
+    if($object)
+        $user = $object;
+}
+
 $counter = 0;
 
 $token = md5(uniqid());
@@ -112,6 +116,7 @@ $_SESSION["tokenForm"] = $token;
 				</div>
 			</div>
 			<div>
+
 				<?php foreach($this->data["rating"] as $rating):
 					$counter++;
 					$object = $userRate->setId(intval($rating["idUser"]));
