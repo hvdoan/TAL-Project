@@ -13,6 +13,7 @@ class Message extends Sql{
 	protected   $creationDate = null;
 	protected   $updateDate = null;
 	private     $userAnswer;
+    private     $subscribedUsers;
 	
 	public function __construct()
 	{

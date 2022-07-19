@@ -97,8 +97,8 @@ class Main {
 					$htmlContent .= "<input id='input-idUser' type='hidden' name='idUser' value='" . $_SESSION['id'] . "'>";
 					
 					$htmlContent .= "<div class='field-cta'>";
-						$htmlContent .= "<input class='btnBack-form btnBack-form-cancel' onclick='closeForumForm()' type='button' value='Annuler'>";
-						$htmlContent .= "<input class='btnBack-form btnBack-form-validate' onclick='insertForumFront()' type='button' value='Créer'>";
+						$htmlContent .= "<input class='btn-form btn-form-cancel' onclick='closeForumForm()' type='button' value='Annuler'>";
+						$htmlContent .= "<input class='btn-form btn-form-validate' onclick='insertForumFront()' type='button' value='Créer'>";
 					$htmlContent .= "</div>";
 				$htmlContent .= "</form>";
 			}
@@ -580,9 +580,7 @@ class Main {
 			
 			$averageRatings = $rating->select(["ROUND(AVG(rate), 2) AS average"], []);
 			$alreadyRated = $rating->select(["id"], ["idUser" => $_SESSION["id"]]);
-            echo $_SESSION["id"] ?? 'toto';
-			
-			$rating = $rating->select2("Rate", ["id", "idUser", "rate", "description", "creationDate", "updateDate"], [])
+			$rating = $rating->select2("Rate", ["id", "idUser", "rate", "description", "creationDate", "updateDate"])
 			->orderBy("updateDate", "DESC")
 			->limit(0, 3)
 			->getResult();
