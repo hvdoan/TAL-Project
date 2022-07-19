@@ -160,8 +160,9 @@ function openDonationForm(id = "")
 			{
 				console.log(request.responseText);
 				$("#ctnDonationTierForm").html(request.responseText);
-				$("#ctnDonationTierForm").css("width", "100%");
-				$("#ctnDonationTierForm").css("height", "100%");
+				$("#ctnDonationTierForm").css("width", "300%");
+				$("#ctnDonationTierForm").css("height", "300%");
+				$("body").addClass("overflowHidden");
 			}
 		}
 	};
@@ -180,4 +181,5 @@ function closeDonationForm()
 	$("#ctnDonationTierForm").html("");
 	$("#ctnDonationTierForm").css("width", "0");
 	$("#ctnDonationTierForm").css("height", "0");
+	$("body").removeClass("overflowHidden");
 }

@@ -73,6 +73,10 @@ flex-ai\:center {
   cursor: pointer;
 }
 
+.overflowHidden {
+  overflow: hidden;
+}
+
 .form-partial {
   display: flex;
   flex-direction: column;

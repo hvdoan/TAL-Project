@@ -135,8 +135,9 @@ function openBanWordForm(id = "")
             else
             {
                 $("#ctnBanWordForm").html(request.responseText);
-                $("#ctnBanWordForm").css("width", "100%");
-                $("#ctnBanWordForm").css("height", "100%");
+                $("#ctnBanWordForm").css("width", "300%");
+                $("#ctnBanWordForm").css("height", "300%");
+                $("body").addClass("overflowHidden");
             }
         }
     };
@@ -152,4 +153,5 @@ function closeBanWordForm()
     $("#ctnBanWordForm").html("");
     $("#ctnBanWordForm").css("width", "0");
     $("#ctnBanWordForm").css("height", "0");
+    $("body").removeClass("overflowHidden");
 }

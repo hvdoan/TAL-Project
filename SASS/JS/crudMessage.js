@@ -158,8 +158,9 @@ function openMessageForm(id = "")
 			{
 				console.log("AJAX : request open form completed");
 				$("#ctnMessageForm").html(request.responseText);
-				$("#ctnMessageForm").css("width", "100%");
-				$("#ctnMessageForm").css("height", "100%");
+				$("#ctnMessageForm").css("width", "300%");
+				$("#ctnMessageForm").css("height", "300%");
+				$("body").addClass("overflowHidden");
 			}
 		}
 	};
@@ -179,4 +180,5 @@ function closeMessageFormBack()
 	$("#ctnMessageForm").html("");
 	$("#ctnMessageForm").css("width", "0");
 	$("#ctnMessageForm").css("height", "0");
+	$("body").removeClass("overflowHidden");
 }

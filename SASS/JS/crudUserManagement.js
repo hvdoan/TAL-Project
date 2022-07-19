@@ -139,8 +139,9 @@ function openUserForm(id = "")
 			{
 				console.log("AJAX : request open form completed");
 				$("#ctnUserForm").html(request.responseText);
-				$("#ctnUserForm").css("width", "100%");
-				$("#ctnUserForm").css("height", "100%");
+				$("#ctnUserForm").css("width", "300%");
+				$("#ctnUserForm").css("height", "300%");
+				$("body").addClass("overflowHidden");
 			}
 		}
 	};
@@ -185,4 +186,5 @@ function closeUserForm()
 	$("#ctnUserForm").html("");
 	$("#ctnUserForm").css("width", "0");
 	$("#ctnUserForm").css("height", "0");
+	$("body").removeClass("overflowHidden");
 }

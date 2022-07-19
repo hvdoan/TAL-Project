@@ -24,6 +24,7 @@ function myAutoloader($class)
 }
 
 spl_autoload_register("App\myAutoloader");
+define('ROOT', realpath(dirname(__FILE__)).'/');
 
 function saveConnexion() {
     $totalVisitor = new TotalVisitor();

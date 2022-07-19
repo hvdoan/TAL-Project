@@ -137,8 +137,8 @@ function openForm(id = "")
 			{
 				console.log("AJAX : request open form completed");
 				$("#ctnTagForm").html(request.responseText);
-				$("#ctnTagForm").css("width", "100%");
-				$("#ctnTagForm").css("height", "100%");
+				$("#ctnTagForm").css("width", "300%");
+				$("#ctnTagForm").css("height", "300%");
 			}
 		}
 	};

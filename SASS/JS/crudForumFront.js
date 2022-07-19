@@ -40,9 +40,10 @@ function openForumFormFront(id = "")
 		if(request.readyState === 4)
 		{
 			$("#ctnForumFormFront").html(request.responseText);
-			$("#ctnForumFormFront").css("width", "100%");
-			$("#ctnForumFormFront").css("height", "100%");
+			$("#ctnForumFormFront").css("width", "300%");
+			$("#ctnForumFormFront").css("height", "300%");
 			$("#input-title").focus();
+			$("body").addClass("overflowHidden");
 			console.log("AJAX : request open form completed");
 		}
 	};
@@ -168,9 +169,10 @@ function openForumFrontForm(idForum)
 		if(request.readyState === 4)
 		{
 				$("#ctnForumFrontForm").html(request.responseText);
-				$("#ctnForumFrontForm").css("width", "100%");
-				$("#ctnForumFrontForm").css("height", "100%");
+				$("#ctnForumFrontForm").css("width", "300%");
+				$("#ctnForumFrontForm").css("height", "300%");
 				$("#input-content0").focus();
+				$("body").addClass("overflowHidden");
 				console.log("AJAX : request open form completed");
 		}
 	};
@@ -190,6 +192,7 @@ function closeMessageForm()
 	$("#ctnForumFrontForm").html("");
 	$("#ctnForumFrontForm").css("width", "0");
 	$("#ctnForumFrontForm").css("height", "0");
+	$("body").removeClass("overflowHidden");
 }
 
 /**************************************************
@@ -200,4 +203,5 @@ function closeForumForm()
 	$("#ctnForumFormFront").html("");
 	$("#ctnForumFormFront").css("width", "0");
 	$("#ctnForumFormFront").css("height", "0");
+	$("body").removeClass("overflowHidden");
 }

@@ -157,8 +157,9 @@ function openForumForm(id = "")
 			else
 			{
 				$("#ctnForumForm").html(request.responseText);
-				$("#ctnForumForm").css("width", "100%");
-				$("#ctnForumForm").css("height", "100%");
+				$("#ctnForumForm").css("width", "300%");
+				$("#ctnForumForm").css("height", "300%");
+				$("body").addClass("overflowHidden");
 			}
 		}
 	};
@@ -177,4 +178,5 @@ function closeForumFormBack()
 	$("#ctnForumForm").html("");
 	$("#ctnForumForm").css("width", "0");
 	$("#ctnForumForm").css("height", "0");
+	$("body").removeClass("overflowHidden");
 }

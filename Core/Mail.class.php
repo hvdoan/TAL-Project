@@ -6,9 +6,9 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-require 'API/phpmailer/src/PHPMailer.php';
-require 'API/phpmailer/src/SMTP.php';
-require 'API/phpmailer/src/Exception.php';
+require  ROOT.'API/PHPMailer/src/PHPMailer.php';
+require  ROOT.'API/PHPMailer/src/SMTP.php';
+require  ROOT.'API/PHPMailer/src/Exception.php';
 
 class Mail
 {
