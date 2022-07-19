@@ -43,6 +43,7 @@ function openForumFormFront(id = "")
 			$("#ctnForumFormFront").css("width", "100%");
 			$("#ctnForumFormFront").css("height", "100%");
 			$("#input-title").focus();
+			$("body").addClass("overflowHidden");
 			console.log("AJAX : request open form completed");
 		}
 	};
