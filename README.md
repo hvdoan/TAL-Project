@@ -32,8 +32,8 @@
 
 ### Iterator
 
-**Utilisation** : <br><br>
+**Utilisation** : <br>Facilite le parcours d'une collection. Exemple d'utilisation : parcours de la collection des pages pour la génération d'un SiteMap<br>
 
-**Où** :          <br><br>
+**Où** :          <br>Dans le dossier `/Core/Iterator/PageIterator.php`, on l'appel dans le `/Controller/config.class.php` dans la méthode SiteMapGeneration() generation (ligne 172)<br>
 
-**Pourquoi** : <br><br><br>
+**Pourquoi** : <br>L'iterator permet de faciliter l'ensemble des données d'un modèle chargé et évite les erreurs lors de boucle dans le code. Cela ajoute aussi de la flexibilité au code.<br><br>
