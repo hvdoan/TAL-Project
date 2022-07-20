@@ -347,6 +347,7 @@ class Main {
 													$htmlContent .= "</div>";
 													
 													$htmlContent .= "<div class='messageContent'>";
+                                                        $answer["content"] = str_ireplace($listWords, "****", $answer["content"]);
 														$htmlContent .= "<p>" . $answer["content"] . "</p>";
 													$htmlContent .= "</div>";
 												
