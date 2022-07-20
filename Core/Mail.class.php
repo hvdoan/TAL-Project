@@ -48,6 +48,7 @@ class Mail
 
 	public function prepareContent($recipient, $subject, $content, $altContent)
 	{
+        $this->email->CharSet = 'UTF-8';
 		$this->email->addAddress($recipient);
 		$this->email->Subject = $subject;
 		$this->email->Body    = $content;

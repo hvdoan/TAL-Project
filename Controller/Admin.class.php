@@ -144,7 +144,10 @@ class Admin
                 foreach($usersList as $user)
                 {
                     $htmlContent .= "<tr>";
-                    $htmlContent .= "<td><input class='idUser' type='checkbox' name='" . $user["id"] . "'></td>";
+                    if ($user["id"] != 1)
+                        $htmlContent .= "<td><input class='idUser' type='checkbox' name='" . $user["id"] . "'></td>";
+                    else
+                        $htmlContent .= "<td></td>";
                     $htmlContent .= "<td>" . $user["id"] . "</td>";
                     $htmlContent .= "<td id='" . $user["id"] . "'>" . $user["firstname"] . " " . strtoupper($user["lastname"]) . "</td>";
                     $htmlContent .= "<td>" . $user["email"] . "</td>";
@@ -226,7 +229,7 @@ class Admin
                 echo "login";
             else
             {
-                if (isset($_POST["userIdList"]) && $_POST["userIdList"] != "") {
+                if (isset($_POST["userIdList"]) && $_POST["userIdList"] != "" && (!in_array('1', $_POST["userIdList"]))) {
                     /* Delete users */
                     $userIdList = explode(",", $_POST["userIdList"]);
 
