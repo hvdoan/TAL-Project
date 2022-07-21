@@ -25,7 +25,7 @@
 
 **Utilisation** : <br>Permet l'envoie de mail en cas de réponse a un message dans le forum<br>
 
-**Où** :          <br><br>
+**Où** :          <br>Dans le dossier `/Model/Message.class.php` implémentation des methods `addNotifyUser()`et `unsetNotifyUser()` permettant d'ajouter et de retirer les users de la liste d'envoie qui se fait par la method `notify()` qui appelle `sendNotificationMail()` se trouvant dans `/Model/User.class.php` demandant un objet Message et un objet User et envoyant un mail à l'aide de PHPMailer au User passé en paramètre.<br>
 
 **Pourquoi** : <br>L'Observer nous permet d'envoyer facilement un mail à la personne qui recoit une réponse a un des ses commentaires dans les forums du site, ce qui lui permet d'aller répondre directement.<br><br>
 
